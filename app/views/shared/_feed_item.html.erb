@@ -1,0 +1,33 @@
+<tr>
+  <td class="gravatar">
+    <%= link_to gravatar_for(feed_item.user), feed_item.user %>
+  </td>
+  <td class="activity">
+    <span class="user">
+      <%= link_to feed_item.user.name, feed_item.user %>
+    </span>
+    <span class="content"><%= feed_item.name %></span>
+    
+    <span class="content"> is <%= feed_item.status %></span><br>
+    
+    <span class="content">Details: <%= feed_item.description %></span><br>
+    
+    
+   
+   <% if feed_item.due!=nil %>
+      <span class="timestamp">tivit is due <%= time_ago_in_words(feed_item.due) %> </span>
+   <% end %>
+    
+   
+      
+   
+    <span class="timestamp">tivit created <%= time_ago_in_words(feed_item.created_at) %> ago.</span>
+  </td>
+  <% if current_user?(feed_item.user) %>
+  <td>
+    <%= link_to "delete", feed_item, :method => :delete,
+                                     :confirm => "You sure you want to delete" +feed_item.name+"?",
+                                     :title => feed_item.name %>
+  </td>
+  <% end %>
+</tr>

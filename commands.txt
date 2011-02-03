@@ -1,0 +1,39 @@
+ rename_column(:activities, :owner_id, :user_id)
+
+rails generate scaffold Activity name:string description:string status:string due:datetime owner:integer who:string
+rails generate model Activity name:string description:string status:string due:datetime owner_id:integer who:string
+
+
+rails generate scaffold Activity name:string description:string status:string due:datetime owner:integer who:string
+rake db:migrate
+
+rename_column :products, :upccode, :upc_code
+
+
+
+Configuring My SQL
+rails -d mysql my_rails_app
+`gem install activerecord-mysql2-adapter
+
+
+
+
+ git remote add origin git@github.com:<ilankasan>/first-app.git
+$ git push origin master
+
+ssh-add path/to/key
+ssh-add "/Users/ilan kasan/.ssh/id_dsa"
+
+
+16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48
+ssh-keygen -t rsa -C "tekkub@gmail.com"
+The key fingerprint is:
+aa:09:9d:16:4f:c6:0a:99:13:2c:6c:e6:25:19:06:04 ilan.kasan1@gmail.com
+
+
+
+rails generate controller Pages home activities myteam signout myaccount
+
+
+gem install autotest -v 4.4.6
+gem install autotest-rails-pure -v 4.1.2

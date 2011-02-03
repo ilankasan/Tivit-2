@@ -1,0 +1,37 @@
+<table class="profile" summary="Profile information">
+  <tr>
+    <td class="main">
+      <h1>
+        <%= gravatar_for @user %>
+        <%= @user.name %>
+      </h1>
+      <h1>
+      <%= link_to "Edit My Account", edit_user_path(current_user) %>
+      </h1>
+    </td>
+    <td class="sidebar round">
+      <strong>Name</strong> <%= @user.name %><br />
+      <strong>URL</strong>  <%= link_to "My account", user_path(@user) %>
+    </td>
+    
+    
+    
+    <% unless @user.activities.empty? %>
+        <table class="activities" summary="User tasks">
+          <%= render @activities %>
+        </table>
+        <%= will_paginate @activities %>
+      <% end %>
+    </td>
+    <td class="sidebar round">
+      <strong>Name</strong> <%= @user.name %><br />
+      <strong>URL</strong> <%= link_to user_path(@user), @user %><br />
+      <strong>activity</strong> <%= @user.activities.count %>
+    </td>
+    
+    
+    
+  </tr>
+</table>
+
+

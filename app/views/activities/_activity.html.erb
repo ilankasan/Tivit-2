@@ -1,0 +1,27 @@
+<tr>
+  <td class="activity">
+    
+    
+    <span class="content"><%= activity.name %></span>
+    <span class="content"> is<%= activity.status %></span><br>
+    
+    <span class="content">Details: <%= activity.description %></span>
+    
+    <% unless !activity.due? %>
+      <span class="timestamp">tivit is due <%= time_ago_in_words(activity.due) %> </span>
+    <% end %>
+    
+    <span class="timestamp">tivit created <%= time_ago_in_words(activity.created_at) %> ago.</span>
+  </td>
+</tr>
+
+
+
+  <% if current_user?(activity.user) %>
+  <td>
+    <%= link_to "delete me", activity, :method => :delete,
+                                     :confirm => "You sure?",
+                                     :title => activity.name%>
+  </td>
+  <% end %>
+</tr>

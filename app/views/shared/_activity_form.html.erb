@@ -1,0 +1,14 @@
+<%= form_for @activity do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <b>Name       : </b>    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+     <b>Description:  </b>   <%= f.text_area :description%>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>
+
