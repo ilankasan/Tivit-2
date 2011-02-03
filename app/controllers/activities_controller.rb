@@ -11,15 +11,17 @@ class ActivitiesController < ApplicationController
         @activity.status = "in progress"
     end
     
-       puts "in progress"
- 
-    
+    puts "in progress"
+     
+    #config.debug("before activity due")
     if (@activity.due == nil)
-        t = Time.new +1
+    puts "in the if"
+
+        t = Time.new
         @activity.due = t
     end
     
-       puts "after due"
+    puts "after due"
  
     
     if @activity.save
