@@ -3,18 +3,24 @@ class ActivitiesController < ApplicationController
   before_filter :authorized_user, :only => :destroy
 
    def create
-    
+    puts "in create"
     @activity  = current_user.activities.build(params[:activity])
+    puts "after build"
     
     if (@activity.status == nil)
         @activity.status = "in progress"
     end
-    puts @activity.due
+    
+       puts "in progress"
+ 
     
     if (@activity.due == nil)
         t = Time.new +1
         @activity.due = t
     end
+    
+       puts "after due"
+ 
     
     if @activity.save
       flash[:success] = "tivit created!"
