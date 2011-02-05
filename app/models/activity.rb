@@ -18,7 +18,18 @@ class Activity < ActiveRecord::Base
   
   attr_accessible :name, :description, :status, :due
   
+  #belongs_to :user
+  
+  
   belongs_to :user
+
+# each activity has many collaborators
+  
+  has_many :collaborators, :class_name => "Activity",  :through => :user_activities
+  
+  
+  
+  
   
   
   validates :name, :presence => true, :length => { :maximum => 140 }

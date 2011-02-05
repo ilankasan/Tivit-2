@@ -3,9 +3,11 @@ class ActivitiesController < ApplicationController
   before_filter :authorized_user, :only => :destroy
 
    def create
-    puts "in create"
-    @activity  = current_user.activities.build(params[:activity])
-    puts "after build"
+    config.debug("creating activity")
+    
+    @activity  = current_user.myactivities.build(params[:activity])
+    config.debug("creating activity" + @activity.name )
+    
     
     if (@activity.status == nil)
         @activity.status = "in progress"
@@ -13,10 +15,8 @@ class ActivitiesController < ApplicationController
     
     puts "in progress"
      
-    #config.debug("before activity due")
     if (@activity.due == nil)
-    puts "in the if"
-
+    
         t = Time.new
         @activity.due = t
     end

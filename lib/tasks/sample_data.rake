@@ -22,7 +22,7 @@ namespace :db do
     
     
   puts "after create uadmin " + admin.name  
-    51.times do |n|
+    10.times do |n|
       name  = Faker::Name.name
       email = "ilank-#{n+1}@test.com"
       password  = "111111"
@@ -35,12 +35,18 @@ namespace :db do
                    
   end
     
-    puts "before pupolate tasks"
-    User.all(:limit => 49).each do |user|
-      2.times do
-        user.activities.create!(:name => Faker::Lorem.sentence(5))
+    puts "---------   >>>> before pupolate tasks"
+    User.all.each do |user|
+        user.myactivities.create!(:name => user.name+"-task 1" )
+        user.myactivities.create!(:name => user.name+"-task 2" )
+     
+     #user.tasks.create!(:content => user.name+"-task #{t}", :user_id => user.id)
+        #user.activities.create!(:content => user.name+"-task #{t}")
              
-      end
-    end 
+          end
+    puts "-------->>>>>>>>>>>>  before ActivityCollabs"
+  UserActivity.create!(:activity_id=>"4",:user_id=>"1")
+  UserActivity.create!(:activity_id=>"3",:user_id=>"1") 
+   
   end
 end

@@ -1,6 +1,7 @@
 <% unless @feed_items.empty? %>
   <table class="activities" summary="User activities">
     <%= render :partial => 'shared/feed_item', :collection => @feed_items %>
+  <%= will_paginate @feed_items %>
   
   <h1>Tasks the user is collaborating on</h1>
    

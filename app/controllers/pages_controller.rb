@@ -4,7 +4,11 @@ class PagesController < ApplicationController
     @title = "Home"
     if signed_in?
       @activity = Activity.new
+      
+      puts "before current user" 
+
       @feed_items = current_user.feed.paginate(:page => params[:page])
+      @feed_items_other = current_user.activities
     end
   end
   

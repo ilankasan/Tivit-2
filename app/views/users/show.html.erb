@@ -16,17 +16,17 @@
     
     
     
-    <% unless @user.activities.empty? %>
+    <% unless @user.myactivities.empty? %>
         <table class="activities" summary="User tasks">
-          <%= render @activities %>
+          <%= render @myactivities %>
         </table>
-        <%= will_paginate @activities %>
+        <%= will_paginate @myactivities %>
       <% end %>
     </td>
     <td class="sidebar round">
       <strong>Name</strong> <%= @user.name %><br />
       <strong>URL</strong> <%= link_to user_path(@user), @user %><br />
-      <strong>activity</strong> <%= @user.activities.count %>
+      <strong>activity</strong> <%= @user.myactivities.count %>
     </td>
     
     

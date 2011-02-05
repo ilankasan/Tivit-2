@@ -29,7 +29,21 @@ class User < ActiveRecord::Base
   attr_accessor :password
   attr_accessible :name, :email, :password, :password_confirmation
   
-  has_many :activities, :dependent => :destroy
+  #has_many :activities, :dependent => :destroy
+##############################################################  
+  
+  has_many :myactivities, :class_name => "Activity", :dependent => :destroy
+            
+  
+# every user has many relationships to tasks he is working on  
+  
+  has_many :user_activities
+  
+ has_many :activities,  :through => :user_activities, :source => :activity
+ 
+  
+  
+  
   
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -72,6 +86,9 @@ class User < ActiveRecord::Base
   
   def feed
     # This is preliminary. See Chapter 12 for the full implementation. this is same at activities
+    #config.debug("Retriving Activities for user id = #{id}" )
+    puts "Retriving users" 
+  
     Activity.where("user_id = ?", id)
   end
   

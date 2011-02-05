@@ -5,7 +5,7 @@
       <%= current_user.name %>
     </span>
     <span class="activities">
-      <%= pluralize(current_user.activities.count, "activity") %>
+      <%= pluralize(current_user.myactivities.count, "activity") %>
     </span>
   </a>
 </div>
