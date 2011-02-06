@@ -1,16 +1,16 @@
 # == Schema Information
-# Schema version: 20110130082834
+# Schema version: 20110205231819
 #
 # Table name: users
 #
-#  id                 :integer         not null, primary key
+#  id                 :integer(4)      not null, primary key
 #  name               :string(255)
 #  email              :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
 #  encrypted_password :string(255)
 #  salt               :string(255)
-#  admin              :boolean
+#  admin              :boolean(1)
 #
 
 # == Schema Information
@@ -27,19 +27,15 @@
 require 'digest'
 class User < ActiveRecord::Base
   attr_accessor :password
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessible :name, :email, :password, :password_confirmationid
   
-  #has_many :activities, :dependent => :destroy
-##############################################################  
-  
-  has_many :myactivities, :class_name => "Activity", :dependent => :destroy
             
   
 # every user has many relationships to tasks he is working on  
-  
-  has_many :user_activities
-  
- has_many :activities,  :through => :user_activities, :source => :activity
+has_and_belongs_to_many :activities
+    
+    
+ #has_many :activities,  :through => :user_activities 
  
   
   
@@ -89,9 +85,24 @@ class User < ActiveRecord::Base
     #config.debug("Retriving Activities for user id = #{id}" )
     puts "Retriving users" 
   
-    Activity.where("user_id = ?", id)
+  #  Activity.where("user_id = ?", id)
+  	return activities
   end
   
+#builds a new activity to a user (as an owner)
+   def add_my_ativity (hash)
+ # settign owner Id to be rqual to the current user
+   	hash["owner_id"] = id
+   	hash["status"] = "in progress"
+ 	hash["due"] = Time.new
+ 
+   	  	
+  	
+   	
+  	return  activities.create(hash)
+  		
+   end
+
   
 
   private

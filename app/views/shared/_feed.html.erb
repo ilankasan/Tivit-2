@@ -2,9 +2,6 @@
   <table class="activities" summary="User activities">
     <%= render :partial => 'shared/feed_item', :collection => @feed_items %>
   
-  <h1>Tasks the user is collaborating on</h1>
-   
-  <%= render :partial => 'shared/feed_item', :collection => @feed_items_other %>
   </table>
   
 <% end %>

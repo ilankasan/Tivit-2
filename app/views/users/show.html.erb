@@ -11,12 +11,13 @@
     </td>
     <td class="sidebar round">
       <strong>Name</strong> <%= @user.name %><br />
+      <strong>email</strong> <%= @user.email %><br />
       <strong>URL</strong>  <%= link_to "My account", user_path(@user) %>
     </td>
     
     
-    
-    <% unless @user.myactivities.empty? %>
+    <% if false %>
+    <% unless @user.activities.empty? %>
         <table class="activities" summary="User tasks">
           <%= render @myactivities %>
         </table>
@@ -28,6 +29,7 @@
       <strong>URL</strong> <%= link_to user_path(@user), @user %><br />
       <strong>activity</strong> <%= @user.myactivities.count %>
     </td>
+    <% end %>
     
     
     

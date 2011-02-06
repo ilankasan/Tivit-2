@@ -4,30 +4,20 @@ class ActivitiesController < ApplicationController
 
    def create
     config.debug("creating activity")
+    :activity.inspect
+        #@activity  = current_user.activities.build(params[:activity],:owner_id => current_user.id)
     
-    @activity  = current_user.myactivities.build(params[:activity])
-    config.debug("creating activity" + @activity.name )
     
     
-    if (@activity.status == nil)
-        @activity.status = "in progress"
-    end
+    @activity  = current_user.add_my_ativity (params[:activity])
+	
+    if (@activity != nil)
+      config.debug("creating activity" + @activity.name )
     
-    puts "in progress"
-     
-    if (@activity.due == nil)
-    
-        t = Time.new
-        @activity.due = t
-    end
-    
-    puts "after due"
- 
-    
-    if @activity.save
-      flash[:success] = "tivit created!"
+      flash[:success] = "tivit " +@activity.name + " created!"
       redirect_to root_path
     else
+      config.debug("creating activity failed") 
       @feed_items = []
       render 'pages/home'
     end

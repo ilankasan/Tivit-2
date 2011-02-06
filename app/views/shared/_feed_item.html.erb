@@ -1,10 +1,12 @@
 <tr>
-  <td class="gravatar">
-    <%= link_to gravatar_for(feed_item.user), feed_item.user %>
-  </td>
   <td class="activity">
 
-     <span class="user">   <%= link_to feed_item.user.name, feed_item.user %></span>
+     <% if false %>
+     	<span class="user">   <%= link_to feed_item.user.name, feed_item.user %></span>
+     	<span class="content">Owner: <%= User.find_by_user_id(feed_item.owner_id).name %></span><br>
+    
+     <% end %>
+     
 
     <span class="content"><%= feed_item.name %></span>
     
@@ -23,7 +25,7 @@
    
     <span class="timestamp">tivit created <%= time_ago_in_words(feed_item.created_at) %> ago.</span>
   </td>
-  <% if current_user?(feed_item.user) %>
+  <% if current_user.id == (feed_item.owner_id) %>
   <td>
     <%= link_to "delete", feed_item, :method => :delete,
                                      :confirm => "You sure you want to delete" +feed_item.name+"?",

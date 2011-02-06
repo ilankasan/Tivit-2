@@ -8,8 +8,7 @@ class PagesController < ApplicationController
       puts "before current user" 
 
       @feed_items = current_user.feed.paginate(:page => params[:page])
-      @feed_items_other = current_user.activities
-    end
+     end
   end
   
   def activities

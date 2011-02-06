@@ -47,6 +47,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
+    mysql2 (0.2.6-x86-mingw32)
     nokogiri (1.4.4.1-x86-mingw32)
     polyglot (0.3.1)
     rack (1.2.1)
@@ -100,6 +101,7 @@ DEPENDENCIES
   factory_girl_rails (= 1.0)
   faker (= 0.3.1)
   gravatar_image_tag (= 1.0.0.pre2)
+  mysql2
   rails (= 3.0.3)
   rspec (= 2.3.0)
   rspec-rails (= 2.3.0)

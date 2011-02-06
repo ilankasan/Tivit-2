@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @myactivities = @user.myactivities.paginate(:page => params[:page])
+    @myactivities = @user.activities.paginate(:page => params[:page])
     
     @title = @user.name
   end
@@ -33,7 +33,10 @@ class UsersController < ApplicationController
     if @user.save
       sign_in @user
       flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      #redirect_to @user
+#send user to home page after sign up
+      #render 'pages/home'
+      redirect_to root_path
     else
       @title = "Sign up"
       render 'new'

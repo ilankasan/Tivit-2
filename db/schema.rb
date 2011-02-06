@@ -10,24 +10,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110204073537) do
+ActiveRecord::Schema.define(:version => 20110205233830) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
     t.string   "description"
     t.string   "status"
     t.datetime "due"
-    t.integer  "user_id"
+    t.integer  "owner_id"
     t.string   "who"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "activities", ["user_id"], :name => "index_activities_on_owner_id"
-
-  
-  
-  create_table "user_activities", :force => true do |t|
+  create_table "activities_users", :id => false, :force => true do |t|
     t.integer  "activity_id"
     t.integer  "user_id"
     t.datetime "created_at"
