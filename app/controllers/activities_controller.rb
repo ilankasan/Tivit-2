@@ -6,7 +6,7 @@ class ActivitiesController < ApplicationController
     
     
     config.debug("------>>>>> Creating activity")
-    due = Time.new(params["due"]["year"],params["due"]["month"],params["due"]["day"])
+    due = Time.local(params["due"]["year"],params["due"]["month"],params["due"]["day"])
 	config.debug("------>>>>> due date "+due.inspect)
     
 	params["due"] = due.inspect 
