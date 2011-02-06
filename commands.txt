@@ -1,3 +1,14 @@
+Heroku
+heroku create
+git push heroku master
+heroku rename tivit1
+heroku pg:reset --db SHARED_DATABASE_URL
+
+git rm Gemfile.lock
+
+$ git push heroku
+$ heroku rake db:migrate
+
  rename_column(:activities, :owner_id, :user_id)
 
 rails generate scaffold Activity name:string description:string status:string due:datetime owner:integer who:string
