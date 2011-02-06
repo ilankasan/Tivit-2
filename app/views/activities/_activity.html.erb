@@ -8,7 +8,7 @@
     <span class="content">Details: <%= activity.description %></span>
     
     <% unless !activity.due? %>
-      <span class="timestamp">tivit is due <%= time_ago_in_words(activity.due) %> </span>
+      <span class="timestamp">tivit is due in <%= time_ago_in_words(activity.due) %> </span>
     <% end %>
     
     <span class="timestamp">tivit created <%= time_ago_in_words(activity.created_at) %> ago.</span>

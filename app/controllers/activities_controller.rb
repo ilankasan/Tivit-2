@@ -6,6 +6,11 @@ class ActivitiesController < ApplicationController
     
     
     config.debug("creating activity")
+    due = Time.new(params["due"]["year"],params["due"]["month"],params["due"]["day"])
+	
+	puts "88888888     time:" +due.inspect
+	params["due"] = due.inspect 
+
     @activity = current_user.add_my_ativity (params)
     @activity.inspect
     
@@ -13,12 +18,8 @@ class ActivitiesController < ApplicationController
     if (@activity != nil)
       config.debug("creating activity" + @activity.name )
 # looking to if user exists
-puts "-----   inspectign Hash ---------------------------------- " + params.inspect
     
 	  email = nil
-	  if(email == nil)
- 			puts "email is null---------------------------------------"
- 	 end
 
       user = User.find_by_email(email)
       if(user == nil && email != nil)
