@@ -17,7 +17,7 @@
 
 class Activity < ActiveRecord::Base
   
-  attr_accessible :name, :description, :status, :due,:owner_id
+  attr_accessible :name, :description, :status, :due,:owner_id, :users
   
     has_and_belongs_to_many :users
 

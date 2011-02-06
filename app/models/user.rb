@@ -29,10 +29,11 @@ class User < ActiveRecord::Base
   attr_accessor :password
   attr_accessible :name, :email, :password, :password_confirmationid
   
+  #attr_accessible :collaborators
             
   
 # every user has many relationships to tasks he is working on  
-has_and_belongs_to_many :activities
+  has_and_belongs_to_many :activities
     
     
  #has_many :activities,  :through => :user_activities 
@@ -94,11 +95,9 @@ has_and_belongs_to_many :activities
  # settign owner Id to be rqual to the current user
    	hash["owner_id"] = id
    	hash["status"] = "in progress"
- 	hash["due"] = Time.new
- 
-   	  	
-  	
-   	
+ 	puts "--------------------> adding activity to user"
+   	puts hash.inspect	
+  	   	
   	return  activities.create(hash)
   		
    end

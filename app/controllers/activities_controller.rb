@@ -3,17 +3,27 @@ class ActivitiesController < ApplicationController
   before_filter :authorized_user, :only => :destroy
 
    def create
+    
+    
     config.debug("creating activity")
-    :activity.inspect
-        #@activity  = current_user.activities.build(params[:activity],:owner_id => current_user.id)
+    @activity = current_user.add_my_ativity (params)
+    @activity.inspect
     
-    
-    
-    @activity  = current_user.add_my_ativity (params[:activity])
-	
+         
     if (@activity != nil)
       config.debug("creating activity" + @activity.name )
+# looking to if user exists
+puts "-----   inspectign Hash ---------------------------------- " + params.inspect
     
+	  email = nil
+	  if(email == nil)
+ 			puts "email is null---------------------------------------"
+ 	 end
+
+      user = User.find_by_email(email)
+      if(user == nil && email != nil)
+      	flash[:warning] = "Use with email " + email + "does not have an account" 
+      end
       flash[:success] = "tivit " +@activity.name + " created!"
       redirect_to root_path
     else

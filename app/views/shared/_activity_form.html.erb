@@ -1,14 +1,27 @@
-<%= form_for @activity do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
+<%= form_tag(:controller => "activities", :method => "post") do %>
+
   <div class="field">
-    <b>Name       : </b>    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-     <b>Description:  </b>   <%= f.text_area :description%>
+  	<%= label_tag(:name, "Name:") %> <%= text_field_tag(:name) %> 
   </div>
   
-  <div class="actions">
-    <%= f.submit "Submit" %>
+  
+  
+  <div class="field">
+  	<%= label_tag(:details, "Details:") %><%= text_area_tag(:details) %> 
   </div>
-<% end %>
+  
+  
+  <div class="field">
+  	<%= label_tag(:email, "invite others (email):") %><%= text_field_tag(:email) %> 
+  </div>
+  
+  <div class="field">
+    <%= label_tag(:due, "activity due:") %>
+  	<%= select_date Date.today, :prefix => :due %>
+</div>
 
+  <div class="actions">
+  <%= submit_tag("Add tivit") %>
+  </div>
+
+<% end %> 
