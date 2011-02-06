@@ -5,18 +5,17 @@ class ActivitiesController < ApplicationController
    def create
     
     
-    config.debug("creating activity")
+    config.debug("------>>>>> Creating activity")
     due = Time.new(params["due"]["year"],params["due"]["month"],params["due"]["day"])
-	
-	puts "88888888     time:" +due.inspect
+	config.debug("------>>>>> due date "+due.inspect)
+    
 	params["due"] = due.inspect 
 
     @activity = current_user.add_my_ativity (params)
-    @activity.inspect
     
          
     if (@activity != nil)
-      config.debug("creating activity" + @activity.name )
+      config.debug("------>>>>> creating activity" + @activity.name )
 # looking to if user exists
     
 	  email = nil
