@@ -31,4 +31,14 @@ class Activity < ActiveRecord::Base
 
   default_scope :order => 'activities.created_at DESC'
 
+# Update status of theusers invites tot he activity
+  def update_user_invites(user)
+  	
+	
+#adding the user to the existing users on the task
+	self.users << user
+#ilan: not 100% we ned the save option
+	self.save
+  end	
+
 end

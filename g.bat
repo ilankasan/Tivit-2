@@ -1,4 +1,4 @@
 git add .
-git commit -m "before email invite 10"
+git commit -m "invite others (one email)"
 git rm GemFile.lock
 git push heroku 

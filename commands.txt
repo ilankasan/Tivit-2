@@ -19,6 +19,8 @@ heroku pg:reset --db SHARED_DATABASE_URL
 
 git rm Gemfile.lock
 
+git checkout -b user-microposts
+
 $ git push heroku
 $ heroku rake db:migrate
 

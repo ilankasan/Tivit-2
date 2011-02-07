@@ -16,6 +16,24 @@
     
     <span class="content">Due : <%= feed_item.due %></span><br>
     
+    	
+   <% feed_item.users.each do |user| %>
+   	  <% if current_user.id == feed_item.owner_id && user.id == current_user.id %>
+      	<span class="content">I am the owner</span><br>
+   	  <% else %>
+   		<% if user.id == feed_item.owner_id %>
+   			<span class="content"><%= user.email%> is the owner of this task</span><br>
+   		<% else %>
+ 			<% if user.id == current_user.id%>	
+   				<span class="content">i am participating</span><br>
+   			<% else %>
+   				<span class="content"><%= user.email%> is participating</span><br>
+   			<% end %>
+   		<% end %>
+   			
+   	  <% end %> 	
+      
+   <% end %>
    
    <% if feed_item.due!=nil %>
       <span class="timestamp">tivit is due in <%= time_ago_in_words(feed_item.due) %> </span>

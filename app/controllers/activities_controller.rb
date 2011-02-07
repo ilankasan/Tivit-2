@@ -13,7 +13,21 @@ class ActivitiesController < ApplicationController
 
     @activity = current_user.add_my_ativity (params)
     
-         
+# Add the invited users to the activity
+
+# assume for now it is just one email
+
+	email = params["who"]
+	if(email != nil)
+		puts " ->>>>>> inviting user with email: "+email
+
+	end
+	if(email == nil)
+		puts "NNNNNNNNNNNNNNNUUUUUUUUUUUUUUUUUUUUULLLLLLLLLLLLLLLLL"
+	end
+	user = user_by_email(email)
+    @activity.update_user_invites(user)
+    
     if (@activity != nil)
       config.debug("------>>>>> creating activity" + @activity.name )
 # looking to if user exists

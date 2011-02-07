@@ -21,9 +21,9 @@ namespace :db do
      
    
     
-    3.times do |n|
+    2.times do |n|
       name  = Faker::Name.name
-      email = "ilank-#{n+1}@test.com"
+      email = "ilan#{n+2}@test.com"
       
     puts "Inserting " +email
       

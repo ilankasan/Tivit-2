@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110205231819
+# Schema version: 20110206213020
 #
 # Table name: users
 #
@@ -11,7 +11,8 @@
 #  encrypted_password :string(255)
 #  salt               :string(255)
 #  admin              :boolean(1)
-#
+#  is_active          :boolean(1)
+
 
 # == Schema Information
 # Schema version: 20110127075729
@@ -27,21 +28,14 @@
 require 'digest'
 class User < ActiveRecord::Base
   attr_accessor :password
-  attr_accessible :name, :email, :password, :password_confirmationid
+  attr_accessible :name, :email, :password, :password_confirmationid, :is_active
   
-  #attr_accessible :collaborators
             
   
 # every user has many relationships to tasks he is working on  
   has_and_belongs_to_many :activities
     
-    
- #has_many :activities,  :through => :user_activities 
  
-  
-  
-  
-  
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   validates :name,  :presence => true,
@@ -65,6 +59,17 @@ class User < ActiveRecord::Base
     encrypted_password == encrypt(submitted_password)
   end
   
+  def deactivate_user
+    is_active = false
+  end
+  
+  def activate_user
+    is_active = true
+  end
+  
+  def is_active?
+    return is_active 
+  end
   
    
   
