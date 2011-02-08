@@ -16,7 +16,6 @@ class ActivitiesController < ApplicationController
     if (@activity != nil)
 		who = params["who"]
 		
-		
 #user_by_email (who)
     	update_activity_participants(who, @activity)    
         config.debug("------>>>>> creating activity" + @activity.name )

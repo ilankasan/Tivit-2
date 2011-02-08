@@ -17,6 +17,13 @@ git push heroku master
 heroku rename tivit1
 heroku pg:reset --db SHARED_DATABASE_URL
 
+
+
+$ git add .
+$ git commit -am "Done with user edit/update, index, and destroy actions"
+$ git checkout master
+$ git merge updating-users
+
 git rm Gemfile.lock
 git rm Gemfile.lock
 
