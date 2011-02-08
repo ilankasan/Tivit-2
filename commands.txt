@@ -21,6 +21,13 @@ git rm Gemfile.lock
 
 git checkout -b user-microposts
 
+
+$ git add .
+$ git commit -am "Done with user edit/update, index, and destroy actions"
+$ git checkout master
+$ git merge updating-users
+
+
 $ git push heroku
 $ heroku rake db:migrate
 
