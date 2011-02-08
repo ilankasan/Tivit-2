@@ -3,10 +3,10 @@ Heroku
 
 If you simply want to start fresh with a fresh set of empty tables, you can first ensure you have an up-to-date definition of the schema in db/schema.rb:
 
-rake db:schema:dump
+heroku rake db:schema:dump
 and then:
 
-rake db:schema:load
+heroku rake db:schema:load
 which has the effect of dropping tables and then re-creating them, without running through your entire battery of migrations.
 
 
@@ -17,6 +17,14 @@ git push heroku master
 heroku rename tivit1
 heroku pg:reset --db SHARED_DATABASE_URL
 
+
+
+$ git add .
+$ git commit -am "Done with user edit/update, index, and destroy actions"
+$ git checkout master
+$ git merge updating-users
+
+git rm Gemfile.lock
 git rm Gemfile.lock
 
 git checkout -b user-microposts
@@ -29,7 +37,7 @@ $ git merge updating-users
 
 
 $ git push heroku
-$ heroku rake db:migrate
+heroku rake db:migrate
 
  rename_column(:activities, :owner_id, :user_id)
 
@@ -49,10 +57,9 @@ rails -d mysql my_rails_app
 `gem install activerecord-mysql2-adapter
 
 
-
-
  git remote add origin git@github.com:<ilankasan>/first-app.git
-$ git push origin master
+ git push origin master
+ git checkout -b edit-tivit
 
 ssh-add path/to/key
 ssh-add "/Users/ilan kasan/.ssh/id_dsa"

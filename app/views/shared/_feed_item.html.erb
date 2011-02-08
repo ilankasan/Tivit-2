@@ -46,6 +46,7 @@
   </td>
   <% if current_user.id == (feed_item.owner_id) %>
   <td>
+  	<%= link_to "edit", edit_activity_path(feed_item) %>            
     <%= link_to "delete", feed_item, :method => :delete,
                                      :confirm => "You sure you want to delete" +feed_item.name+"?",
                                      :title => feed_item.name %>

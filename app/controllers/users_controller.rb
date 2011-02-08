@@ -29,12 +29,12 @@ class UsersController < ApplicationController
   
   
  def create
-# find is there is a skeleton of the user
+# find if there is a skeleton of the user
 	 
 	  @user = get_user(params) 
 	if @user.save
       sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
+      flash[:success] = "Welcome to the Tivity!"
       #redirect_to @user
 #send user to home page after sign up
       #render 'pages/home'
