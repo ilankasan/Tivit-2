@@ -19,12 +19,8 @@ class Activity < ActiveRecord::Base
   
   attr_accessible :name, :description, :status, :due,:owner_id, :users
   
-    has_and_belongs_to_many :users
+  has_and_belongs_to_many :users
 
-  #has_many :users, :through => :user_activities
-  
-    
-  
   validates :name, :presence => true, :length => { :maximum => 140 }
   validates :description, :length => { :maximum => 1024 }
   validates :owner_id, :presence => true
@@ -33,12 +29,16 @@ class Activity < ActiveRecord::Base
 
 # Update status of theusers invites tot he activity
   def update_user_invites(user)
-  	
-	
+ puts "**********************************************************" 	
+	if(user != nil)
+		puts "**********************************************************" + user.inspect 	
+ 
 #adding the user to the existing users on the task
 	self.users << user
 #ilan: not 100% we ned the save option
 	self.save
+		
+	end	
   end	
 
 end

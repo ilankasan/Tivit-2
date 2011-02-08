@@ -19,12 +19,10 @@ module UsersHelper
 		puts "creatign a new user"
 	
 	else
-		@user.name = params[:user]["name"]
-		@user.name = params[:user]["password"]
-		@user.name = params[:user]["password_confirmation"]
-		@user.activate_user
+		@user.update_attributes(params[:user])
 		puts "updatting skeleton user"
-
+		puts "--------------------------------------"
+		puts params.inspect
 	end
   	return @user
  end

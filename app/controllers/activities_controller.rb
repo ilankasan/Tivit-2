@@ -3,47 +3,30 @@ class ActivitiesController < ApplicationController
   before_filter :authorized_user, :only => :destroy
 
    def create
-    
-    
+      
     config.debug("------>>>>> Creating activity")
     due = Time.local(params["due"]["year"],params["due"]["month"],params["due"]["day"])
-	config.debug("------>>>>> due date "+due.inspect)
-    
-	params["due"] = due.inspect 
-
+#adding a strign representation of due date 
+    params["due"] = due.inspect 
+#adding activity to current user	
     @activity = current_user.add_my_ativity (params)
     
-# Add the invited users to the activity
 
-# assume for now it is just one email
-
-	email = params["who"]
-	if(email != nil)
-		puts " ->>>>>> inviting user with email: "+email
-
-	end
-	if(email == nil)
-		puts "NNNNNNNNNNNNNNNUUUUUUUUUUUUUUUUUUUUULLLLLLLLLLLLLLLLL"
-	end
-	user = user_by_email(email)
-    @activity.update_user_invites(user)
-    
+	    
     if (@activity != nil)
-      config.debug("------>>>>> creating activity" + @activity.name )
-# looking to if user exists
-    
-	  email = nil
-
-      user = User.find_by_email(email)
-      if(user == nil && email != nil)
-      	flash[:warning] = "Use with email " + email + "does not have an account" 
-      end
-      flash[:success] = "tivit " +@activity.name + " created!"
-      redirect_to root_path
+		who = params["who"]
+		
+		
+#user_by_email (who)
+    	update_activity_participants(who, @activity)    
+        config.debug("------>>>>> creating activity" + @activity.name )
+        flash[:success] = "tivit " +@activity.name + " created!"
+        redirect_to root_path
     else
-      config.debug("creating activity failed") 
-      @feed_items = []
-      render 'pages/home'
+        config.debug("creating activity failed")
+#ilan: not sure why we need the below row 
+        @feed_items = []
+        render 'pages/home'
     end
   
   end
@@ -53,6 +36,14 @@ class ActivitiesController < ApplicationController
     @activity.destroy
     redirect_back_or root_path
   end
+  
+  
+  def edit
+    puts "EEEEDDDDIIIYYYYYYYYYYYYYTTTTTTTTTTTTTTTT--------------------"
+	
+    redirect_back_or root_path
+  end
+
 
   private
 
