@@ -1,5 +1,7 @@
 git add .
-git commit -m "edit tivit 1"
-git rm GemFile.lock
+git rm Gemfile.lock
+
+git commit -m "edit tivit 2"
+git rm Gemfile.lock
 git push
 git push heroku 

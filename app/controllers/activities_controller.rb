@@ -50,7 +50,7 @@ class ActivitiesController < ApplicationController
     
     @activity = Activity.find(params[:id])   
     if (@activity != nil && @activity.update_attributes(params[:activity]))
-      flash[:success] = "tivit " +@activity +"updated"
+      flash[:success] = "tivit" + @activity.name + " updated"
       redirect_to @activity
     else
       @title = "Edit activity"
