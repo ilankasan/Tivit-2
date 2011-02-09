@@ -1,4 +1,4 @@
 git add .
-git commit -m "invite others (one email) - fixed signup and email invite"
+git commit -m "edit tivit 1"
 git rm GemFile.lock
 git push heroku 

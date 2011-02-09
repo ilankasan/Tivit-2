@@ -20,7 +20,7 @@ heroku pg:reset --db SHARED_DATABASE_URL
 
 
 $ git add .
-$ git commit -am "Done with user edit/update, index, and destroy actions"
+git commit -am "added update task"
 $ git checkout master
 $ git merge updating-users
 
