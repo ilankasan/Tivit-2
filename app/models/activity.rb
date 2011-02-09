@@ -29,16 +29,12 @@ class Activity < ActiveRecord::Base
 
 # Update status of theusers invites tot he activity
   def update_user_invites(user)
- puts "**********************************************************" 	
-	if(user != nil)
-		puts "**********************************************************" + user.inspect 	
- 
-#adding the user to the existing users on the task
+ #adding the user to the existing users on the task
 	self.users << user
 #ilan: not 100% we ned the save option
 	self.save
 		
-	end	
+	
   end	
 
 end

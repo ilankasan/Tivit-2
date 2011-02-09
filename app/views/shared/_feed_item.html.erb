@@ -1,19 +1,9 @@
 <tr>
   <td class="activity">
 
-     <% if false %>
-     	<span class="user">   <%= link_to feed_item.user.name, feed_item.user %></span>
-     	<span class="content">Owner: <%= User.find_by_user_id(feed_item.owner_id).name %></span><br>
-    
-     <% end %>
-     
-
-    <span class="content"><%= feed_item.name %></span>
-    
+    <span class="content"><%= feed_item.name %></span>  
     <span class="content"> is <%= feed_item.status %></span><br>
-    
     <span class="content">Details: <%= feed_item.description %></span><br>
-    
     <span class="content">Due : <%= feed_item.due %></span><br>
     
     	
@@ -29,24 +19,20 @@
    			<% else %>
    				<span class="content"><%= user.email%> is participating</span><br>
    			<% end %>
-   		<% end %>
-   			
+   		<% end %>			
    	  <% end %> 	
-      
    <% end %>
-   
    <% if feed_item.due!=nil %>
       <span class="timestamp">tivit is due in <%= time_ago_in_words(feed_item.due) %> </span>
    <% end %>
     
-   
-      
-   
     <span class="timestamp">tivit created <%= time_ago_in_words(feed_item.created_at) %> ago.</span>
   </td>
+  
   <% if current_user.id == (feed_item.owner_id) %>
   <td>
-  	<%= link_to "edit", edit_activity_path(feed_item) %>            
+  	<%= link_to "edit", edit_activity_path(feed_item) %>
+  	
     <%= link_to "delete", feed_item, :method => :delete,
                                      :confirm => "You sure you want to delete" +feed_item.name+"?",
                                      :title => feed_item.name %>

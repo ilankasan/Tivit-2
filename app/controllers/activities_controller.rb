@@ -3,19 +3,16 @@ class ActivitiesController < ApplicationController
   before_filter :authorized_user, :only => :destroy
 
    def create
-      
+    
     config.debug("------>>>>> Creating activity")
     due = Time.local(params["due"]["year"],params["due"]["month"],params["due"]["day"])
 #adding a strign representation of due date 
     params["due"] = due.inspect 
 #adding activity to current user	
-    @activity = current_user.add_my_ativity (params)
-    
-
+    @activity = current_user.add_my_ativity (params)    
 	    
     if (@activity != nil)
-		who = params["who"]
-		
+		who = params["who"]	
 #user_by_email (who)
     	update_activity_participants(who, @activity)    
         config.debug("------>>>>> creating activity" + @activity.name )
@@ -27,9 +24,7 @@ class ActivitiesController < ApplicationController
         @feed_items = []
         render 'pages/home'
     end
-  
   end
-  
   
   def destroy
     @activity.destroy
@@ -38,16 +33,36 @@ class ActivitiesController < ApplicationController
   
   
   def edit
-    puts "EEEEDDDDIIIYYYYYYYYYYYYYTTTTTTTTTTTTTTTT--------------------"
-	
-    redirect_back_or root_path
+  
+    @activity = Activity.find(params[:id])
+    @title = "Edit tivit: " +@activity.name
   end
+  
+  
+  def show
+    
+    @activity = Activity.find(params[:id])
+  	@title = @activity .name
+  	
+  end
+  
+  def update
+    
+    @activity = Activity.find(params[:id])   
+    if (@activity != nil && @activity.update_attributes(params[:activity]))
+      flash[:success] = "tivit " +@activity +"updated"
+      redirect_to @activity
+    else
+      @title = "Edit activity"
+      render 'edit'
+    end  
+  end 
 
 
   private
 
     def authorized_user
       @activity = Activity.find(params[:id])
-      redirect_to root_path unless current_user?(@activity.user)
+      redirect_to root_path unless current_user
     end
 end
