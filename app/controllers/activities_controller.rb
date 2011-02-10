@@ -12,9 +12,14 @@ class ActivitiesController < ApplicationController
     @activity = current_user.add_my_ativity (params)    
 	    
     if (@activity != nil)
-		who = params["who"]	
-#user_by_email (who)
-    	update_activity_participants(who, @activity)    
+		invitees = params["invitees"]	
+		
+	
+#Adding invitees to activity
+		if (invitees != nil && invitees.empty? == false)
+    		add_activity_participants(invitees, @activity)
+    	end     
+
         config.debug("------>>>>> creating activity" + @activity.name )
         flash[:success] = "tivit " +@activity.name + " created!"
         redirect_to root_path
@@ -36,6 +41,7 @@ class ActivitiesController < ApplicationController
   
     @activity = Activity.find(params[:id])
     @title = "Edit tivit: " +@activity.name
+    
   end
   
   
@@ -49,9 +55,18 @@ class ActivitiesController < ApplicationController
   def update
     
     @activity = Activity.find(params[:id])   
+    
     if (@activity != nil && @activity.update_attributes(params[:activity]))
+      
+      invitee_email = params["invitees"]	
+      
+      update_activity_participants_by_email(invitee_email, @activity)    
+      
+      #add_activity_participants (invitee_email,@activity)
+      
       flash[:success] = "tivit" + @activity.name + " updated"
       redirect_to @activity
+      
     else
       @title = "Edit activity"
       render 'edit'

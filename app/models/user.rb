@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   
             
   
-# every user has many relationships to tasks he is working on  
+# every user has many  activities he is working on  
   has_and_belongs_to_many :activities
     
  
@@ -98,11 +98,11 @@ class User < ActiveRecord::Base
 #builds a new activity to a user (as an owner)
    def add_my_ativity (hash)
  # settign owner Id to be rqual to the current user
-   	hash["owner_id"] = id
-   	hash["status"] = "in progress"
- 	puts "--------------------> adding activity to user"
-   	puts hash.inspect	
-  	   	
+   	hash["owner_id"] = self.id
+   	hash["status"] = "In progress"
+ 	puts hash.inspect	
+
+# returns a new activity created from the parameters in hash
   	return  activities.create(hash)
   		
    end

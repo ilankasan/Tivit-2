@@ -12,11 +12,16 @@
   	<%= label_tag(:description, "Details:") %><%= text_area_tag(:description,@activity.description) %> 
   </div>
   
-  
-  <div class="field">
-  	<%= label_tag(:who, "invite others (email):") %><%= text_field_tag(:who,@activity.users[0].email) %> 
+ <% @activity.users.each do |user| %>
+   <% if user.id != @activity.owner_id  %>
+    <div class="field">
+  	<%= label_tag(:invitees, "invite others (email):") %><%= text_field_tag(:invitees,user.email) %> 
   </div>
-  
+
+   <% end %>
+<% end %>
+
+    
   <div class="field">
     <%= label_tag(:due, "activity due:") %>
   	<%= select_date @activity.due, :prefix => :due  %>

@@ -24,17 +24,33 @@ class Activity < ActiveRecord::Base
   validates :name, :presence => true, :length => { :maximum => 140 }
   validates :description, :length => { :maximum => 1024 }
   validates :owner_id, :presence => true
+  #validates_inclusion_of :status, :in => %w('in progress' completed),
+   # :message => "%{value} is not a valid status"
+
 
   default_scope :order => 'activities.created_at DESC'
 
 # Update status of theusers invites tot he activity
-  def update_user_invites(user)
+  def add_user_invites(user)
  #adding the user to the existing users on the task
 	self.users << user
+	
 #ilan: not 100% we ned the save option
 	self.save
 		
 	
   end	
+
+  def update_user_invitee(user)
+ #replacing user 
+	self.users = [user]
+	
+#ilan: not 100% we ned the save option
+	self.save
+		
+	
+  end	
+
+
 
 end

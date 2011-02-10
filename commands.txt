@@ -1,3 +1,4 @@
+
 Heroku
 
 
@@ -27,7 +28,7 @@ $ git merge updating-users
 git rm Gemfile.lock
 git rm Gemfile.lock
 
-git checkout -b user-microposts
+git checkout -b multiple tivit-status
 
 
 $ git add .

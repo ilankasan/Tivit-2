@@ -2,6 +2,7 @@
 <li>
   <%= gravatar_for user, :size => 30 %>
   <%= link_to user.name, user %>
+  (<%= user.email%>)
   
   
    <% if user.admin? %>

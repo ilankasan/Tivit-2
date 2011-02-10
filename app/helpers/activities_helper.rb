@@ -4,9 +4,8 @@ module ActivitiesHelper
 # returns nil if email is invalid 
 
   def user_by_email (email)
-  	puts "user_by_email ======================"
   	if(email != nil && !email.empty? )
-		puts "if(email != nil && !email.empty? )----------------------------------------"
+		puts "------------------ adding new invitee: " + email 
 	  	user  = User.find_by_email(email)
 	  	if(user == nil)
 	#create an inactive user
@@ -14,30 +13,63 @@ module ActivitiesHelper
 			params = {:name => "not active",:email => email, :password => "111111",:password_confirmation => "111111"}
 			
 	#ilan: using temporary password. Deactivated user should not have passwords	
+			puts "------------------ creating new user: " + email 
+			
 			user = User.create(params)
 			user.deactivate_user
 	# ilan: missign error handling
-	  	end
-  	
+	  	end  	
   end
   return user
   
  end
-  
-  def  update_activity_participants(email, activity) 
+
+###################################################### 
+# add participants to activity 
+######################################################
+
+  def  add_activity_participants(emails, activity) 
 #in the furue we need to parse a list of users
-   	puts "update_activity_participants 0909090909090900000000000000000"
+  	
+  	invitees = emails.split (';')
+  	
+  	puts "#######################################################"
+  	puts invitees.inspect
+  	puts "#######################################################"
+  	
+  	invitees.each do |email_address|
+  	
+  	puts "#######################################################"
+  	puts "adding user: " + email_address
+  	puts "#######################################################"
+  	
+	   	if (email_address != nil && !email_address.empty?)
+	    	user = user_by_email(email_address.strip)
+	    	if(user !=nil)
+	   			activity.add_user_invites(user)
+	   		end
+		end		
+	end 
+  end
+  
+# replace activity 
+   def  update_activity_participants_by_email (email, activity) 
+#in the furue we need to parse a list of users
+  	
+  	invitees_email_addresses = email.split(',')
+  	
+  	puts "**********"
+  	puts invitees_email_address.inspect
+  	puts "**********"
   	
    	if (email != nil && !email.empty?)
     	user = user_by_email(email)
     	if(user !=nil)
-   			activity.update_user_invites(user)
+   			activity.update_user_invitee (user)
    		end
 	end
   	return user
   end
-  
-  
   
   
 

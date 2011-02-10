@@ -1,25 +1,26 @@
 
 <%= form_tag(:controller => "activities", :method => "post") do %>
 
+<!-- Acitivity Name -->
   <div class="field">
   	<%= label_tag(:name, "Name:") %> <%= text_field_tag(:name,"enter tivit name...") %> 
   </div>
   
-  
-  
+ <!-- Acitivity Description -->
   <div class="field">
   	<%= label_tag(:description, "Details:") %><%= text_area_tag(:description) %> 
   </div>
   
-  
+<!-- Acitivity Invitees -->
   <div class="field">
-  	<%= label_tag(:who, "invite others (email):") %><%= text_field_tag(:who) %> 
+  	<%= label_tag(:invitees, "invite others (email):") %><%= text_field_tag(:invitees) %> 
   </div>
   
+<!-- Acitivity Due Date -->
   <div class="field">
     <%= label_tag(:due, "activity due:") %>
   	<%= select_date Date.today, :prefix => :due %>
-</div>
+ </div>
 
   <div class="actions">
   <%= submit_tag("Add tivit") %>
