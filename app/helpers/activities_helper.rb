@@ -39,9 +39,7 @@ module ActivitiesHelper
   	
   	invitees.each do |email_address|
   	
-  	puts "#######################################################"
-  	puts "adding user: " + email_address
-  	puts "#######################################################"
+  	
   	
 	   	if (email_address != nil && !email_address.empty?)
 	    	user = user_by_email(email_address.strip)

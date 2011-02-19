@@ -67,7 +67,8 @@ class ActivitiesController < ApplicationController
 # update task status
 	if(params["status"] == "true")
 		params["status"] = "completed"
-		params["completed_at"] = Time.new
+		time = Time.new
+		params["completed_at"] = time.localtime 
 
 	else
 		params["status"] = "in-progress"
