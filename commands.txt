@@ -41,7 +41,7 @@ $ git checkout master
 $ git merge updating-users
 
 
-$ git push heroku
+$ 
 heroku rake db:migrate
 
  rename_column(:activities, :owner_id, :user_id)
@@ -67,6 +67,13 @@ rails -d mysql my_rails_app
  git remote add origin git@github.com:<ilankasan>/first-app.git
  git push origin master
  git checkout -b edit-tivit
+ 
+ 
+ 
+ rails generate migration add_completed_at_to_activity completed_at:datetime
+ 
+ 
+ rails generate migration add_password_to_users encrypted_password:string
 
 ssh-add path/to/key
 ssh-add "/Users/ilan kasan/.ssh/id_dsa"

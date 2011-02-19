@@ -21,22 +21,23 @@
    		<% end %>			
    	  <% end %> 	
    <% end %>
-   <% if feed_item.due!=nil %>
-   	<% if feed_item.due > Time.now %>
-   		
-      <span class="timestamp">tivit is due in <%= time_ago_in_words(feed_item.due) %> </span>
-   	<% else %>
-   		
-      <span class="timestamp">tivit is <%= time_ago_in_words(feed_item.due) %> ovberdue! </span>
-   <% end %>
-   <% end %> 
     <span class="timestamp">tivit created <%= time_ago_in_words(feed_item.created_at) %> ago.</span>
   </td>
   <td>
   	<% if feed_item.status == "completed" %>
  			<span class="content"> Completed !</span><br>
+ 			<% if feed_item.completed_at!=nil %>
+				<span class="timestamp">tivit was completed <%= time_ago_in_words(feed_item.completed_at) %> ago </span> 			
+   			<% end %> 
   	<% else %> 
  			<span class="content"> In Progress </span><br>
+ 			<% if feed_item.due!=nil %>
+   				<% if feed_item.due > Time.now %>
+      				<span class="timestamp">tivit is due in <%= time_ago_in_words(feed_item.due) %> </span>
+   				<% else %>
+   					<span class="timestamp">tivit is <%= time_ago_in_words(feed_item.due) %> ovberdue! </span>
+   				<% end %>
+   			<% end %> 
   	<% end %> 
    
   </td>

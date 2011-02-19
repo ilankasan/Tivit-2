@@ -1,23 +1,24 @@
 # == Schema Information
-# Schema version: 20110205233830
+# Schema version: 20110219220858
 #
 # Table name: activities
 #
-#  id          :integer(4)      not null, primary key
-#  name        :string(255)
-#  description :string(255)
-#  status      :string(255)
-#  due         :datetime
-#  owner_id    :integer(4)
-#  who         :string(255)
-#  created_at  :datetime
-#  updated_at  :datetime
+#  id           :integer(4)      not null, primary key
+#  name         :string(255)
+#  description  :string(255)
+#  status       :string(255)
+#  due          :datetime
+#  owner_id     :integer(4)
+#  who          :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#  completed_at :datetime
 #
 
 
 class Activity < ActiveRecord::Base
   
-  attr_accessible :name, :description, :status, :due,:owner_id, :users
+  attr_accessible :name, :description, :status, :due,:owner_id, :users, :completed_at
   
   has_and_belongs_to_many :users
 

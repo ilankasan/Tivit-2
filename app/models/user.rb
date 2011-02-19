@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110206213020
+# Schema version: 20110219220858
 #
 # Table name: users
 #
@@ -12,6 +12,7 @@
 #  salt               :string(255)
 #  admin              :boolean(1)
 #  is_active          :boolean(1)
+#
 
 
 # == Schema Information
