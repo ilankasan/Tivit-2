@@ -4,8 +4,7 @@ rails generate model TivitComment commenter:user_id body:text activity:reference
 
 
 Heroku
-
-
+---------------
 If you simply want to start fresh with a fresh set of empty tables, you can first ensure you have an up-to-date definition of the schema in db/schema.rb:
 
 heroku rake db:schema:dump
