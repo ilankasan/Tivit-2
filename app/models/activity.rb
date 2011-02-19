@@ -31,26 +31,38 @@ class Activity < ActiveRecord::Base
   default_scope :order => 'activities.created_at DESC'
 
 # Update status of theusers invites tot he activity
-  def add_user_invites(user)
+  def add_user_invitee(user)
  #adding the user to the existing users on the task
 	self.users << user
+	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+	
+	puts self.users.inspect
+	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 	
 #ilan: not 100% we ned the save option
-	self.save
 		
 	
   end	
 
-  def update_user_invitee(user)
+  def old_update_user_invitee(user)
  #replacing user 
 	self.users = [user]
 	
 #ilan: not 100% we ned the save option
 	self.save
-		
-	
+
   end	
 
+ def clean_user_invitees
+ #clean users accept the task owber
+ 	owner = User.find_by_id(self.owner_id)
+ 	self.users = [owner]
+	
+  end	
 
 
 end

@@ -31,7 +31,7 @@ module ActivitiesHelper
   def  add_activity_participants(emails, activity) 
 #in the furue we need to parse a list of users
   	
-  	invitees = emails.split (';')
+  	invitees = emails.split (',')
   	
   	puts "#######################################################"
   	puts invitees.inspect
@@ -46,35 +46,32 @@ module ActivitiesHelper
 	   	if (email_address != nil && !email_address.empty?)
 	    	user = user_by_email(email_address.strip)
 	    	if(user !=nil)
-	   			activity.add_user_invites(user)
+	   			activity.add_user_invitee(user)
 	   		end
 		end		
 	end 
+	activity.save
+	
   end
   
+#convert year/month/day to one string
+   def  convert_date_to_string (params, parameter_name) 
+   	#puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  " + parameter_name 
+  	#puts params.inspect	
+   		
+   		due = Time.local(params[parameter_name]["year"],params[parameter_name]["month"],params[parameter_name]["day"])
+#adding a strign representation of due date
+		puts due.inspect
+		
+    	return due.inspect 
+   end
 # replace activity 
-   def  update_activity_participants_by_email (email, activity) 
+   def  update_activity_participants_by_email (emails, activity) 
 #in the furue we need to parse a list of users
+    activity.clean_user_invitees	
+  	add_activity_participants(emails, activity)
   	
-  	invitees_email_addresses = email.split(',')
-  	
-  	puts "**********"
-  	puts invitees_email_address.inspect
-  	puts "**********"
-  	
-   	if (email != nil && !email.empty?)
-    	user = user_by_email(email)
-    	if(user !=nil)
-   			activity.update_user_invitee (user)
-   		end
-	end
-  	return user
-  end
-  
-  
-
-  
-
-      
-    
+   end
+   
+     
 end

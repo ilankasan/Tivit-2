@@ -23,9 +23,14 @@
    	  <% end %> 	
    <% end %>
    <% if feed_item.due!=nil %>
+   	<% if feed_item.due > Time.now %>
+   		
       <span class="timestamp">tivit is due in <%= time_ago_in_words(feed_item.due) %> </span>
+   	<% else %>
+   		
+      <span class="timestamp">tivit is <%= time_ago_in_words(feed_item.due) %> ovberdue! </span>
    <% end %>
-    
+   <% end %> 
     <span class="timestamp">tivit created <%= time_ago_in_words(feed_item.created_at) %> ago.</span>
   </td>
   

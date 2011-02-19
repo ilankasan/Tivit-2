@@ -11,15 +11,23 @@
   <div class="field">
   	<%= label_tag(:description, "Details:") %><%= text_area_tag(:description,@activity.description) %> 
   </div>
-  
+ <% invitees = ""%>
  <% @activity.users.each do |user| %>
    <% if user.id != @activity.owner_id  %>
-    <div class="field">
-  	<%= label_tag(:invitees, "invite others (email):") %><%= text_field_tag(:invitees,user.email) %> 
-  </div>
-
+   	<% if invitees.length == 0 %>
+   
+		<%invitees = user.email%>
+	<% else %>
+		<%invitees += (","+user.email)%>
+		
+	<% end %>
+ 
    <% end %>
+ 
 <% end %>
+<div class="field">
+  	<%= label_tag(:invitees, "invite others (email):") %><%= text_field_tag(:invitees,invitees) %> 
+</div>
 
     
   <div class="field">

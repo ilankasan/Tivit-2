@@ -5,9 +5,8 @@ class ActivitiesController < ApplicationController
    def create
     
     config.debug("------>>>>> Creating activity")
-    due = Time.local(params["due"]["year"],params["due"]["month"],params["due"]["day"])
-#adding a strign representation of due date 
-    params["due"] = due.inspect 
+    #adding a strign representation of due date 
+    params["due"] = convert_date_to_string(params,"due") 
 #adding activity to current user	
     @activity = current_user.add_my_ativity (params)    
 	    
@@ -56,15 +55,51 @@ class ActivitiesController < ApplicationController
     
     @activity = Activity.find(params[:id])   
     
-    if (@activity != nil && @activity.update_attributes(params[:activity]))
+    puts params.inspect
+    puts "----------->>>>>>>>>>>"  
+    params["due"] = convert_date_to_string(params, "due")
+    puts "-----------<<<<<<<<<<<<<<<<<<"
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+    puts "-----------<<<<<<<<<<<<<<<<<<" 
+     
+    puts params 
+ 	puts "-----------<<<<<<<<<<<<<<<<<<" 
+    
+    if (@activity != nil && @activity.update_attributes(params))
       
-      invitee_email = params["invitees"]	
+      invitee_emails = params["invitees"]	
       
-      update_activity_participants_by_email(invitee_email, @activity)    
+      update_activity_participants_by_email(invitee_emails, @activity)    
       
       #add_activity_participants (invitee_email,@activity)
-      
-      flash[:success] = "tivit" + @activity.name + " updated"
+      @activity.save
+      puts "SSSSSSSAAAAAAAAAAAAAAVVVVVVVVVVVVVEEEEEEEEEEEE             -----------<<<<<<<<<<<<<<<<<<" 
+    
+      flash[:success] = "tivit " + @activity.name + " updated"
       redirect_to @activity
       
     else

@@ -1,9 +1,12 @@
 <tr>
   <td class="activity">
 
-    <span class="content"><%= @activity.name %></span>  
+    <span class="content"><%= @activity.name %></span>
+    
     <span class="content"> is <%= @activity.status %></span><br>
+    
     <span class="content">Details: <%= @activity.description %></span><br>
+    
     <span class="content">Due : <%= @activity.due %></span><br>
     
     	
@@ -19,27 +22,30 @@
    			<% else %>
    				<span class="content"><%= user.email%> is participating</span><br>
    			<% end %>
-   		<% end %>			
+   		<% end %>
+   			
    	  <% end %> 	
+      
    <% end %>
+   
+   
+
+   
+   
    <% if @activity.due!=nil %>
-   	<% if @activity.due > Time.now %>
-   		
-      <span class="timestamp">tivit is due in <%= time_ago_in_words(@activity.due) %> </span><br>
-   	<% else %>
-   		
-      <span class="timestamp">tivit is <%= time_ago_in_words(@activity.due) %> ovberdue! </span><br>
+      <span class="timestamp">tivit is due in <%= time_ago_in_words(@activity.due) %> </span>
    <% end %>
-   <% end %> 
+    
+   
+      
+   
     <span class="timestamp">tivit created <%= time_ago_in_words(@activity.created_at) %> ago.</span>
   </td>
-  
   <% if current_user.id == (@activity.owner_id) %>
   <td>
-  	<%= link_to "edit", edit_activity_path(@activity) %>
-  	
+  	<%= link_to "edit", edit_activity_path(@activity) %>            
     <%= link_to "delete", @activity, :method => :delete,
-                                     :confirm => "You sure you want to delete" + @activity.name + "?",
+                                     :confirm => "You sure you want to delete" +@activity.name+"?",
                                      :title => @activity.name %>
   </td>
   <% end %>
