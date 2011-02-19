@@ -99,7 +99,7 @@ class User < ActiveRecord::Base
    def add_my_ativity (hash)
  # settign owner Id to be rqual to the current user
    	hash["owner_id"] = self.id
-   	hash["status"] = "In progress"
+   	hash["status"] = "in-progress"
  	puts hash.inspect	
 
 # returns a new activity created from the parameters in hash

@@ -1,3 +1,7 @@
+rails generate model TivitComment commenter:user_id body:text activity:references
+
+
+
 
 Heroku
 
@@ -28,7 +32,7 @@ $ git merge updating-users
 git rm Gemfile.lock
 git rm Gemfile.lock
 
-git checkout -b multiple tivit-status
+git checkout -b tivit-status
 
 
 $ git add .
@@ -50,6 +54,8 @@ rails generate scaffold Activity name:string description:string status:string du
 rake db:migrate
 
 rename_column :products, :upccode, :upc_code
+
+
 
 
 

@@ -1,8 +1,7 @@
 <tr>
   <td class="activity">
 
-    <span class="content"><%= feed_item.name %></span>  
-    <span class="content"> is <%= feed_item.status %></span><br>
+    <span class="content"><%= feed_item.name %></span><br>
     <span class="content">Details: <%= feed_item.description %></span><br>
     <span class="content">Due : <%= feed_item.due %></span><br>
     
@@ -32,6 +31,14 @@
    <% end %>
    <% end %> 
     <span class="timestamp">tivit created <%= time_ago_in_words(feed_item.created_at) %> ago.</span>
+  </td>
+  <td>
+  	<% if feed_item.status == "completed" %>
+ 			<span class="content"> Completed !</span><br>
+  	<% else %> 
+ 			<span class="content"> In Progress </span><br>
+  	<% end %> 
+   
   </td>
   
   <% if current_user.id == (feed_item.owner_id) %>

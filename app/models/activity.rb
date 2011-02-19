@@ -26,6 +26,8 @@ class Activity < ActiveRecord::Base
   validates :owner_id, :presence => true
   #validates_inclusion_of :status, :in => %w('in progress' completed),
    # :message => "%{value} is not a valid status"
+  validates_inclusion_of :status, :in => %w(in-progress completed),
+    :message => "%{value} is not a valid status"
 
 
   default_scope :order => 'activities.created_at DESC'

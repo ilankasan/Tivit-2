@@ -60,35 +60,20 @@ class ActivitiesController < ApplicationController
     params["due"] = convert_date_to_string(params, "due")
     puts "-----------<<<<<<<<<<<<<<<<<<"
     puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-     
     puts params 
  	puts "-----------<<<<<<<<<<<<<<<<<<" 
     
+    
+# update task status
+	if(params["status"] == "true")
+		params["status"] = "completed"
+	else
+		params["status"] = "in-progress"
+	end
+	
+	puts "-------->>>>>>>>>>>>>  STATUS = "+params["status"] 
+    
+	
     if (@activity != nil && @activity.update_attributes(params))
       
       invitee_emails = params["invitees"]	
@@ -97,7 +82,6 @@ class ActivitiesController < ApplicationController
       
       #add_activity_participants (invitee_email,@activity)
       @activity.save
-      puts "SSSSSSSAAAAAAAAAAAAAAVVVVVVVVVVVVVEEEEEEEEEEEE             -----------<<<<<<<<<<<<<<<<<<" 
     
       flash[:success] = "tivit " + @activity.name + " updated"
       redirect_to @activity

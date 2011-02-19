@@ -19,12 +19,17 @@
 		<%invitees = user.email%>
 	<% else %>
 		<%invitees += (","+user.email)%>
-		
 	<% end %>
- 
    <% end %>
+ <% end %>
  
-<% end %>
+   <% if @activity.status == "completed" %>
+		<%= label_tag(:status, "Completed") %> <%= check_box_tag(:status,true, checked = true) %>
+   							   
+   <% else %>
+		<%= label_tag(:status, "Completed") %> <%= check_box_tag(:status,true,checked = false) %> 
+ 
+  <% end %>
 <div class="field">
   	<%= label_tag(:invitees, "invite others (email):") %><%= text_field_tag(:invitees,invitees) %> 
 </div>

@@ -36,8 +36,8 @@ namespace :db do
    #if(time1.day > 29)
    #	time1.day = 1
    #end
-   user.activities.create!(:description => "task description", :name => name+"-task #{user.id}.1",:owner_id => user.id,:due => time1, :status => "In Progress")
-   user.activities.create!(:description => "task description",:name => name+"-task #{user.id}.2",:owner_id => user.id,:due => time1, :status => "In Progress" )                 
+   user.activities.create!(:description => "task description", :name => name+"-task #{user.id}.1",:owner_id => user.id,:due => time1, :status => "in progress")
+   user.activities.create!(:description => "task description",:name => name+"-task #{user.id}.2",:owner_id => user.id,:due => time1, :status => "in progress" )                 
                  
     end
     puts "---->>>"
