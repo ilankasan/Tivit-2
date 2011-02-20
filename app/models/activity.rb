@@ -19,8 +19,14 @@
 class Activity < ActiveRecord::Base
   
   attr_accessible :name, :description, :status, :due,:owner_id, :users, :completed_at
-  
+# each Tivit has many participants 
   has_and_belongs_to_many :users
+  
+# each tivit has many comments
+  has_many :tivitcomments
+
+  
+  
 
   validates :name, :presence => true, :length => { :maximum => 140 }
   validates :description, :length => { :maximum => 1024 }

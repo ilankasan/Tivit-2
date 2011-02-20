@@ -1,5 +1,32 @@
-rails generate model TivitComment commenter:user_id body:text activity:references
 
+<span class="content">
+   <%= form_for([@avtivity, @activity.tivitcomments.build]) do |f| %>
+    <%= f.label :comment %><br />
+    <%= f.text_field :comment, :size => "100" %>
+  <div class="actions">
+    <%= f.submit "add comment" %>
+  </div>
+  </span>
+
+
+<%= form_tag(:controller => "tivitcomments", :method => "post") do %>
+
+<!-- add comment  -->
+  <div class="field">
+  	<%= label_tag(:comment, "comment:") %> <%= text_field_tag(:name,"enter comment...") %> 
+  </div>
+  
+   <div class="actions">
+  <%= submit_tag("Add comments") %>
+  </div>
+
+<% end %> 
+
+
+rails generate model Tivitcomment user_id:integer body:string activity:integer
+
+
+rails remove model Tivitcomment 
 
 
 
@@ -69,6 +96,16 @@ rails -d mysql my_rails_app
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  rails generate migration add_completed_at_to_activity completed_at:datetime
  
  
@@ -86,6 +123,8 @@ aa:09:9d:16:4f:c6:0a:99:13:2c:6c:e6:25:19:06:04 ilan.kasan1@gmail.com
 
 
 rails generate controller Pages home activities myteam signout myaccount
+rails generate controller Tivitcomments create, new 
+
 
 
 gem install autotest -v 4.4.6

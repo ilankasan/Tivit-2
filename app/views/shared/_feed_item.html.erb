@@ -1,3 +1,4 @@
+
 <tr>
   <td class="activity">
 
@@ -42,13 +43,47 @@
    
   </td>
   
-  <% if current_user.id == (feed_item.owner_id) %>
+  
   <td>
+  	
+  <% if current_user.id == (feed_item.owner_id) %>
   	<%= link_to "edit", edit_activity_path(feed_item) %>
   	
     <%= link_to "delete", feed_item, :method => :delete,
                                      :confirm => "You sure you want to delete" +feed_item.name+"?",
                                      :title => feed_item.name %>
-  </td>
   <% end %>
+  </td>
+
+ 
 </tr>
+
+<tr>
+
+  <td>
+<!-- Displaying comment -->
+
+<% feed_item.tivitcomments.each do |comment| %>
+   	  <span class="content"><b><%= comment.user.name%>:</b>  </span>
+   	  <span class="content"><%= comment.comment%> </span>
+   	  <br>
+   	   	
+<% end %>
+    
+
+<!-- Add comment -->  
+  
+  <span class="content">
+   <%= form_for([feed_item, feed_item.tivitcomments.build]) do |f| %>
+    <%= f.label :comment %><br />
+    <%= f.text_field :comment, :size => "40" %>
+  <div class="actions">
+    <%= f.submit "add comment" %>
+  </div>
+  <% end %>
+  </span>
+
+  </td>
+
+</tr>
+

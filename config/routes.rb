@@ -1,6 +1,13 @@
 FirstApp::Application.routes.draw do
   
   
+  resources :activities do
+  resources :tivitcomments
+end
+  resources :tivitcomments
+
+  get "tivitcomments/new"
+
   resources :users
   resources :sessions,   :only => [:new, :create, :destroy]
   #resources :activities, :only => [:create, :destroy, :update, :show, :edit]

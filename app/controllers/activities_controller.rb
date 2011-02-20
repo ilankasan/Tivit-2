@@ -1,11 +1,11 @@
 class ActivitiesController < ApplicationController
-  before_filter :authenticate, :only => [:create, :destroy]
+  before_filter :authenticate, :only => [:create, :new,:update, :destroy]
   before_filter :authorized_user, :only => :destroy
 
    def create
     
     config.debug("------>>>>> Creating activity")
-    #adding a strign representation of due date 
+#adding a strign representation of due date 
     params["due"] = convert_date_to_string(params,"due") 
 #adding activity to current user	
     @activity = current_user.add_my_ativity (params)    
@@ -58,11 +58,7 @@ class ActivitiesController < ApplicationController
     puts params.inspect
     puts "----------->>>>>>>>>>>"  
     params["due"] = convert_date_to_string(params, "due")
-    puts "-----------<<<<<<<<<<<<<<<<<<"
-    puts "-----------<<<<<<<<<<<<<<<<<<" 
-    puts params 
- 	puts "-----------<<<<<<<<<<<<<<<<<<" 
-    
+   
     
 # update task status
 	if(params["status"] == "true")
