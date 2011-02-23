@@ -4,15 +4,17 @@
       <table class="front" summary="For signed-in users">
         <tr>
         <td class="main">
-          <h1 class="activity">add new tivit</h1>
+          <h1 class="activity">Add new tivit</h1>
 	      <!-- Creat new activity form -->         
 	      <%= render 'shared/activity_form' %>
 	        
-          <!-- Display Current Activities -->  
-		  <h1 class="activity">my tivits</h1>
+          <!-- Display Current Activities -->   
           <%= render 'shared/feed' %>
-       
+      
+     
+        
         </td>
+        
         
         <td class="sidebar round">
           <%= render 'shared/user_info' %>
@@ -20,8 +22,9 @@
     </tr>
   </table>
 <% else %>
-	<h1>Get stuff done faster!</h1>
-    <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+        <%= link_to "Sign in", signin_path %>
+     
+        <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
 <% end %>
 
 

@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20110219231906) do
     t.string   "encrypted_password"
     t.string   "salt"
     t.boolean  "admin",              :default => false
-    t.boolean  "is_active"
+    t.boolean  "is_active",          :default => true
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

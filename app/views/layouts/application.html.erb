@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= @title %> </title>
-  <%= csrf_meta_tag %>
-  <%= stylesheet_link_tag 'blueprint/screen', :media => 'screen' %>
-  <%= render 'layouts/stylesheets' %>
-  <%= javascript_include_tag :defaults %>
-    
+	<title><%= @title %> </title>
+	<%= csrf_meta_tag %>
+	<%= render 'layouts/stylesheets' %>
+	<%= javascript_include_tag :defaults %>
   </head>
   
 <body>
@@ -20,9 +18,7 @@
         <% end %>
         <%= yield %>
       </section>
-      
-      
-      
+            
       <%= render 'layouts/footer' %>
       <%= debug(params) if Rails.env.development? %>
     </div>    

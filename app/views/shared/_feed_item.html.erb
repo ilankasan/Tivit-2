@@ -1,12 +1,10 @@
 
 <tr>
   <td class="activity">
-
-    <span class="content"><%= feed_item.name %></span><br>
+    <span class="content"><b><%= feed_item.name %></b></span><br>
     <span class="content">Details: <%= feed_item.description %></span><br>
     <span class="content">Due : <%= feed_item.due %></span><br>
-    
-    	
+
    <% feed_item.users.each do |user| %>
    	  <% if current_user.id == feed_item.owner_id && user.id == current_user.id %>
       	<span class="content">I am the owner</span><br>

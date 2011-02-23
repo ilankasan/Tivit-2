@@ -1,70 +1,27 @@
 <header>
-           <table border="0" cellpadding="8" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" bgcolor="#000000">
-          <tr>
-            <!--td><a href="/home"><%= image_tag("tivity.jpg", :alt => "Tivity", :width =>"100", :height => "40") %></td-->
-           <td>   <%= link_to logo, root_path %></td>
-         
-            <td bgcolor="#FFFFFF" valign="bottom">
-            <!--%= link_to "Home", home_path %-->
-            <p align="left">
-            <font face="Arial" color="#999999" style="font-size: 8pt">get things 
-            done.&nbsp; <br>
-            together.</font>
-            </td>
-          </tr>
-          
-          
-          
-          <tr>
-           <nav class="round">
-              
-              <ul>
-                
-               <% if signed_in? %>
-                  <li><%= link_to "Profile", current_user %></li>
-                  <li><%= link_to "Users", allusers_path %></li> 
-               
-               <% end %>
-                
-                <li><%= link_to "Help", help_path %></li>
-                <% if signed_in? %>
-                  <li><%= link_to "Sign out", signout_path, :method => :delete %></li>
-                <% else %>
-                  <li><%= link_to "Sign in", signin_path %></li>
-                <% end %>
-              </ul>
-        </nav>
-        </tr>
-        
-        
-        
-        
-        
-        
-        </table>   
-          <table border="0" cellpadding="6" cellspacing="0" style="border-collapse: collapse" width="100%" bgcolor="#333333">
-              <tr>
-                <td width="11%" align="center">
-                <table border="1" cellpadding="2" cellspacing="0" style="border-collapse: collapse" width="90%" bordercolor="#CCFF99">
-                  <tr>
-                    <td width="100%">
-                    <p align="center"><b>
-                    <font face="Arial" size="2" color="#CCFF99"> <li><%= link_to "Home", root_path %></li>
-               </font></b></td>
-                  </tr>
-                </table>
-                </td>
-                <td width="11%" align="center">
-                <font face="Arial" size="2" color="#FFFFFF">all activities</font></td>
-                <td width="11%" align="center">
-                <font face="Arial" size="2" color="#FFFFFF">my team</font></td>
-                <td width="11%" align="center">&nbsp;</td>
-                <td width="11%" align="center">&nbsp;</td>
-                <td width="11%" align="center">&nbsp;</td>
-                <td width="11%" align="center">&nbsp;</td>
-                <td width="11%" align="center">&nbsp;</td>
-                <td width="12%" align="center">&nbsp;</td>
-              </tr>
-            </table>     
-   </header>
-     
+  <%= link_to logo, root_path %>
+  <nav class="round">
+    <ul>
+      <!-- no need for header link since titivi logo is linked to it>
+      	<li><%= link_to "Home", root_path %></li>
+      -->
+      
+       <% if signed_in? %>
+      		<li><%= link_to "Users", allusers_path %></li>       
+       <% end %>
+       
+      <li><%= link_to "Help", help_path %></li>
+      
+      <% if signed_in? %>
+      	<li><%= link_to "Profile", current_user %></li>
+      	<li><%= link_to "Settings", edit_user_path(current_user) %></li>
+	  <% end %>
+      
+      <% if signed_in? %>
+      	<li><%= link_to "Sign out", signout_path, :method => :delete %></li>
+      <% else %>
+      		<li><%= link_to "Sign in", signin_path %></li>
+      <% end %>
+    </ul>          
+  </nav>
+</header>

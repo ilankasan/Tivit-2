@@ -6,17 +6,22 @@
 #  pool: 5
 #  timeout: 5000
 
+# Ilan - MySQL
+#development:
+#  adapter: mysql2
+#  encoding: utf8
+#  database: tiviti1
+#  pool: 5
+#  username: root
+#  password:
+#  socket: /tmp/mysql.sock
 
+# Yaniv - sqlite
 development:
-  adapter: mysql2
-  encoding: utf8
-  database: tiviti1
+  adapter: sqlite3
+  database: db/development.sqlite3
   pool: 5
-  username: root
-  password:
-  socket: /tmp/mysql.sock
-
-
+  timeout: 5000
 
 
 # Warning: The database defined as "test" will be erased and
