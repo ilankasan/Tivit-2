@@ -196,6 +196,15 @@ ul.users {
 
 /* activities */
 
+/* this textarea is used by text_area_tag function - big input field (act. discription) */
+textarea {
+	width:520px;
+	height:40px;
+	padding:8px;
+	/*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
+	font-family: inherit
+}
+
 h1.activity {
   margin-bottom: 0.3em;
 }
