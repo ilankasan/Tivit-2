@@ -25,7 +25,8 @@ class Activity < ActiveRecord::Base
 # each tivit has many comments
   has_many :tivitcomments
 
-  
+# each tivit has many user status (show the specific status for each user)
+  has_many :tivit_user_statuses
   
 
   validates :name, :presence => true, :length => { :maximum => 140 }
@@ -43,13 +44,11 @@ class Activity < ActiveRecord::Base
   def add_user_invitee(user)
  #adding the user to the existing users on the task
 	self.users << user
-	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+	puts "&&&&&&&&&&&&&        updating user task status &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 	
+	
+	self.update_user_tivit_status(user)
 	puts self.users.inspect
-	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 	
 #ilan: not 100% we ned the save option
@@ -57,14 +56,36 @@ class Activity < ActiveRecord::Base
 	
   end	
 
-  def old_update_user_invitee(user)
- #replacing user 
-	self.users = [user]
+  def update_user_tivit_status(user)
+ 	#tivit_status = user.get_tivit_status(self)
+ 	#if(tivit_status == nil)
+ 	
+ 	
+ 	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+	puts "((&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&)((((((((((((((((())))))))))))))))))))))))"
+	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 	
-#ilan: not 100% we ned the save option
-	self.save
-
-  end	
+ 	tivit_status = create_status_new(user)
+ 	puts "creating a task with status new"	
+ 		
+ 	#end
+ 		
+  end
+  
+  
+  
+  def get_status(user)
+  	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
+  	if(tivit_user_status == nil)
+  		tivit_user_status = create_status_new(user)
+ 		
+  	end
+    return tivit_user_status.status_id
+ 	
+  end
+	
 
  def clean_user_invitees
  #clean users accept the task owber
@@ -73,5 +94,15 @@ class Activity < ActiveRecord::Base
 	
   end	
 
-
+private
+ def create_status_new(user)
+ 		tivit_status = user.tivit_user_statuses.new()
+ 		tivit_status.status_id = "New"
+ 		tivit_status.activity_id = self.id
+ 		tivit_status.save()
+ 		return tivit_status 
+  
+  end 
+  
+ 
 end

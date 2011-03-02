@@ -23,7 +23,8 @@
 <% end %> 
 
 
-rails generate model Tivitcomment user_id:integer body:string activity:integer
+rails generate model TivitUserStatus user_id:integer activity_id:integer status_id:string
+rails generate model TivitStatus status_id:string local:string 
 
 
 rails remove model Tivitcomment 

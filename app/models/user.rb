@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
   
 # every user has many  activities he is working on  
   has_and_belongs_to_many :activities
+  
+# each user has many user status (show the specific status for each task)
+  has_many :tivit_user_statuses
+
     
  
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

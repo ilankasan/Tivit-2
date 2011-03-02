@@ -1,7 +1,7 @@
 <% unless @feed_items.empty? %>
+
   <table class="activities" summary="User activities">
     <%= render :partial => 'shared/feed_item', :collection => @feed_items %>
-  
   </table>
-  
+ 
 <% end %>
