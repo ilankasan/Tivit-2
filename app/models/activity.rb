@@ -125,7 +125,7 @@ private
  	tivit_status = user.tivit_user_statuses.new()
  	puts " ----------------------------------------- "
  	puts " ----------------  Changing status ------------------------- "
- 	if(tivit_status.status_id == nill)
+ 	if(tivit_status.status_id == nil)
  		puts " nil -->>> " + status
  	else
  		puts tivit_status.status_id + "-->>> " + status
