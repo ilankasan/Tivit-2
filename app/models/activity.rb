@@ -74,7 +74,26 @@ class Activity < ActiveRecord::Base
  		
   end
   
-  
+# After the user viewed the tivit for the virst time, make sure status changes from New to Review 
+  def update_tivit_status_after_show(user)
+ puts "------------------------------------------------------------"
+ puts "attempting to change status" 	
+ puts "------------------------------------------------------------" 	
+  	
+  	if(self.get_status(user) == "New")
+  		change_status(user,"Reviewed")
+  		puts "chaging status from new to Review" 	
+  	end
+  end
+ 
+ def update_tivit_user_status_accept(user)
+ 	change_status(user,"Accepted")
+ end
+ 
+ def update_tivit_user_status_decline(user)
+ 	change_status(user,"Declined")
+ end
+ 
   
   def get_status(user)
   	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
@@ -85,6 +104,8 @@ class Activity < ActiveRecord::Base
     return tivit_user_status.status_id
  	
   end
+  
+  
 	
 
  def clean_user_invitees
@@ -95,14 +116,38 @@ class Activity < ActiveRecord::Base
   end	
 
 private
- def create_status_new(user)
- 		tivit_status = user.tivit_user_statuses.new()
- 		tivit_status.status_id = "New"
- 		tivit_status.activity_id = self.id
- 		tivit_status.save()
- 		return tivit_status 
+ def create_status_new(user)	
+ 	return create_status(user,"new") 
+ end 
+ 
+ 
+ def create_status(user, status)
+ 	tivit_status = user.tivit_user_statuses.new()
+ 	puts " ----------------------------------------- "
+ 	puts " ----------------  Changing status ------------------------- "
+ 	puts tivit_status.status_id + " -->>> " + status
+ 	
+ 	puts " ----------------------------------------- "
+ 	
+ 	tivit_status.status_id = status
+ 	tivit_status.activity_id = self.id
+ 	tivit_status.save()
+ 	return tivit_status 
   
   end 
+ 
+ 
+ 
+ def change_status(user, status)
+  	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
+  	if(tivit_user_status == nil)
+  		tivit_user_status = create_status(user,status)
+  	end
+  	tivit_user_status.status_id = status
+  	tivit_user_status.save()
+    return tivit_user_status.status_id
+ 	
+  end
   
  
 end

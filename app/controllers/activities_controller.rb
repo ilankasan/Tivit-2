@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_filter :authenticate, :only => [:create, :new,:update, :destroy]
+  before_filter :authenticate, :only => [:create, :new,:update, :destroy,:show,:accept,:decline]
   before_filter :authorized_user, :only => :destroy
 
    def create
@@ -46,17 +46,29 @@ class ActivitiesController < ApplicationController
   
   def show
     
+    
+    puts "----------->>>>>>>>>>> sho show show"  
+    puts "----------->>>>>>>>>>> sho show show"  
+    puts params.inspect
+    puts "----------->>>>>>>>>>>"
+    
     @activity = Activity.find(params[:id])
-  	@title = @activity .name
+    @activity.update_tivit_status_after_show(current_user)
+  	@title = @activity.name
   	
   end
   
   def update
+    puts "----------->>>>>>>>>>>"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "----------->>>>>>>>>>>"  
+    puts "-----------    UPDATE ---------------"  
     
     @activity = Activity.find(params[:id])   
     
     puts params.inspect
-    puts "----------->>>>>>>>>>>"  
+    puts "----------->>>>>>>>>>>"
+      
     params["due"] = convert_date_to_string(params, "due")
    
     
@@ -89,11 +101,36 @@ class ActivitiesController < ApplicationController
       @title = "Edit activity"
       render 'edit'
     end  
-  end 
-
-
+  end
+   
+  def accept
+    
+    puts "----------->>>>>>>>>>>"  
+    puts "-----------    accepet ---------------"  
+    
+    @activity = Activity.find(params[:id])
+    puts "Activity is " + @activity.name  
+   
+    @activity.update_tivit_user_status_accept(current_user)
+	redirect_back_or root_path
+  	
+  end
+  
+  
+ def decline
+  	puts "----------->>>>>>>>>>>"  
+    puts "-----------    decline ---------------"  
+  
+    @activity = Activity.find(params[:id])
+    @activity.update_tivit_user_status_decline(current_user)
+  	redirect_back_or root_path
+  end
+  
+  
+  
   private
-
+  
+  
     def authorized_user
       @activity = Activity.find(params[:id])
       redirect_to root_path unless current_user

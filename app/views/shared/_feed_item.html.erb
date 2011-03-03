@@ -53,6 +53,34 @@
                                      :confirm => "You sure you want to delete" +feed_item.name+"?",
                                      :title => feed_item.name %>
   <% end %>
+  
+  
+  
+  
+  <%= link_to "details", feed_item, :action => "show",
+  									:method => "get",
+                                    :title  => feed_item.name %>
+                                      
+   <% if current_user.id != (feed_item.owner_id) %>
+  	
+    
+    <%= link_to "accept", 		:controller  => "activities", 
+   								:action  => "accept",
+ 								:id  => feed_item.id, 
+  							    :confirm => "Are you sure you want to accepect tivit" +feed_item.name+"?", 
+                                :title   => feed_item.name %>
+
+    
+    
+                                     
+    <%= link_to "decline",      :controller  => "activities",
+    							:action  => "decline",
+    							:id  => feed_item.id, 
+  							    :confirm => "Are you sure you want to decline tivit" +feed_item.name+"?",
+                                :title   => feed_item.name %>
+
+  <% end %>
+  
   </td>
 
  

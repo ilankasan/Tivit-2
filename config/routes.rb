@@ -18,7 +18,12 @@ end
 
 resources :activities
 #match '/activities',    :to => 'activities#update'
-match "activities/:id" => "activities#update"
+	match "activities/:id" => "activities#update"
+	match "/accept" => "activities#accept"
+  	match "/decline" => "activities#decline"
+  	
+  	
+
         
 resources :pages  
 
