@@ -47,8 +47,8 @@ FirstApp::Application.configure do
   
   
   # Host name
-  config.host_name = tivit1.heroku.com
-  config.port	   = nil 
+  #config.host_name = tivit1.heroku.com
+  #config.port	   = nil 
   
 
   # Send deprecation notices to registered listeners
