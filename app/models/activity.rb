@@ -45,7 +45,9 @@ class Activity < ActiveRecord::Base
  #adding the user to the existing users on the task
 	self.users << user
 	puts "&&&&&&&&&&&&&        updating user task status &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-	
+# sending invitee an email invite
+	owner = User.find_by_id(self.owner_id)
+	UserMailer.new_tivit_email(user,owner,self).deliver
 	
 	self.update_user_tivit_status(user)
 	puts self.users.inspect
@@ -62,9 +64,6 @@ class Activity < ActiveRecord::Base
  	
  	
  	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-	puts "((&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&)((((((((((((((((())))))))))))))))))))))))"
-	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 	
  	tivit_status = create_status_new(user)

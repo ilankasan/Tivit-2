@@ -46,8 +46,6 @@ class ActivitiesController < ApplicationController
   
   def show
     
-    
-    puts "----------->>>>>>>>>>> sho show show"  
     puts "----------->>>>>>>>>>> sho show show"  
     puts params.inspect
     puts "----------->>>>>>>>>>>"
@@ -61,8 +59,6 @@ class ActivitiesController < ApplicationController
   def update
     puts "----------->>>>>>>>>>>"  
     puts "-----------    UPDATE ------llllllllll---------"  
-    puts "----------->>>>>>>>>>>"  
-    puts "-----------    UPDATE ---------------"  
     
     @activity = Activity.find(params[:id])   
     

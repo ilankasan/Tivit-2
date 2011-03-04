@@ -39,12 +39,12 @@ module ActivitiesHelper
   	
   	invitees.each do |email_address|
   	
-  	
-  	
+    	
 	   	if (email_address != nil && !email_address.empty?)
 	    	user = user_by_email(email_address.strip)
 	    	if(user !=nil)
 	   			activity.add_user_invitee(user)
+	   			
 	   		end
 		end		
 	end 

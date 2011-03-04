@@ -33,6 +33,7 @@ class UsersController < ApplicationController
 	 
 	  @user = get_user(params) 
 	if @user.save
+# sending a welcome email to the new user
 	UserMailer.welcome_email(@user).deliver
       sign_in @user
       flash[:success] = "Welcome to the Tivity!"
