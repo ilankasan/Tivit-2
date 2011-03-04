@@ -23,7 +23,10 @@ FirstApp::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
-  
+  # Host name
+  #config.host_url = {
+  	#:localhost = "localhost",
+  	#:port      = "3000"} 
   
   # config/environments/development.rb
   config.action_mailer.raise_delivery_errors = true

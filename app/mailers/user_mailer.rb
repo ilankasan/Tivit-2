@@ -14,8 +14,15 @@ class UserMailer < ActionMailer::Base
     @tivit   = tivit
     
     #@url  = "http://http://tivit1.heroku.com/"
-    @url  = "http://localhost:3000"
-
+ #   if(config == nil)
+  
+  #  if(config.port != nil)
+   # 	@url  = "http://"+config.host_name+":"+config.port
+    #else
+    #	@url  = "http://"+config.host_url["localhost"]
+    				      
+    #end
+@url  = "http://tivit1.heroku.com"
     mail(:to => invitee.email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => "New tivit!")
   end
