@@ -1,26 +1,8 @@
-
-<span class="content">
-   <%= form_for([@avtivity, @activity.tivitcomments.build]) do |f| %>
-    <%= f.label :comment %><br />
-    <%= f.text_field :comment, :size => "100" %>
-  <div class="actions">
-    <%= f.submit "add comment" %>
-  </div>
-  </span>
+Git Synch
+--------------
 
 
-<%= form_tag(:controller => "tivitcomments", :method => "post") do %>
 
-<!-- add comment  -->
-  <div class="field">
-  	<%= label_tag(:comment, "comment:") %> <%= text_field_tag(:name,"enter comment...") %> 
-  </div>
-  
-   <div class="actions">
-  <%= submit_tag("Add comments") %>
-  </div>
-
-<% end %> 
 
 
 rails generate model TivitUserStatus user_id:integer activity_id:integer status_id:string
