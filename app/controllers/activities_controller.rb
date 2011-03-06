@@ -1,12 +1,6 @@
 class ActivitiesController < ApplicationController
   before_filter :authenticate, :only => [:create, :new,:update, :destroy,:show,:accept,:decline]
   before_filter :authorized_user, :only => :destroy
-<<<<<<< HEAD
-#changing ilan 2 - master
-=======
-#changing ilan
->>>>>>> test1
-   def create
     
     config.debug("------>>>>> Creating activity")
 #adding a strign representation of due date 
