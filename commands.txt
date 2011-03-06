@@ -39,7 +39,7 @@ $ git checkout master
 $ git merge ilan updating-users
 
 git rm Gemfile.lock
-git rm Gemfile.lock
+
 
 git checkout -b tivit-status
 
@@ -57,6 +57,7 @@ heroku rake db:migrate
 
 rails generate scaffold Activity name:string description:string status:string due:datetime owner:integer who:string
 rails generate model Activity name:string description:string status:string due:datetime owner_id:integer who:string
+
 
 
 rails generate scaffold Activity name:string description:string status:string due:datetime owner:integer who:string
@@ -117,12 +118,3 @@ gem install autotest-rails-pure -v 4.1.2
 rails generate migration add_comment_to_tivit_user_statused comment:string
 
 
-
-
-
-<% if (@action == "Accepted") %>
- 	<%= form_tag(:controller => "activities" , :action => "Accepted", :method => "put") do %>
- <% else %>
- 	<%= form_tag(:controller => "activities" , :action => "Declined", :method => "put") do %>
- <% end %>
- 

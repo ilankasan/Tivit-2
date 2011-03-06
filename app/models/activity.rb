@@ -81,7 +81,7 @@ class Activity < ActiveRecord::Base
  status = self.get_status(user) 	
  # ilan: the double comparison is temporary due to curroption of data
   	if(status == "New" || status == "new")
-  		change_status(user,"Reviewed")
+  		change_status(user,"Reviewed","")
   		puts "chaging status from new to Review" 	
   	end
   end
