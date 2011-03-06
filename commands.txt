@@ -36,7 +36,7 @@ heroku pg:reset --db SHARED_DATABASE_URL
 $ git add .
 git commit -am "added update task"
 $ git checkout master
-$ git merge updating-users
+$ git merge ilan updating-users
 
 git rm Gemfile.lock
 git rm Gemfile.lock
@@ -112,3 +112,17 @@ rails generate controller Tivitcomments create, new
 
 gem install autotest -v 4.4.6
 gem install autotest-rails-pure -v 4.1.2
+
+
+rails generate migration add_comment_to_tivit_user_statused comment:string
+
+
+
+
+
+<% if (@action == "Accepted") %>
+ 	<%= form_tag(:controller => "activities" , :action => "Accepted", :method => "put") do %>
+ <% else %>
+ 	<%= form_tag(:controller => "activities" , :action => "Declined", :method => "put") do %>
+ <% end %>
+ 

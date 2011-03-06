@@ -21,6 +21,8 @@ resources :activities
 	match "activities/:id" => "activities#update"
 	match "/accept" => "activities#accept"
   	match "/decline" => "activities#decline"
+  	match "/change_tivit_status" => "activities#change_tivit_status"
+  	
   	
   	
 

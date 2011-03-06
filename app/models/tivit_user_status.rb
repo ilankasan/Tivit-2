@@ -14,7 +14,7 @@
 class TivitUserStatus < ActiveRecord::Base
 
 	
-attr_accessible :status_id, :activity_id,:user_id
+attr_accessible :status_id, :activity_id,:user_id,:comment
 		
 	belongs_to :activity
 	belongs_to :user

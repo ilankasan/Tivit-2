@@ -46,7 +46,7 @@ class Activity < ActiveRecord::Base
 	self.users << user
 	puts "&&&&&&&&&&&&&        updating user task status &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 # sending invitee an email invite
-	owner = User.find_by_id(self.owner_id)
+	owner = self.get_owner
 	UserMailer.new_tivit_email(user,owner,self).deliver
 	
 	self.update_user_tivit_status(user)
@@ -86,12 +86,12 @@ class Activity < ActiveRecord::Base
   	end
   end
  
- def update_tivit_user_status_accept(user)
- 	change_status(user,"Accepted")
+ def update_tivit_user_status_accept(user,comment)
+ 	change_status(user,"Accepted",comment)
  end
  
- def update_tivit_user_status_decline(user)
- 	change_status(user,"Declined")
+ def update_tivit_user_status_decline(user,comment)
+ 	change_status(user,"Declined",comment)
  end
  
   
@@ -105,15 +105,36 @@ class Activity < ActiveRecord::Base
  	
   end
   
+ 
+ def get_status_comment(user)
+  	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
+  	if(tivit_user_status == nil)
+  		tivit_user_status = create_status_new(user)
+ 		
+  	end
+    return tivit_user_status.comment
+ 	
+  end
+  
+  
+  
+
   
 	
 
  def clean_user_invitees
  #clean users accept the task owber
- 	owner = User.find_by_id(self.owner_id)
+ 	owner = self.get_owner
  	self.users = [owner]
-	
+
   end	
+
+
+ def get_owner
+ #adding the user to the existing users on the task
+		return User.find_by_id(self.owner_id)
+  end	
+
 
 private
  def create_status_new(user)	
@@ -141,12 +162,13 @@ private
  
  
  
- def change_status(user, status)
+ def change_status(user, status,comment)
   	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if(tivit_user_status == nil)
   		tivit_user_status = create_status(user,status)
   	end
   	tivit_user_status.status_id = status
+  	tivit_user_status.comment   = comment
   	tivit_user_status.save()
     return tivit_user_status.status_id
  	

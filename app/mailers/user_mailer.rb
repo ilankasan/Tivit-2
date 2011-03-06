@@ -22,9 +22,24 @@ class UserMailer < ActionMailer::Base
     #	@url  = "http://"+config.host_url["localhost"]
     				      
     #end
-@url  = "http://tivit1.heroku.com"
+	@url  = "http://tivit1.heroku.com"
     mail(:to => invitee.email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => "New tivit!")
   end
+  
+  
+  def user_tivit_status_change_email(user, action,comment,tivit)
+    @owner    = tivit.get_owner
+    @user     = user
+    @action   = action
+    @comment  = comment
+    @tivit    = tivit
+    
+    
+	@url  = "http://tivit1.heroku.com"
+    mail(:to => @owner.email, :cc => "tiviti.mailer.cc@gmail.com",
+         :subject => @owner.name+" has "+ action + " tivit '"+tivit.name+"'" )
+  end
+  
   
 end

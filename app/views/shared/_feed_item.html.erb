@@ -23,7 +23,7 @@
     <span class="timestamp">tivit created <%= time_ago_in_words(feed_item.created_at) %> ago.</span>
   </td>
   <td>
-  	<span class="content">Task Status: <%= feed_item.get_status(current_user) %> ! </span><br> 			
+  	<span class="content">Task Status: <%= feed_item.get_status(current_user) %>:<%= feed_item.get_status_comment(current_user) %> </span><br> 			
    	
   	<% if feed_item.status == "completed" %>
  			<span class="content"> Completed !</span><br>

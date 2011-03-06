@@ -98,16 +98,50 @@ class ActivitiesController < ApplicationController
       render 'edit'
     end  
   end
+  
+  
+  
+  def change_tivit_status
+    
+    puts "<<<<<<<<<<<<----------->>>>>>>>>>>"  
+    puts "-----------    change activity status ---------------"
+    puts params.inspect  
+ #ilan: the below can be optimized   
+    @activity = Activity.find(params[:id])
+    
+    status = params["status"]
+    @action = status
+    if(status == "accept")
+    	@title= "Accept"
+    else 
+    	@title = "Decline"
+    end
+    puts "Activity is " + @activity.name  
+    #if (params["decline"])
+   # 	render 'decline'
+   # else
+   # 	render 'accepet'
+   # end
+   render 'tivit_status_change'
+    
+    
+  end
+  
    
   def accept
     
     puts "----------->>>>>>>>>>>"  
     puts "-----------    accepet ---------------"  
-    
+    puts "<<<<<<<<<<<<----------->>>>>>>>>>>"  
+    puts params.inspect  
+    puts "<<<<<<<<<<<<----------->>>>>>>>>>>"  
+ 
     @activity = Activity.find(params[:id])
     puts "Activity is " + @activity.name  
    
-    @activity.update_tivit_user_status_accept(current_user)
+    @activity.update_tivit_user_status_accept(current_user,params["comment"])
+    UserMailer.user_tivit_status_change_email(current_user, "Acceped",params["comment"],@activity).deliver
+  
 	redirect_back_or root_path
   	
   end
@@ -118,7 +152,9 @@ class ActivitiesController < ApplicationController
     puts "-----------    decline ---------------"  
   
     @activity = Activity.find(params[:id])
-    @activity.update_tivit_user_status_decline(current_user)
+    @activity.update_tivit_user_status_decline(current_user,params["comment"])
+    UserMailer.user_tivit_status_change_email(current_user, "Declined",params["comment"],@activity).deliver
+    		   
   	redirect_back_or root_path
   end
   
@@ -126,8 +162,7 @@ class ActivitiesController < ApplicationController
   
   private
   
-  
-    def authorized_user
+	    def authorized_user
       @activity = Activity.find(params[:id])
       redirect_to root_path unless current_user
     end

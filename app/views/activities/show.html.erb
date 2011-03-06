@@ -23,7 +23,7 @@
     <span class="timestamp">tivit created <%= time_ago_in_words(@activity.created_at) %> ago.</span><br>
   </td>
   <td>
-  	<span class="content">Task Status: <%= @activity.get_status(current_user) %> ! </span><br> 			
+  	<span class="content">Task Status: <%= @activity.get_status(current_user) %>:<%= @activity.get_status_comment(current_user) %> </span><br> 			
    	
   	<% if @activity.status == "completed" %>
  			<span class="content"> Completed !</span><br>
@@ -65,19 +65,21 @@
   	
     
     <%= link_to "accept", 		:controller  => "activities", 
-   								:action  => "accept",
- 								:id  => @activity.id, 
-  							    :confirm => "Are you sure you want to accept tivit" +@activity.name+"?", 
-                                :title   => @activity.name %>
+   								:action      => "change_tivit_status",
+   								:status      => "accept",
+ 								:id          => @activity.id, 
+  							    :confirm     => "Are you sure you want to accept tivit" +@activity.name+"?", 
+                                :title       => @activity.name %>
 
     
     
                                      
     <%= link_to "decline",      :controller  => "activities",
-    							:action  => "decline",
-    							:id  => @activity.id, 
-  							    :confirm => "Are you sure you want to decline tivit" +@activity.name+"?",
-                                :title   => @activity.name %>
+    							:action      => "change_tivit_status",
+    							:status      => "decline",
+    							:id          => @activity.id, 
+  							    :confirm     => "Are you sure you want to decline tivit" +@activity.name+"?",
+                                :title       => @activity.name %>
 
   <% end %>
   
