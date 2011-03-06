@@ -78,8 +78,9 @@ class Activity < ActiveRecord::Base
  puts "------------------------------------------------------------"
  puts "attempting to change status" 	
  puts "------------------------------------------------------------" 	
-  	
-  	if(self.get_status(user) == "New")
+ status = self.get_status(user) 	
+ # ilan: the double comparison is temporary due to curroption of data
+  	if(status == "New" || status == "new")
   		change_status(user,"Reviewed")
   		puts "chaging status from new to Review" 	
   	end
@@ -116,7 +117,7 @@ class Activity < ActiveRecord::Base
 
 private
  def create_status_new(user)	
- 	return create_status(user,"new") 
+ 	return create_status(user,"New") 
  end 
  
  

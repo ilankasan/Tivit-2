@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110301074306) do
+ActiveRecord::Schema.define(:version => 20110306074446) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20110301074306) do
     t.string   "status_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "comment"
   end
 
   create_table "tivitcomments", :force => true do |t|
