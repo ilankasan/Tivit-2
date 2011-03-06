@@ -92,9 +92,11 @@
 <!-- Displaying comment -->
 
 <% @activity.tivitcomments.each do |comment| %>
+	<%if comment.user != nil%>
    	  <span class="content"><b><%= comment.user.name%>:</b>  </span>
    	  <span class="content"><%= comment.comment%> </span>
    	  <br>
+	<% end %>
    	   	
 <% end %>
     

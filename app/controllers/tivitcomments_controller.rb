@@ -3,17 +3,23 @@ class TivitcommentsController < ApplicationController
   #before_filter :authorized_user, :only => :destroy
 
   def create
+  	puts "---------    create comment -----------------------"
+  	puts "********************************************"
   	puts "param - " +params.inspect
-	if (@activity == nil)
-			puts "activtity ========= nill !!!!!!!!!!!!!!!!!!!!"
+  	puts "********************************************"
+  	puts "********************************************"
+  	puts "********************************************"
+  	
+	
 
-	end
   	@activity= Activity.find(params[:activity_id])
+  	if (@activity == nil)
+			puts "activtity ========= nill !!!!!!!!!!!!!!!!!!!!"
+	end
+
 	params["tivitcomment"]["user_id"] = current_user.id
 	
-	
-	puts "params ----------   " + params["tivitcomment"].inspect 
-
+#		puts "params ----------   " + params["tiviticomment"].inspect 
 	@comment = @activity.tivitcomments.create(params["tivitcomment"])
     if (@comment != nil)
 			puts "@comment =======  " +@comment.inspect
