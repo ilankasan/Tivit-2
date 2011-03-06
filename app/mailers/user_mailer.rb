@@ -38,7 +38,7 @@ class UserMailer < ActionMailer::Base
     
 	@url  = "http://tivit1.heroku.com"
     mail(:to => @owner.email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => @owner.name+" has "+ action + " tivit '"+tivit.name+"'" )
+         :subject => @user.name+" has "+ action + " tivit '"+tivit.name+"'" )
   end
   
   
