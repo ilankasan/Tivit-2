@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
   before_filter :authenticate, :only => [:create, :new,:update, :destroy,:show,:accept,:decline]
   before_filter :authorized_user, :only => :destroy
-
+#changing ilan 2 - master
    def create
     
     config.debug("------>>>>> Creating activity")
