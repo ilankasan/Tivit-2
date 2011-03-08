@@ -66,7 +66,11 @@ rake db:migrate
 rename_column :products, :upccode, :upc_code
 
 
+git fetch git@github.com:ilankasan/Tivit-2.git/yaniv-new_ui_1
+git fetch Tivit-2.git/yaniv-new_ui_1
 
+git fetch git remote -v
+yaniv-new_ui_1
 
 
 Configuring My SQL
