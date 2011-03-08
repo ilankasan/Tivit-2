@@ -31,11 +31,12 @@ module ActivitiesHelper
   def  add_activity_participants(emails, activity) 
 #in the furue we need to parse a list of users
   	
-  	invitees = emails.split (',')
+  	invitees = emails.split(/;|,/)
+  	
   	
   	puts "#######################################################"
   	puts invitees.inspect
-  	puts "#######################################################"
+  	puts "######################################################"
   	
   	invitees.each do |email_address|
   	
