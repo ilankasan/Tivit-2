@@ -89,7 +89,7 @@
 
   <td>
 <!-- Displaying comment -->
-
+<h3>Comments:</h3>
 <% feed_item.tivitcomments.each do |comment| %>
 	<%if comment.user != nil %>
    	  <span class="content"><b><%= comment.user.name%>:</b>  </span>
@@ -103,7 +103,7 @@
   
   <span class="content">
    <%= form_for([feed_item, feed_item.tivitcomments.build]) do |f| %>
-    <%= f.label :comment %><br />
+    
     <%= f.text_field :comment, :size => "40" %>
   <div class="actions">
     <%= f.submit "add comment" %>
