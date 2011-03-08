@@ -11,7 +11,8 @@ class ActivitiesController < ApplicationController
     puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
     
 #adding a strign representation of due date 
-  	#params["due"] = convert_date_to_string(params,"due") 
+  	params["due"] = convert_date_to_string(params,"due") 
+    puts "->>>>>>>>>>> Due date id " +params["due"]
  
 #adding activity to current user	
     @activity = current_user.add_my_ativity(params)    

@@ -54,14 +54,21 @@ module ActivitiesHelper
   
 #convert year/month/day to one string
    def  convert_date_to_string (params, parameter_name) 
-   	#puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  " + parameter_name 
-  	#puts params.inspect	
-   		
-   		#due = Time.local(params[parameter_name]["year"],params[parameter_name]["month"],params[parameter_name]["day"])
-#adding a strign representation of due date
-		#puts due.inspect
-		
-    	return params[parameter_name] 
+   	puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  " + parameter_name 
+  	puts params.inspect	
+   	if(params[parameter_name].instance_of? String)
+   			if(params[parameter_name] == nil || params[parameter_name].empty?)
+   				return ""
+   			end
+   			date = params[parameter_name].split ('-')
+   			puts date.inspect
+   			params[parameter_name]= {"year"  => date[2],
+   									 "month" => date[0],
+   									 "day"	 => date[1]}
+   	end
+   	due = Time.local(params[parameter_name]["year"],params[parameter_name]["month"],params[parameter_name]["day"]).inspect		
+    return due
+    	 
    end
 # replace activity 
    def  update_activity_participants_by_email (emails, activity) 

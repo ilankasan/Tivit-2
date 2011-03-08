@@ -97,8 +97,8 @@ def add_my_ativity (hash)
    	hash["owner_id"] = self.id
    	hash["status"] = "in-progress"
  	puts hash.inspect	
- 	now = Time.now
-    hash ["due"]=Time.parse(hash["due"], now)
+ 	#now = Time.now
+    #hash ["due"]=Time.parse(hash["due"], now)
 # returns a new activity created from the parameters in hash
   	puts hash.inspect
   		
