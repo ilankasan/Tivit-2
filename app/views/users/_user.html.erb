@@ -1,7 +1,11 @@
 
 <li>
-  <%= gravatar_for user, :size => 30 %>
-  <%= link_to user.name, user %>
+	
+	
+	<%= image_tag @user.avatar.url %>
+	<%= image_tag @user.avatar.url(:medium) %>
+	<%= image_tag @user.avatar.url(:thumb) %>	
+    <%= link_to user.name, user %>
   (<%= user.email%>)
   
   

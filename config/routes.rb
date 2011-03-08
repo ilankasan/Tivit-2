@@ -51,6 +51,7 @@ resources :pages
   get "users/show"
   match '/signup',  :to => 'users#new'
   match '/allusers',  :to => 'users#allusers'
+  match "users/:id" => "users#update"
   
   
 #  match '/signup',  :to => 'users#new'

@@ -54,6 +54,9 @@ class UsersController < ApplicationController
  
  
  def update
+ 	puts "----------    update usrs -------------------"
+ 	puts "----------    update usrs -------------------"
+    puts params.inspect
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated."

@@ -44,5 +44,9 @@ cache_classes = false
 
   }
   
+  
+  
+  Paperclip.options[:command_path] = "c:/Windows/system32/convert"
+  
 end
 

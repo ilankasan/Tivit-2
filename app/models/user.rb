@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   attr_accessor :password
   attr_accessible :name, :email, :password, :password_confirmation, :is_active
   
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }
             
   
 # every user has many  activities he is working on  
