@@ -29,10 +29,13 @@
 	
 	</nav>
 	
-	<!-- Create new activity form-->  
-	<div id="new-activity">
-		<%= render 'shared/activity_form' %>
-	</div>
+	<!-- Create new activity form only for logged in users -->  
+	<% if signed_in? %>
+	
+		<div id="new-activity">
+			<%= render 'shared/activity_form' %>
+		</div>
+	<% end %>
 	
 </header>	
   

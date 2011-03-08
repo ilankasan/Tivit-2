@@ -55,16 +55,12 @@ ActiveRecord::Schema.define(:version => 20110306192311) do
     t.datetime "updated_at"
     t.string   "encrypted_password"
     t.string   "salt"
-
     t.boolean  "admin",               :default => false
-    t.boolean  "is_active"
+    t.boolean  "is_active",           :default => true
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-
-    t.boolean  "admin",              :default => false
-    t.boolean  "is_active",          :default => true
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

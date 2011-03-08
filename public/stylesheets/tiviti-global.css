@@ -6,10 +6,10 @@ html, body {
 	padding: 0;
 }
 body {
-	font-family: Arial, Helvetica, Verdana, Sans-serif;
+	font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; /*Arial, Helvetica, Verdana, Sans-serif;*/
 	font-size: 12px;
 	color: #666666;
-	background: #e3edef;
+	background: #EEEEEE;/*#e3edef;*/
 }
 .hidden {
 	display: none;
@@ -19,9 +19,20 @@ body {
 	/* if no width is specified, the whole browser will be take over */
 	width: 980px;
 	margin: auto; /*this will center the div on the page*/
+	-moz-border-radius:    3px;
+ 	-webkit-border-radius: 3px;
+  	border-radius:         3px;
+}
+#main-nav-background {
+	background: #333333; /*#15628c;*/
+	height: 50px;
+	text-align: center;
+	vertical-align:middle;
+	color: white;
+	margin: auto; /*this will center the div on the page*/
 }
 #main-nav {
-	background: #15628c;
+	background: #333333; /*#15628c;*/
 	height: 50px;
 	text-align: center;
 	vertical-align:middle;
@@ -30,7 +41,8 @@ body {
 	-moz-border-radius:    3px;
  	-webkit-border-radius: 3px;
   	border-radius:         3px;
- 
+  	margin: auto;
+  	width: 980px;
 }
 #main-nav .nav-item li {
 	color: white;
@@ -38,11 +50,11 @@ body {
 	float: left;
 	vertical-align:middle;
 	text-align: center;
-	font-size:14px;
+	font-size:15px;
 }
 #main-nav .nav-item li a{
 	color: white;
-	font-size:14px;
+	font-size:15px;
 	height:34px;
 	float:left;
 	padding: 16px 10px 0 10px;
@@ -50,13 +62,13 @@ body {
 	vertical-align:middle;
 }
 #main-nav .nav-item li a:hover{
-	/*text-decoration: underline;*/
-	background: #2a4b6e;
+	/*text-decoration: underline;*/	 
 	text-decoration: none;
+	background: #140F13; /*#2a4b6e;*/
 }
 #main-nav .nav-item li a:visited{
 	font-weight: bold;
-	background: #2a4b6e;
+	/*background: #2a4b6e;*/
 }
 /* logo */
 .logo {
@@ -69,7 +81,7 @@ body {
 ul, li{margin:0; border:0; padding:0; list-style:none;}
 #user-nav{
 	color: white;
-	font-size:14px;
+	font-size:15px;
 	padding:;
 	float: right;
 }
@@ -132,7 +144,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 }
 /* New Activity Bar / Input */
 #new-activity {
-	background: #365461;
+	background: #DDDDDD; /*#365461;*/
 	height: 40px;
 	text-align: left;
 	width: 700px;
@@ -151,6 +163,9 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 }
 #new-activity-complete {
 	display: none;
+	 -moz-border-radius:    6px;
+  -webkit-border-radius: 6px;
+  border-radius:         6px;
 }
 #new-activity a {
 	padding: 20px;
@@ -160,16 +175,17 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	padding: 0 10px;
 	width: 700px;
 	margin: auto;
-	background: #365461;
+	background: #EEEEEE; /*#365461*/
 	vertical-align: middle;
 }
 #new-activity .field-label {	
 	font-size:14px;	
 	width: 100px;
 	text-align: right;
-	color: white;
-	background: #365461;
+	color: #333333;
+	background: #EEEEEE; /*#365461;*/
 	float: left;
+	font-weight: bold;
 	vertical-align: middle;
 	padding-right: 10px;
 }
@@ -184,11 +200,13 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	width: 500px;
 	padding: 6px 0px 0px 4px;
 	vertical-align: middle;
+	font-size: 14px;
 }
 #new-activity .input-date {
 	width: 100px;
 	padding: 6px 0px 0px 4px;
 	vertical-align: middle;
+	font-size: 14px;
 }
 /* this textarea is used by text_area_tag function - big input field (act. discription) */
 #new-activity .input-description {
@@ -201,6 +219,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	padding: 6px 0px 0px 4px;	
 	max-width: 500px;
 	max-height: 700px;
+	font-size: 14px;
 }
 #new-activity .form-button {
 	width:100px;
@@ -208,7 +227,9 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	vertical-align: top;
 	/*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
 	font-family: inherit;	
-	float: right;	
+	position: relative; 
+	left: 476px;
+	bottom: 14px;
 	
   display: block;
   text-align: center;
