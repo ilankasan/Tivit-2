@@ -57,11 +57,11 @@ module ActivitiesHelper
    	#puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  " + parameter_name 
   	#puts params.inspect	
    		
-   		due = Time.local(params[parameter_name]["year"],params[parameter_name]["month"],params[parameter_name]["day"])
+   		#due = Time.local(params[parameter_name]["year"],params[parameter_name]["month"],params[parameter_name]["day"])
 #adding a strign representation of due date
-		puts due.inspect
+		#puts due.inspect
 		
-    	return due.inspect 
+    	return params[parameter_name] 
    end
 # replace activity 
    def  update_activity_participants_by_email (emails, activity) 

@@ -46,9 +46,9 @@ git checkout -b tivit-status
 
 $ git add .
 $ git commit -am "add decline and accept"
-$ git checkout master
-$ git merge updating-users
-
+git checkout master
+git merge updating-users
+aniv-new_ui_1'
 
 $ 
 heroku rake db:migrate
