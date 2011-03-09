@@ -1,11 +1,11 @@
 # == Schema Information
-# Schema version: 20110219220858
+# Schema version: 20110309070830
 #
 # Table name: activities
 #
 #  id           :integer(4)      not null, primary key
 #  name         :string(255)
-#  description  :string(255)
+#  description  :text
 #  status       :string(255)
 #  due          :datetime
 #  owner_id     :integer(4)
@@ -18,7 +18,7 @@
 
 class Activity < ActiveRecord::Base
   
-  attr_accessible :name, :description, :status, :due,:owner_id, :users, :completed_at
+  attr_accessible :name, :description, :status, :due,:owner_id, :users, :completed_at, :summary
 # each Tivit has many participants 
   has_and_belongs_to_many :users
   
@@ -34,7 +34,7 @@ class Activity < ActiveRecord::Base
   validates :owner_id, :presence => true
   #validates_inclusion_of :status, :in => %w('in progress' completed),
    # :message => "%{value} is not a valid status"
-  validates_inclusion_of :status, :in => %w(in-progress completed),
+  validates_inclusion_of :status, :in => %w(in-progress Completed),
     :message => "%{value} is not a valid status"
 
 

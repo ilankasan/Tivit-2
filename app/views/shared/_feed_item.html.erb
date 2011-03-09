@@ -25,7 +25,7 @@
   <td>
   	<span class="content">Task Status: <%= feed_item.get_status(current_user) %>:<%= feed_item.get_status_comment(current_user) %> </span><br> 			
    	
-  	<% if feed_item.status == "completed" %>
+  	<% if feed_item.status == "Completed" %>
  			<span class="content"> Completed !</span><br>
  			<% if feed_item.completed_at!=nil %>
 				<span class="timestamp">tivit was completed <%= time_ago_in_words(feed_item.completed_at) %> ago </span> 			

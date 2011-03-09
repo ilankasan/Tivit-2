@@ -17,8 +17,9 @@ $ git merge ilan updating-users
 
 git rm Gemfile.lock
 
+git push ilangithub\ilan-bug_fixes
 
-git checkout -b tivit-status
+git checkout -b ilan-bug_fixes
 
 
 Heroku
@@ -65,6 +66,7 @@ rake db:migrate
 rename_column :products, :upccode, :upc_code
 
 
+
 git fetch git@github.com:ilankasan/Tivit-2.git/yaniv-new_ui_1
 git fetch Tivit-2.git/yaniv-new_ui_1
 
@@ -93,10 +95,12 @@ rails -d mysql my_rails_app
  
  
  
- rails generate migration add_completed_at_to_activity completed_at:datetime
+ rails generate migration change_description_activity_column_type
+ 
+ rails generate change_column_(table_name, column_name, type, options): Changes the column to a different type using the same parameters as add_column.
  
  
- rails generate migration add_password_to_users encrypted_password:string
+ rails generate migration add_summary_to_activities text:string
 
 ssh-add path/to/key
 ssh-add "/Users/ilan kasan/.ssh/id_dsa"
