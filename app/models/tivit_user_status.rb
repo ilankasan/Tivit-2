@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110301074306
+# Schema version: 20110309070830
 #
 # Table name: tivit_user_statuses
 #
@@ -9,6 +9,7 @@
 #  status_id   :string(255)
 #  created_at  :datetime
 #  updated_at  :datetime
+#  comment     :string(255)
 #
 
 class TivitUserStatus < ActiveRecord::Base

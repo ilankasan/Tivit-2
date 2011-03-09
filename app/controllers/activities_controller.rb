@@ -64,43 +64,67 @@ class ActivitiesController < ApplicationController
   end
   
   def update
-    puts "----------->>>>>>>>>>>"  
+   
     puts "-----------    UPDATE ------llllllllll---------"  
+   
     
     @activity = Activity.find(params[:id])   
     
+    puts "<<<<<<<<<<<<  Before Inspect  >>>>>>>>>>>"
+    
     puts params.inspect
-    puts "----------->>>>>>>>>>>"
+   
       
     params["due"] = convert_date_to_string(params, "due")
    
     
 # update task status
 	if(params["status"] == "true")
-		params["status"] = "completed"
+		params["status"] = "Completed"
 		time = Time.new
+		puts "-------->>>>>>>>>>>>>  Completed TTTTTTTTTT!!!!!!!!!!!!!!!!!!!!!!!!!!!" 
+    
 		params["completed_at"] = time.localtime 
 
 	else
 		params["status"] = "in-progress"
 	end
 	
-	puts "-------->>>>>>>>>>>>>  STATUS = "+params["status"] 
+	puts "-------->>>>>>>>>>>>>  summary = "+params["summary"] 
+    puts "-------->>>>>>>>>>>>>  params = "+params.inspect
     
-	
+	if(@activity == nil )
+		puts "NilNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+	end
     if (@activity != nil && @activity.update_attributes(params))
       
+      puts " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
       invitee_emails = params["invitees"]	
       
       update_activity_participants_by_email(invitee_emails, @activity)    
+    #  @activity.name 		 = params["name"]
+    #  @activity.description  = params["description"]
+    #  @activity.status 		 = params["status"]
+    #  @activity.completed_at = params["completed_at"]
+      #@activity.name 		 = params["name"]
+    #  @activity.summary		 = params["sumary"]
       
       #add_activity_participants (invitee_email,@activity)
       @activity.save
-    
+	  puts " inspecting activity --------------------"
+	  puts " inspecting activity --------------------"
+	  puts " inspecting activity --------------------"
+	  puts " inspecting activity --------------------"
+	  puts " inspecting activity --------------------"
+	  puts " inspecting activity --------------------"
+	  puts " inspecting activity --------------------"
+	  
+	  puts @activity.inspect 	    
       flash[:success] = "tivit " + @activity.name + " updated"
       redirect_to @activity
       
     else
+   	  flash[:failed] = "Errrorrororororor"
       @title = "Edit activity"
       render 'edit'
     end  
