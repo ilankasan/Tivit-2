@@ -1,16 +1,24 @@
 Git Synch
 --------------
 
-
-
-
-
 rails generate model TivitUserStatus user_id:integer activity_id:integer status_id:string
 rails generate model TivitStatus status_id:string local:string 
 
 
 rails remove model Tivitcomment 
 
+Git
+---------
+
+$ git add .
+git commit -am "added update task"
+$ git checkout master
+$ git merge ilan updating-users
+
+git rm Gemfile.lock
+
+
+git checkout -b tivit-status
 
 
 Heroku
@@ -33,15 +41,6 @@ heroku pg:reset --db SHARED_DATABASE_URL
 
 
 
-$ git add .
-git commit -am "added update task"
-$ git checkout master
-$ git merge ilan updating-users
-
-git rm Gemfile.lock
-
-
-git checkout -b tivit-status
 
 
 $ git add .
