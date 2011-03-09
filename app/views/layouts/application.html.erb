@@ -1,37 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
-	<title><%= @title %> </title>
-	<%= csrf_meta_tag %>
-	<%= render 'layouts/stylesheets' %>
-	<%= javascript_include_tag :defaults %>
-	<%= javascript_include_tag "datetimepicker_css" %>
+	<head>
+		<title>tiviti - <%= @title %> </title>
+		<%= csrf_meta_tag %>
+		<%= render 'layouts/stylesheets' %>
+		<%= javascript_include_tag :defaults %>
+		<%= javascript_include_tag "datetimepicker_css" %>  
+	</head>
   
-  </head>
-  
-<body>
-   
+	<body>
+   		
+   		<!-- Header - Main Navigation & New Activity Bar -->
 	  	<div id="main-nav-background">
 	      	<%= render 'layouts/header' %>
 	    </div>
-     
-      <div id="page-container">
+     	
+     	<!-- Page Content Area -->
+		<div id="page-container">
       	
-		<% flash.each do |key, value| %>
-			<div class="flash <%= key %>"><%= value %></div>
-		<% end %>
-     
-     	<%= yield %>
-       
-      
-    </div>    
+			<% flash.each do |key, value| %>
+				<div class="flash <%= key %>"><%= value %></div>
+			<% end %>
+	     
+	     	<%= yield %>
+	        
+    	</div>    
     
-    <div id="footer">
-    	<%= render 'layouts/footer' %>
-    </div>
-    <%= debug(params) if Rails.env.development? %>
+    	<!-- Footer -->
+	    <div id="footer">
+	    	<%= render 'layouts/footer' %>
+	    </div>
+    
+    	<%= debug(params) if Rails.env.development? %>
       
-</body>
+	</body>
 
   
 </html>

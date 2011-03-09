@@ -12,7 +12,7 @@ class PagesController < ApplicationController
   end
   
   def activities
-    @title = "tivity Activities"
+    @title = "Activities"
   end
 
   def myteam
@@ -20,16 +20,15 @@ class PagesController < ApplicationController
   end
 
   def signout
-     @title = "sign out tivity"
+     @title = "tiviti - Sign in"
   end
 
   def myaccount
-     @title = "tivity My Account"
+     @title = "My Account"
   end
-  
-  
+   
   def about
-     @title = "About tivity"
+     @title = "About"
   end
 
 end

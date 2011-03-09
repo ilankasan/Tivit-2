@@ -9,20 +9,22 @@ body {
 	font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; /*Arial, Helvetica, Verdana, Sans-serif;*/
 	font-size: 12px;
 	color: #666666;
-	background: #EEEEEE;/*#e3edef;*/
+	background: orange;/*#EEEEEE;/*#e3edef;*/
 }
 .hidden {
 	display: none;
 }
 #page-container{
 	background: white;
+	position: relative;
+	top: 32px;
 	/* if no width is specified, the whole browser will be take over */
 	width: 980px;
+	min-height: 768px;
 	margin: auto; /*this will center the div on the page*/
-	-moz-border-radius:    3px;
- 	-webkit-border-radius: 3px;
-  	border-radius:         3px;
+	
 }
+/* Main Navigation **************************************************/
 #main-nav-background {
 	background: #333333; /*#15628c;*/
 	height: 50px;
@@ -70,13 +72,13 @@ body {
 	font-weight: bold;
 	/*background: #2a4b6e;*/
 }
-/* logo */
+/* logo ************************************************************/
 .logo {
 	padding: 2px 80px 2px 3px;
 	background: ;
 	float: left;
 }
-/* Drop Down Menu */
+/* Drop Down Menu **************************************************/
 /* 1. Menu Button */
 ul, li{margin:0; border:0; padding:0; list-style:none;}
 #user-nav{
@@ -142,7 +144,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 #user-nav .submenu li a:hover{
 	background:#e3edef;
 }
-/* New Activity Bar / Input */
+/* New Activity Bar / Input*****************************************/
 #new-activity {
 	background: #DDDDDD; /*#365461;*/
 	height: 40px;
@@ -160,6 +162,12 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	-moz-border-radius:    3px;
  	-webkit-border-radius: 3px;
   	border-radius:         3px; 
+}
+#new-activity-background {
+	background: white; 
+	width: 980px;
+	height: 42px;
+	margin: auto;
 }
 #new-activity-complete {
 	display: none;
@@ -243,6 +251,24 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
   -webkit-border-radius: 6px;
   border-radius:         6px;
 }
+/* Home Page - On Deck Container **************************************************/
+/*
+#ondeck-container {
+	background: red;
+	width: 100%;
+	position: relative;
+	top: 42px;
+	margin: auto; 
+	-moz-border-radius:    3px;
+ 	-webkit-border-radius: 3px;
+  	border-radius:         3px;
+}
+*/
+h1 {
+	font-size: 16px;
+	padding-left: 20px;
+} 
+
 
 /* Round corners */
 .round {

@@ -1,4 +1,4 @@
-<header>
+
 	<nav id="main-nav">	
 		<div class="logo">	
 			<%= link_to logo, root_path %>
@@ -8,7 +8,7 @@
 	    <ul class="nav-item">
 	    	<li><%= link_to "Home", root_path %></li>
 	    	<li><%= link_to "Activities", about_path %></li>
-	    	<li><%= link_to "Team", contact_path %></li>      
+	    	<li><%= link_to "Conact", contact_path %></li>      
 		</ul>
 	<% end %>
 	
@@ -32,39 +32,11 @@
 	<!-- Create new activity form only for logged in users -->  
 	<% if signed_in? %>
 	
+	<div id="new-activity-background">
 		<div id="new-activity">
 			<%= render 'shared/activity_form' %>
 		</div>
-	<% end %>
+	</div>
 	
-</header>	
-  
+	<% end %>
 
-<!--
-  
-  <nav id="main-nav">
-    <ul>
-      
-       <% if signed_in? %>
-      		<li><%= link_to "Users", allusers_path %></li>       
-       <% end %>
-       
-      <li><%= link_to "Help", help_path %></li>
-      
-      <% if signed_in? %>
-      	<li><%= link_to "Profile", current_user %></li>
-      	<li><%= link_to "Settings", edit_user_path(current_user) %></li>
-	  <% end %>
-      
-      <% if signed_in? %>
-      	<li><%= link_to "Sign out", signout_path, :method => :delete %></li>
-      <% else %>
-      		<li><%= link_to "Sign in", signin_path %></li>
-      <% end %>
-    </ul>          
-  </nav>
-  
-
-</header>
-
--->

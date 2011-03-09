@@ -3,23 +3,15 @@
 <% if signed_in? %>
 	
 	
-			
-      <table class="front" summary="For signed-in users">
-        <tr>
-        <td class="main">
 	
-          <!-- Display Current Activities -->  
-		  <h1 class="activity">my tivits</h1>
-          <%= render 'shared/feed' %>
-       
-        </td>
-        
-        <td class="sidebar round">
-          <%= render 'shared/user_info' %>
-        </td>
-    </tr>
-  </table>
-  
+		 <h1>On Deck!</h1>
+		  <%= render 'shared/feed' %>
+
+	
+	
+	
+	
+   
 <% else %>
 
 	<h1>Get stuff done faster!</h1>
