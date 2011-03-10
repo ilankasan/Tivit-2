@@ -71,6 +71,9 @@ class User < ActiveRecord::Base
     return is_active 
   end
   
+  def get_id
+  	return self.id
+  end
    
   
   def self.authenticate(email, submitted_password)
@@ -89,7 +92,7 @@ class User < ActiveRecord::Base
   def feed
     # This is preliminary. See Chapter 12 for the full implementation. this is same at activities
     #config.debug("Retriving Activities for user id = #{id}" )
-    puts "Retriving users" 
+    puts "----------------Retriving users" 
   
   #  Activity.where("user_id = ?", id)
   	return activities

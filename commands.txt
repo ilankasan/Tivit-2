@@ -9,6 +9,11 @@ rails remove model Tivitcomment
 
 Git
 ---------
+heroku rename tiviti --app tivit1
+
+
+git remote add origin git@github.com:<ilankasan>/<new repository name on GitHub you created.git>
+git remote add heroku git@heroku.com:tiviti.git
 
 $ git add .
 git commit -am "added update task"
@@ -18,6 +23,7 @@ $ git merge ilan updating-users
 git rm Gemfile.lock
 
 git push ilangithub\ilan-bug_fixes
+git push heroku master
 
 git checkout -b ilan-march_8
 

@@ -1,7 +1,49 @@
-<% unless @feed_items.empty? %>
+<% unless @tivits_participate == nil  %>
+
+  <!--table class="activities" summary="User activities">
+  	<h1>New Requests</h1>
+    <%= render :partial => 'shared/feed_item', :collection => @feed_items1 %>
+ 
+  </table-->
 
   <table class="activities" summary="User activities">
-    <%= render :partial => 'shared/feed_item', :collection => @feed_items %>
-  </table>
+    <h1>Deliverables due to you</h1> <!--%@feed_items = @feed_items_tivits_i_own%-->
+     <%puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"%>
+     <%puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"%>
+     <%puts "^^^^^^^^^^^^^^^^^           PARTICIPATING ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"%>
+     
+     <%puts @tivits_participate.inspect%>
+     
+    <%= render :partial => 'shared/feed_item', :collection =>  @tivits_participate %>
  
+  </table>
+ <% end %>
+
+<% unless @tivits_owned== nil  %>
+
+  <!--table class="activities" summary="User activities">
+  	<h1>New Requests</h1>
+    <%= render :partial => 'shared/feed_item', :collection => @feed_items1 %>
+ 
+  </table-->
+
+  <table class="activities" summary="User activities">
+     <h1>Tivits for you to complete</h1>
+     <!--%@feed_items = @feed_items_tivits_i_own%-->
+     <%puts "^^^^^^^^^^^^^^^^^^^    I am the OWNER ^^^^^^^^^^^^^^^^^^^^^^^^^^^"%>
+     <%puts "^^^^^^^^^^^^^^^^^^^    I am the OWNER ^^^^^^^^^^^^^^^^^^^^^^^^^^^"%>
+     <%puts "^^^^^^^^^^^^^^^^^^^    I am the OWNER ^^^^^^^^^^^^^^^^^^^^^^^^^^^"%>
+     <%puts "^^^^^^^^^^^^^^^^^^^    I am the OWNER ^^^^^^^^^^^^^^^^^^^^^^^^^^^"%>
+     
+     <%puts @tivits_owned.inspect%>
+     
+    <%= render :partial => 'shared/feed_item', :collection =>  @tivits_owned %>
+ 
+  </table>
+ <!--table class="activities" summary="User activities">
+	<h1>Deliverables due to you</h1>
+    <%= render :partial => 'shared/feed_item', :collection => @feed_items3 %>
+ 
+  </table-->
+  
 <% end %>

@@ -32,10 +32,9 @@ class Activity < ActiveRecord::Base
   validates :name, :presence => true, :length => { :maximum => 140 }
   validates :description, :length => { :maximum => 1024 }
   validates :owner_id, :presence => true
-  #validates_inclusion_of :status, :in => %w('in progress' completed),
-   # :message => "%{value} is not a valid status"
-  validates_inclusion_of :status, :in => %w(in-progress Completed),
-    :message => "%{value} is not a valid status"
+   
+ # validates_inclusion_of :status, :in => %w(in-progress Completed),
+  #  :message => "%{value} is not a valid status"
 
 
   default_scope :order => 'activities.created_at DESC'
@@ -47,6 +46,7 @@ class Activity < ActiveRecord::Base
 	puts "&&&&&&&&&&&&&        updating user task status &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 # sending invitee an email invite
 	owner = self.get_owner
+# ilan: email invites shouldbein controllers not models
 	UserMailer.new_tivit_email(user,owner,self).deliver
 	
 	self.update_user_tivit_status(user)
@@ -88,10 +88,6 @@ class Activity < ActiveRecord::Base
  
  def update_tivit_user_status_accept(user,comment)
  	change_status(user,"Accepted",comment)
- end
- 
- def update_tivit_user_status_i_am_done(user,comment)
- 	change_status(user,"I Am Done",comment)
  end
  
  def update_tivit_user_status_decline(user,comment)

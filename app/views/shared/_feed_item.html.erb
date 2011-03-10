@@ -28,6 +28,8 @@
    	
   	<% if feed_item.status == "Completed" %>
  			<span class="content"> Completed !</span><br>
+ 			<span class="content">Tivit Summary : <%= feed_item.summary%> </span><br> 			
+   			
  			<% if feed_item.completed_at!=nil %>
 				<span class="timestamp">tivit was completed <%= time_ago_in_words(feed_item.completed_at) %> ago </span> 			
    			<% end %> 
