@@ -15,9 +15,10 @@ class PagesController < ApplicationController
       @tivits_participate = current_user.activities.where("not owner_id = ?", current_user.get_id)
       #@tivits_new         = current_user.activities.where("not owner_id = ?", current_user.get_id)
       #sql = "SELECT * FROM activities WHERE NOT owner_id = "+current_user.get_id.inspect  
-      sql = "SELECT activities.* FROM activities INNER JOIN tivit_user_statuses ON tivit_user_statuses.activity_id = activities.id WHERE tivit_user_statuses.user_id = "+current_user.get_id.inspect
+      #sql = "SELECT activities.* FROM activities INNER JOIN tivit_user_statuses ON tivit_user_statuses.activity_id = activities.id WHERE tivit_user_statuses.user_id = "+current_user.get_id.inspect
 
-      @tivits_new          = Activity.find_by_sql(sql)
+      sql = "SELECT activities.* FROM activities, tivit_user_statuses WHERE tivit_user_statuses.activity_id = activities.id AND tivit_user_statuses.status_id = 'New' AND tivit_user_statuses.user_id = "+current_user.get_id.inspect
+	@tivits_new          = Activity.find_by_sql(sql)
       
       
       #@new_tivits = current_user.activities.find_by_owner_id(current_user.get_id)
