@@ -134,3 +134,12 @@ rails generate migration add_avatar_columns_to_users avatar_file_name:string ava
 
 
 
+
+SELECT * FROM activities INNER JOIN tivit_user_status ON tivit_user_status.activity_id = activities.id WHERE (tivit_user_status.user_id = ? )
+
+
+
+
+
+SELECT `tivit_user_statuses`.* FROM `tivit_user_statuses` WHERE (`tivit_user_statuses`.activity_id = 29) AND (`tivit_user_statuses`.`user_id` = 8) LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT `tivitcomments`.* FROM `tivitcomments` WHERE (`tivitcomments`.activity_id = 29)[0m
