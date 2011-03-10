@@ -112,12 +112,6 @@ class ActivitiesController < ApplicationController
       #add_activity_participants (invitee_email,@activity)
       @activity.save
 	  puts " inspecting activity --------------------"
-	  puts " inspecting activity --------------------"
-	  puts " inspecting activity --------------------"
-	  puts " inspecting activity --------------------"
-	  puts " inspecting activity --------------------"
-	  puts " inspecting activity --------------------"
-	  puts " inspecting activity --------------------"
 	  
 	  puts @activity.inspect 	    
       flash[:success] = "tivit " + @activity.name + " updated"
@@ -135,27 +129,23 @@ class ActivitiesController < ApplicationController
   def change_tivit_status
     
     puts "<<<<<<<<<<<<----------->>>>>>>>>>>"  
-    puts "-----------    change activity status ---------------"
     puts params.inspect  
  #ilan: the below can be optimized   
     @activity = Activity.find(params[:id])
     
     status = params["status"]
     @action = status
-    if(status == "accept")
-    	@title= "Accept"
+    if(status.downcase == "i_am_done")
+    	@title= "I Am Done!"
     else 
-    	@title = "Decline"
+    	@title  = status.capitalize
+ 
     end
-    puts "Activity is " + @activity.name  
-    #if (params["decline"])
-   # 	render 'decline'
-   # else
-   # 	render 'accepet'
-   # end
-   render 'tivit_status_change'
-    
-    
+    puts "Activity is " + @activity.name
+    puts "Title is " + @title  
+   
+    render 'tivit_status_change'
+      
   end
   
    
@@ -177,6 +167,23 @@ class ActivitiesController < ApplicationController
   	
   end
   
+
+  def i_am_done
+    
+    puts "-----------    I AM DONE ---------------"  
+    
+    @activity = Activity.find(params[:id])
+    
+    @activity.update_tivit_user_status_i_am_done(current_user,params["comment"])
+    UserMailer.user_tivit_status_change_done_email(current_user,params["comment"],@activity).deliver
+  
+	redirect_back_or root_path
+  	
+  end
+
+
+
+
   
  def decline
   	puts "----------->>>>>>>>>>>"  

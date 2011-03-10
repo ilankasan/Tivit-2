@@ -90,6 +90,10 @@ class Activity < ActiveRecord::Base
  	change_status(user,"Accepted",comment)
  end
  
+ def update_tivit_user_status_i_am_done(user,comment)
+ 	change_status(user,"I Am Done",comment)
+ end
+ 
  def update_tivit_user_status_decline(user,comment)
  	change_status(user,"Declined",comment)
  end

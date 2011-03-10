@@ -23,7 +23,8 @@
     <span class="timestamp">tivit created <%= time_ago_in_words(feed_item.created_at) %> ago.</span>
   </td>
   <td>
-  	<span class="content">Task Status: <%= feed_item.get_status(current_user) %>:<%= feed_item.get_status_comment(current_user) %> </span><br> 			
+  	<span class="content">My status : <%= feed_item.get_status(current_user) %>:<%= feed_item.get_status_comment(current_user) %> </span><br> 			
+   	<span class="content">Task status : </span> 			
    	
   	<% if feed_item.status == "Completed" %>
  			<span class="content"> Completed !</span><br>
@@ -64,19 +65,30 @@
    <% if current_user.id != (feed_item.owner_id) %>
   	    
    
-    <%= link_to "accept", 		:controller  => "activities", 
-   								:action  => "accept",
- 								:id  => feed_item.id, 
-  							    :confirm => "Are you sure you want to accept tivit" +feed_item.name+"?", 
-                                :title   => feed_item.name %>
+     <%= link_to "accept", 		:controller  => "activities", 
+   								:action      => "change_tivit_status",
+   								:status      => "accept",
+ 								:id          => feed_item.id, 
+  							    :confirm     => "Are you sure you want to accept tivit" +feed_item.name+"?", 
+                                :title       => feed_item.name %>
 
         
                                      
-    <%= link_to "decline",      :controller  => "activities",
-    							:action  => "decline",
-    							:id  => feed_item.id, 
-  							    :confirm => "Are you sure you want to decline tivit" +feed_item.name+"?",
-                                :title   => feed_item.name %>
+    
+	<%= link_to "decline",      :controller  => "activities",
+    							:action      => "change_tivit_status",
+    							:status      => "decline",
+    							:id          => feed_item.id, 
+  							    :confirm     => "Are you sure you want to decline tivit" +feed_item.name+"?",
+                                :title       => feed_item.name %>
+
+
+	<%= link_to "I Am Done",    :controller  => "activities",
+    							:action      => "change_tivit_status",
+    							:status      => "i_am_done",
+    							:id          => feed_item.id, 
+  							    :confirm     => "Are you sure you want to decline tivit" +feed_item.name+"?",
+                                :title       => feed_item.name %>
 
   <% end %>
   
