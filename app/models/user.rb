@@ -105,7 +105,6 @@ def add_my_ativity (params)
    	params["status"] = "in-progress"
  	puts hash.inspect	
 # returns a new activity created from the parameters in hash
- 	
   	return  activities.create(hash)		
    end
 
