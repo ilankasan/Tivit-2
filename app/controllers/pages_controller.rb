@@ -25,21 +25,10 @@ class PagesController < ApplicationController
 	  @tivits_new          = Activity.find_by_sql(sql_new_tivits)
       
       
-      #@new_tivits = current_user.activities.find_by_owner_id(current_user.get_id)
+      #@tivits_completed       = current_user.activities.where("status = 'Completed' AND completed_at > ?",)
+      @tivits_completed       = current_user.activities.where("status = 'Completed'")
       
       
-      if(@tivits_owned!= nil)
-      	puts "user has owners!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    "
-
-      		puts @tivits_owned.inspect
-      else
-      	puts "user has no tasks"
-
-      end
-      
-      	
-	  #@feed_items_tivits_i_participate    = current_user.feed.paginate(:page => params[:page])
-	 
      end
   end
   

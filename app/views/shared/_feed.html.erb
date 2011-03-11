@@ -1,47 +1,32 @@
 <% unless @tivits_new == nil  %>
 
    <table class="activities" summary="User activities">
-     <h1>New for you</h1>
-     <!--%@feed_items = @feed_items_tivits_i_own%-->
-     <%puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"%>
-     
-     <%puts @tivits_new .inspect%>
-     
+     <h2>New for you (you do not own)</h2> 
     <%= render :partial => 'shared/feed_item', :collection =>  @tivits_new  %> 
   </table>
 <% end %>
 
-
-
-
-
-
-
 <% unless @tivits_participate == nil  %>
 
    <table class="activities" summary="User activities">
-     <h1>Tivits for you to complete</h1>
-     <!--%@feed_items = @feed_items_tivits_i_own%-->
-     <%puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"%>
+     <h2>Tivits due to you (you participate))</h2>
      
-     <%puts @tivits_owned.inspect%>
-     
-    <%= render :partial => 'shared/feed_item', :collection =>  @tivits_owned %>
+     <%= render :partial => 'shared/feed_item', :collection =>  @tivits_participate %>
   </table>  
 <% end %>
 
 
 <% unless @tivits_owned== nil  %>
-
    <table class="activities" summary="User activities">
-     <h1>Tivits for you to complete</h1>
-     <!--%@feed_items = @feed_items_tivits_i_own%-->
-     <%puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"%>
-     
-     <%puts @tivits_owned.inspect%>
-     
-    <%= render :partial => 'shared/feed_item', :collection =>  @tivits_owned %>
- 
+     <h2>Tivits for you to complete (you own)</h2>
+     <%= render :partial => 'shared/feed_item', :collection =>  @tivits_owned %>
   </table>
-   
+<% end %>
+
+<% unless @tivits_completed== nil  %>
+   <table class="activities" summary="User activities">
+     <h2>Completed tivities (last 7 days)</h2>
+     <%= render :partial => 'shared/feed_item', :collection =>  @tivits_completed %> 
+  </table>
+
 <% end %>
