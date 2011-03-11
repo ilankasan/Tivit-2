@@ -99,21 +99,16 @@ class User < ActiveRecord::Base
   end
   
 #builds a new activity to a user (as an owner)
-def add_my_ativity (hash)
+def add_my_ativity (params)
  # settign owner Id to be rqual to the current user
-   	hash["owner_id"] = self.id
-   	hash["status"] = "in-progress"
+   	params["owner_id"] = self.id
+   	params["status"] = "in-progress"
  	puts hash.inspect	
- 	#now = Time.now
-    #hash ["due"]=Time.parse(hash["due"], now)
 # returns a new activity created from the parameters in hash
-  	puts hash.inspect
-  		
-  	return  activities.create(hash)
-  		
+ 	
+  	return  activities.create(hash)		
    end
 
-  
 
   private
 

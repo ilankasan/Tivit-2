@@ -3,22 +3,18 @@ class PagesController < ApplicationController
   def home
     @title = "Home"
     if signed_in?
-      @activity = Activity.new
-      
+      @activity = Activity.new #ilan:not sure this is needed
       puts "before current user" 
 
       #@feed_items_new                     = current_user.feed.paginate(:page => params[:page])
       #@feed_items1 = current_user.feed.paginate(:page => params[:page])
-      puts "******************************"
-	  puts "current user is "+current_user.inspect
       @tivits_owned       = current_user.activities.find_all_by_owner_id(current_user.get_id)
-      @tivits_participate = current_user.activities.where("not owner_id = ?", current_user.get_id)
-      #@tivits_new         = current_user.activities.where("not owner_id = ?", current_user.get_id)
-      #sql = "SELECT * FROM activities WHERE NOT owner_id = "+current_user.get_id.inspect  
-      #sql = "SELECT activities.* FROM activities INNER JOIN tivit_user_statuses ON tivit_user_statuses.activity_id = activities.id WHERE tivit_user_statuses.user_id = "+current_user.get_id.inspect
-
-      sql = "SELECT activities.* FROM activities, tivit_user_statuses WHERE tivit_user_statuses.activity_id = activities.id AND tivit_user_statuses.status_id = 'New' AND tivit_user_statuses.user_id = "+current_user.get_id.inspect
-	@tivits_new          = Activity.find_by_sql(sql)
+      @tivits_participate = current_user.activities.where("NOT owner_id = ?", current_user.get_id)
+      
+#this SQL retrieves all new tivits for me eccpet the ones i am the owner
+	  current_user_id = current_user.get_id.inspect
+      sql_new_tivits = "SELECT activities.* FROM activities, tivit_user_statuses WHERE NOT activities.owner_id = "+current_user_id+" AND tivit_user_statuses.activity_id = activities.id AND tivit_user_statuses.status_id = 'New' AND tivit_user_statuses.user_id = "+current_user_id
+	  @tivits_new          = Activity.find_by_sql(sql_new_tivits)
       
       
       #@new_tivits = current_user.activities.find_by_owner_id(current_user.get_id)

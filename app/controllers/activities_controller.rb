@@ -5,10 +5,6 @@ class ActivitiesController < ApplicationController
    def create
     
     config.debug("------>>>>> Creating activity")
-    puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-    puts params.inspect
-    puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-    puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
     
 #adding a strign representation of due date 
   	params["due"] = convert_date_to_string(params,"due") 
@@ -44,10 +40,8 @@ class ActivitiesController < ApplicationController
   
   
   def edit
-  
     @activity = Activity.find(params[:id])
     @title = "Edit tivit: " +@activity.name
-    
   end
   
   
@@ -66,15 +60,10 @@ class ActivitiesController < ApplicationController
   def update
    
     puts "-----------    UPDATE ------llllllllll---------"  
-   
     
     @activity = Activity.find(params[:id])   
     
-    puts "<<<<<<<<<<<<  Before Inspect  >>>>>>>>>>>"
-    
     puts params.inspect
-   
-      
     params["due"] = convert_date_to_string(params, "due")
    
     
@@ -82,34 +71,16 @@ class ActivitiesController < ApplicationController
 	if(params["status"] == "true")
 		params["status"] = "Completed"
 		time = Time.new
-		puts "-------->>>>>>>>>>>>>  Completed TTTTTTTTTT!!!!!!!!!!!!!!!!!!!!!!!!!!!" 
-    
 		params["completed_at"] = time.localtime 
-
 	else
 		params["status"] = "in-progress"
 	end
-	
-	puts "-------->>>>>>>>>>>>>  summary = "+params["summary"] 
-    puts "-------->>>>>>>>>>>>>  params = "+params.inspect
-    
-	if(@activity == nil )
-		puts "NilNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
-	end
-    if (@activity != nil && @activity.update_attributes(params))
+
+	if (@activity != nil && @activity.update_attributes(params))
       
-      puts " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
       invitee_emails = params["invitees"]	
       
       update_activity_participants_by_email(invitee_emails, @activity)    
-    #  @activity.name 		 = params["name"]
-    #  @activity.description  = params["description"]
-    #  @activity.status 		 = params["status"]
-    #  @activity.completed_at = params["completed_at"]
-      #@activity.name 		 = params["name"]
-    #  @activity.summary		 = params["sumary"]
-      
-      #add_activity_participants (invitee_email,@activity)
       @activity.save
 	  puts " inspecting activity --------------------"
 	  
@@ -139,24 +110,17 @@ class ActivitiesController < ApplicationController
     	@title= "I Am Done!"
     else 
     	@title  = status.capitalize
- 
     end
-    puts "Activity is " + @activity.name
-    puts "Title is " + @title  
-   
-    render 'tivit_status_change'
-      
+    render 'tivit_status_change'      
   end
-  
+
    
   def accept
     
     puts "----------->>>>>>>>>>>"  
-    puts "-----------    accepet ---------------"  
-    puts "<<<<<<<<<<<<----------->>>>>>>>>>>"  
-    puts params.inspect  
-    puts "<<<<<<<<<<<<----------->>>>>>>>>>>"  
- 
+   
+   # puts params.inspect  
+   
     @activity = Activity.find(params[:id])
     puts "Activity is " + @activity.name  
    
