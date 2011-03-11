@@ -15,7 +15,16 @@
  			<% if user.id == current_user.id%>	
    				<span class="content">i am participating</span><br>
    			<% else %>
-   				<span class="content"><%= user.email%> is participating</span><br>
+   				<% user_status = feed_item.get_user_status(user)%>
+   				<% case user_status%>
+   				<% when "New"%>	
+	   				<span class="content"><%= user.email%> has not reviewed tivit</span><br>
+				<% when "I Am Done"%>	
+					<span class="content"><%= user.email%> is done!</span><br>
+				<% else %>
+				 	<span class="content"><%= user.email%> <%= user_status%> tivit</span><br>
+   				<% end %>
+   				
    			<% end %>
    		<% end %>			
    	  <% end %> 	
