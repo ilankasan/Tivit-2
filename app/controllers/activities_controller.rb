@@ -8,12 +8,7 @@ class ActivitiesController < ApplicationController
     
 #adding a strign representation of due date 
   	params["due"] = convert_date_to_string(params,"due") 
-    puts "->>>>>>>>>>> Due date id " +params["due"]
-    puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" 
- 	puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" 
- 	puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" 
- 	puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" 
- 	
+    #puts "->>>>>>>>>>> Due date id " +params["due"]
  	puts "Inspect Params " +params.inspect
  
 #adding activity to current user	
@@ -53,10 +48,10 @@ class ActivitiesController < ApplicationController
   
   def show
     
-    puts "----------->>>>>>>>>>> sho show show"  
-    puts params.inspect
-    puts "----------->>>>>>>>>>>"
-    
+   # puts "----------->>>>>>>>>>> sho show show"  
+   # puts params.inspect
+   # puts "----------->>>>>>>>>>>"
+ #updating tivit status New -> Reviewed
     @activity = Activity.find(params[:id])
     @activity.update_tivit_status_after_show(current_user)
   	@title = @activity.name
@@ -74,24 +69,29 @@ class ActivitiesController < ApplicationController
    
     
 # update task status
+	
 	if(params["status"] == "true")
 		params["status"] = "Completed"
 		time = Time.new
-		params["completed_at"] = time.localtime 
+		params["completed_at"] = time.localtime
 	else
 		params["status"] = "in-progress"
 	end
-
+# vhecking to see if tthe task was previously closed. This will be used before the email is sent out below
+	was_completed = @activity.status
 	if (@activity != nil && @activity.update_attributes(params))
       
       invitee_emails = params["invitees"]	
       
       update_activity_participants_by_email(invitee_emails, @activity)    
       @activity.save
-	  puts " inspecting activity --------------------"
-	  
-	  puts @activity.inspect 	    
-      flash[:success] = "tivit " + @activity.name + " updated"
+      
+#send email to all parcicipants that tivit was completed (not including owner):
+	  if(was_completed != "Completed" && @activity.status == "Completed" )
+	 		UserMailer.user_tivit_status_completed_email(current_user, invitee_emails,params["summary"],@activity).deliver
+	  end
+
+	  flash[:success] = "tivit " + @activity.name + " updated"
       redirect_to @activity
       
     else
@@ -100,8 +100,6 @@ class ActivitiesController < ApplicationController
       render 'edit'
     end  
   end
-  
-  
   
   def change_tivit_status
     
@@ -112,11 +110,6 @@ class ActivitiesController < ApplicationController
     
     status = params["status"]
     @action = status
-    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    puts "Action =====   "+status
-    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
     
     if(status.downcase == "i_am_done")
     	@title= "I Am Done!"

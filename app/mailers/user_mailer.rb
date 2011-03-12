@@ -11,6 +11,29 @@ class UserMailer < ActionMailer::Base
   end
   
   
+  
+  def user_tivit_status_completed_email (user, invitees,summary,tivit)
+  
+    @user    = user
+    @tivit   = tivit
+    @summary = summary
+    @url     = "http://tiviti.heroku.com"
+    
+    puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+    puts "--------------------------------------------------------------------"
+    
+    puts invitees.inspect
+    
+    
+    puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+    
+    mail(:to => invitees, :cc => "tiviti.mailer.cc@gmail.com,"+user.email,
+         :subject =>"tivit" +" '"+tivit.name+"' " + "is completed!" )
+    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+    
+  end
+  
+  
   def new_tivit_email(invitee, owner,tivit)
     @invitee = invitee
     @owner   = owner
