@@ -103,9 +103,9 @@ def add_my_ativity (params)
  # settign owner Id to be rqual to the current user
    	params["owner_id"] = self.id
    	params["status"] = "in-progress"
- 	puts hash.inspect	
+ 	#puts params.inspect	
 # returns a new activity created from the parameters in hash
-  	return  activities.create(hash)		
+  	return  activities.create(params)		
    end
 
 
