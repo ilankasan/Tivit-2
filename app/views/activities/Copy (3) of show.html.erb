@@ -23,15 +23,18 @@
     <span class="timestamp">tivit created <%= time_ago_in_words(@activity.created_at) %> ago.</span><br>
   </td>
   <td>
-  	<span class="content">Task Status: <%= @activity.get_status(current_user) %>:<%= @activity.get_status_comment(current_user) %> </span><br> 			
+  	<span class="content">My status : <%= @activity.get_user_status(current_user) %>:<%= @activity.get_user_status_comment(current_user) %> </span><br> 			
+   	<span class="content">Task status : </span> 			
    	
   	<% if @activity.status == "Completed" %>
  			<span class="content"> Completed !</span><br>
+ 			<span class="content">Tivit Summary : <%= @activity.summary%> </span><br> 			
+   			
  			<% if @activity.completed_at!=nil %>
 				<span class="timestamp">tivit was completed <%= time_ago_in_words(@activity.completed_at) %> ago </span> 			
    			<% end %> 
   	<% else %> 
- 			<span class="content"> In Progress  </span><br>
+ 			<span class="content"> In Progress </span><br>
  			<% if @activity.due!=nil %>
    				<% if @activity.due > Time.now %>
       				<span class="timestamp">tivit is due in <%= time_ago_in_words(@activity.due) %> </span>
@@ -62,21 +65,29 @@
                                     :title  => @activity.name %>
                                       
    <% if current_user.id != (@activity.owner_id) %>
-  	
-    
-    <%= link_to "accept", 		:controller  => "activities", 
+  	    
+   
+     <%= link_to "accept", 		:controller  => "activities", 
    								:action      => "change_tivit_status",
    								:status      => "accept",
  								:id          => @activity.id, 
   							    :confirm     => "Are you sure you want to accept tivit" +@activity.name+"?", 
                                 :title       => @activity.name %>
 
-    
-    
+        
                                      
-    <%= link_to "decline",      :controller  => "activities",
+    
+	<%= link_to "decline",      :controller  => "activities",
     							:action      => "change_tivit_status",
     							:status      => "decline",
+    							:id          => @activity.id, 
+  							    :confirm     => "Are you sure you want to decline tivit" +@activity.name+"?",
+                                :title       => @activity.name %>
+
+
+	<%= link_to "I Am Done",    :controller  => "activities",
+    							:action      => "change_tivit_status",
+    							:status      => "i_am_done",
     							:id          => @activity.id, 
   							    :confirm     => "Are you sure you want to decline tivit" +@activity.name+"?",
                                 :title       => @activity.name %>
@@ -92,14 +103,13 @@
 
   <td>
 <!-- Displaying comment -->
-
+<h3>Comments:</h3>
 <% @activity.tivitcomments.each do |comment| %>
-	<%if comment.user != nil%>
+	<%if comment.user != nil %>
    	  <span class="content"><b><%= comment.user.name%>:</b>  </span>
    	  <span class="content"><%= comment.comment%> </span>
    	  <br>
-	<% end %>
-   	   	
+	<% end %>   	   	
 <% end %>
     
 
@@ -107,7 +117,7 @@
   
   <span class="content">
    <%= form_for([@activity, @activity.tivitcomments.build]) do |f| %>
-    <%= f.label :comment %><br />
+    
     <%= f.text_field :comment, :size => "40" %>
   <div class="actions">
     <%= f.submit "add comment" %>
@@ -120,5 +130,4 @@
 </tr>
 
 
-
-
+ 

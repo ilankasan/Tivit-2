@@ -2,7 +2,7 @@
 
    <table class="activities" summary="User activities">
      <h2>New for you (you do not own)</h2> 
-    <%= render :partial => 'shared/feed_item', :collection =>  @tivits_new  %> 
+    <%= render :partial => 'shared/tivit', :collection =>  @tivits_new  %> 
   </table>
 <% end %>
 
@@ -11,7 +11,7 @@
    <table class="activities" summary="User activities">
      <h2>Tivits due to you (you participate))</h2>
      
-     <%= render :partial => 'shared/feed_item', :collection =>  @tivits_participate %>
+     <%= render :partial => 'shared/tivit', :collection =>  @tivits_participate %>
   </table>  
 <% end %>
 
@@ -19,14 +19,14 @@
 <% unless @tivits_owned== nil  %>
    <table class="activities" summary="User activities">
      <h2>Tivits for you to complete (you own)</h2>
-     <%= render :partial => 'shared/feed_item', :collection =>  @tivits_owned %>
+     <%= render :partial => 'shared/tivit', :collection =>  @tivits_owned %>
   </table>
 <% end %>
 
 <% unless @tivits_completed== nil  %>
    <table class="activities" summary="User activities">
      <h2>Completed tivities (last 7 days)</h2>
-     <%= render :partial => 'shared/feed_item', :collection =>  @tivits_completed %> 
+     <%= render :partial => 'shared/tivit', :collection =>  @tivits_completed %> 
   </table>
 
 <% end %>

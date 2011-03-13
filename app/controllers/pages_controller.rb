@@ -23,12 +23,8 @@ class PagesController < ApplicationController
       				   AND tivit_user_statuses.user_id     = "+current_user_id
 	 
 	  @tivits_new          = Activity.find_by_sql(sql_new_tivits)
-      
-      
       #@tivits_completed       = current_user.activities.where("status = 'Completed' AND completed_at > ?",)
       @tivits_completed       = current_user.activities.where("status = 'Completed'")
-      
-      
      end
   end
   

@@ -12,7 +12,10 @@
 #
 
 class Tivitcomment < ActiveRecord::Base
-	attr_accessible :status_id, :activity_id,:user_id,:comment
+	attr_accessible :status_id, :activity_id,:user_id,:comment, :created_at
 	belongs_to :activity
 	belongs_to :user
+	
+	validates :comment,  :presence => true
+                    
 end
