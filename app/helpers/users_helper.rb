@@ -13,6 +13,20 @@ module UsersHelper
  # If no user with that email address exists, it creates a new object 
   def get_user(params)
     
+    
+    puts "----------    New  usrs -------------------"
+ 	puts "----------    New  usrs -------------------"
+ 	puts params.inspect
+    puts "----------    New  usrs -------------------"
+ 	puts "----------    New  usrs -------------------"
+ 	puts "----------    New  usrs -------------------"
+ 	puts "----------    New  usrs -------------------"
+ 	puts "----------    New  usrs -------------------"
+ 	puts "----------    New  usrs -------------------"
+ 	puts "----------    New  usrs -------------------"
+ 	puts "----------    New  usrs -------------------"
+ 	
+    
     @user = User.find_by_email( params[:user]["email"])
 	if (@user == nil)
 		@user = User.new(params[:user])

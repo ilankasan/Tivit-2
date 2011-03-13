@@ -13,10 +13,12 @@
       <strong>Name</strong> <%= @user.name %><br />
       <strong>email</strong> <%= @user.email %><br />
       <strong>URL</strong>  <%= link_to "My account", user_path(@user) %>
-      <%= image_tag @user.avatar.url %>
+      
+	  <%= image_tag @user.avatar.url %>
 	  <%= image_tag @user.avatar.url(:medium) %>
       <%= image_tag @user.avatar.url(:thumb) %>
-    </td>
+
+	</td>
     
     
     <% if false %>

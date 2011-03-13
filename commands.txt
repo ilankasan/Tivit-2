@@ -16,7 +16,7 @@ git remote add origin git@github.com:<ilankasan>/<new repository name on GitHub 
 git remote add heroku git@heroku.com:tiviti.git
 
 $ git add .
-git commit -am "added update task"
+
 $ git checkout master
 $ git merge ilan updating-users
 

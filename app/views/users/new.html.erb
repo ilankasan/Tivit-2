@@ -2,8 +2,10 @@
 
 
 <%= form_for(@user) do |f| %>
+
 <%= render 'shared/error_messages', :object => f.object %>  
-  
+<!--% form_for :user,   :html => { :multipart => true } do |f| %-->
+
 
   <div class="field">
     <%= f.label :name %><br />
@@ -17,11 +19,18 @@
     <%= f.label :password %><br />
     <%= f.password_field :password %>
   </div>
+
   <div class="field">
     <%= f.label :password_confirmation, "Confirmation" %><br />
     <%= f.password_field :password_confirmation %>
+    
+    <!--%= f.file_field :avatar %-->
+
   </div>
+  
+  
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>
 <% end %>
+

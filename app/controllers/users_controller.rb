@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   
  def create
 # find if there is a skeleton of the user
-	 
+	  params[:user][:email] = params[:user][:email].downcase 
 	  @user = get_user(params) 
 	if @user.save
 # sending a welcome email to the new user
@@ -65,7 +65,10 @@ class UsersController < ApplicationController
     puts "----------    update usrs -------------------"
     
     @user = User.find(params[:id])
+#save email address lower case
+    params[:user]["email"] = params[:user]["email"].downcase 
     if @user.update_attributes(params[:user])
+      @user.avatar = params[:user]["avatar"]
       flash[:success] = "Profile updated."
       redirect_to @user
     else

@@ -15,7 +15,7 @@ class PagesController < ApplicationController
 #this SQL retrieves all new tivits for me eccpet the ones i am the owner
 	  current_user_id = current_user.get_id.inspect
    #   sql_new_tivits = "SELECT activities.* FROM activities, tivit_user_statuses WHERE NOT activities.owner_id = "+current_user_id+" AND tivit_user_statuses.activity_id = activities.id AND tivit_user_statuses.status_id = 'New' AND tivit_user_statuses.user_id = "+current_user_id
-      sql_new_tivits = "SELECT activities.* FROM activities, tivit_user_statuses 
+      sql_new_tivits = "SELECT DISTINCT activities.* FROM activities, tivit_user_statuses 
       				   WHERE NOT activities.status         = 'Completed' 
       				   AND   NOT activities.owner_id       = "+current_user_id+" 
       				   AND tivit_user_statuses.activity_id = activities.id 
