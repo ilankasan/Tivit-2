@@ -41,7 +41,7 @@
 			<% if tivit.status == "Completed" %>
 	 			<div class="text"> Completed!
 	 				
-	 				<% if tivitdetails.completed_at!=nil %>
+	 				<% if tivit.completed_at!=nil %>
 						<%= time_ago_in_words(tivit.completed_at) %> ago			
 	   				<% end %> 
 	   				<div class="text">Summary: <%= tivit.summary%> </div> 		
