@@ -1,0 +1,120 @@
+
+<tr>
+  <td class="activity">
+    <span class="content"><b><%= tivitdetails.name %></b></span><br>
+    <span class="content">Details: <%= tivitdetails.description %></span><br>
+    <span class="content">Due : <%= tivitdetails.due %></span><br>
+
+   <% tivitdetails.users.each do |user| %>
+   	  <% if current_user.id == tivitdetails.owner_id && user.id == current_user.id %>
+      	<span class="content">I am the owner</span><br>
+   	  <% else %>
+   		<% if user.id == tivitdetails.owner_id %>
+   			<span class="content"><%= user.email%> is the owner of this task</span><br>
+   		<% else %>
+ 			<% if user.id == current_user.id%>	
+   				<span class="content">i am participating</span><br>
+   			<% else %>
+   				<% user_status = tivitdetails.get_user_status(user)%>
+   				<% case user_status%>
+   				<% when "New"%>	
+	   				<span class="content"><%= user.email%> has not reviewed tivit</span><br>
+				<% when "I Am Done"%>	
+					<span class="content"><%= user.email%> is done!</span><br>
+				<% else %>
+				 	<span class="content"><%= user.email%> <%= user_status%> tivit</span><br>
+   				<% end %>
+   				
+   			<% end %>
+   		<% end %>			
+   	  <% end %> 	
+   <% end %>
+    <span class="timestamp">tivit created <%= time_ago_in_words(tivitdetails.created_at) %> ago.</span><br>
+  </td>
+  <td>
+  	<span class="content">My status : <%= tivitdetails.get_user_status(current_user) %>:<%= tivitdetails.get_user_status_comment(current_user) %> </span><br> 			
+   	<span class="content">Task status : </span> 			
+   	
+  	<% if tivitdetails.status == "Completed" %>
+ 			<span class="content"> Completed !</span><br>
+ 			<span class="content">Tivit Summary : <%= tivitdetails.summary%> </span><br> 			
+   			
+ 			<% if tivitdetails.completed_at!=nil %>
+				<span class="timestamp">tivit was completed <%= time_ago_in_words(tivitdetails.completed_at) %> ago </span> 			
+   			<% end %> 
+  	<% else %> 
+ 			<span class="content"> In Progress </span><br>
+ 			<% if tivitdetails.due!=nil %>
+   				<% if tivitdetails.due > Time.now %>
+      				<span class="timestamp">tivit is due in <%= time_ago_in_words(tivitdetails.due) %> </span>
+   				<% else %>
+   					<span class="timestamp">tivit is <%= time_ago_in_words(tivitdetails.due) %> ovberdue! </span>
+   				<% end %>
+   			<% end %> 
+  	<% end %> 
+   
+  </td>
+  
+  
+  <td>
+  	
+  <% if current_user.id == (tivitdetails.owner_id) %>
+  	<%= link_to "edit", edit_activity_path(tivitdetails) %>
+  	
+    <%= link_to "delete", tivitdetails, :method => :delete,
+                                     :confirm => "You sure you want to delete" +tivitdetails.name+"?",
+                                     :title => tivitdetails.name %>
+  <% end %>
+  
+  
+  
+  
+  <%= link_to "details", tivitdetails, :action => "show",
+  									:method => "get",
+                                    :title  => tivitdetails.name %>
+                                      
+   <% if current_user.id != (tivitdetails.owner_id) %>
+  	    
+   
+     <%= link_to "accept", 		:controller  => "activities", 
+   								:action      => "change_tivit_status",
+   								:status      => "accept",
+ 								:id          => tivitdetails.id, 
+  							    :confirm     => "Are you sure you want to accept tivit" +tivitdetails.name+"?", 
+                                :title       => tivitdetails.name %>
+
+        
+                                     
+    
+	<%= link_to "decline",      :controller  => "activities",
+    							:action      => "change_tivit_status",
+    							:status      => "decline",
+    							:id          => tivitdetails.id, 
+  							    :confirm     => "Are you sure you want to decline tivit" +tivitdetails.name+"?",
+                                :title       => tivitdetails.name %>
+
+
+	<%= link_to "I Am Done",    :controller  => "activities",
+    							:action      => "change_tivit_status",
+    							:status      => "i_am_done",
+    							:id          => tivitdetails.id, 
+  							    :confirm     => "Are you sure you want to decline tivit" +tivitdetails.name+"?",
+                                :title       => tivitdetails.name %>
+
+  <% end %>
+  
+  </td>
+
+ 
+</tr>
+
+<tr>
+
+  <td>
+<!-- Displaying and adding comments -->
+
+ <%= render :partial => 'shared/tivit_comments', :collection =>  [tivitdetails], :as => :tivit%> 
+  </td>
+
+</tr>
+

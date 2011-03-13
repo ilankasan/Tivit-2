@@ -22,7 +22,6 @@ body {
 	width: 980px;
 	min-height: 768px;
 	margin: auto; /*this will center the div on the page*/
-	
 }
 /* Main Navigation **************************************************/
 #main-nav-background {
@@ -243,30 +242,126 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
   text-align: center;
   width: 140px;
   color: #fff;
-  background: #006400;
+  background: #111312;
+  border: 0px;
   font-size: 110%;
   font-weight: bold;
   padding: 4px;
-  -moz-border-radius:    6px;
-  -webkit-border-radius: 6px;
-  border-radius:         6px;
+  -moz-border-radius:    3px;
+  -webkit-border-radius: 3px;
+  border-radius:         3px;
 }
-/* Home Page - On Deck Container **************************************************/
-/*
-#ondeck-container {
-	background: red;
-	width: 100%;
+/* Home Page - left navigation **************************************************/
+#homepage-left-nav-container {
+	background: white;
 	position: relative;
-	top: 42px;
-	margin: auto; 
-	-moz-border-radius:    3px;
- 	-webkit-border-radius: 3px;
-  	border-radius:         3px;
+	top: 32px;
+	/* if no width is specified, the whole browser will be take over */
+	width: 120px;
+	min-height: 768px;
+	float: left;
+	
 }
-*/
+/* Home Page - tivit list Container **************************************************/
+#homepage-tivit-list-container {
+	background: white;
+	position: relative;
+	top: 32px;
+	/* if no width is specified, the whole browser will be take over */
+	width: 840px;
+	min-height: 768px;
+	float: right;
+}
+/* individual tivit container **************************************************/
+#tivit-container-background {
+	width: 627px;
+	height: 120px;
+	background: #EEEEEE;
+}
+#tivit-container {
+	padding-bottom: 16px;
+	width: 627px;
+	height: 120px;
+}
+#tivit-avatar {
+	background: white;
+	width: 80px;
+	height: 100px;
+	float: left;
+}
+#tivit-avatar-label {
+	background: #EEEEEE;
+	width: 80px;
+	height: 20px;
+	float: left;
+}
+#tivit-avatar-label .text{
+	font-size: 12px;
+	color: black;
+	text-align: center;
+	line-height: 20px;
+}
+#tivit-title {
+	background: #DDDDDD;
+	width: 627px;
+	height: 30px;	
+}
+#tivit-title .text{
+	font-size: 14px;
+	text-align: left;
+	font-weight: bold;
+	line-height: 30px;	/* by using same line hieght as the container, the text magically vertical center align */
+	text-indent: 20px;
+	/*text-decoration: underline;*/
+	color: #000000;
+	margin: 8px;
+}
+#tivit-content {
+	background: #EEEEEE;
+	width: 530px;
+	height: 70px;
+}
+#tivit-content .text{
+	padding-top: 6px;
+	text-indent: 8px;
+}
+#tivit-status {
+	background: white;
+	width: 20px;
+	height: 20px;
+	float: right;
+	position: relative;
+	top: -24px;
+	left: -4px;
+}
+
+#tivit-container .tivitbutton {
+	width: 80px;
+	height: 18px;
+	margin: 0;
+	line-height: 18px; /* same hieght as the container will center the text in the middle */
+	/*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
+	font-family: inherit;
+	float: right;	
+	position: relative;
+	top: -60px;
+	left: -10px;
+    display: block;
+    text-align: center;
+    color: #fff;
+    background: #111312;
+    font-size: 100%;
+    font-weight: bold;
+    padding: 4px;
+    border: 0px;
+    -moz-border-radius:    3px;
+    -webkit-border-radius: 3px;
+    border-radius:         3px;
+}
+
 h1 {
 	font-size: 16px;
-	padding-left: 20px;
+	padding-top: 10px;
 } 
 
 
@@ -345,6 +440,8 @@ footer {
   width: 710px;
   margin-left: auto;
   margin-right: auto;
+  clear: both;
+}
 }
 
 footer nav {

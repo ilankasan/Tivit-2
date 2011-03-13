@@ -51,7 +51,7 @@ class ActivitiesController < ApplicationController
    # puts "----------->>>>>>>>>>> sho show show"  
    # puts params.inspect
    # puts "----------->>>>>>>>>>>"
- #updating tivit status New -> Reviewed
+   #updating tivit status New -> Reviewed
     @activity = Activity.find(params[:id])
     @activity.update_tivit_status_after_show(current_user)
   	@title = @activity.name

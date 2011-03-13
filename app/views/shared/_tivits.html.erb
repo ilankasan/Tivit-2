@@ -1,31 +1,60 @@
+
+<!--
+<div id="tivit-container">
+	
+	<div id="tivit-avatar">
+		<img src="/images/yaniv.jpg">
+	</div>
+	<div id="tivit-title" class="text">
+		
+		<%= link_to "tivit test with ruby", signup_path, :class => "text" %>
+                                    
+	</div>
+	<div id="tivit-status">
+		<img src="/images/status-inprogress.gif" alt="in progress">
+		</div>
+	<div id="tivit-content">
+		<div class="text">Due: <b> Next Tursday </b>(3/3)</div>
+		<div class="text">Details: need to make sure everything works fine</div>
+	</div>
+	<div id="tivit-avatar-label">
+		<div class="text">yaniv</div>
+	</div>
+	<div class="buttons">
+		<%= submit_tag("Respond", :class => "tivitbutton") %>
+	</div>
+	
+</div>
+
+-->
+
 <% unless @tivits_new == nil  %>
 
    <table class="activities" summary="User activities">
-     <h2>New for you (you do not own)</h2> 
+     <h1>New Requests (<%= @tivits_new.count%>)</h1> 
     <%= render :partial => 'shared/tivit', :collection =>  @tivits_new  %> 
+  </table>
+<% end %>
+
+<% unless @tivits_owned== nil  %>
+   <table class="activities" summary="User activities">
+     <h1>Acitivites for you to complete (<%= @tivits_owned.count%>)</h1>
+     <%= render :partial => 'shared/tivit', :collection =>  @tivits_owned %>
   </table>
 <% end %>
 
 <% unless @tivits_participate == nil  %>
 
    <table class="activities" summary="User activities">
-     <h2>Tivits due to you (you participate))</h2>
+     <h1>Deliverables due to you (<%= @tivits_participate.count%>)</h1>
      
      <%= render :partial => 'shared/tivit', :collection =>  @tivits_participate %>
   </table>  
 <% end %>
 
-
-<% unless @tivits_owned== nil  %>
-   <table class="activities" summary="User activities">
-     <h2>Tivits for you to complete (you own)</h2>
-     <%= render :partial => 'shared/tivit', :collection =>  @tivits_owned %>
-  </table>
-<% end %>
-
 <% unless @tivits_completed== nil  %>
    <table class="activities" summary="User activities">
-     <h2>Completed tivities (last 7 days)</h2>
+     <h1>Completed (<%= @tivits_completed.count%>)</h1>
      <%= render :partial => 'shared/tivit', :collection =>  @tivits_completed %> 
   </table>
 

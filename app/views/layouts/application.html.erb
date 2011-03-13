@@ -18,18 +18,30 @@
      	<!-- Page Content Area -->
 		<div id="page-container">
       	
+      		
+      		<div id="homepage-left-nav-container">
+      		</div>
+      		
 			<% flash.each do |key, value| %>
 				<div class="flash <%= key %>"><%= value %></div>
 			<% end %>
 	     
-	     	<%= yield %>
-	        
+		     <div id="homepage-tivit-list-container">
+		     	<%= yield %>	     	 
+		     </div>
+	       
+	       <div style="clear: both;"></div>
+	       
     	</div>    
     
+     
+     
     	<!-- Footer -->
 	    <div id="footer">
 	    	<%= render 'layouts/footer' %>
 	    </div>
+    
+    <div style="clear: both;"></div>
     
     	<%= debug(params) if Rails.env.development? %>
       
