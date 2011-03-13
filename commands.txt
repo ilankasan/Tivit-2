@@ -54,7 +54,7 @@ $ git add .
 $ git commit -am "add completed email march 10-1"
 git checkout master
 git merge updating-users
-git merge yaniv-new_ui_4
+git merge yaniv-new_ui_1
 git push heroku
 $ 
 heroku rake db:migrate
