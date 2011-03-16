@@ -18,11 +18,23 @@
   <div class="field">
     <%= f.label :password_confirmation, "Confirmation" %><br />
     <%= f.password_field :password_confirmation %><br />
-    
-    <%= f.file_field :avatar %>
+   
+<% if false %>   
+   <p>
+    <label for="profile_image">Upload A Mugshot:</label>
+    <%= f.file_field :uploaded_data %>
+  </p>
+<% end %>
+      
+   
   </div>
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
 <% end %>
+
+
+
+
+
 

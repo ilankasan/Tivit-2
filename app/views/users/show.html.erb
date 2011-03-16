@@ -5,6 +5,15 @@
         <%= gravatar_for @user %>
         <%= @user.name %>
       </h1>
+      
+      <h1>
+      	 <%= link_to "Edit Profile Picture",:controller  => "users", 
+   											:action      => "editprofileimage",
+   										    :id          => @user.id, 
+  							    			:title       => "Edit picture for "+ @user.name %>
+      </h1>
+      
+      
       <h1>
       <%= link_to "Edit My Account", edit_user_path(current_user) %>
       </h1>
@@ -14,9 +23,13 @@
       <strong>email</strong> <%= @user.email %><br />
       <strong>URL</strong>  <%= link_to "My account", user_path(@user) %>
       
-	  <%= image_tag @user.avatar.url %>
-	  <%= image_tag @user.avatar.url(:medium) %>
-      <%= image_tag @user.avatar.url(:thumb) %>
+	  <h1>Profile Image Test</h1>
+	<% if @profile_image != nil %>
+      
+		 <% for profile_images in @profile_image -%>
+	  	 	<%= link_to image_tag(@user.profile_images.public_filename(:thumb)), @user.profile_images.public_filename %>
+		 <% end %>
+	<% end %>
 
 	</td>
     

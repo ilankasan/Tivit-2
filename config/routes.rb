@@ -1,6 +1,8 @@
 FirstApp::Application.routes.draw do
   
   
+  
+
   resources :activities do
   resources :tivitcomments
 end
@@ -25,34 +27,26 @@ resources :activities
   	match "/change_tivit_status" => "activities#change_tivit_status"
   	
   	
-  	
-
         
 resources :pages  
-
-  #get "users/new"
-  
   match '/about',   :to => 'pages#about'
   match '/home',    :to => 'pages#home'
   match '/signout',   :to => 'pages#signout'
-    match '/myteam',   :to => 'pages#myteam'
- 
+  match '/myteam',   :to => 'pages#myteam'
   match '/help',    :to => 'pages#help'
-   match '/contact', :to => 'pages#contact'
+  match '/contact', :to => 'pages#contact'
   match '/myaccount', :to => 'pages#myaccount'
   
 
   get "pages/signout"
 
-  
-  
-  
-  
-  resources :users
+resources :users
   get "users/show"
   match '/signup',  :to => 'users#new'
   match '/allusers',  :to => 'users#allusers'
   match "users/:id" => "users#update"
+  match "/editprofileimage" => "users#editprofileimage"
+  	
   
   
 #  match '/signup',  :to => 'users#new'

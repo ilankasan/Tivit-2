@@ -44,8 +44,10 @@ cache_classes = false
 
   }
   
-  Paperclip.options[:command_path] = "c:/Windows/system32/convert"
+  Paperclip.options[:command_path] = "/c/Windows/system32/convert"
  # Paperclip.options[:command_path] = "/some/path/to"
   
+  
+  #config.gem "rmagick", :lib => "RMagick"  
 end
 

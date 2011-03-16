@@ -56,20 +56,34 @@ class UsersController < ApplicationController
  def update
  	puts "----------    update usrs -------------------"
  	puts "----------    update usrs -------------------"
+   puts "----------    update usrs -------------------"
+   puts "----------    update usrs -------------------"
+   puts "----------    update usrs -------------------"
+   puts "----------    update usrs -------------------"
+   puts "----------    update usrs -------------------"
+   
     puts params.inspect
     puts "----------    update usrs -------------------"
-    puts "----------    update usrs -------------------"
-    puts "----------    update usrs -------------------"
-    puts "----------    update usrs -------------------"
-    puts "----------    update usrs -------------------"
-    puts "----------    update usrs -------------------"
+   
+  
+   
+   
     
     @user = User.find(params[:id])
+    
+    
+     @profile_image = ProfileImage.new(params[:profile_image])
+  #  flash[:notice] = 'Mugshot was successfully created.'
+   # redirect_to mugshot_url(@mugshot)     
+  
+    
 #save email address lower case
     params[:user]["email"] = params[:user]["email"].downcase 
     if @user.update_attributes(params[:user])
-      @user.avatar = params[:user]["avatar"]
+     
+      @user.profile_image = @profile_image 	
       flash[:success] = "Profile updated."
+      
       redirect_to @user
     else
       @title = "Edit user"
@@ -77,6 +91,17 @@ class UsersController < ApplicationController
     end
  end
  
+ 
+ def editprofileimage
+    puts " -------   editprofileimage   --------"
+    puts " -------   editprofileimage   --------"
+    puts " -------   editprofileimage   --------"
+    puts " -------   editprofileimage   --------"
+    puts " -------   editprofileimage   --------"
+    puts " -------   editprofileimage   --------"
+    
+    render 'edit_profile_image'
+  end
  
  
    def destroy
