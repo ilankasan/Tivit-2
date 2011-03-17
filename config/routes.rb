@@ -2,6 +2,23 @@ FirstApp::Application.routes.draw do
   
   
   
+  resources :profile_images do
+  resources :users
+end
+
+resources :profile_images 
+  match "profile_images/:id" => "profile_images#update"
+  match "profile_images/:id/edit" => "profile_images#update"
+  
+  match "/edit" => "profile_images#edit"
+  match "/show" => "profile_images#show"
+  #match "/update" => "profile_images#update"
+  
+  #get "profile_images/update"
+  #get "profile_images/show"
+
+  #match "/editprofileimage" => "profile_image#editprofileimage"
+  
 
   resources :activities do
   resources :tivitcomments
@@ -45,7 +62,6 @@ resources :users
   match '/signup',  :to => 'users#new'
   match '/allusers',  :to => 'users#allusers'
   match "users/:id" => "users#update"
-  match "/editprofileimage" => "users#editprofileimage"
   	
   
   

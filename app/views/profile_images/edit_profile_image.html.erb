@@ -1,0 +1,48 @@
+<h1><%= @title %></h1>
+
+
+
+<h1>Edit user</h1>
+
+<% form_for :profiel_image, @profile_image, :url => profile_image_path,  :html => { :multipart => true } do |f| %>
+  
+   <p>
+    <label for="profile_images">Upload A Mugshot ddd:</label>
+    <%= f.file_field :uploaded_data %>
+  </p>
+     
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+<% end %>
+
+
+
+
+
+
+
+
+<!--%= error_messages_for :profile_image %-->
+
+<% form_for(:profile_image,  :controller => "profile_images" , :action => "update", :method => "post", 
+                      :html => { :multipart => true }) do |f| -%>
+                
+<!--% form_for(:profile_image, :url => profile_image_path, :action =>"update", :methos =>"put",
+                      :html => { :multipart => true }) do |f| -%-->
+  <p>
+    <label for="profile_image">Upload A Profile Image ilan 1:</label>
+    <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  
+    <%= f.file_field :uploaded_datad %>
+  </p>
+  <p>
+    <%= submit_tag 'Update Profiel Image' %>
+  </p>
+<% end %>
+
+
+

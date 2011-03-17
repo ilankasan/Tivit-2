@@ -72,7 +72,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     
     
-     @profile_image = ProfileImage.new(params[:profile_image])
+ #    @profile_image = ProfileImage.new(params[:profile_image])
   #  flash[:notice] = 'Mugshot was successfully created.'
    # redirect_to mugshot_url(@mugshot)     
   
@@ -81,7 +81,7 @@ class UsersController < ApplicationController
     params[:user]["email"] = params[:user]["email"].downcase 
     if @user.update_attributes(params[:user])
      
-      @user.profile_image = @profile_image 	
+     # @user.profile_image = @profile_image 	
       flash[:success] = "Profile updated."
       
       redirect_to @user
@@ -92,16 +92,9 @@ class UsersController < ApplicationController
  end
  
  
- def editprofileimage
-    puts " -------   editprofileimage   --------"
-    puts " -------   editprofileimage   --------"
-    puts " -------   editprofileimage   --------"
-    puts " -------   editprofileimage   --------"
-    puts " -------   editprofileimage   --------"
-    puts " -------   editprofileimage   --------"
-    
-    render 'edit_profile_image'
-  end
+ #def editprofileimage
+ 
+  #end
  
  
    def destroy

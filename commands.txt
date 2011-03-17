@@ -1,7 +1,7 @@
 Attachement_fu
 ----------------
 http://thewebfellas.com/blog/2008/2/18/imagescience-on-windows-without-the-pain/comments/931
-rails plugin  install git://github.com/technoweenie/attachment_fu.git
+rails plugin  install git://github.com/technoweenie/attachment_fu.git  -r rails3
 gem install --include-dependencies RubyInline
 gem install "C:\Ruby192\image_science-1.1.3-i386-mswin32.gem"
 rails generate model ProfileImage user_id:integer parent_id:integer content_type:string filename:string thumbnail:string size:integer width:integer height:integer
@@ -137,7 +137,7 @@ aa:09:9d:16:4f:c6:0a:99:13:2c:6c:e6:25:19:06:04 ilan.kasan1@gmail.com
 
 
 rails generate controller Pages home activities myteam signout myaccount
-rails generate controller ProfileImage upate 
+rails generate controller ProfileImage  
 
 
 

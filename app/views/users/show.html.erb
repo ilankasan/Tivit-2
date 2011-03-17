@@ -7,8 +7,8 @@
       </h1>
       
       <h1>
-      	 <%= link_to "Edit Profile Picture",:controller  => "users", 
-   											:action      => "editprofileimage",
+      	 <%= link_to "Edit Profile Picture",:controller  => "profile_images", 
+   											:action      => "edit",
    										    :id          => @user.id, 
   							    			:title       => "Edit picture for "+ @user.name %>
       </h1>
@@ -24,11 +24,10 @@
       <strong>URL</strong>  <%= link_to "My account", user_path(@user) %>
       
 	  <h1>Profile Image Test</h1>
-	<% if @profile_image != nil %>
-      
-		 <% for profile_images in @profile_image -%>
-	  	 	<%= link_to image_tag(@user.profile_images.public_filename(:thumb)), @user.profile_images.public_filename %>
-		 <% end %>
+	<% if @user.profile_image != nil && @user.profile_image.id != nil%>
+      <%puts "55555555555555555555555555555555555555555555"%>
+      <%puts @user.profile_image.inspect%>
+		 	<!--%= link_to image_tag(@user.profile_image.public_filename(:thumb)), @user.profile_image.public_filename %-->
 	<% end %>
 
 	</td>
