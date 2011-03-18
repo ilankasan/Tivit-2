@@ -15,12 +15,19 @@ class ProfileImagesController < ApplicationController
 	    puts "&&&&&&&&&&&&&&&&&&&"
 	    puts params["user"].inspect
 	    
-		@user = ProfileImage.find(params[:id])
+		@user = User.find(params[:id])
+		
+		
+		if(params["user"] == nil || params["user"]["avatar"] == nil)
+	    	render 'edit_profile_image'
+	   else
 	    
-		@image = ProfileImage.find_by_user_id(params[:id])
-		if(@image == nil)
-			@image = ProfileImage.new
-			@image.user_id =  params[:id]
+		
+	    
+		#@image = ProfileImage.find_by_user_id(params[:id])
+		if(@user.profile_image == nil)
+			@user.profile_image = ProfileImage.new
+		#	@image.user_id =  params[:id]
 			puts "image does not exists"
 		else
 			   # u.avatar.url # => '/url/to/file.png'
@@ -28,20 +35,23 @@ class ProfileImagesController < ApplicationController
 			
 		end
 		
-		puts "image exists" + params["user"]["avatar"].inspect
+		#puts "image exists" + params["user"]["avatar"].inspect
 			
-		@image.avatar =params["user"]["avatar"]
+		@user.profile_image.avatar =params["user"]["avatar"]
 		#@image.avatar = File.open('public/images') 	
-		@image.save!
+		@user.profile_image.save!
 		
 		puts "_____________________________________________________________________"
-		puts "URL          = " + @image.avatar.url # => '/url/to/file.png'
-		puts "Current path = " + @image.avatar.current_path # => 'path/to/file.png'else
+		puts "URL          = " + @user.profile_image.avatar.url # => '/url/to/file.png'
+		puts "Current path = " + @user.profile_image.avatar.current_path # => 'path/to/file.png'else
 		puts "_____________________________________________________________________"
 		
     	#render @user
+    	#redirect_to edit_profile_image(@user)
     	render 'edit_profile_image'
+		
 		#render "users/show.html.erb"
+		end
 	end
 	
 end
