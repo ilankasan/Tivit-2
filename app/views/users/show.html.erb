@@ -2,9 +2,8 @@
   <tr>
     <td class="main">
       <h1>
-        <%= gravatar_for @user %>
-        <%= @user.name %>
-      </h1>
+     <%= render :partial => 'profile_images/profile_image', :collection =>  [@user], :as => :user%> 
+	 </h1>
       
       <h1>
       	 <%= link_to "Edit Profile Picture",:controller  => "profile_images", 
