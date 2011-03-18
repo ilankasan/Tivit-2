@@ -2,13 +2,7 @@ class CreateProfileImages < ActiveRecord::Migration
   def self.up
     create_table :profile_images do |t|
       t.integer :user_id
-      t.integer :parent_id
-      t.string :content_type
-      t.string :filename
-      t.string :thumbnail
-      t.integer :size
-      t.integer :width
-      t.integer :height
+      t.string :avatar
 
       t.timestamps
     end

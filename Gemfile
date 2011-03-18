@@ -3,8 +3,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.3'
 gem 'faker', '0.3.1'
-#gem 'mysql2'
-#gem "paperclip", "~> 2.3"
+gem 'carrierwave'
 
 
 gem 'gravatar_image_tag', '1.0.0.pre2'

@@ -21,11 +21,11 @@
 
 
 require 'digest'
+
 class User < ActiveRecord::Base
   attr_accessor :password
   attr_accessible :name, :email, :password, :password_confirmation, :is_active 
   
-  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }
   
 # every user has many  activities he is working on  
   has_and_belongs_to_many :activities
@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   has_many :tivit_user_statuses
   has_one :profile_image
 
-    
+  
  
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

@@ -1,0 +1,6 @@
+
+<%if user.profile_image != nil && user.profile_image.avatar != nil%>
+	<img src=<%= user.profile_image.avatar.url%> 
+<%else%>
+	<img src="/images/default-avatar.jpg">
+<%end%>	

@@ -24,31 +24,8 @@
       <strong>URL</strong>  <%= link_to "My account", user_path(@user) %>
       
 	  <h1>Profile Image Test</h1>
-	<% if @user.profile_image != nil && @user.profile_image.id != nil%>
-      <%puts "55555555555555555555555555555555555555555555"%>
-      <%puts @user.profile_image.inspect%>
-		 	<!--%= link_to image_tag(@user.profile_image.public_filename(:thumb)), @user.profile_image.public_filename %-->
-	<% end %>
 
 	</td>
-    
-    
-    <% if false %>
-    <% unless @user.activities.empty? %>
-        <table class="activities" summary="User tasks">
-          <%= render @myactivities %>
-        </table>
-        <%= will_paginate @myactivities %>
-      <% end %>
-    </td>
-    <td class="sidebar round">
-      <strong>Name</strong> <%= @user.name %><br />
-      <strong>URL</strong> <%= link_to user_path(@user), @user %><br />
-      <strong>activity</strong> <%= @user.myactivities.count %>
-    </td>
-    <% end %>
-    
-    
     
   </tr>
 </table>

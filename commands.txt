@@ -5,7 +5,7 @@ rails plugin  install git://github.com/technoweenie/attachment_fu.git  -r rails3
 
 gem install --include-dependencies RubyInline
 gem uninstall "C:\Ruby192\image_science-1.1.3-i386-mswin32.gem"
-rails generate model ProfileImage user_id:integer parent_id:integer content_type:string filename:string thumbnail:string size:integer width:integer height:integer
+rails generate model ProfileImage user_id:integer avatar:string 
 
 Git Synch
 --------------
@@ -62,7 +62,7 @@ heroku pg:reset --db SHARED_DATABASE_URL
 
 
 $ git add .
-$ git commit -am "10-1"
+$ git commit -am " 10-1"
 git checkout master
 git merge updating-users
 git merge yaniv-new_ui_1
@@ -114,7 +114,8 @@ rails -d mysql my_rails_app
  
  rails generate migration change_description_activity_column_type
  
- rails generate change_column_(table_name, column_name, type, options): Changes the column to a different type using the same parameters as add_column.
+ rails generate change_column_(table_name, column_name, type, options): 
+ Changes the column to a different type using the same parameters as add_column.
  
  
  rails generate migration add_profile_image_to_users profile_image:integer
@@ -147,6 +148,7 @@ gem install autotest-rails-pure -v 4.1.2
 
 
 rails generate migration add_comment_to_tivit_user_statuses comment:string
+rails generate migration add_avatar_to_users avatar:string
 
 rails generate migration add_avatar_columns_to_users avatar_file_name:string avatar_content_type:string avatar_file_size:integer avatar_updated_at:datetime
 
