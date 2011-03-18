@@ -2,8 +2,9 @@ Attachement_fu
 ----------------
 http://thewebfellas.com/blog/2008/2/18/imagescience-on-windows-without-the-pain/comments/931
 rails plugin  install git://github.com/technoweenie/attachment_fu.git  -r rails3
+
 gem install --include-dependencies RubyInline
-gem install "C:\Ruby192\image_science-1.1.3-i386-mswin32.gem"
+gem uninstall "C:\Ruby192\image_science-1.1.3-i386-mswin32.gem"
 rails generate model ProfileImage user_id:integer parent_id:integer content_type:string filename:string thumbnail:string size:integer width:integer height:integer
 
 Git Synch
@@ -61,7 +62,7 @@ heroku pg:reset --db SHARED_DATABASE_URL
 
 
 $ git add .
-$ git commit -am "add completed email march 10-1"
+$ git commit -am "10-1"
 git checkout master
 git merge updating-users
 git merge yaniv-new_ui_1
