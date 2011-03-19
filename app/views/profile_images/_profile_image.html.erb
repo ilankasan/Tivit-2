@@ -1,5 +1,5 @@
 <%if user != nil && user.profile_image != nil && user.profile_image.avatar != nil%>
-	<%= image_tag user.profile_image.avatar.url, :size => "100x100" %> 
+	<%= image_tag user.profile_image.avatar.url, :size => "80x80" %> 
 <%else%>
 	<%= image_tag "/images/default-avatar.jpg" %> 
 

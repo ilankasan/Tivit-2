@@ -3,17 +3,9 @@
 	<div id="tivit-container-background">
 		
 		<div id="tivit-avatar">
+			 <%= render :partial => 'profile_images/profile_image', :collection =>  [tivit.get_owner], :as => :user%> 
+	
 			
-			<% case tivit.get_owner.email %>
-   				<% when "yanivlevi1@gmail.com"%>					
-	   				<img src="/images/yaniv.jpg">		
-	  			<% when "ilan.kasan@gmail.com"%>					
-	   				<img src="/images/ilan.jpg">	
-	   			<% when "jon.nakasone@gmail.com"%>					
-	   				<img src="/images/jon.jpg">			
-	  		<% else %>
-				 	<img src="/images/default-avatar.jpg">		
-   			<% end %>
 		</div>
 		<div id="tivit-title" class="text">
 			
