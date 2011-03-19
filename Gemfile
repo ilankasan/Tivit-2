@@ -1,5 +1,5 @@
-source 'http://rubygems.org'
-
+#source 'http://rubygems.org'
+source :gemcutter
 
 gem 'rails', '3.0.3'
 gem 'faker', '0.3.1'
