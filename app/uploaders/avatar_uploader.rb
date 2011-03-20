@@ -17,8 +17,10 @@ class AvatarUploader < CarrierWave::Uploader::Base
 		  CarrierWave.configure do |config|
 		    config.storage = :file
 		  end
-		else  
-			config.storage = :s3 
+		else 
+		  CarrierWave.configure do |config|
+		   	config.storage = :s3
+		  end 
 		end
   end
   
