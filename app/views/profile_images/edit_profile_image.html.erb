@@ -3,7 +3,7 @@
 
 <%= render :partial => 'profile_images/profile_image', :collection =>  [@user], :as => :user%> 
 
-<h1>Edit Profile</h1>
+<h1>Edit Image</h1>
 
 <% form_for  @user, :url => profile_image_path,  :html => { :multipart => true } do |f| %>
   
