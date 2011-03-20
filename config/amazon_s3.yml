@@ -1,0 +1,18 @@
+development:
+  bucket_name: appname_development
+  access_key_id: 
+  secret_access_key: 
+  distribution_domain: XXXX.cloudfront.net
+
+test:
+  bucket_name: appname_test
+  access_key_id: 
+  secret_access_key: 
+  distribution_domain: XXXX.cloudfront.net
+
+production:
+  bucket_name: AKIAJHY36IP6D642ZGQQ
+  access_key_id: x6LjywZtDk3B+bs8+M2LUUezSNZQ7cAxz5JieU3k
+  secret_access_key: tiviti-heroku
+  
+  
