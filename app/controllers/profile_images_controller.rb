@@ -41,13 +41,14 @@ class ProfileImagesController < ApplicationController
 		#@image.avatar = File.open('public/images')
 		
 		
-		puts "_____________________________________________________________________"
-		#puts "URL          = " + @user.profile_image.avatar.url # => '/url/to/file.png'
-		puts "Current path = " + @user.profile_image.avatar.current_path # => 'path/to/file.png'else
-		puts "_____________________________________________________________________"
 		 	
 		@user.profile_image.save!
 		
+		
+		puts "_____________________________________________________________________"
+		puts "URL          = " + @user.profile_image.avatar.url # => '/url/to/file.png'
+		puts "Current path = " + @user.profile_image.avatar.current_path # => 'path/to/file.png'else
+		puts "_____________________________________________________________________"
 		
     	#render @user
     	#redirect_to edit_profile_image(@user)
