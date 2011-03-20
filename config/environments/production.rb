@@ -64,5 +64,16 @@ FirstApp::Application.configure do
 	  :password       => 'gotiviti'
 
   }
+  
+  
+  CarrierWave.configure do |config|
+  config.s3_access_key_id = 'AKIAJHY36IP6D642ZGQQ'
+  config.s3_secret_access_key = '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'
+  config.s3_bucket = 'tiviti-heroku'
+  config.s3_access_policy = :public_read
+ # config.s3_headers = {'Cache-Control' => 'max-age=315576000'}
+#  config.s3_region = 'us-east-1'
+  config.s3_cnamed = true
+end
 
 end
