@@ -21,7 +21,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
 			config.storage = :s3 
 		end
   end
-  #end
+  
   
   
   # Override the directory where uploaded files will be stored.
