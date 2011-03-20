@@ -44,6 +44,32 @@ cache_classes = false
 
   }
   
+  
+  CarrierWave.configure do |config|
+  config.s3_access_key_id = 'AKIAJHY36IP6D642ZGQQ'
+  config.s3_secret_access_key = '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'
+  config.s3_bucket = 'tiviti-heroku'
+  config.s3_access_policy = :public_read
+ # config.s3_headers = {'Cache-Control' => 'max-age=315576000'}
+#  config.s3_region = 'us-east-1'
+  config.s3_cnamed = true
+end
+
+  
+  
+#   CarrierWave.configure do |config|
+ #     config.fog_credentials = {
+  #      :provider               => 'AWS',       # required
+   #     :aws_access_key_id      => 'AKIAJHY36IP6D642ZGQQ',       # required
+    #    :aws_secret_access_key  => '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',       # required
+        #:region                 => 'eu-west-1'  # optional, defaults to 'us-east-1'
+     # }
+      #config.fog_directory  = 'tiviti-heroku'                     # required
+      #config.fog_host       = 'https://assets.example.com'            # optional, defaults to nil
+  #    config.fog_public     = false                                   # optional, defaults to true
+      #config.fog_attributes = {'Cache-Control'=>'max-age=315576000'}  # optional, defaults to {}
+   # end
+  
  # Paperclip.options[:command_path] = "/some/path/to"
   
   
