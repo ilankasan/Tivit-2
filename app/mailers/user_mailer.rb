@@ -2,6 +2,8 @@ require "socket"
 class UserMailer < ActionMailer::Base
    default :from => "tiviti.mailer@gmail.com"
    #//:url =>"http://"+Socket.gethostname
+  
+  
   def welcome_email(user)
     @user = user
     @url  = "http://tiviti.heroku.com"
@@ -13,24 +15,13 @@ class UserMailer < ActionMailer::Base
   
   
   def user_tivit_status_completed_email (user, invitees,summary,tivit)
-  
     @user    = user
     @tivit   = tivit
     @summary = summary
     @url     = "http://tiviti.heroku.com"
     
-    puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-    puts "--------------------------------------------------------------------"
-    
-    puts invitees.inspect
-    
-    
-    puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-    
     mail(:to => invitees, :cc => "tiviti.mailer.cc@gmail.com,"+user.email,
-         :subject =>"tivit" +" '"+tivit.name+"' " + "is completed!" )
-    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    
+         :subject =>"tivit" +" '"+tivit.name+"' " + "is completed!" )  
   end
   
   
@@ -64,9 +55,7 @@ class UserMailer < ActionMailer::Base
     @tivit    = tivit
     @url  	  = "http://tiviti.heroku.com"
     
-    
-	#@url  = "http://"+Socket.gethostname+Socket.ip_address_list
-	  
+     
     mail(:to => @owner.email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => @user.name+" has "+ action + " tivit '"+tivit.name+"'" )
   end
