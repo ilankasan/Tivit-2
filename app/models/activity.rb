@@ -23,7 +23,7 @@ class Activity < ActiveRecord::Base
   has_and_belongs_to_many :users
 
 # every activity has many document asign to it
-  has_and_belongs_to_many :activities
+  has_and_belongs_to_many :documents
 
 
 

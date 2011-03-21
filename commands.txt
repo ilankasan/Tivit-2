@@ -6,6 +6,7 @@ rails plugin  install git://github.com/technoweenie/attachment_fu.git  -r rails3
 gem install --include-dependencies RubyInline
 gem uninstall "C:\Ruby192\image_science-1.1.3-i386-mswin32.gem"
 rails generate model ProfileImage user_id:integer parent_id:integer content_type:string filename:string thumbnail:string size:integer width:integer height:integer
+rails generate model ActivityDocument activity_id:integer document_id:integer
 
 Git Synch
 --------------
@@ -76,7 +77,8 @@ heroku rake db:migrate
 rails generate scaffold Activity name:string description:string status:string due:datetime owner:integer who:string
 rails generate model Activity name:string description:string status:string due:datetime owner_id:integer who:string
 
-
+rails generate uploader TivitDoc
+rails generate model Document name:string description:string
 
 rails generate scaffold Activity name:string description:string status:string due:datetime owner:integer who:string
 rake db:migrate
