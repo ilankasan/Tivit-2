@@ -50,10 +50,12 @@ class UsersController < ApplicationController
 	   flash[:failed] = "User with this email already exists!"
 	   render 'new'
     end
- #ilan: need to add error handling
-  if (@use != nil)
-    puts "saving user"
-    @user.save   
+ puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+ #ilan: need to revisit error handling
+  if (@user != nil)
+    puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>    saving user"
+    @user.save
+    puts "->>>>>>>>>>>>>>>  After Saving "   
 # sending a welcome email to the new user
 	UserMailer.welcome_email(@user).deliver
    	sign_in @user
