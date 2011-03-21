@@ -50,8 +50,8 @@ class Activity < ActiveRecord::Base
 	UserMailer.new_tivit_email(user,owner,self).deliver
 	
 	self.update_user_tivit_status(user)
-	puts self.users.inspect
-	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+	#puts self.users.inspect
+#	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 	
 #ilan: not 100% we ned the save option
 		

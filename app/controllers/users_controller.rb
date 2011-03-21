@@ -30,9 +30,14 @@ class UsersController < ApplicationController
   
  def create
 # find if there is a skeleton of the user
-	  params[:user][:email] = params[:user][:email].downcase 
-	  @user = get_user(params) 
-	if @user.save
+	params[:user][:email] = params[:user][:email].downcase 
+	@user = get_user(params)
+	 
+	if @user.is_active
+	  sign_in @user
+      flash[:failed] = "User with this email already exists!"
+      render 'new'
+	elsif @user.save
 # sending a welcome email to the new user
 	UserMailer.welcome_email(@user).deliver
       sign_in @user
@@ -56,19 +61,12 @@ class UsersController < ApplicationController
  def update
  	puts "----------    update usrs -------------------"
  	puts "----------    update usrs -------------------"
-   puts "----------    update usrs -------------------"
-   puts "----------    update usrs -------------------"
-   puts "----------    update usrs -------------------"
-   puts "----------    update usrs -------------------"
-   puts "----------    update usrs -------------------"
-   
+   	puts "----------    update usrs -------------------"
+   	puts "----------    update usrs -------------------"
+   	puts "----------    update usrs -------------------"
     puts params.inspect
     puts "----------    update usrs -------------------"
    
-  
-   
-   
-    
     @user = User.find(params[:id])
     
     

@@ -14,19 +14,17 @@ module UsersHelper
   def get_user(params)
     
     
-    puts "----------    New  usrs -------------------"
- 	puts "----------    New  usrs -------------------"
- 	puts params.inspect
-    puts "----------    New  usrs -------------------"
- 	puts "----------    New  usrs -------------------"
- 	puts "----------    New  usrs -------------------"
- 	puts "----------    New  usrs -------------------"
- 	puts "----------    New  usrs -------------------"
- 	puts "----------    New  usrs -------------------"
- 	puts "----------    New  usrs -------------------"
- 	puts "----------    New  usrs -------------------"
+    puts "----------    New  usrs -----------    Get user --------"
+    puts "----------    New  usrs -----------    Get user --------"
+ 	puts "----------    New  usrs -----------    Get user --------"
+ 	puts "----------    New  usrs -----------    Get user --------"
  	
+ 	puts params.inspect
     
+    puts "----------    New  usrs -----------    Get user --------"
+ 	puts "----------    New  usrs -----------    Get user --------"
+ 	
+        
     @user = User.find_by_email( params[:user]["email"])
 	if (@user == nil)
 		@user = User.new(params[:user])
@@ -37,6 +35,9 @@ module UsersHelper
 		puts "updatting skeleton user"
 		puts "--------------------------------------"
 		puts params.inspect
+		puts "--------------------------------------"
+		puts "--------------------------------------"
+	
 	end
   	return @user
  end

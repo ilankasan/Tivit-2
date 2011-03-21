@@ -7,18 +7,21 @@ module ActivitiesHelper
   	if(email_input != nil && !email_input.empty? )
 		email = email_input.downcase
   	
-		puts "------------------ adding new invitee: " + email 
+		#puts "------------------ adding new invitee: " + email 
 	  	user  = User.find_by_email(email)
 	  	if(user == nil)
 	#create an inactive user
 			config.debug("--->>> creating a skeloton user for email: "+email)
-			params = {:name => "not active",:email => email, :password => "234F5(67890GDFSF",:password_confirmation => "111111"}
+			temppassword = "234F5(67890GDFasdgqoSF" 
+			params = {:name => "not active",:email => email, :password => temppassword ,:password_confirmation => temppassword}
 			
 	#ilan: using temporary password. Deactivated user should not have passwords	
 			puts "------------------ creating new user: " + email 
 			
-			user = User.create(params)
+			user = User.new(params)
 			user.deactivate_user
+	
+			user.save
 	# ilan: missign error handling
 	  	end  	
   end
