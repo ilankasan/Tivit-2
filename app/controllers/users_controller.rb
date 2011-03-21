@@ -29,27 +29,42 @@ class UsersController < ApplicationController
   
   
  def create
-# find if there is a skeleton of the user
-	params[:user][:email] = params[:user][:email].downcase 
-	@user = get_user(params)
-	 
-	if @user.is_active
-	  sign_in @user
-      flash[:failed] = "User with this email already exists!"
-      render 'new'
-	elsif @user.save
+ 	params[:user][:email] = params[:user][:email].downcase 
+	@user = User.find_by_email( params[:user]["email"])
+	
+	puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
+	puts "before testing is active user"
+	puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
+	
+	if (@user == nil) # user does not exist, creating a new user
+		@user = User.new(params[:user])
+		puts "creatign a new user"
+	elsif (@user.is_active == false) # checking is a skeleton on an inactive user exists
+	  	puts "Activattin a skeleton"+@user.is_active.inspect
+	  	@user.update_attributes(params[:user])
+		@user.activate_user
+   	else
+# user already exists
+  	   puts "An active user existsin the system"
+	   @title = "Sign up"
+	   flash[:failed] = "User with this email already exists!"
+	   render 'new'
+    end
+ #ilan: need to add error handling
+  if (@use != nil)
+    puts "saving user"
+    @user.save   
 # sending a welcome email to the new user
 	UserMailer.welcome_email(@user).deliver
-      sign_in @user
-      flash[:success] = "Welcome to the Tivity!"
-      #redirect_to @user
-#send user to home page after sign up
-      #render 'pages/home'
-      redirect_to root_path
-    else
-      @title = "Sign up"
-      render 'new'
-    end
+   	sign_in @user
+   	flash[:success] = "Welcome to the Tivity!"
+   	redirect_to root_path
+  else
+  	flash[:failed] = "Failed to create user, try again!"
+    @title = "Sign up"
+  #  render 'new'
+  end
+  
  end
  
  def edit
@@ -61,19 +76,10 @@ class UsersController < ApplicationController
  def update
  	puts "----------    update usrs -------------------"
  	puts "----------    update usrs -------------------"
-   	puts "----------    update usrs -------------------"
-   	puts "----------    update usrs -------------------"
-   	puts "----------    update usrs -------------------"
     puts params.inspect
     puts "----------    update usrs -------------------"
    
     @user = User.find(params[:id])
-    
-    
- #    @profile_image = ProfileImage.new(params[:profile_image])
-  #  flash[:notice] = 'Mugshot was successfully created.'
-   # redirect_to mugshot_url(@mugshot)     
-  
     
 #save email address lower case
     params[:user]["email"] = params[:user]["email"].downcase 
@@ -90,12 +96,7 @@ class UsersController < ApplicationController
  end
  
  
- #def editprofileimage
- 
-  #end
- 
- 
-   def destroy
+  def destroy
     user1 = User.find(params[:id]).destroy
     flash[:success] = "User "+user1.name+" destroyed."
     redirect_to allusers_path

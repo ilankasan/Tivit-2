@@ -2,11 +2,11 @@ require "socket"
 class UserMailer < ActionMailer::Base
    default :from => "tiviti.mailer@gmail.com"
    #//:url =>"http://"+Socket.gethostname
-  
+  	
   
   def welcome_email(user)
     @user = user
-    @url  = "http://tiviti.heroku.com"
+    @url  = root_path
     
     mail(:to => user.email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => "Welcome to tiviti!")

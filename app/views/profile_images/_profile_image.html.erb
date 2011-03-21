@@ -7,6 +7,7 @@
 		<%= image_tag user.profile_image.avatar.url, :size => "80x80" %>
 
 	<%else%>
+<!-- The line below needs to be generalized by taking amazon url and bucket name from a config file -->
 		<%= image_tag user.profile_image.avatar.url.gsub("tiviti-heroku","tiviti-heroku.s3.amazonaws.com"), :size => "80x80" %>
 
 	<%end%>
