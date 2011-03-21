@@ -60,20 +60,6 @@ class User < ActiveRecord::Base
   end
   
   def deactivate_user
-  	puts "deactivate_user"
-  	puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-     
     self.is_active = false
   end
   

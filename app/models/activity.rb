@@ -21,7 +21,12 @@ class Activity < ActiveRecord::Base
   attr_accessible :name, :description, :status, :due,:owner_id, :users, :completed_at, :summary
 # each Tivit has many participants 
   has_and_belongs_to_many :users
-  
+
+# every activity has many document asign to it
+  has_and_belongs_to_many :activities
+
+
+
 # each tivit has many comments
   has_many :tivitcomments
 
@@ -55,21 +60,12 @@ class Activity < ActiveRecord::Base
 	
 #ilan: not 100% we ned the save option
 		
-	
   end	
 
   def update_user_tivit_status(user)
- 	#tivit_status = user.get_tivit_status(self)
- 	#if(tivit_status == nil)
- 	
- 	
  	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-	
  	tivit_status = create_status_new(user)
  	puts "creating a task with status new"	
- 		
- 	#end
  		
   end
   
