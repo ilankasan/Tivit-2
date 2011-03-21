@@ -10,18 +10,24 @@ class AvatarUploader < CarrierWave::Uploader::Base
   #file system
   #storage :file
    
-  def initialize(a,b)
- 	super 	 
- #  if(false)
+  def do_not_use_initialize(a,b)
+  	super 	 
+
+  	if(false)
+ 	 #  if(false)
    		if Rails.env.development? || Rails.env.test?
+   		  puts "in development using file system "
 		  CarrierWave.configure do |config|
 		    config.storage = :file
 		  end
-		else 
+		else
+			puts "Production using S3"
+		   
 		  CarrierWave.configure do |config|
 		   	config.storage = :s3
 		  end 
 		end
+	end #end false
   end
   
   

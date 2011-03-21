@@ -6,7 +6,7 @@ class UserMailer < ActionMailer::Base
   
   def welcome_email(user)
     @user = user
-    @url  = root_path
+    @url     = "http://tiviti.heroku.com" # ilan: need to pass url dynamically or through a config file
     
     mail(:to => user.email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => "Welcome to tiviti!")
