@@ -8,6 +8,7 @@ class CreateActivities < ActiveRecord::Migration
       t.datetime :completed_at
       t.integer :owner_id
       t.string :who
+      t.text :summary
 
       t.timestamps
     end

@@ -4,6 +4,7 @@ class CreateTivitUserStatuses < ActiveRecord::Migration
       t.integer :user_id
       t.integer :activity_id
       t.string :status_id
+      t.string :comment
 
       t.timestamps
     end
