@@ -56,6 +56,18 @@
   </td>
   
   
+  
+  <h1>
+      	 <%= link_to "Upload Document",:controller  => "activity_documents", 
+   											:action      => "edit",
+   										    :id          => tivitdetails.id, 
+  							    			:title       => "Uplaod document"+ tivitdetails.name %>
+      </h1>
+      
+  
+    
+  
+  
   <td>
   	
   <% if current_user.id == (tivitdetails.owner_id) %>
@@ -65,8 +77,6 @@
                                      :confirm => "You sure you want to delete" +tivitdetails.name+"?",
                                      :title => tivitdetails.name %>
   <% end %>
-  
-  
   
   
   <%= link_to "details", tivitdetails, :action => "show",

@@ -12,13 +12,14 @@ resources :profile_images
   
   match "/edit" => "profile_images#edit"
   match "/show" => "profile_images#show"
-  #match "/update" => "profile_images#update"
   
-  #get "profile_images/update"
-  #get "profile_images/show"
-
-  #match "/editprofileimage" => "profile_image#editprofileimage"
+resources :activity_documents
+  match "activity_documents/:id" => "activity_documents#update"
+  match "activity_documents/:id/edit" => "activity_documents#update"
   
+  #match "/edit" => "profile_images#edit"
+  #match "/show" => "profile_images#show"
+    
 
   resources :activities do
   resources :tivitcomments
