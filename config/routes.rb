@@ -6,16 +6,17 @@ FirstApp::Application.routes.draw do
   resources :users
 end
 
-resources :profile_images 
+resources :profile_images do
   match "profile_images/:id" => "profile_images#update"
   match "profile_images/:id/edit" => "profile_images#update"
   
   match "/edit" => "profile_images#edit"
   match "/show" => "profile_images#show"
-  
+end
 resources :activity_documents
   match "activity_documents/:id" => "activity_documents#update"
   match "activity_documents/:id/edit" => "activity_documents#update"
+  match "activity_documents/new" => "activity_documents#new"
   
   #match "/edit" => "profile_images#edit"
   #match "/show" => "profile_images#show"

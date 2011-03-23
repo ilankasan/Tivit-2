@@ -7,10 +7,7 @@ class TivitcommentsController < ApplicationController
   	puts "********************************************"
   	puts "param - " +params.inspect
   	puts "********************************************"
-  	puts "********************************************"
-  	puts "********************************************"
   	
-	
 
   	@activity= Activity.find(params[:activity_id])
   	if (@activity == nil)

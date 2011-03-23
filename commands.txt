@@ -7,7 +7,7 @@ gem install --include-dependencies RubyInline
 gem uninstall "C:\Ruby192\image_science-1.1.3-i386-mswin32.gem"
 rails generate model ProfileImage user_id:integer parent_id:integer content_type:string filename:string thumbnail:string size:integer width:integer height:integer
 
-rails generate model ActivityDocument activity_id:integer description:string
+rails generate model ActivityDocument activity_id:integer document_id:integer
 rails generate model Document activity_document_id:integer name:string note:string version:string
 
 Git Synch

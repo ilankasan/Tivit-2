@@ -1,8 +1,5 @@
 class ProfileImagesController < ApplicationController
 	def edit
-	#	puts "Edit Profile Image"
-	#	puts params.inspect
-	#	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 		@user = User.find(params[:id])
 	    render 'edit_profile_image'
 	end
