@@ -21,7 +21,8 @@ class TivitcommentsController < ApplicationController
     if (@comment != nil)
 			puts "@comment =======  " +@comment.inspect
 	end
-    redirect_to root_path
+	redirect_to @activity
+	#redirect_to root_path
   end
 
 

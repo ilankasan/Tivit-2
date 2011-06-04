@@ -54,11 +54,10 @@
   	<% end %> 
    
   </td>
-  
-  
+  <%= render :partial => 'activity_documents/document', :collection =>  tivitdetails.activity_documents, :as => :document%>
   
   <h1>
-      	 <%= link_to "Upload Document",:controller  => "activity_documents", 
+      	 <%= link_to "Upload Document !!!",:controller  => "activity_documents", 
    											:action      => "edit",
    										    :activity_id          => tivitdetails.id, 
   							    			:title       => "Uplaod document"+ tivitdetails.name %>
