@@ -65,15 +65,7 @@ class User < ActiveRecord::Base
     puts "deactivate_user" 
     puts "deactivate_user" 
     puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-     
+   
     self.is_active = false
   end
   
@@ -115,8 +107,14 @@ class User < ActiveRecord::Base
 #builds a new activity to a user (as an owner)
 def add_my_ativity (params)
  # settign owner Id to be rqual to the current user
+ puts "---------------- add_my_ativity  ----------------------" 
+ puts "---------------- add_my_ativity  ----------------------" 
+ puts "---------------- add_my_ativity  ----------------------" 
+ 
    	params["owner_id"] = self.id
-   	params["status"] = "in-progress"
+   	params["status"]   = "in-progress"
+   	params["activity_type"]     = "activity"
+ 	
  	#puts params.inspect	
 # returns a new activity created from the parameters in hash
   	return  activities.create(params)		

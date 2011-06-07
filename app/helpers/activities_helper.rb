@@ -45,7 +45,7 @@ module ActivitiesHelper
   	
   	invitees.each do |email_address|
   	
-    	
+ 
 	   	if (email_address != nil && !email_address.empty?)
 	    	user = user_by_email(email_address.strip)
 	    	if(user !=nil)
@@ -57,6 +57,35 @@ module ActivitiesHelper
 	activity.save
 	
   end
+
+
+def  add_tivit_to_user(emails, activity) 
+#in the furue we need to parse a list of users
+  	
+  	invitees = emails.split(/;|,/)
+  	
+  	
+  	puts "#######################################################"
+  	puts invitees.inspect
+  	puts "######################################################"
+  	
+  	invitees.each do |email_address|
+  	
+ 
+	   	if (email_address != nil && !email_address.empty?)
+	    	user = user_by_email(email_address.strip)
+	    	if(user !=nil)
+	   			user.activities << activity
+	   			activity.owner_id = user.id
+	   			
+	   		end
+		end		
+	end 
+	activity.save
+	
+  end
+
+
   
 #convert year/month/day to one string
    def  convert_date_to_string (params, parameter_name) 
