@@ -1,4 +1,7 @@
+
 <div id="tivit-container">
+
+
 
 	<div id="tivit-container-background">
 		
@@ -12,8 +15,30 @@
 			<%= link_to tivit.name, tivit, :action => "show",
 	  									   :method => "get",
 	                                       :title  => tivit.name,
-	                                       :class => "text" %>                                    
+	                                       :class => "text" %>
+	            
+	            <% parent = tivit.get_parent %>
+   					
+   				
+	            <% if parent !=nil %>
+   					for <b><%=parent.name%></b>
+   				<% end %>
+   				
+   				                             
+	    		<% if tivit.due!=nil %>
+   					<% if tivit.due > Time.now %>
+      					<span class="timestamp">By: <%= time_ago_in_words(tivit.due) %> </span>
+   					<% else %>
+   					<span class="timestamp">tivit <%= time_ago_in_words(tivit.due) %> ovberdue! </span>
+   					<% end %>
+   				<% end %>
+   				<br>
+   				<%= tivit.get_owner.get_name%> was invited <%= time_ago_in_words(tivit.created_at) %> ago
+   							
+		                                    
 		</div>
+		
+		
 		<div id="tivit-status">
 			<% if tivit.status == "Completed" %>				
 	   			<img src="/images/status-done.gif" alt="tivit it done"> 			
@@ -39,20 +64,27 @@
 	   				<div class="text">Summary: <%= tivit.summary%> </div> 		
 	 				
 	 			</div>	
-		  	<% else %> 
-		 			<% if tivit.due!=nil %>
-		   				<% if tivit.due > Time.now %>
-		      				<div class="text">Due: in <b><%= time_ago_in_words(tivit.due) %></b> </div>
-		   				<% else %>
-		   					<div class="text">Due: <b><%= time_ago_in_words(tivit.due) %> ovberdue! </b></div>
-		   				<% end %>
-		   			<% end %> 
 		  	<% end %> 
-  	
-			<div class="text">Details: <%= tivit.description %></div>
+		 	<br>		
+		 	
+		 	
+		 	
+			<div class="text"><%= tivit.description %></div>
+			
+				
+<!-- Displaying other Tivits-->
+			<div class="text">
+				<% if tivit.tivits.size >0%>
+					<b> Activity has <%=tivit.tivits.size%> tivits</b>
+					<%end%>
+				
+				
+			</div>
+
+				
 		</div>
 		<div id="tivit-avatar-label">
-			<div class="text"><%= tivit.get_owner.name%></div>
+			<div class="text"><%= tivit.get_owner.get_name%></div>
 		</div>
 		<div class="buttons">
 			<%= link_to "Respond", tivit, :action => "show",

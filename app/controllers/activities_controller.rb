@@ -1,19 +1,33 @@
 class ActivitiesController < ApplicationController
   before_filter :authenticate, :only => [:create, :new,:update, :destroy,:show,:accept,:decline]
   before_filter :authorized_user, :only => :destroy
+  
+   def create_activity(params, type)
+   	puts "------>>>>>>>>>>>>  create_activity"
+   	puts "------>>>>>>>>>>>>  create_activity"
+   	puts "------>>>>>>>>>>>>  create_activity"
+   	
+   	params["due"] = convert_date_to_string(params,"due")
+   	params["owner_id"] = current_user.id
+   	params["status"]   = "in-progress"
+   	params["activity_type"]     = "activity"
 
+   	puts "Inspect Params " +params.inspect
+   	@activity = current_user.add_my_ativity(params)    
+	
+   	#current.ueractivities.create(params)
+ 	
+   end
+   
    def create
-    
-    config.debug("------>>>>> Creating activity")
-    
-#adding a strign representation of due date 
-  	params["due"] = convert_date_to_string(params,"due") 
-    #puts "->>>>>>>>>>> Due date id " +params["due"]
- 	puts "Inspect Params " +params.inspect
- 
-#adding activity to current user	
-    @activity = current_user.add_my_ativity(params)    
-	    
+
+# Create Activity
+	
+   @activity = current_user.add_my_ativity(params)    
+	
+ 	
+# Adding activity to current user	
+        
     if (@activity != nil)
 		invitees = params["invitees"]	
 		
@@ -25,7 +39,10 @@ class ActivitiesController < ApplicationController
 
         config.debug("------>>>>> creating activity" + @activity.name )
         flash[:success] = "tivit " +@activity.name + " created!"
-        redirect_to root_path
+#        redirect_to root_path
+#redirect_to 'shared/activitydetails'
+        render 'show'
+                       
     else
         config.debug("creating activity failed")
 #ilan: not sure why we need the below row 
@@ -35,7 +52,15 @@ class ActivitiesController < ApplicationController
   end
   
   def destroy
+    
+    
+#ilan: Need to send an email notifying all participants the activity and tivit
+	related_tivits = @activity.tivits
+    related_tivits.each do |tivit|
+    	tivit.destroy
+  	end 
     @activity.destroy
+      
     redirect_back_or root_path
   end
   
@@ -48,9 +73,8 @@ class ActivitiesController < ApplicationController
   
   def show
     
-   # puts "----------->>>>>>>>>>> sho show show"  
+   puts "----------->>>>>>>>>>> sho show show"  
    # puts params.inspect
-   # puts "----------->>>>>>>>>>>"
    #updating tivit status New -> Reviewed
     @activity = Activity.find(params[:id])
     @activity.update_tivit_status_after_show(current_user)
@@ -136,22 +160,66 @@ class ActivitiesController < ApplicationController
   	
   end
   
+  def new_tivit
+  	@activity = Activity.find(params[:id])
+    puts "Addign Tivit to Activity " + @activity.name
+    render 'new_tivit'   
+   
+  end
+  
+  
+  def create_tivit
+  	
+  	puts "--------------->> create Tvit"
+  	puts "create Tvit"
+  	puts "create Tvit"
+  	puts "--------------->> create Tvit"
+  	puts "--------------->> create Tvit"
+   puts "Inspect Params " +params.inspect
+	
+#adding a strign representation of due date 
+  	params["due"] 		= convert_date_to_string(params,"due")
+  	params["parent_id"] = params[:id] 						#   adding Parent ID	
+	params["status"]    = "in-progress"
+	
+        
+    invitees = params["invitees"]	
+		
+	
+	user = user_by_email(invitees.strip)
+	params["owner_id"] =  user.id
+	params["activity_type"] = "tivit"
+	
+	puts "Inspect!!!!!!!!!!!!!!!!!"
+	puts "Inspect Params " +params.inspect
+	puts "--------------->>>>  creatintg  activity"
+   
+	@activity = user.activities.create(params)	 						
+	
+#Adding invitees to activity
+	if(@activity!=nil)
+      config.debug("------>>>>> creating activity" + @activity.name )
+        flash[:success] = "tivit " +@activity.name + " created!"
+        redirect_to root_path
+    else
+        config.debug("creating activity failed")
+#ilan: not sure why we need the below row 
+        @feed_items = []
+        render 'pages/home'
+    end
+
+   
+  end
+  
 
   def i_am_done
     
-    puts "-----------    I AM DONE ---------------"  
-    
     @activity = Activity.find(params[:id])
-    
     @activity.update_tivit_user_status_i_am_done(current_user,params["comment"])
     UserMailer.user_tivit_status_change_done_email(current_user,params["comment"],@activity).deliver
+  	redirect_back_or root_path
   
-	redirect_back_or root_path
-  	
   end
-
-
-
 
   
  def decline

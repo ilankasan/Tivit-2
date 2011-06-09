@@ -46,7 +46,7 @@
  			<span class="content"> In Progress </span><br>
  			<% if tivitdetails.due!=nil %>
    				<% if tivitdetails.due > Time.now %>
-      				<span class="timestamp">tivit is due in <%= time_ago_in_words(tivitdetails.due) %> </span>
+      				<span class="timestamp">ss tivit is due in <%= time_ago_in_words(tivitdetails.due) %> </span>
    				<% else %>
    					<span class="timestamp">tivit is <%= time_ago_in_words(tivitdetails.due) %> ovberdue! </span>
    				<% end %>

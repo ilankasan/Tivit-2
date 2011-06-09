@@ -44,6 +44,10 @@ resources :activities
   	match "/decline" => "activities#decline"
   	match "/iamdone" => "activities#i_am_done"
   	match "/change_tivit_status" => "activities#change_tivit_status"
+  	match "/new_tivit" => "activities#new_tivit"
+  	match "/create_tivit" => "activities#create_tivit"
+  	
+  	
   	
   	
         

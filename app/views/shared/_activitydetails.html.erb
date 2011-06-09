@@ -1,0 +1,143 @@
+
+<div id="tivit-container">
+
+	<div id="tivit-container-background">
+		
+		<div id="tivit-avatar">
+			 <%= render :partial => 'profile_images/profile_image', :collection =>  [activitydetails.get_owner], :as => :user%> 
+		</div>
+
+
+	<div id="tivit-title" class="text">
+			
+			<h1><%= activitydetails.name %></h1>
+			
+			<% if activitydetails.due!=nil %>
+   				<% if activitydetails.due > Time.now %>
+      				<span class="timestamp">By: <%= time_ago_in_words(activitydetails.due) %> </span>
+   				<% else %>
+   					<span class="timestamp">Activity <%= time_ago_in_words(activitydetails.due) %> ovberdue! </span>
+   				<% end %>
+   			<% end %>                 
+                                    
+		</div>
+		
+	
+
+				
+	</div>
+</div>
+
+<tr>
+  <td class="activity">
+
+    <span class="content">Details: <%= activitydetails.description %></span><br>
+    
+
+    <span class="timestamp">tivit created <%= time_ago_in_words(activitydetails.created_at) %> ago.</span><br>
+  </td>
+  <td>
+  	<!--span class="content">My status : <%= activitydetails.get_user_status(current_user) %>:<%= activitydetails.get_user_status_comment(current_user) %> </span--><br> 			
+   	<span class="content">Task status : </span> 			
+   	
+  	<% if activitydetails.status == "Completed" %>
+ 			<span class="content"> Completed !</span><br>
+ 			<span class="content">Tivit Summary : <%= activitydetails.summary%> </span><br> 			
+   			
+ 			<% if activitydetails.completed_at!=nil %>
+				<span class="timestamp">tivit was completed <%= time_ago_in_words(activitydetails.completed_at) %> ago </span> 			
+   			<% end %> 
+  	<% else %> 
+ 			<span class="content"> In Progress </span><br>
+ 			 
+  	<% end %> 
+   
+  </td>
+  
+  
+  
+  
+  
+  
+  <td>
+  	
+  <% if current_user.id == (activitydetails.owner_id) %>
+  	<%= link_to "edit", edit_activity_path(activitydetails) %>
+  	
+    <%= link_to "delete", activitydetails, :method => :delete,
+                                     :confirm => "You sure you want to delete" +activitydetails.name+"?",
+                                     :title => activitydetails.name %>
+                                     
+                                     
+    </br>                                
+	
+	
+	 <h1><%= link_to "Ask for help", 		:controller  => "activities", 
+   											:action      => "new_tivit",
+   											:id          => activitydetails.id, 
+  							    			:title       => activitydetails.name %>,<h1>
+  <% end %>
+  
+  
+	<h1><span class="content">
+	<% if activitydetails.tivits !=nil && activitydetails.tivits.size > 0%>
+				<%= activitydetails.tivits.size %> Team Tivits</span></h1>
+	<%end%>
+	
+	
+	
+	 			  
+  
+  <%= link_to "details", activitydetails, :action => "show",
+  									:method => "get",
+                                    :title  => activitydetails.name %>
+                                      
+   <% if current_user.id != (activitydetails.owner_id) %>
+  	    
+   
+     <%= link_to "accept", 		:controller  => "activities", 
+   								:action      => "change_tivit_status",
+   								:status      => "accept",
+ 								:id          => activitydetails.id, 
+  							    :confirm     => "Are you sure you want to accept tivit" +activitydetails.name+"?", 
+                                :title       => activitydetails.name %>
+
+        
+                                     
+    
+	<%= link_to "decline",      :controller  => "activities",
+    							:action      => "change_tivit_status",
+    							:status      => "decline",
+    							:id          => activitydetails.id, 
+  							    :confirm     => "Are you sure you want to decline tivit" +activitydetails.name+"?",
+                                :title       => activitydetails.name %>
+
+
+	<%= link_to "I Am Done",    :controller  => "activities",
+    							:action      => "change_tivit_status",
+    							:status      => "i_am_done",
+    							:id          => activitydetails.id, 
+  							    :confirm     => "Are you sure you want to decline tivit" +activitydetails.name+"?",
+                                :title       => activitydetails.name %>
+
+  <% end %>
+  
+  
+  
+  
+  </td>
+
+ 
+</tr>
+
+<tr>
+
+  <td>
+<!-- Displaying and adding comments Need to remove this-->
+
+ <!--%= render :partial => 'shared/tivits_comments', :collection =>  [activitydetails], :as => :tivit%-->
+ <%= render :partial => 'shared/tivit', :collection =>  activitydetails.tivits  %> 
+  </td>
+
+</tr>
+

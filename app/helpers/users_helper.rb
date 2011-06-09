@@ -16,8 +16,6 @@ module UsersHelper
     
     puts "----------    New  usrs -----------    Get user --------"
     puts "----------    New  usrs -----------    Get user --------"
- 	puts "----------    New  usrs -----------    Get user --------"
- 	puts "----------    New  usrs -----------    Get user --------"
  	
  	puts params.inspect
     

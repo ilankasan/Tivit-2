@@ -18,7 +18,7 @@
 
 class Activity < ActiveRecord::Base
   
-  attr_accessible :name, :description, :status, :due,:owner_id, :users, :completed_at, :summary
+  attr_accessible :name, :description, :status, :due,:owner_id, :users, :completed_at, :summary,:activity_type, :parent_id
 # each Tivit has many participants 
   has_and_belongs_to_many :users
 
@@ -34,13 +34,20 @@ class Activity < ActiveRecord::Base
 # each tivit has many user status (show the specific status for each user)
   has_many :tivit_user_statuses
   
+  #has_many :activities, :as => :imageable
+  has_many :activities
+  
+  has_many :tivits, :class_name => "Activity",
+    :foreign_key => "parent_id" 
 
   validates :name, :presence => true, :length => { :maximum => 140 }
   validates :description, :length => { :maximum => 1024 }
   validates :owner_id, :presence => true
-   
- # validates_inclusion_of :status, :in => %w(in-progress Completed),
-  #  :message => "%{value} is not a valid status"
+  validates :activity_type, :presence => true, :length => { :maximum => 140 }
+  
+  
+  validates_inclusion_of :activity_type, :in => %w(activity tivit),
+    :message => "%{value} is not a valid status"
 
 
   default_scope :order => 'activities.created_at DESC'
@@ -62,6 +69,16 @@ class Activity < ActiveRecord::Base
 #ilan: not 100% we ned the save option
 		
   end	
+
+  def get_parent
+  	
+  	if(self.parent_id ==nil)
+  			return nil
+  	end
+  	return Activity.find(self.parent_id)
+  end
+
+
 
   def update_user_tivit_status(user)
  	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
@@ -119,10 +136,6 @@ class Activity < ActiveRecord::Base
   end
   
   
-  
-
-  
-	
 
  def clean_user_invitees
  #clean users accept the task owber
