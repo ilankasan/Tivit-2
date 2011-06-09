@@ -60,10 +60,6 @@ class User < ActiveRecord::Base
   end
   
   def deactivate_user
-<<<<<<< HEAD
-=======
-  	
->>>>>>> V2.0
     self.is_active = false
   end
   
