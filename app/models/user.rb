@@ -60,12 +60,7 @@ class User < ActiveRecord::Base
   end
   
   def deactivate_user
-  	puts "deactivate_user"
-  	puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-    puts "deactivate_user" 
-   
+  	
     self.is_active = false
   end
   
@@ -75,6 +70,14 @@ class User < ActiveRecord::Base
   
   def is_active?
     return self.is_active 
+  end
+  
+  def get_name
+  	if(self.is_active == false)
+  		return self.email
+  	else
+    	return self.name
+    end 
   end
   
   def get_id

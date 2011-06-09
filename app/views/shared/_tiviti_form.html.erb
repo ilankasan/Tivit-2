@@ -1,4 +1,5 @@
 
+
 <div id="new-activity">
 	
 	<%= form_tag(:controller => "activities", :action => "create_tivit", :method => "post", :id => @activity.id) do %>
@@ -39,8 +40,9 @@
 	     		<img src="/images/calendarpicker/cal.gif" onclick="javascript:NewCssCal('due', 'mmddyyyy', 'arrow')" style="cursor:pointer"/>
 	     	  	
 			 </div>
-			
-			  <div class="field">
+			 
+			 
+		 	  <div class="field">
 			  	<div class="buttons">
 			  		<%= submit_tag("Invite", :class => "form-button") %>
 			  	</div>

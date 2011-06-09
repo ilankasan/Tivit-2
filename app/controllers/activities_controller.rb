@@ -20,20 +20,13 @@ class ActivitiesController < ApplicationController
    end
    
    def create
-    
-    
-#adding a strign representation of due date 
-  	
 
 # Create Activity
 	
    @activity = current_user.add_my_ativity(params)    
 	
  	
-# Asign Activity to User 
-
- 
-#adding activity to current user	
+# Adding activity to current user	
         
     if (@activity != nil)
 		invitees = params["invitees"]	
@@ -46,7 +39,10 @@ class ActivitiesController < ApplicationController
 
         config.debug("------>>>>> creating activity" + @activity.name )
         flash[:success] = "tivit " +@activity.name + " created!"
-        redirect_to root_path
+#        redirect_to root_path
+#redirect_to 'shared/activitydetails'
+        render 'show'
+                       
     else
         config.debug("creating activity failed")
 #ilan: not sure why we need the below row 
@@ -56,7 +52,15 @@ class ActivitiesController < ApplicationController
   end
   
   def destroy
+    
+    
+#ilan: Need to send an email notifying all participants the activity and tivit
+	related_tivits = @activity.tivits
+    related_tivits.each do |tivit|
+    	tivit.destroy
+  	end 
     @activity.destroy
+      
     redirect_back_or root_path
   end
   
@@ -69,7 +73,7 @@ class ActivitiesController < ApplicationController
   
   def show
     
-   # puts "----------->>>>>>>>>>> sho show show"  
+   puts "----------->>>>>>>>>>> sho show show"  
    # puts params.inspect
    #updating tivit status New -> Reviewed
     @activity = Activity.find(params[:id])
@@ -171,14 +175,14 @@ class ActivitiesController < ApplicationController
   	puts "create Tvit"
   	puts "--------------->> create Tvit"
   	puts "--------------->> create Tvit"
-   
+   puts "Inspect Params " +params.inspect
+	
 #adding a strign representation of due date 
   	params["due"] 		= convert_date_to_string(params,"due")
   	params["parent_id"] = params[:id] 						#   adding Parent ID	
 	params["status"]    = "in-progress"
 	
-    
-#       
+        
     invitees = params["invitees"]	
 		
 	
@@ -187,14 +191,11 @@ class ActivitiesController < ApplicationController
 	params["activity_type"] = "tivit"
 	
 	puts "Inspect!!!!!!!!!!!!!!!!!"
-   
 	puts "Inspect Params " +params.inspect
-	
- 	
-	puts "creatintg  activity"
+	puts "--------------->>>>  creatintg  activity"
    
 	@activity = user.activities.create(params)	 						
-
+	
 #Adding invitees to activity
 	if(@activity!=nil)
       config.debug("------>>>>> creating activity" + @activity.name )
@@ -207,11 +208,7 @@ class ActivitiesController < ApplicationController
         render 'pages/home'
     end
 
-  	
-  	#@activity = Activity.find(params[:id])
-    #puts "Addign Tivit to Activity " + @activity.name
-    #render 'new_tivit'
-    #render 'pages/home'   
+   
   end
   
 

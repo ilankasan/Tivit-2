@@ -28,7 +28,8 @@ class Activity < ActiveRecord::Base
 # each tivit has many user status (show the specific status for each user)
   has_many :tivit_user_statuses
   
-  has_many :activities, :as => :imageable
+  #has_many :activities, :as => :imageable
+  has_many :activities
   
   has_many :tivits, :class_name => "Activity",
     :foreign_key => "parent_id" 
@@ -63,6 +64,16 @@ class Activity < ActiveRecord::Base
 		
 	
   end	
+
+  def get_parent
+  	
+  	if(self.parent_id ==nil)
+  			return nil
+  	end
+  	return Activity.find(self.parent_id)
+  end
+
+
 
   def update_user_tivit_status(user)
  	#tivit_status = user.get_tivit_status(self)
@@ -128,10 +139,6 @@ class Activity < ActiveRecord::Base
   end
   
   
-  
-
-  
-	
 
  def clean_user_invitees
  #clean users accept the task owber
