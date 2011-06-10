@@ -5,3 +5,12 @@ require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
 FirstApp::Application.load_tasks
+
+module ::FirstApp
+   class Application
+    include Rake::DSL
+  end
+end
+module ::RakeFileUtils
+  extend Rake::FileUtilsExt
+end
