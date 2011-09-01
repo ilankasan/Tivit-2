@@ -27,13 +27,18 @@
    				                             
 	    		<% if tivit.due!=nil %>
    					<% if tivit.due > Time.now %>
-      					<span class="timestamp">By: <%= time_ago_in_words(tivit.due) %> </span>
+      					<span class="timestamp">By new-2: <%= time_ago_in_words(tivit.due) %> </span>
    					<% else %>
    					<span class="timestamp">tivit <%= time_ago_in_words(tivit.due) %> ovberdue! </span>
    					<% end %>
    				<% end %>
    				<br>
-   				<%= tivit.get_owner.get_name%> was invited <%= time_ago_in_words(tivit.created_at) %> ago
+   				<% if tivit.get_invited_by !=nil %>
+   					<%= tivit.get_owner.get_name%> was invited by <%= tivit.get_invited_by.name %> <%= time_ago_in_words(tivit.created_at) %> ago
+   				<% else %>
+   				<%= tivit.get_owner.get_name%> was invited  <%= time_ago_in_words(tivit.created_at) %> ago
+
+   				<% end %>
    							
 		                                    
 		</div>
@@ -61,7 +66,7 @@
 	 				<% if tivit.completed_at!=nil %>
 						<%= time_ago_in_words(tivit.completed_at) %> ago			
 	   				<% end %> 
-	   				<div class="text">Summary: <%= tivit.summary%> </div> 		
+	   				<div class="text">Summery: <%= tivit.summary%> </div> 		
 	 				
 	 			</div>	
 		  	<% end %> 

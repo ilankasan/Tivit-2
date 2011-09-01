@@ -22,7 +22,8 @@ class ActivitiesController < ApplicationController
    def create
 
 # Create Activity
-	
+	params["due"] = convert_date_to_string(params,"due")
+   		
    @activity = current_user.add_my_ativity(params)    
 	
  	
@@ -175,11 +176,24 @@ class ActivitiesController < ApplicationController
   	puts "create Tvit"
   	puts "--------------->> create Tvit"
   	puts "--------------->> create Tvit"
+  	puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
    puts "Inspect Params " +params.inspect
+   puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+   
+   
+   
+   puts "--------------->> create Tvit"
+  	puts "create Tvit"
+  	puts "create Tvit"
+  	puts "--------------->> create Tvit"
+  	puts "--------------->> create Tvit"
+
 	
 #adding a strign representation of due date 
   	params["due"] 		= convert_date_to_string(params,"due")
-  	params["parent_id"] = params[:id] 						#   adding Parent ID	
+  	params["parent_id"] = params[:id] 						#   adding Parent ID
+  	params["invited_by"] = current_user.id 						#   adding invite by	
+		
 	params["status"]    = "in-progress"
 	
         
@@ -194,7 +208,11 @@ class ActivitiesController < ApplicationController
 	puts "Inspect Params " +params.inspect
 	puts "--------------->>>>  creatintg  activity"
    
+   
 	@activity = user.activities.create(params)	 						
+
+
+   
 	
 #Adding invitees to activity
 	if(@activity!=nil)

@@ -1,4 +1,4 @@
-class TivitcommentsController < ApplicationController
+cdclass TivitcommentsController < ApplicationController
   #before_filter :authenticate, :only => [:create, :new,:update, :destroy]
   #before_filter :authorized_user, :only => :destroy
 
@@ -46,4 +46,3 @@ class TivitcommentsController < ApplicationController
   end
   
 
-end

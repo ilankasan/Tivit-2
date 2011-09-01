@@ -112,12 +112,19 @@ def add_my_ativity (params)
  puts "---------------- add_my_ativity  ----------------------" 
  puts "---------------- add_my_ativity  ----------------------" 
  puts "---------------- add_my_ativity  ----------------------" 
+ puts "---------------- add_my_ativity  ----------------------" 
+ puts "---------------- add_my_ativity  ----------------------" 
+ puts "---------------- add_my_ativity  ----------------------" 
+ puts "---------------- add_my_ativity  ----------------------" 
+ puts "---------------- add_my_ativity  ----------------------" 
+ puts "---------------- add_my_ativity  ----------------------" 
  
+   
    	params["owner_id"] = self.id
    	params["status"]   = "in-progress"
    	params["activity_type"]     = "activity"
  	
- 	#puts params.inspect	
+ 	puts params.inspect	
 # returns a new activity created from the parameters in hash
   	return  activities.create(params)		
    end

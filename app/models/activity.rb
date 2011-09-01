@@ -18,7 +18,7 @@
 
 class Activity < ActiveRecord::Base
   
-  attr_accessible :name, :description, :status, :due,:owner_id, :users, :completed_at, :summary,:activity_type, :parent_id
+  attr_accessible :name, :description, :status, :due,:invited_by,:owner_id, :users, :completed_at, :summary,:activity_type, :parent_id
 # each Tivit has many participants 
   has_and_belongs_to_many :users
 
@@ -150,6 +150,10 @@ class Activity < ActiveRecord::Base
 		return User.find_by_id(self.owner_id)
   end	
 
+ def get_invited_by
+ #adding the user to the existing users on the task
+		return User.find_by_id(self.invited_by)
+  end	
 
 private
  def create_status_new(user)	
