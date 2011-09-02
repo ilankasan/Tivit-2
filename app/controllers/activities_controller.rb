@@ -147,7 +147,14 @@ class ActivitiesController < ApplicationController
    
   def accept
     
-    puts "----------->>>>>>>>>>>"  
+   puts "----------->>>>>>>>>>>"  
+   puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Accept   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+   puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Accept   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
+   puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Accept   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
+   puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Accept   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
+   puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Accept   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
+   puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Accept   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
+     
    
    # puts params.inspect  
    
@@ -212,8 +219,6 @@ class ActivitiesController < ApplicationController
 	@activity = user.activities.create(params)	 						
 
 
-   
-	
 #Adding invitees to activity
 	if(@activity!=nil)
       config.debug("------>>>>> creating activity" + @activity.name )

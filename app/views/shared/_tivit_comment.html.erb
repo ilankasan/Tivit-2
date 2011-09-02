@@ -1,6 +1,6 @@
 
 <!-- Displaying comment -->
-<%if comment.user != nil && comment.comment != nil%>
+<%if   comment.comment != nil && comment.user != nil%>
   	  <span class="content"><b><%= comment.user.name%>:</b>  </span>
    	  <span class="content"><%= comment.comment%> </span><br>
       <span class="timestamp"><%= time_ago_in_words(comment.created_at) %> ago.</span><br>

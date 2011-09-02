@@ -63,9 +63,7 @@ class Activity < ActiveRecord::Base
 	UserMailer.new_tivit_email(user,owner,self).deliver
 	
 	self.update_user_tivit_status(user)
-	#puts self.users.inspect
-#	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-	
+
 #ilan: not 100% we ned the save option
 		
   end	
@@ -155,6 +153,27 @@ class Activity < ActiveRecord::Base
 		return User.find_by_id(self.invited_by)
   end	
 
+  
+  def get_activity_tivit_status
+#returns a string of how many tivits have been completed
+
+	if(self.tivits == nil || self.tivits.size == 0)
+		return "no tivits"
+	else
+		count = 0
+		self.tivits do |tivit|
+			if (tivit.status == "Completed")
+				count = count+1
+			end
+		end
+	end
+	
+	return count.inspect + "/" + self.tivits.size.inspect+" tivits have been completed"
+	
+  end
+
+
+
 private
  def create_status_new(user)	
  	return create_status(user,"New") 
@@ -192,6 +211,10 @@ private
     return tivit_user_status.status_id
  	
   end
+  
+  
+
+
   
  
 end

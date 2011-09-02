@@ -4,11 +4,11 @@
 <%if user != nil && user.profile_image != nil && user.profile_image.avatar != nil && user.profile_image.avatar.url != nil%>
 	
 	<%if(AvatarUploader.storage.kind_of?(File))%>
-		<%= image_tag user.profile_image.avatar.url, :size => "80x80" %>
+		<%= image_tag user.profile_image.avatar.url, :size => "40x40" %>
 
 	<%else%>
 <!-- The line below needs to be generalized by taking amazon url and bucket name from a config file -->
-		<%= image_tag user.profile_image.avatar.url.gsub("tiviti-heroku","tiviti-heroku.s3.amazonaws.com"), :size => "80x80" %>
+		<%= image_tag user.profile_image.avatar.url.gsub("tiviti-heroku","tiviti-heroku.s3.amazonaws.com"), :size => "40x40" %>
 
 	<%end%>
 	
@@ -17,6 +17,6 @@
 	<!--%= image_tag user.profile_image.avatar.current_path, :size => "80x80" %--> 
  
 <%else%>
-	<%= image_tag "/images/default-avatar.jpg" %> 
+	<%= image_tag "/images/default-avatar.jpg",  :size => "40x40"  %> 
 
 <%end%>	

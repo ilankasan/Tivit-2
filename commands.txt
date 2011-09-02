@@ -159,3 +159,6 @@ http://tiviti-heroku.s3.amazonaws.com/uploads/profile_image/avatar/2/album-the-b
 http://s3.amazonaws.com/tiviti/tiviti-heroku/uploads/profile_image/avatar/2/album-the-bootleg-series-vol-4-bob-dylan-live-1966-the-royal-albert-hall-concert.jpg 
 
 
+		<!--div id="tivit-avatar">
+			 <%= render :partial => 'profile_images/profile_image', :collection =>  [activity_db.get_owner], :as => :user%> 
+		</div-->
