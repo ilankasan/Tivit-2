@@ -3,7 +3,7 @@
 <% unless @tivits_participate == nil  %>
    <table class="activities" summary="User activities">
      <h1>Total Acitivites / tivits you own (<%= @tivits_participate.count%>)</h1>
-     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_participate %>
+     <%= render :partial => 'shared/activity_object_db', :collection =>  @tivits_participate %>
   </table>
 <% end %>
 

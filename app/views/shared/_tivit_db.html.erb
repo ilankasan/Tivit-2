@@ -30,9 +30,11 @@
    				<%= tivit.get_owner.get_name%> was invited  <%= time_ago_in_words(tivit.created_at) %> ago
 
    				<% end %>
-   							
-		                                    
+   				<br>
+   				Tivit User status =   <%= tivit.get_user_status(tivit.get_owner) %> 
+   	                                    
 		</div>
+		
 <!-- Displaying tivit status -->	
 		<div id="tivit-status">
 			<% if tivit.status == "Completed" %>				
@@ -64,7 +66,8 @@
 		 	
 		 	
 <!-- tivit description-->
- 	
+ 		 	<br>		
+	
 			<div class="text"><%= tivit.description %></div>
 	
 	<br>		

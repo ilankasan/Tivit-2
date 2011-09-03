@@ -111,16 +111,19 @@ class Activity < ActiveRecord::Base
  	change_status(user,"I Am Done",comment)
  end
 
-#returns the status of a user with respect to this activity and this activity 
+#returns the status of a user with respect to this activity 
 
   def get_user_status(user)
   	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if(tivit_user_status == nil)
   		tivit_user_status = create_status_new(user) 		
   	end
+  	
     return tivit_user_status.status_id
  	
   end
+ 
+ 
   
 #returns the comment associated with a specific user and this activity 
  def get_user_status_comment(user)
@@ -133,6 +136,24 @@ class Activity < ActiveRecord::Base
  	
   end
   
+###################################################
+#      Get status givven one user per tivit       #
+###################################################
+
+#returns the status of a user with respect to this activity and this activity 
+ # def get_user_status 	
+ # 	return self.get_user_status(self.get_owner)
+ # end
+  
+#returns the comment associated with a specific user and this activity 
+ #def get_user_status_comment
+#	return self.get_user_status_comment(self.get_owner)
+# end
+
+
+
+
+
   
 
  def clean_user_invitees
@@ -198,8 +219,7 @@ private
   
   end 
  
- 
- 
+  
  def change_status(user, status,comment)
   	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if(tivit_user_status == nil)
@@ -209,12 +229,6 @@ private
   	tivit_user_status.comment   = comment
   	tivit_user_status.save()
     return tivit_user_status.status_id
- 	
-  end
-  
-  
-
-
-  
- 
+ end
+   
 end

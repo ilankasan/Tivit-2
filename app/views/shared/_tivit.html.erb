@@ -81,7 +81,7 @@
 
 
 <!-- tivit action to take-->
-<% if current_user.id != (tivit.owner_id) %>
+<% if current_user.id == (tivit.owner_id) %>
   	    
    
      <%= link_to "accept", 		:controller  => "activities", 
