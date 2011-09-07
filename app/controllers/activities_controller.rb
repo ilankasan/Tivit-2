@@ -86,6 +86,40 @@ class ActivitiesController < ApplicationController
   def update
    
     puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
     
     @activity = Activity.find(params[:id])   
     
@@ -93,22 +127,30 @@ class ActivitiesController < ApplicationController
     params["due"] = convert_date_to_string(params, "due")
    
     
-# update task status
+# update activity status to completed if check box was checked 
 	
-	if(params["status"] == "true")
-		params["status"] = "Completed"
-		time = Time.new
-		params["completed_at"] = time.localtime
+	if(params["activity_status"] == "true")
+		params["activity_status"] = "Completed"
+#		params["completed_at"] = time.localtime
 	else
-		params["status"] = "in-progress"
+		params["activity_status"] = "in-progress"
 	end
+
+	puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"] 
+ 	  
 # vhecking to see if tthe task was previously closed. This will be used before the email is sent out below
 	was_completed = @activity.status
 	if (@activity != nil && @activity.update_attributes(params))
-      
+      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"]
+      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"] 
+ 	  puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"] 
+ 	  puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"] 
+ 	   
+ 	  @activity.update_activity_status(params["activity_status"]) 
+ 
       invitee_emails = params["invitees"]	
       
-      update_activity_participants_by_email(invitee_emails, @activity)    
+      update_activity_participants_by_email(invitee_emails, @activity)
       @activity.save
       
 #send email to all parcicipants that tivit was completed (not including owner):
@@ -148,8 +190,6 @@ class ActivitiesController < ApplicationController
   def accept
     
    puts "----------->>>>>>>>>>>"  
-   puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Accept   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-   puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Accept   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Accept   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Accept   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
   
@@ -252,7 +292,8 @@ class ActivitiesController < ApplicationController
     		   
   	redirect_back_or root_path
   end
-  
+
+   
   
   
   private

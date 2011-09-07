@@ -149,13 +149,6 @@ class Activity < ActiveRecord::Base
  #def get_user_status_comment
 #	return self.get_user_status_comment(self.get_owner)
 # end
-
-
-
-
-
-  
-
  def clean_user_invitees
  #clean users accept the task owber
  	owner = self.get_owner
@@ -197,13 +190,64 @@ class Activity < ActiveRecord::Base
 	
   end
 
-def set_completed
-	self.status = "Completed"
-	self.save
-	return
-end
+#def set_completed
+	#self.status = "Completed"
+	#self.save
+	#return
+#end
 
+# Checking to see if tthe task was previously closed. This will be used before the email is sent out below
+	
+  def update_activity_status (status)
+  	puts "_____________________________________________________"
+  	puts "_____________________________________________________"
+  	puts "_____________________________________________________"
+  	puts "Changng status from " +self.status+" to = " +status
+  	puts "_____________________________________________________"
+  	puts "_____________________________________________________"
+  	
+  	if(self.status == status)
+    	return
+   else 
+   		if(status == "Completed")
+    		change_status_to_completed
+    	else
+    		change_status_to_in_progress
+    	end
+   end
+	    	
+  end
+
+
+
+
+  def change_status_to_completed
+  	puts "change_status_to_completed"
+	time = Time.now()
+  	self.completed_at = time.localtime
+  	self.status       = "Completed"
+  	self.save 
+  	if(self.tivits != nil || self.tivits.size > 0)
+		self.tivits.each do |tivit|
+			tivit.change_status_to_completed
+		end
+	end
+  end
+	  
+  def change_status_to_in_progress
+  	puts "change_status_to_in_progress"
+	self.status       = "in-progress"
+	self.save
+  	if(self.tivits != nil || self.tivits.size > 0)
+		self.tivits.each do |tivit|
+			tivit.change_status_to_in_progress
+		end
+	end 
+  	
+  end
+  
 private
+
  def create_status_new(user)	
  	return create_status(user,"New") 
  end 

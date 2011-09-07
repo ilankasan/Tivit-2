@@ -34,10 +34,10 @@
   	<%= select_date @activity.due, :prefix => :due  %>
 </div>
 <% if @activity.status == "Completed" %>
-		<%= label_tag(:status, "Completed") %> <%= check_box_tag(:status,true, checked = true) %>
+		<%= label_tag(:activity_status, "Completed checked") %> <%= check_box_tag(:activity_status,true, checked = true) %>
    							   
    <% else %>
-		<%= label_tag(:status, "Completed") %> <%= check_box_tag(:status,true,checked = false) %> 
+		<%= label_tag(:activity_status, "Completed unchecked") %> <%= check_box_tag(:activity_status,true,checked = false) %> 
  
   <% end %>
 
