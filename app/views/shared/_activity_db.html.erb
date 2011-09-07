@@ -13,12 +13,11 @@
 	  									   :method => "get",
 	                                       :title  => activity_db.name,
 	                                       :class => "text" %>
-	    
-			
+	    	<small>by <%= activity_db.get_owner.email %> </small>
 			
 			<% if activity_db.due!=nil %>
    				<% if activity_db.due > Time.now %>
-      				<small>id due in <%= time_ago_in_words(activity_db.due) %> </small>
+      				<small>is due in <%= time_ago_in_words(activity_db.due) %> </small>
    				<% else %>
    					<small>is <%= time_ago_in_words(activity_db.due) %> ovberdue!</small> 
    				<% end %>

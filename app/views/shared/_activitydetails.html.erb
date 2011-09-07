@@ -10,7 +10,9 @@
 
 	<div id="tivit-title" class="text">
 			
-			<h1><%= activitydetails.name %> @ _activitydetails.html.erb</h1>
+			<h1><%= activitydetails.name %> </h1>
+		<small>by <%= activitydetails.get_owner.email %> </small>
+		
 			
 			<% if activitydetails.due!=nil %>
    				<% if activitydetails.due > Time.now %>

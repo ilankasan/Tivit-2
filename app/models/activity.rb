@@ -177,23 +177,31 @@ class Activity < ActiveRecord::Base
   
   def get_activity_tivit_status
 #returns a string of how many tivits have been completed
-
+#puts "get_activity_tivit_status"
+#puts "_____________________________________________________"
 	if(self.tivits == nil || self.tivits.size == 0)
 		return "no tivits"
 	else
 		count = 0
-		self.tivits do |tivit|
-			if (tivit.status == "Completed")
+#		puts "get_activity_tivit_status = " +self.tivits.size.inspect
+
+		self.tivits.each do |tivit|
+			status = tivit.get_user_status(tivit.get_owner)
+			puts "status = "+ status
+			if (status == "I Am Done")
 				count = count+1
 			end
-		end
+		end 
 	end
-	
 	return count.inspect + "/" + self.tivits.size.inspect+" tivits have been completed"
 	
   end
 
-
+def set_completed
+	self.status = "Completed"
+	self.save
+	return
+end
 
 private
  def create_status_new(user)	
