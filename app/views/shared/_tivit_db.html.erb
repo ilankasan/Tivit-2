@@ -31,7 +31,10 @@
 
    				<% end %>
    				<br>
-   				Tivit User status =   <%= tivit.get_user_status(tivit.get_owner) %> 
+   				<div id="tivit-content">
+		
+   				tivit asigned to <%= tivit.get_owner.email %>,  Tivit User status =   <%= tivit.get_user_status(tivit.get_owner) %><br>
+   				</div> 
    	                                    
 		</div>
 		

@@ -10,7 +10,6 @@ class TivitcommentsController < ApplicationController
   	puts "---------    create comment -----------------------"
   	puts "---------    create comment -----------------------"
   	puts "---------    create comment -----------------------"
-  	puts "---------    create comment -----------------------"
   puts "_________________________________________________________________________________"
  
   	
