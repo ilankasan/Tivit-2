@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>tiviti - Home </title>
+    <meta name="csrf-param" content="authenticity_token">
+    <meta name="csrf-token" content="D9fVd/v/7yHi4IjONMqcl/1EAU+nHHM+NwXyBrQgNb8=">
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+
+    <link href="css/tiviti-global.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="css/tiviti-styles.css" media="screen" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.hashchange.js"></script>
+    <script type="text/javascript" src="js/jquery.jtabs.0.1.min.js"></script>
+    <script type="text/javascript" src="js/base-jq.js"></script>
+
+
+    <script src="js/prototype.js" type="text/javascript"></script>
+    <script src="js/effects.js" type="text/javascript"></script>
+    <script src="js/dragdrop.js" type="text/javascript"></script>
+    <script src="js/controls.js" type="text/javascript"></script>
+    <script src="js/rails.js" type="text/javascript"></script>
+    <script src="js/application.js" type="text/javascript"></script>
+    <script src="js/datetimepicker_css.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        function callback(id, datum) {
+             var CalId = document.getElementById(id); if (datum=== 'undefined') { var d = new Date(); datum = d.getDate() + '/' +(d.getMonth()+1) + '/' + d.getFullYear(); } window.calDatum=datum;CalId.value=datum;
+             if (Cal.ShowTime) {
+                 CalId.value+=' '+Cal.getShowHour()+':'+Cal.Minutes;
+                 if (Cal.ShowSeconds)
+                  CalId.value+=':'+Cal.Seconds;
+                 if (TimeMode === 12)
+                  CalId.value+=''+Cal.getShowAMorPM();
+             }
+             winCal.style.visibility='hidden';
+        }
+    </script>
+    <style type="text/css">.calTD {
+        font-family: verdana;
+        font-size: 12px;
+        text-align: center;
+        border: 0;
+    }
+
+    .calR {
+        font-family: verdana;
+        font-size: 12px;
+        text-align: center;
+        font-weight: bold;
+    }</style>
+</head>
+
+<body>
+
+<!-- Header - Main Navigation & New Activity Bar -->
+<div id="main-nav-background">
+
+    <nav id="main-nav">
+        <div class="logo">
+            <a href="http://tiviti.heroku.com/">
+                <img alt="Sample App" class="logo" src="images/tivity.jpg">
+            </a>
+        </div>
+
+        <ul class="nav-item">
+            <li><a href="http://tiviti.heroku.com/" class="current">Home</a></li>
+            <li><a href="http://tiviti.heroku.com/">Meetings</a></li>
+            <li><a href="http://tiviti.heroku.com/about">Activities</a></li>
+            <li><a href="http://tiviti.heroku.com/">Files</a></li>
+            <li><a href="http://tiviti.heroku.com/contact">Team</a></li>
+        </ul>
+
+        <div id="user-nav">
+            <ul class="menu">
+                <li><a href="#" onclick="javascript:showlayer('sm_1')"> Hello, <b>Don Drapper </b></a></li>
+                <ul class="submenu" id="sm_1">
+                    <li><a href="http://tiviti.heroku.com/users/6">Profile</a></li>
+                    <li><a href="http://tiviti.heroku.com/users/6/edit">Settings</a></li>
+                    <li><a href="http://tiviti.heroku.com/signout" data-method="delete" rel="nofollow">Sign out</a></li>
+                </ul>
+            </ul>
+        </div>
+
+    </nav>
+
+
+
+
+
+</div>
+
+<!-- Page Content Area -->
+<div id="page-container">
+
+<!-- Create new activity form only for logged in users The second condition is to make sure not to display new activity when creating a new tivit -->
+
+   <div id="new-activity-background">
+       <div id="new-activity">
+
+           <div id="new-activity">
+
+               <form accept-charset="UTF-8" action="/activities?method=post" method="post" id="new-activity-form">
+                   <div style="margin:0;padding:0;display:inline">
+                       <input name="utf8" value="✓" type="hidden"/>
+                       <input name="authenticity_token" value="D9fVd/v/7yHi4IjONMqcl/1EAU+nHHM+NwXyBrQgNb8=" type="hidden"/>
+                   </div>
+
+                   <!-- Acitivity Name -->
+                   <div class="field">
+                       <div class="field-label">
+                           <label for="name">New Activity: </label>
+                       </div>
+                       <input class="input-name" id="name" name="name" placeholder="enter name..." type="text"/>
+                   </div>
+
+
+                   <!-- The complete Activiti form, opened upon activity name on focus -->
+                   <div id="new-activity-complete">
+
+                      <!-- Acitivity Due Date -->
+                       <div class="field">
+
+                           <label class="field-label" for="due">Need it by: </label>
+                           <input class="input-date" id="due" name="due" placeholder="choose date" type="text">
+                           <img src="images/cal.gif"
+                                onclick="javascript:NewCssCal('due', 'mmddyyyy', 'arrow')" style="cursor: pointer;">
+
+                       </div>
+
+                      <!-- Acitivity Description -->
+                      <div class="field" id="tivitdescription">
+                           <div class="field-label">
+                               <label class="field-label" for="description">What: </label>
+                           </div>
+                           <textarea class="input-description" id="description" name="description"></textarea>
+                       </div>
+
+                       <!-- Acitivity Description -->
+                      <div class="field">
+                           <div class="field-label">
+                               <label class="field-label" for="description">Attachments: </label>
+                           </div>
+                           <div>add a file</div>
+                       </div>
+
+
+                       <div class="field">
+                           <div class="buttons">
+                           		<span class="form-cancel-button">Cancel</span>
+                           		<input class="form-button" name="commit" value="Create Activity" type="submit"/>
+                           </div>
+                       </div>
+                   </div>
+
+               </form>
+           </div>
+
+       </div>
+   </div>
+
+
+
+<div id="homepage-tivit-list-container">
+
+    <div class="filter">
+        <dl>
+            <dt>Show:</dt>
+            <dd>
+                <input type="checkbox" value="" id="my_activ"/>
+                <label for="my_activ">My Activities</label>
+            </dd>
+            <dd>
+                <input type="checkbox" value="" id="my_tivit"/>
+                <label for="my_tivit">My tivits</label>
+            </dd>
+        </dl>
+    </div>
+
+
+    <div id="tivit-container" class="tab-content">
+
+        <div class="tabs">
+            <div class="status">You have 5 activities and 5 tivits</div>
+
+			<ul id="tabs-nav">
+				<li class="tab open">
+	                <a href="#tivit-desk">On Deck</a>
+	            </li>
+	            <li class="tab">
+	                <a href="#t2">All Updates</a>
+	                <i>5</i>
+	            </li>
+	            <li class="tab">
+	                <a href="#t3">New Requests</a>
+	                <i>2</i>
+            	</li>
+            </ul>
+        </div>
+
+		<div class="tabContent">
+	        <div id="tivit-desk" class="tivit-desk tabInfo">
+	            <div class="tvit-day">
+	                <div class="calendar today">
+	                    <div class="text">today</div>
+	                </div>
+
+	                <div class="tvit-list">
+	                    <div class="label">
+	                        <div class="progress">
+	                            <strong>0%</strong>
+	                            (11 visits complete)
+	                        </div>
+	                        <a href="">Pan-American Campaing</a> - 3 tivits to complete
+	                    </div>
+	                    <ul class="list">
+
+	                        <li class="record">
+	                            <div class="status">
+	                               <div class="icon complete"></div>
+	                            </div>
+	                            <div class="avatar">
+	                                <img alt="Don-profile" src="images/avatar_1.jpg" height="35" width="35"/>
+	                            </div>
+	                            <div class="text">
+	                                <div class="activity">
+	                                    <div class="attach">
+	                                        <i>1</i>
+	                                    </div>
+	                                    <div class="comments">
+	                                        <i>2</i>
+	                                    </div>
+	                                </div>
+
+	                                <strong>Meet with Marketing Director</strong>
+
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+
+	                        <li class="record">
+	                            <div class="status">
+	                               <div class="icon inprog"></div>
+	                            </div>
+	                            <div class="avatar">
+	                                <img alt="Don-profile" src="images/avatar_1.jpg" height="35" width="35"/>
+	                            </div>
+	                            <div class="text">
+	                                <div class="activity">
+	                                    <div class="comments">
+	                                        <i>2</i>
+	                                    </div>
+	                                </div>
+
+	                                <strong>Develop compain</strong>
+
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+
+	                    </ul>
+	                </div>
+
+	                <div class="tvit-list">
+	                    <div class="label">
+	                        <div class="progress">
+	                            <strong>50%</strong>
+	                            (1/2 visits complete)
+	                        </div>
+	                        <a href="">Tanqueray slogan</a>
+	                    </div>
+	                    <ul class="list">
+
+	                        <li class="record">
+	                            <div class="status">
+	                               <div class="icon complete"></div>
+	                            </div>
+	                            <div class="avatar">
+	                                <img alt="Don-profile" src="images/avatar_1.jpg" height="35" width="35"/>
+	                            </div>
+	                            <div class="text">
+
+	                                <strong>Set up a meeting</strong>
+	                                <br/>
+	                                <span class="grey">Pete, 25 min ago</span>
+
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+
+	                        <li class="record">
+	                            <div class="status">
+	                               <div class="icon attention"></div>
+	                            </div>
+	                            <div class="avatar">
+	                                <img alt="Don-profile" src="images/avatar_1.jpg" height="35" width="35"/>
+	                            </div>
+	                            <div class="text">
+
+	                                <strong>Develop compain</strong>
+	                                <br/>
+	                                <span class="grey">text <a href="">link</a></span>
+
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+
+	                    </ul>
+	                </div>
+
+	            </div>
+
+
+	            <div class="tvit-day">
+	                <div class="calendar date earlyDay">
+	                    <div class="week">TUE</div>
+	                    <div class="text">29</div>
+	                </div>
+
+	                <div class="tvit-list">
+	                    <div class="label">
+	                        <div class="progress">
+	                            <strong>0%</strong>
+	                            (11 visits complete)
+	                        </div>
+	                        <a href="">Lucky</a> - 3 tivits to complete
+	                    </div>
+	                    <ul class="list">
+
+	                        <li class="record">
+	                            <div class="status">
+	                               <div class="icon risk"></div>
+	                            </div>
+	                            <div class="avatar">
+	                                <img alt="Don-profile" src="images/avatar_1.jpg" height="35" width="35"/>
+	                            </div>
+	                            <div class="text">
+	                                <div class="activity">
+	                                    <div class="attach">
+	                                        <i>1</i>
+	                                    </div>
+	                                    <div class="comments">
+	                                        <i>2</i>
+	                                    </div>
+	                                </div>
+
+	                                <strong>Meet with Marketing Director</strong>
+
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+
+	                    </ul>
+	                </div>
+
+	                <div class="tvit-list">
+	                    <div class="label">
+	                        <div class="progress">
+	                            <strong>50%</strong>
+	                            (1/2 visits complete)
+	                        </div>
+	                        <a href="">Mom B</a>
+	                    </div>
+	                    <ul class="list">
+
+	                        <li class="record">
+	                            <div class="status">
+	                               <div class="icon complete"></div>
+	                            </div>
+	                            <div class="avatar">
+	                                <img alt="Don-profile" src="images/avatar_1.jpg" height="35" width="35"/>
+	                            </div>
+	                            <div class="text">
+
+	                                <strong>Set up a meeting</strong>
+	                                <br/>
+	                                <span class="grey">Pete, 25 min ago</span>
+
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+
+
+
+	                    </ul>
+	                </div>
+
+	            </div>
+
+
+	            <div class="tvit-day">
+	                <div class="calendar date nearlyDay">
+	                    <div class="week">TUE</div>
+	                    <div class="text">29</div>
+	                </div>
+
+	                <div class="tvit-list">
+	                    <div class="label">
+	                        <div class="progress">
+	                            <strong>0%</strong>
+	                            (11 visits complete)
+	                        </div>
+	                        <a href="">Lucky</a> - 3 tivits to complete
+	                    </div>
+	                    <ul class="list">
+
+	                        <li class="record">
+	                            <div class="status">
+	                               <div class="icon risk"></div>
+	                            </div>
+	                            <div class="avatar">
+	                                <img alt="Don-profile" src="images/avatar_1.jpg" height="35" width="35"/>
+	                            </div>
+	                            <div class="text">
+	                                <div class="activity">
+	                                    <div class="attach">
+	                                        <i>1</i>
+	                                    </div>
+	                                    <div class="comments">
+	                                        <i>2</i>
+	                                    </div>
+	                                </div>
+
+	                                <strong>Meet with Marketing Director</strong>
+
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+
+	                    </ul>
+	                </div>
+
+	            </div>
+
+
+	            <div class="tvit-day">
+	                <div class="calendar date pastDay">
+	                    <div class="week">TUE</div>
+	                    <div class="text">29</div>
+	                </div>
+
+	                <div class="tvit-list">
+	                    <div class="label">
+	                        <div class="progress">
+	                            <strong>0%</strong>
+	                            (11 visits complete)
+	                        </div>
+	                        <a href="">Lucky</a> - 3 tivits to complete
+	                    </div>
+	                    <ul class="list">
+
+	                        <li class="record">
+	                            <div class="status">
+	                               <div class="icon risk"></div>
+	                            </div>
+	                            <div class="avatar">
+	                                <img alt="Don-profile" src="images/avatar_1.jpg" height="35" width="35"/>
+	                            </div>
+	                            <div class="text">
+	                                <div class="activity">
+	                                    <div class="attach">
+	                                        <i>1</i>
+	                                    </div>
+	                                    <div class="comments">
+	                                        <i>2</i>
+	                                    </div>
+	                                </div>
+
+	                                <strong>Meet with Marketing Director</strong>
+
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+
+	                    </ul>
+	                </div>
+
+	            </div>
+
+                 <a href="" class="showMore">Show More</a>
+	        </div>
+
+	        <div class="t2 tabInfo">
+
+	        	<div class="tvit-day">
+	                <div class="calendar date earlyDay">
+	                    <div class="week">TUE</div>
+	                    <div class="text">29</div>
+	                </div>
+
+	                <div class="tvit-list">
+	                    <div class="label">
+	                        <div class="progress">
+	                            <strong>0%</strong>
+	                            (11 visits complete)
+	                        </div>
+	                        <a href="">Lucky</a> - 3 tivits to complete
+	                    </div>
+	                    <ul class="list">
+
+	                        <li class="record">
+	                            <div class="status">
+	                               <div class="icon risk"></div>
+	                            </div>
+	                            <div class="avatar">
+	                                <img alt="Don-profile" src="images/avatar_1.jpg" height="35" width="35"/>
+	                            </div>
+	                            <div class="text">
+	                                <div class="activity">
+	                                    <div class="attach">
+	                                        <i>1</i>
+	                                    </div>
+	                                    <div class="comments">
+	                                        <i>2</i>
+	                                    </div>
+	                                </div>
+
+	                                <strong>Meet with Marketing Director</strong>
+
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+
+	                    </ul>
+	                </div>
+
+	                <div class="tvit-list">
+	                    <div class="label">
+	                        <div class="progress">
+	                            <strong>50%</strong>
+	                            (1/2 visits complete)
+	                        </div>
+	                        <a href="">Mom B</a>
+	                    </div>
+	                    <ul class="list">
+
+	                        <li class="record">
+	                            <div class="status">
+	                               <div class="icon complete"></div>
+	                            </div>
+	                            <div class="avatar">
+	                                <img alt="Don-profile" src="images/avatar_1.jpg" height="35" width="35"/>
+	                            </div>
+	                            <div class="text">
+
+	                                <strong>Set up a meeting</strong>
+	                                <br/>
+	                                <span class="grey">Pete, 25 min ago</span>
+
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+
+
+
+	                    </ul>
+	                </div>
+
+	            </div>
+                 <a href="" class="showMore">Show More</a>
+	        </div>
+
+	        <div class="t3 tabInfo">
+	        	<div class="tvit-day">
+	                <div class="calendar date pastDay">
+	                    <div class="week">TUE</div>
+	                    <div class="text">29</div>
+	                </div>
+
+	                <div class="tvit-list">
+	                    <div class="label">
+	                        <div class="progress">
+	                            <strong>0%</strong>
+	                            (11 visits complete)
+	                        </div>
+	                        <a href="">Lucky</a> - 3 tivits to complete
+	                    </div>
+	                    <ul class="list">
+
+	                        <li class="record">
+	                            <div class="status">
+	                               <div class="icon risk"></div>
+	                            </div>
+	                            <div class="avatar">
+	                                <img alt="Don-profile" src="images/avatar_1.jpg" height="35" width="35"/>
+	                            </div>
+	                            <div class="text">
+	                                <div class="activity">
+	                                    <div class="attach">
+	                                        <i>1</i>
+	                                    </div>
+	                                    <div class="comments">
+	                                        <i>2</i>
+	                                    </div>
+	                                </div>
+
+	                                <strong>Meet with Marketing Director</strong>
+
+	                            </div>
+	                            <div class="clear"></div>
+	                        </li>
+
+	                    </ul>
+	                </div>
+
+	            </div>
+
+	        </div>
+
+             <a href="" class="showMore">Show More</a>
+        </div>
+
+
+
+    </div>
+
+
+</div>
+
+<div style="clear: both;"></div>
+ <div id="activity-overlay"></div>
+</div>
+
+
+<!-- Footer -->
+<div id="footer">
+    <footer>
+        <nav class="round">
+            <ul>
+                <li><a href="http://tiviti.heroku.com/">Home</a></li>
+                <li><a href="http://tiviti.heroku.com/about">About</a></li>
+                <li><a href="http://tiviti.heroku.com/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </footer>
+</div>
+
+<div style="clear: both;"></div>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,48 +1,31 @@
-
-<table>
-
-<div id="tivit-container">
-
-	<div id="tivit-container-background">
-		
-	<div id="tivit-title" class="text">
-		
-		
-		
-			<h1>Activity: <%= link_to activity_db.name, activity_db, :action => "show",
+<div class="tvit-day">
+	<div class="calendar today">
+		<div class="text">today (statis)</div>
+	    	</div>
+                <div class="tvit-list">
+                    <div class="label">
+                        <div class="progress">
+                            <strong>static%</strong>
+                           
+                           <%= activity_db.get_activity_tivit_status %> (temp) 
+	        
+                        </div>
+	                        
+	                        <a><%= link_to activity_db.name, activity_db, :action => "show",
 	  									   :method => "get",
 	                                       :title  => activity_db.name,
-	                                       :class => "text" %>
-	    	<small>by <%= activity_db.get_owner.email %> </small>
-			
-			<% if activity_db.due!=nil %>
-   				<% if activity_db.due > Time.now %>
-      				<small>is due in <%= time_ago_in_words(activity_db.due) %> </small>
-   				<% else %>
-   					<small>is <%= time_ago_in_words(activity_db.due) %> ovberdue!</small> 
-   				<% end %>
-   			<% else %>
-   				<small>no due date  </small>
-   				
-   			<% end %>
-   			<small>  <%=activity_db.get_activity_tivit_status%></small>
-   		</h1>
-     	
-   	</tr>
-   	<tr>   	
-  	<% if activity_db.tivits !=nil && activity_db.tivits.size > 0%>
-				<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.tivits, :as => :tivit  %>
- 
-	<%end%>
+	                                       :class => "text" %></a>
+	                        - 3 tivits to complete (static)
 
-  </tr>
-   		                                
-		</div>
+	                   </div>
+
+	                    
+					<% if activity_db.tivits !=nil && activity_db.tivits.size > 0%>
+						<ul class="list">
+								<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.tivits, :as => :tivit  %>
+						</ul>
+					
+					<%end%>
+
 	</div>
 </div>
-
-
-
-</table>
-<br>
-

@@ -1,4 +1,5 @@
-/* this is the entire page container that hols all the content. The '#' is in the front because in the HTML we use 'id' and not class <div id="page-container">.
+
+/* this is the entire page container that hols all the content. The '#' is in the front because in the HTML we use 'id' and not class <div id="page-container">. 
  * For classes, the CSS will be defined with '.' <div class="page-container">
  */
 html, body {
@@ -17,12 +18,11 @@ body {
 #page-container{
 	background: white;
 	position: relative;
-	/*top: 32px;*/
+	top: 32px;
 	/* if no width is specified, the whole browser will be take over */
 	width: 980px;
 	min-height: 768px;
 	margin: auto; /*this will center the div on the page*/
-    padding-top:40px;
 }
 /* Main Navigation **************************************************/
 #main-nav-background {
@@ -64,7 +64,7 @@ body {
 	vertical-align:middle;
 }
 #main-nav .nav-item li a:hover{
-	/*text-decoration: underline;*/
+	/*text-decoration: underline;*/	 
 	text-decoration: none;
 	background: #140F13; /*#2a4b6e;*/
 }
@@ -153,27 +153,27 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	line-height:3em;
 	/*vertical-align: middle;*/
 	font-size:14px;
+	color: white;
 	margin: 0 auto; /*will center the div in the container */
-
+	
 	z-index: 20; /* very high number to insure last one to be drawn */
 	position: relative;
-
+	
 	-moz-border-radius:    3px;
  	-webkit-border-radius: 3px;
-  	border-radius:         3px;
+  	border-radius:         3px; 
 }
 #new-activity-background {
-	background: white;
+	background: white; 
 	width: 980px;
 	height: 42px;
 	margin: auto;
 }
 #new-activity-complete {
 	display: none;
-
-    -moz-border-radius:    6px;
-    -webkit-border-radius: 6px;
-    border-radius:         6px;
+	 -moz-border-radius:    6px;
+  -webkit-border-radius: 6px;
+  border-radius:         6px;
 }
 #new-activity a {
 	padding: 20px;
@@ -186,9 +186,9 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	background: #EEEEEE; /*#365461*/
 	vertical-align: middle;
 }
-#new-activity .field-label {
-	font-size:14px;
-	width: 150px;
+#new-activity .field-label {	
+	font-size:14px;	
+	width: 100px;
 	text-align: right;
 	color: #333333;
 	background: #EEEEEE; /*#365461;*/
@@ -202,7 +202,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	width: 500px;
 	padding: 6px 0px 0px 4px;
 	/*vertical-align: middle;*/
-	font-size: 14px;
+	font-size: 14px;	
 }
 #new-activity .input-invitees {
 	width: 500px;
@@ -224,7 +224,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	vertical-align: middle;
 	/*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
 	font-family: inherit;
-	padding: 6px 0px 0px 4px;
+	padding: 6px 0px 0px 4px;	
 	max-width: 500px;
 	max-height: 700px;
 	font-size: 14px;
@@ -232,23 +232,25 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 #new-activity .form-button {
 	width:100px;
 	margin: 0;
-	vertical-align: middle;
+	vertical-align: top;
 	/*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
-	font-family: inherit;
-	position: relative;
-
-	text-align: center;
-	width: 140px;
-	color: #fff;
-	background: green;
-	border:1px solid #aaa;
-	font-size: 110%;
-	font-weight: bold;
-	padding: 4px;
-	-moz-border-radius:    4px;
-	-webkit-border-radius: 4px;
-	border-radius:         4px;
-	margin-left: 20px;
+	font-family: inherit;	
+	position: relative; 
+	left: 476px;
+	bottom: 14px;
+	
+  display: block;
+  text-align: center;
+  width: 140px;
+  color: #fff;
+  background: #111312;
+  border: 0px;
+  font-size: 110%;
+  font-weight: bold;
+  padding: 4px;
+  -moz-border-radius:    3px;
+  -webkit-border-radius: 3px;
+  border-radius:         3px;
 }
 /* Home Page - left navigation **************************************************/
 #homepage-left-nav-container {
@@ -259,16 +261,33 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	width: 120px;
 	min-height: 768px;
 	float: left;
-
+	
 }
 /* Home Page - tivit list Container **************************************************/
 #homepage-tivit-list-container {
 	background: white;
 	position: relative;
+	top: 32px;
 	/* if no width is specified, the whole browser will be take over */
+	width: 840px;
 	min-height: 768px;
+	float: right;
 }
 /* individual tivit container **************************************************/
+
+#tivit-container-background-activity {
+	width: 627px;
+	height: 150px;
+	background: #EEEEEE;
+}
+#tivit-container-activity {
+	padding-bottom: 16px;
+	width: 627px;
+	height: 150px;
+}
+
+
+
 #tivit-container-background {
 	width: 627px;
 	height: 120px;
@@ -276,13 +295,13 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 }
 #tivit-container {
 	padding-bottom: 16px;
-	width: 734px;
-	/*height: 120px;*/
+	width: 627px;
+	height: 120px;
 }
 #tivit-avatar {
 	background: white;
-	width: 80px;
-	height: 100px;
+	width: 40px;
+	height: 40px;
 	float: left;
 }
 #tivit-avatar-label {
@@ -300,7 +319,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 #tivit-title {
 	background: #DDDDDD;
 	width: 627px;
-	height: 30px;
+	height: 30px;	
 }
 #tivit-title .text{
 	font-size: 14px;
@@ -338,7 +357,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	line-height: 18px; /* same hieght as the container will center the text in the middle */
 	/*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
 	font-family: inherit;
-	float: right;
+	float: right;	
 	position: relative;
 	top: -60px;
 	left: -10px;
@@ -358,7 +377,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 h1 {
 	font-size: 16px;
 	padding-top: 10px;
-}
+} 
 
 
 /* Round corners */
@@ -563,7 +582,7 @@ table.activities tr td.activity span.timestamp {
 
 div.user_info img {
   padding-right: 0.1em;
-
+  
 }
 
 div.user_info a {
@@ -585,7 +604,7 @@ form.new_activity {
 form.new_activity textarea {
   height: 4em;
   margin-bottom: 0;
-
+  
 /* From Jon */
 div.activity
 {
@@ -604,7 +623,7 @@ div.activity
 .activity td
 {
   padding: 3px;
-  background: #ffffff;
+  background: #ffffff; 
 }
 .activity tr:hover td
 {
@@ -631,15 +650,15 @@ div.nav
   padding: 4px;
   text-align: center;
 }
-.nav a:link
+.nav a:link 
 {
   color:#EEEEEE;text-decoration:none;
 }
-.nav a:visited
+.nav a:visited 
 {
   color:#EEEEEE;text-decoration:none;
 }
-.nav a:hover
+.nav a:hover 
 {
   text-decoration:none;
 }

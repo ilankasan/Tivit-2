@@ -1,7 +1,3 @@
-<!--div id="page-container"!-->
-
-<!-- missing new activity....needs to go to partial!-->
- 
 <div id="homepage-tivit-list-container">
 
     <div class="filter">
@@ -38,17 +34,20 @@
             </ul>
         </div>
  
- 		<!--div class="tabContent" this section made content diss apear>
-	        <div id="tivit-desk" class="tivit-desk tabInfo"!-->
+ 		<div class="tabContent">
+	        <div id="tivit-desk" class="tivit-desk tabInfo">
 
- <% unless @tivits_participate == nil %>
+ 
+ 
+<% unless @tivits_participate == nil %>
    <table class="activities" summary="User activities">
      <h1>Total Acitivites / tivits you own (<%= @tivits_participate.count%>)</h1>
      <%= render :partial => 'shared/activity_object_db', :collection =>  @tivits_participate %>
   </table>
 <% end %>
 
-			<!--/div>
-		</div!-->
+			</div>
+		</div>
 	</div>
 </div>
+

@@ -167,9 +167,40 @@ class Activity < ActiveRecord::Base
 		return User.find_by_id(self.invited_by)
   end	
 
+
+ def get_number_of_tivits
+#returns number of tivits
+	if(self.tivits == nil || self.tivits.size == 0)
+		return 0
+	else
+		return self.tivits.size
+	end
+ end
+  
+def get_number_of_completed_tivits
+#returns the number of completed tivits 
+	if(self.tivits == nil || self.tivits.size == 0)
+		return "0"
+	else
+		count = 0
+#		puts "get_activity_tivit_status = " +self.tivits.size.inspect
+
+		self.tivits.each do |tivit|
+			status = tivit.get_user_status(tivit.get_owner)
+			puts "status = "+ status
+			if (status == "I Am Done")
+				count = count+1
+			end
+		end 
+	end
+	return count 
+	
+  end
+
   
   def get_activity_tivit_status
 #returns a string of how many tivits have been completed
+# need to remove business logic from model
 #puts "get_activity_tivit_status"
 #puts "_____________________________________________________"
 	if(self.tivits == nil || self.tivits.size == 0)

@@ -1,0 +1,317 @@
+#main-nav .nav-item li a.current{
+    background:#000;
+}
+.tabInfo{
+	display: none;
+}
+#new-activity-background{
+	width: 780px;
+	margin: 0;
+	position: absolute;
+	top:0;
+	left:0;
+}
+#activity-overlay{
+    position:fixed;
+    height:100%;
+    width:100%;
+    background:rgba(0,0,0,0.5);
+    display:none;
+    z-index:50;
+    top:0;
+    left:0;
+}
+#new-activity-background{
+    z-index:100;
+}
+.clear{
+    clear:both;
+    font-size:0;
+    line-height:0;
+}
+#user-nav ul .submenu{
+    border:1px solid #cfcfcf;
+    padding:2px;
+    }
+    #user-nav .menu li > a{
+        background:url("../images/arr_w_down.gif") right 21px no-repeat;
+    }
+    #user-nav ul .submenu li{
+        border:none;
+        margin:0;
+        }
+        #user-nav ul .submenu li a{
+            color:#000;
+            font-size:13px;
+            background:none;
+        }
+        #user-nav ul .submenu li a:hover{
+            background:#eaeaea;
+            text-decoration:none;
+        }
+
+#new-activity{
+    margin:0;
+    width:780px;
+    }
+    #new-activity .field{
+        width:760px;
+    }
+    #new-activity .input-name{
+        width:420px;
+        padding-bottom: 2px;
+    }
+    #new-activity .field-label{
+    	font-weight:normal;
+    }
+    #new-activity .input-date{
+    	width: 200px;
+    	padding-bottom: 2px;
+    }
+#new-activity-complete .buttons{
+	text-align: right;
+	padding-right: 175px;
+}
+#new-activity-complete .form-cancel-button{
+	padding:5px;
+	color:#aaa;
+	background: #fff;
+	border:1px solid #aaa;
+	-moz-border-radius:    4px;
+	-webkit-border-radius: 4px;
+	border-radius:         4px;
+	vertical-align: middle;
+	display: inline-block;
+	height: 14px;
+	line-height: 14px;
+	font-size: 12px;
+	cursor: default;
+}
+
+.tab-content{
+    padding:15px 45px 35px 0 !important;
+    border-right:1px solid #ededed;
+    position:relative;
+    float:left;
+    }
+    .tab-content .showMore{
+        position:absolute;
+        bottom:0;
+        left:350px;
+    }
+
+.filter{
+    float:right;
+    width:140px;
+    margin-right:10px;
+    padding:10px 15px;
+    border-top:1px solid #ddd;
+    border-bottom:1px solid #ddd;
+    }
+    .filter dl{
+        margin:0;
+    }
+    .filter dt{
+        margin-bottom:5px;
+    }
+    .filter dd{
+        margin:0 0 5px 0;
+    }
+
+
+.tabs{
+    overflow:hidden;
+    clear:both;
+    padding:10px 0;
+    }
+    .tabs .status{
+        float:right;
+        color:#8a8ad8;
+        padding-top:5px;
+        position:relative;
+        }
+
+
+    .tabs .tab{
+        display:inline-block;
+        margin-right:5px;
+        height:17px;
+        padding:2px 15px;
+        color:#929292;
+        background:#eaeaea;
+        border:2px solid #e4e4e4;
+        border-radius:5px;
+        font-size:12px;
+        line-height:17px;
+        cursor:pointer;
+        position:relative;
+    }
+    .tabs .active{
+        background:#fff;
+        color:#000;
+        cursor:default;
+        }
+        .tabs .tab i{
+            position:absolute;
+            right:-6px;
+            top:-8px;
+            background:red;
+            padding:0 4px;
+            border:1px solid #c0c0c0;
+            border-radius:9px;
+            color:#fff;
+            font-size:8px;
+            text-align:center;
+            font-weight:bold;
+            font-style:normal;
+            line-height:12px;
+        }
+
+.tvit-day{
+    padding:20px 0 0 45px;
+    position:relative;
+    }
+    .tvit-day .calendar{
+        width:34px;
+        height:31px;
+        background:url("../images/day_bg.jpg") 0 0 no-repeat;
+        position:absolute;
+        top:25px;
+        left:1px;
+        overflow:hidden;
+    }
+    .tvit-day .today{
+        font-size:8px;
+        font-weight:bold;
+        width:26px;
+        padding:14px 0 0 10px;
+        color:#000;
+    }
+    .tvit-day .calendar .earlyDay{
+        background:url("../images/day_bg.jpg") 0 0 no-repeat;
+    }
+    .tvit-day .date .week{
+        color:#fff;
+        font-size:9px;
+        font-weight:bold;
+        text-align:center;
+        padding-left:3px;
+    }
+    .tvit-day .date .text{
+        color:#000;
+        font-size:15px;
+        text-align:center;
+        font-weight:bold;
+        padding-left:2px;
+    }
+    .tvit-day .nearlyDay{
+        background:url("../images/day_bg.jpg") -46px 0 no-repeat;
+    }
+    .tvit-day .pastDay{
+        background:url("../images/day_bg.jpg") -92px 0 no-repeat;
+    }
+    .tvit-day .pastDay .text{
+        color:#808080;
+    }
+
+
+.tvit-list{
+    margin-top:5px;
+}
+.tvit-list .label{
+    padding: 0 0 2px 5px;
+    border-bottom:1px dotted #e0e0e0;
+    margin-bottom:1px;
+    }
+    .tvit-list .label .progress{
+        float:right;
+    }
+
+.tvit-list .record{
+    padding:5px;
+}
+.tvit-list .record .status{
+    width:27px;
+    float:left;
+    height:31px;
+    position:relative;
+    }
+    .tvit-list .record .status .icon{
+            width:16px;
+            height:16px;
+            position:absolute;
+            left:2px;
+            bottom:5px;
+        }
+        .tvit-list .record .status .complete{
+            background:url("../images/status_complete.png") 0 0 no-repeat;
+            width:19px;
+            height:20px;
+        }
+        .tvit-list .record .status .inprog{
+            background:url("../images/status_inprog.png") 0 0 no-repeat;
+        }
+        .tvit-list .record .status .attention{
+            background:url("../images/status_attention.png") 0 0 no-repeat;
+        }
+        .tvit-list .record .status .risk{
+            background:url("../images/status_risk.png") 0 0 no-repeat;
+        }
+.tvit-list .record .avatar{
+    float:left;
+}
+.tvit-list .record .text{
+    overflow:hidden;
+    padding: 0 0 0 15px;
+    min-height:31px;
+    position:relative;
+    }
+    .tvit-list .record .text .grey{
+        color:#888;
+        font-size:10px;
+        margin:0;
+    }
+.tvit-list .record .activity{
+    float:right;
+    width:90px;
+    padding:10px 10px 0 0;
+    text-align:right;
+}
+.tvit-list .record .comments{
+    width:20px;
+    height:18px;
+    position:relative;
+    display:inline-block;
+    background:url("../images/ico_comment.png") 0 0 no-repeat;
+}
+.tvit-list .record .attach{
+    width:18px;
+    height:18px;
+    position:relative;
+    display:inline-block;
+    background:url("../images/ico_attach.png") 0 0 no-repeat;
+    margin-right:15px;
+}
+.tvit-list .record .comments i,
+.tvit-list .record .attach i{
+    position:absolute;
+    background:red;
+    padding:0 4px;
+    border:1px solid #c0c0c0;
+    border-radius:9px;
+    color:#fff;
+    font-size:8px;
+    text-align:center;
+    font-weight:bold;
+    font-style:normal;
+    line-height:12px;
+}
+.tvit-list .record .comments i{
+    right:-7px;
+    top:-5px;
+}
+.tvit-list .record .attach i{
+    right:-10px;
+    top:-5px;
+}
+
