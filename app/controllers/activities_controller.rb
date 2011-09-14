@@ -67,9 +67,27 @@ class ActivitiesController < ApplicationController
   
   
   def edit
-    @activity = Activity.find(params[:id])
+  	puts "edit activit"
+        @activity = Activity.find(params[:id])
     @title = "Edit tivit: " +@activity.name
   end
+  
+  def remove_tivit
+	puts "Remove Tivit"
+	@tivit = Activity.find(params[:id])
+	@tivit.destroy
+	redirect_back_or root_path
+      	
+  end
+  
+  
+  def edit_tivit
+  	puts "edit tivit"
+    @activity = Activity.find(params[:id])
+    @title = "Edit tivit: " +@activity.name
+      	
+  end
+
   
   
   def show
@@ -83,42 +101,63 @@ class ActivitiesController < ApplicationController
   	
   end
   
+  
+  
+  
+  
+  def update_tivit
+#under construction
+
+    puts "-----------    UPDATE tivit"  
+    
+    @activity = Activity.find(params[:id])   
+    
+    puts params.inspect
+    params["due"] = convert_date_to_string(params, "due")
+   
+    
+# update activity status to completed if check box was checked 
+	
+	if(params["activity_status"] == "true")
+		params["activity_status"] = "Completed"
+#		params["completed_at"] = time.localtime
+	else
+		params["activity_status"] = "in-progress"
+	end
+
+	  
+# vhecking to see if tthe task was previously closed. This will be used before the email is sent out below
+	was_completed = @activity.status
+	if (@activity != nil && @activity.update_attributes(params))
+      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"]
+      
+ 	  @activity.update_activity_status(params["activity_status"]) 
+ 
+      invitee_emails = params["invitees"]	
+      
+      update_activity_participants_by_email(invitee_emails, @activity)
+      @activity.save
+      
+#send email to all parcicipants that tivit was completed (not including owner):
+	  if(was_completed != "Completed" && @activity.status == "Completed" )
+	 		UserMailer.user_tivit_status_completed_email(current_user, invitee_emails,params["summary"],@activity).deliver
+	  end
+
+	  flash[:success] = "tivit " + @activity.name + " updated"
+      redirect_to @activity
+      
+    else
+   	  flash[:failed] = "Errrorrororororor"
+      @title = "Edit activity"
+      render 'edit'
+    end  
+  end
+
+  
+  
+  
   def update
    
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
     puts "-----------    UPDATE ------llllllllll---------"  
     
     @activity = Activity.find(params[:id])   
@@ -136,16 +175,12 @@ class ActivitiesController < ApplicationController
 		params["activity_status"] = "in-progress"
 	end
 
-	puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"] 
- 	  
+	  
 # vhecking to see if tthe task was previously closed. This will be used before the email is sent out below
 	was_completed = @activity.status
 	if (@activity != nil && @activity.update_attributes(params))
       puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"]
-      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"] 
- 	  puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"] 
- 	  puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"] 
- 	   
+      
  	  @activity.update_activity_status(params["activity_status"]) 
  
       invitee_emails = params["invitees"]	

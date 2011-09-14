@@ -4,16 +4,8 @@ class TivitcommentsController < ApplicationController
 
   def create
   	puts "---------    create comment -----------------------"
-  	puts "---------    create comment -----------------------"
-  	puts "---------    create comment -----------------------"
-  	puts "---------    create comment -----------------------"
-  	puts "---------    create comment -----------------------"
-  	puts "---------    create comment -----------------------"
-  	puts "---------    create comment -----------------------"
-  puts "_________________________________________________________________________________"
- 
-  	
-  	puts "********************************************"
+  	puts "_________________________________________________________________________________"
+   	puts "********************************************"
   	puts "param - " +params.inspect
   	puts "********************************************"
 
@@ -32,14 +24,13 @@ class TivitcommentsController < ApplicationController
 	#redirect_to @activity
 	redirect_back_or root_path
 	#render @activity
-	#redirect_to root_path
-  end
+ end
 
 
 
 
 # not in use
-  def edit
+  def notinuse_edit
 	if(params == nil)
 		puts "param is nill !!!!!!!!!!!!!!!!!!!!"
 	else	

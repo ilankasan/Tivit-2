@@ -23,13 +23,8 @@
    			<% else %>
    				<span class="timestamp">DUE DATE == Nil  </span>
    				
-   			<% end %>                 
-                                    
-		</div>
-		
-	
-
-				
+   			<% end %>                                                   
+		</div>			
 	</div>
 </div>
 
@@ -60,10 +55,6 @@
   </td>
   
   
-  
-  
-  
-  
   <td>
   	
   <% if current_user.id == (activitydetails.owner_id) %>
@@ -84,65 +75,43 @@
   <% end %>
   
   
-	<h1><span class="content">
-	<% if activitydetails.tivits !=nil && activitydetails.tivits.size > 0%>
-				<%= activitydetails.tivits.size %> Team Tivits</span></h1>
-	<%end%>
-	
-	
-	
-	 			  
-  
-  <%= link_to "details", activitydetails, :action => "show",
-  									:method => "get",
-                                    :title  => activitydetails.name %>
+			  
+  <br>
                                       
    <% if current_user.id != (activitydetails.owner_id) %>
-  	    
-   
-     <%= link_to "accept", 		:controller  => "activities", 
-   								:action      => "change_tivit_status",
-   								:status      => "accept",
- 								:id          => activitydetails.id, 
-  							    :confirm     => "Are you sure you want to accept tivit" +activitydetails.name+"?", 
-                                :title       => activitydetails.name %>
 
-        
-                                     
-    
-	<%= link_to "decline",      :controller  => "activities",
+<!-- this action is not working yet-->
+	<%= link_to "Completed",    :controller  => "activities",
     							:action      => "change_tivit_status",
-    							:status      => "decline",
+    							:status      => "Completed",
     							:id          => activitydetails.id, 
-  							    :confirm     => "Are you sure you want to decline tivit" +activitydetails.name+"?",
-                                :title       => activitydetails.name %>
-
-
-	<%= link_to "I Am Done",    :controller  => "activities",
-    							:action      => "change_tivit_status",
-    							:status      => "i_am_done",
-    							:id          => activitydetails.id, 
-  							    :confirm     => "Are you sure you want to decline tivit" +activitydetails.name+"?",
+  							    :confirm     => "Are you sure you want to mark activity as completed" +activitydetails.name+"?",
                                 :title       => activitydetails.name %>
 
   <% end %>
   
   
-  
-  
   </td>
-
- 
 </tr>
-
 <tr>
 
   <td>
-<!-- Displying list of Tivits-->
 
- <!--%= render :partial => 'shared/tivits_comments', :collection =>  [activitydetails], :as => :tivit%-->
- <%= render :partial => 'shared/tivit', :collection =>  activitydetails.tivits  %> 
+	
+<!-- Displying list of My Tivits-->  	
+ <span class="content">
+ 	<% mytivits = activitydetails.tivits.where("owner_id = ? " ,current_user.id)%>
+	<% if mytivits !=nil && mytivits.size > 0%>
+		<h1><%= mytivits.size %> My Tivits</span></h1>
+		<%= render :partial => 'shared/tivit', :collection =>  mytivits %> 
+	<%end%>
+
+<!-- Displying list of Team Tivits-->
+	
+<% teamtivits = activitydetails.tivits.where("NOT owner_id = ? " ,current_user.id)%>
+	<% if teamtivits !=nil && teamtivits.size > 0%>
+		<h1><%= teamtivits.size %> Team Tivits</span></h1>
+		<%= render :partial => 'shared/tivit', :collection =>  teamtivits %> 
+	<%end%>
   </td>
-
 </tr>
-

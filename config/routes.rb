@@ -46,6 +46,10 @@ resources :activities
   	match "/change_tivit_status" => "activities#change_tivit_status"
   	match "/new_tivit" => "activities#new_tivit"
   	match "/create_tivit" => "activities#create_tivit"
+  	match "/remove_tivit" => "activities#remove_tivit"
+  	match "/edit_tivit" => "activities#edit_tivit"
+  	match "/update_tivit" => "activities#update_tivit"
+  	
   	
   	
   	
