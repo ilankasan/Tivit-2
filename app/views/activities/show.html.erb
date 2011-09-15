@@ -1,0 +1,13 @@
+ 
+ <% if @activity.activity_type == "activity" %>
+   
+	<%= render :partial => 'shared/activitydetails', :collection =>  [@activity] %>
+<% else %>
+	<span class="content"> Old code, clean and replace!!!!!!!!!!!!!!!!!!!!!!!!</span><br>	
+
+	<%= render :partial => 'shared/tivitdetails', :collection =>  [@activity] %>
+<% end %>
+   
+     
+
+ 

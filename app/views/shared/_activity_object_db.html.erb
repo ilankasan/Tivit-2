@@ -1,0 +1,10 @@
+<!-- Check if object is a tivity or an Activity. If a tivit find the parent activity -->
+		
+		
+	<% if activity_object_db.activity_type == "activity"%>
+	
+		<%= render :partial => 'shared/activity_db', :collection =>  [activity_object_db], :as => :activity_db %>
+	<% else %>
+		<%= render :partial => 'shared/activity_db', :collection =>  [activity_object_db.get_parent], :as => :activity_db %>		
+	<% end %>
+   			

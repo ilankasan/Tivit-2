@@ -1,0 +1,150 @@
+<!-- Display a single tivits in Team tivit within an acitivty-->
+<br><br>
+<div id="tivit-container-activity">
+
+
+
+	<div id="tivit-container-background-activity">
+		
+		<div id="tivit-avatar">
+			 <%= render :partial => 'profile_images/profile_image', :collection =>  [tivit.get_owner], :as => :user%> 
+	
+			
+		</div>
+		<div id="tivit-title" class="text">
+			
+			<%= link_to tivit.name, tivit, :action => "show",
+	  									   :method => "get",
+	                                       :title  => tivit.name,
+	                                       :class => "text" %>
+	            
+	            <% parent = tivit.get_parent %>_tivit.html
+   					
+   				
+	            <% if parent !=nil %>
+   					for <b><%=parent.name%></b>
+   				<% end %>
+   				
+   				                             
+	    		<% if tivit.due!=nil %>
+   					<% if tivit.due > Time.now %>
+      					<span class="timestamp">Need by: <%= time_ago_in_words(tivit.due) %> </span>
+   					<% else %>
+   					<span class="timestamp">tivit <%= time_ago_in_words(tivit.due) %> ovberdue! </span>
+   					<% end %>
+   				<% end %>
+   				<br>
+   				<% if tivit.get_invited_by !=nil %>
+   					<%= tivit.get_owner.get_name%> was invited by <%= tivit.get_invited_by.name %> <%= time_ago_in_words(tivit.created_at) %> ago
+   				<% else %>
+   				<%= tivit.get_owner.get_name%> was invited  <%= time_ago_in_words(tivit.created_at) %> ago
+
+   				<% end %>
+   							
+		                                    
+		</div>
+<!-- Displaying tivit status -->	
+		<div id="tivit-status">
+			<% if tivit.status == "Completed" %>				
+	   			<img src="/images/status-done.gif" alt="tivit it done"> 			
+	  		<% else %> 	
+	 			<% if tivit.due!=nil %>
+	   				<% if tivit.due > Time.now %>
+	      				<img src="/images/status-inprogress.gif" alt="tivit in progress">
+	   				<% else %>
+	   					<img src="/images/status-overdue.gif" alt="tivit in overdue!">
+	   				<% end %>
+	   			<% end %> 
+	  		<% end %> 
+		</div>
+		
+		<div id="tivit-content">
+			
+			<% if tivit.status == "Completed" %>
+	 			<div class="text"> Completed!
+	 				
+	 				<% if tivit.completed_at!=nil %>
+						<%= time_ago_in_words(tivit.completed_at) %> ago			
+	   				<% end %> 
+	   				<div class="text">Summery: <%= tivit.summary%> </div> 		
+	 				
+	 			</div>	
+		  	<% end %> 
+		 	<br>		
+		 	
+		 	
+<!-- tivit description-->
+	<div class="text"><%= tivit.description %></div>
+
+<!-- Displaytivit user status, New = Unread, Reviewed = Read -->
+	
+	<br><div class="text">User status:<%= tivit.get_user_status(tivit.get_owner) %></div>
+
+	
+
+
+<% if current_user.id == (tivit.owner_id) %>
+
+
+<!-- Changing Tivit status to Reviwed -->
+		<%tivit.update_tivit_status_after_show(current_user)%>
+
+<!-- tivit action to take-->
+     <%= link_to "accept", 		:controller  => "activities", 
+   								:action      => "change_tivit_status",
+   								:status      => "accept",
+ 								:id          => tivit.id, 
+  							    :confirm     => "Are you sure you want to accept tivit" +tivit.name+"?", 
+                                :title       => tivit.name %>
+
+        
+                                     
+    
+	<%= link_to "decline",      :controller  => "activities",
+    							:action      => "change_tivit_status",
+    							:status      => "decline",
+    							:id          => tivit.id, 
+  							    :confirm     => "Are you sure you want to decline tivit" +tivit.name+"?",
+                                :title       => tivit.name %>
+
+
+	<%= link_to "I Am Done",    :controller  => "activities",
+    							:action      => "change_tivit_status",
+    							:status      => "i_am_done",
+    							:id          => tivit.id, 
+  							    :confirm     => "Are you sure you want to decline tivit" +tivit.name+"?",
+                                :title       => tivit.name %>
+
+  <% end %>
+
+			
+<!-- Actions only the activity owner can take >
+	
+	<!-- tivit action to take-->
+<% if current_user.id == tivit.get_parent.owner_id %>
+  	    
+   
+     <%= link_to "Remove", 		:controller  => "activities", 
+   								:action      => "remove_tivit",
+   								:id          => tivit.id, 
+  							    :confirm     => "Are you sure you want to remove this tivit " +tivit.name+"?", 
+                                :title       => tivit.name %>
+                                
+                                
+	 <%= link_to "Edit", 		:controller  => "activities", 
+   								:action      => "edit_tivit",
+   								:id          => tivit.id, 
+  							    :title       => "Edit"+tivit.name %>
+
+<% end %>
+
+
+
+
+<!-- tivit comments-->
+
+<div id="tivit-content">
+<%= render :partial => 'shared/tivit_comments', :collection =>  [tivit], :as => :tivit%>
+</div>	
+
+				

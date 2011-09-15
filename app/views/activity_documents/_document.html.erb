@@ -1,0 +1,30 @@
+<%=  puts "----------->>   document.inspect"%>
+<%=  puts "----------->>   document.inspect"%>
+<%=  puts "----------->>   document.inspect"%>
+<%=  puts "----------->>   document.inspect"%>
+<%=  puts "----------->>   document.inspect"%>
+<%=  puts "----------->>   document.inspect"%>
+<%=  puts "----------->>   document.inspect"%>
+<%=  puts "----------->>   document.inspect"%>
+
+<%=  puts document.inspect%>
+	
+<% if true%>
+<%if document != nil && (not document.empty?)  && document[0].name.url != nil%>
+	
+	<%if(TivitDocUploader.storage.kind_of?(File))%>
+		<%= link_to "link to document"+document[0].id.inspect, document.avatar.url, :size => "80x80" %>
+
+	<%else%>
+<!-- The line below needs to be generalized by taking amazon url and bucket name from a config file -->
+		<%= link_to "link to document"+document[0].id.inspect, document.name.url.gsub("tiviti-heroku","tiviti-heroku.s3.amazonaws.com"), :size => "80x80" %>
+	<%end%>
+	
+	<!--%= image_tag user.profile_image.avatar.current_path.gsub("/images/","http://tiviti-heroku.s3.amazonaws.com/"), :size => "80x80" %--> 
+
+	<!--%= image_tag user.profile_image.avatar.current_path, :size => "80x80" %--> 
+ 
+<%else%>
+	<%= image_tag "/images/default-avatar.jpg" %> 
+<%end%>	
+<%end%>	

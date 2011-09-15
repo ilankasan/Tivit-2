@@ -1,0 +1,44 @@
+
+	<nav id="main-nav">	
+		<div class="logo">	
+			<%= link_to logo, root_path %>
+		</div>
+  
+  <% if signed_in? %>
+	    <ul class="nav-item">
+	    	<li><%= link_to "Home", root_path %></li>
+	    	<li><%= link_to "Activities", about_path %></li>
+	    	<li><%= link_to "Team", contact_path %></li>      
+		</ul>
+	<% end %>
+	
+		<div id="user-nav">
+			<ul class="menu">		
+				<% if signed_in? %>
+					<li><a href="#" onclick="javascript:showlayer('sm_1')"> Hello, <b><%= current_user.name %> </b></a></li>
+						<ul class="submenu" id="sm_1">
+							<li><%= link_to "Profile", current_user %></li>
+							<li><%= link_to "Settings", edit_user_path(current_user) %></li>
+							<li><%= link_to "Sign out", signout_path, :method => :delete %></li>
+						</ul>
+					</ul>
+				<% else %>
+					<li><%= link_to "Sign in", signin_path %></li>	
+				<% end %>
+		</div>
+	
+	</nav>
+	 <%= %> 
+	<%= controller.action_name %> 
+	
+	<!-- Create new activity form only for logged in users The second condition is to make sure not to display new activity when creating a new tivit -->  
+	<% if signed_in? && !(controller.controller_name=="activities" && controller.action_name == "new_tivit")%>
+	
+	<div id="new-activity-background">
+		<div id="new-activity">
+			<%= render 'shared/activity_form' %>
+		</div>
+	</div>
+	
+	<% end %>
+

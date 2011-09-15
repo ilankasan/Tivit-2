@@ -1,0 +1,53 @@
+<div id="homepage-tivit-list-container">
+
+    <div class="filter">
+        <dl>
+            <dt>Show:</dt>
+            <dd>
+                <input type="checkbox" value="" id="my_activ"/>
+                <label for="my_activ">My Activities</label>
+            </dd>
+            <dd>
+                <input type="checkbox" value="" id="my_tivit"/>
+                <label for="my_tivit">My tivits</label>
+            </dd>
+        </dl>
+    </div>
+
+	<div id="tivit-container" class="tab-content">
+
+    <div class="tabs">
+            <div class="status">You have <%= @tivits_participate.count%> activities / tivits </div>
+
+			<ul id="tabs-nav">
+				<li class="tab open">
+	                <a href="#tivit-desk">On Deck</a>
+	            </li>
+	            <li class="tab">
+	                <a href="#t2">All Updates</a>
+	                <i>5</i>
+	            </li>
+	            <li class="tab">
+	                <a href="#t3">New Requests</a>
+	                <i>2</i>
+            	</li>
+            </ul>
+        </div>
+ 
+ 		<div class="tabContent">
+	        <div id="tivit-desk" class="tivit-desk tabInfo">
+
+ 
+ 
+<% unless @tivits_participate == nil %>
+   <table class="activities" summary="User activities">
+     <h1>Total Acitivites / tivits you own (<%= @tivits_participate.count%>)</h1>
+     <%= render :partial => 'shared/activity_object_db', :collection =>  @tivits_participate %>
+  </table>
+<% end %>
+
+			</div>
+		</div>
+	</div>
+</div>
+

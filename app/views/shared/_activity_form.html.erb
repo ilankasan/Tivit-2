@@ -1,0 +1,55 @@
+
+<div id="new-activity">
+	
+	<%= form_tag(:controller => "activities", :method => "post") do %>
+	
+	<!-- Acitivity Name -->
+	 <div class="field" onclick="javascript:showlayer('new-activity-complete')">
+	  	<div class="field-label">
+	  		<%= label_tag(:name, "New Activity: ") %>
+	  	</div>
+	  	<%= text_field_tag(:name, nil, :placeholder => "enter name...", :class => "input-name") %> 
+	  </div>
+	 
+	 
+	<!-- The complete Activiti form, opened upon activity name on focus --> 
+	  <div id="new-activity-complete">
+	  
+			<!-- Acitivity Invitees -->
+			  <!--div class="field">
+			  	<div class="field-label">
+			  		<%= label_tag(:invitees, "Who: ", :class => "field-label") %>
+			  	</div>
+			  	<%= text_field_tag(:invitees, nil, :placeholder => "enter email address, separated by ; ", :class => "input-invitees") %> 
+			  </div-->
+			
+			<!-- Acitivity Due Date -->
+			  <div class="field">
+			  	
+			    <%= label_tag(:due, "Need it by: ", :class => "field-label") %>		
+	     		<%= text_field_tag(:due, nil, :placeholder => "choose date", :class => "input-date") %> 
+	     		<img src="/images/calendarpicker/cal.gif" onclick="javascript:NewCssCal('due', 'mmddyyyy', 'arrow')" style="cursor:pointer"/>
+	     	  	
+			 </div>
+			
+			
+			  
+			  <!-- Acitivity Description -->
+			  <div class="field" id="tivitdescription">
+			  	<div class="field-label">
+			  		<%= label_tag(:description, "What: ", :class => "field-label") %>
+			  	</div>
+			  	<%= text_area_tag(:description, nil, :class => "input-description" ) %> 
+			  </div>
+			  
+			
+			  <div class="field">
+			  	<div class="buttons">
+			  		<%= submit_tag("Create Activity", :class => "form-button") %>
+			  	</div>
+			  </div>
+		</div>
+	
+	<% end %> 
+
+</div>

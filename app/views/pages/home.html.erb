@@ -1,0 +1,15 @@
+<!-- Creat new Activity -->   
+   
+<% if signed_in? %>
+	
+		  <%= render 'shared/dashboard' %>
+		  
+<% else %>
+
+	<h1>Get stuff done faster!</h1>
+   	 <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+   	 
+<% end %>
+
+
+

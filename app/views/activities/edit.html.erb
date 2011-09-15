@@ -1,0 +1,55 @@
+<h1><%= @title %></h1>
+
+<%= form_tag(:controller => "activities" , :action => "update", :method => "put") do %>
+
+  <div class="field">
+  	<%= label_tag(:name, "Name:") %> <%= text_field_tag(:name,@activity.name) %> 
+  </div>
+  
+  
+  
+  <div class="field">
+  	<%= label_tag(:description, "Details:") %><%= text_area_tag(:description,@activity.description) %> 
+  </div>
+ <% invitees = ""%>
+ <% @activity.users.each do |user| %>
+   <% if user.id != @activity.owner_id  %>
+   	<% if invitees.length == 0 %>
+   
+		<%invitees = user.email%>
+	<% else %>
+		<%invitees += (","+user.email)%>
+	<% end %>
+   <% end %>
+ <% end %>
+ 
+   
+<div class="field">
+  	<%= label_tag(:invitees, "invite others (email):") %><%= text_field_tag(:invitees,invitees) %> 
+</div>
+
+    
+  <div class="field">
+    <%= label_tag(:due, "activity due:") %>
+  	<%= select_date @activity.due, :prefix => :due  %>
+</div>
+<% if @activity.status == "Completed" %>
+		<%= label_tag(:activity_status, "Completed checked") %> <%= check_box_tag(:activity_status,true, checked = true) %>
+   							   
+   <% else %>
+		<%= label_tag(:activity_status, "Completed unchecked") %> <%= check_box_tag(:activity_status,true,checked = false) %> 
+ 
+  <% end %>
+
+<div class="field">
+	<%= label_tag(:summary, "Task Summery (if marked as completed)") %><%= text_area_tag(:summary,@activity.summary) %>
+</div>
+ 
+  <div class="actions">
+  <%= submit_tag("Save tivit") %>
+  </div>
+
+<% end %> 
+
+
+

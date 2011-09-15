@@ -1,0 +1,2 @@
+module ActivityDocumentHelper
+end

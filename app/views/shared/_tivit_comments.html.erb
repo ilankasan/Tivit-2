@@ -1,0 +1,25 @@
+
+<!-- Displaying comment -->
+<h3>Comments:</h3>
+<%if tivit != nil%>
+	<%= render :partial => 'shared/tivit_comment', :collection =>  tivit.tivitcomments, :as => :comment%> 
+   	
+<% end %>
+    
+
+<!-- Add comment -->  
+  
+  <span class="content">
+   <%= form_for([tivit, tivit.tivitcomments.build]) do |f| %>
+    
+    <%= f.text_field :comment, :size => "40" %>
+  <div class="actions">
+    <%= f.submit "add comment" %>
+  </div>
+  <% end %>
+  </span>
+
+  </td>
+
+</tr>
+
