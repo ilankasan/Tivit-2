@@ -130,10 +130,16 @@ class Activity < ActiveRecord::Base
   	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if(tivit_user_status == nil)
   		tivit_user_status = create_status_new(user)
- 		
   	end
-    return tivit_user_status.comment
- 	
+    return tivit_user_status.comment	
+  end
+  
+  def get_number_of_comments
+  	if(self.tivitcomments == nil)
+  		return 0
+  	else 	
+  		return self.tivitcomments.size
+  	end
   end
   
 ###################################################
