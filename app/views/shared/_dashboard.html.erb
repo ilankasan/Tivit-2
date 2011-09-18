@@ -1,9 +1,16 @@
-<!--div id="page-container"!-->
+<!-- Create new activity form only for logged in users The second condition is to make sure not to display new activity when creating a new tivit -->  
+<% if signed_in? && !(controller.controller_name=="activities" && controller.action_name == "new_tivit")%>
+	
+	<div id="new-activity-background">
+		<div id="new-activity">
+			<%= render 'shared/activity_form' %>
+		</div>
+	</div>
+	
+<% end %>
 
-<!-- missing new activity....needs to go to partial!-->
- 
 <div id="homepage-tivit-list-container">
-
+	
     <div class="filter">
         <dl>
             <dt>Show:</dt>
@@ -17,11 +24,11 @@
             </dd>
         </dl>
     </div>
-
+	
 	<div id="tivit-container" class="tab-content">
 
-    <div class="tabs">
-            <div class="status">You have <%= @tivits_participate.count%> activities / tivits </div>
+		<div class="tabs">
+             <div class="status">You have <%= @tivits_participate.count%> activities / tivits </div>
 
 			<ul id="tabs-nav">
 				<li class="tab open">
@@ -37,18 +44,24 @@
             	</li>
             </ul>
         </div>
- 
- 		<!--div class="tabContent" this section made content diss apear>
-	        <div id="tivit-desk" class="tivit-desk tabInfo"!-->
+    
+   		<!-- This is the div that holds the On Deck/All Updates/New Requests tab Content -->    
+		<div class="tabContent">
+					
+	        <div id="tivit-desk" class="tivit-desk tabInfo"> 
 
- <% unless @tivits_participate == nil %>
-   <table class="activities" summary="User activities">
-     <h1>Total Acitivites / tivits you own (<%= @tivits_participate.count%>)</h1>
-     <%= render :partial => 'shared/activity_object_db', :collection =>  @tivits_participate %>
-  </table>
-<% end %>
+			<% unless @tivits_participate == nil %>
+			 
+			     <%= render :partial => 'shared/activity_object_db', :collection =>  @tivits_participate %>
+		     
+			<% end %>
 
-			<!--/div>
-		</div!-->
+			</div>
+		</div>
+		  
 	</div>
+		
 </div>
+ 
+ 		
+	

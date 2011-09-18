@@ -18,3 +18,4 @@ function setFocus(field)
 {
      document.getElementById(field).focus();
 }
+

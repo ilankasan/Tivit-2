@@ -14,15 +14,15 @@ ActiveRecord::Schema.define(:version => 20110830051746) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
-    t.text     "description"
+    t.text     "description",   :limit => 255
     t.string   "status"
     t.datetime "due"
+    t.datetime "completed_at"
     t.integer  "owner_id"
     t.string   "who"
+    t.text     "summary"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "completed_at"
-    t.text     "summary"
     t.string   "activity_type"
     t.integer  "parent_id"
     t.integer  "invited_by"
@@ -62,9 +62,9 @@ ActiveRecord::Schema.define(:version => 20110830051746) do
     t.integer  "user_id"
     t.integer  "activity_id"
     t.string   "status_id"
+    t.string   "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "comment"
   end
 
   create_table "tivitcomments", :force => true do |t|
@@ -79,9 +79,9 @@ ActiveRecord::Schema.define(:version => 20110830051746) do
     t.string   "name"
     t.string   "email"
     t.string   "encrypted_password"
+    t.string   "salt"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "salt"
     t.boolean  "admin",              :default => false
     t.boolean  "is_active",          :default => true
   end

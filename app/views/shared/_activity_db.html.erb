@@ -1,31 +1,44 @@
 <div class="tvit-day">
+
+<!-- for today use the folloiwng divs 
 	<div class="calendar today">
-		<div class="text">today (statis)</div>
-	    	</div>
-                <div class="tvit-list">
-                    <div class="label">
-                        <div class="progress">
-                            <strong>static%</strong>
-                           
-                           <%= activity_db.get_activity_tivit_status %> (temp) 
+		<div class="text">today</div>
+	</div>
+-->
+
+ 	<div class="calendar date earlyDay">
+		<div class="week"><%= (activity_db.due.strftime ("%a")).upcase %></div>
+	    <div class="text"><%= activity_db.due.strftime ("%d") %></div>
+	</div>	                
+	                       
+	<div class="tvit-list">
+		<div class="label">
+	    	<div class="progress">
+	            	<strong>static%</strong>
+	                	<%= activity_db.get_activity_tivit_status %> (temp) 
+	        </div>
 	        
-                        </div>
-	                        
-	                        <a><%= link_to activity_db.name, activity_db, :action => "show",
+	        <%= link_to activity_db.name, activity_db, :action => "show",
 	  									   :method => "get",
 	                                       :title  => activity_db.name,
-	                                       :class => "text" %></a>
+	                                       :class => "text" %>
+	                                       
 	                        - 3 tivits to complete (static)
-
-	                   </div>
-
-	                    
-					<% if activity_db.tivits !=nil && activity_db.tivits.size > 0%>
-						<ul class="list">
-								<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.tivits, :as => :tivit  %>
-						</ul>
-					
-					<%end%>
-
-	</div>
+	    </div>
+	        
+	        <!-- If activity has tivits, go a head and rended all the tivits in that activity -->
+	        
+<% if activity_db.tivits !=nil && activity_db.tivits.size > 0%>
+	        	
+		<ul class="list">
+	
+			<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.tivits, :as => :tivit  %>
+		        
+		</ul>
+		    	
+<%end%>
+		    
+		</div>
+	                	   
 </div>
+
