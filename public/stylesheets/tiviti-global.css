@@ -1,163 +1,15 @@
-/* this is the entire page container that hols all the content. The '#' is in the front because in the HTML we use 'id' and not class <div id="page-container">.
- * For classes, the CSS will be defined with '.' <div class="page-container">
- */
-html, body {
-	margin: 0;
-	padding: 0;
-}
-body {
-	font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; /*Arial, Helvetica, Verdana, Sans-serif;*/
-	font-size: 12px;
-	color: #666666;
-	background: orange;/*#EEEEEE;/*#e3edef;*/
-}
-.hidden {
-	display: none;
-}
-#page-container{
-	background: white;
-	position: relative;
-	/*top: 32px;*/
-	/* if no width is specified, the whole browser will be take over */
-	width: 980px;
-	min-height: 768px;
-	margin: auto; /*this will center the div on the page*/
-    padding-top:40px;
-}
-/* Main Navigation **************************************************/
-#main-nav-background {
-	background: #333333; /*#15628c;*/
-	height: 50px;
-	text-align: center;
-	vertical-align:middle;
-	color: white;
-	margin: auto; /*this will center the div on the page*/
-}
-#main-nav {
-	background: #333333; /*#15628c;*/
-	height: 50px;
-	text-align: center;
-	vertical-align:middle;
-	color: white;
-	margin: auto; /*this will center the div on the page*/
-	-moz-border-radius:    3px;
- 	-webkit-border-radius: 3px;
-  	border-radius:         3px;
-  	margin: auto;
-  	width: 980px;
-}
-#main-nav .nav-item li {
-	color: white;
-	margin-left:12px;
-	float: left;
-	vertical-align:middle;
-	text-align: center;
-	font-size:15px;
-}
-#main-nav .nav-item li a{
-	color: white;
-	font-size:15px;
-	height:34px;
-	float:left;
-	padding: 16px 10px 0 10px;
-	text-align: center;
-	vertical-align:middle;
-}
-#main-nav .nav-item li a:hover{
-	/*text-decoration: underline;*/
-	text-decoration: none;
-	background: #140F13; /*#2a4b6e;*/
-}
-#main-nav .nav-item li a:visited{
-	font-weight: bold;
-	/*background: #2a4b6e;*/
-}
-/* logo ************************************************************/
-.logo {
-	padding: 2px 80px 2px 3px;
-	background: ;
-	float: left;
-}
-/* Drop Down Menu **************************************************/
-/* 1. Menu Button */
-ul, li{margin:0; border:0; padding:0; list-style:none;}
-#user-nav{
-	color: white;
-	font-size:15px;
-	padding:;
-	float: right;
-}
-#user-nav .menu li {
-	background:url(lm.png) left top no-repeat;
-	float:left;
-	margin-right:10px;
-}
-#user-nav .menu li a{
-	color: white;
-	text-decoration:none;
-	padding:0 10px;
-	height:30px;
-	line-height:30px;
-	display:block;
-	float:left;
-	padding:8px 16px 0 10px;
-	background:url(rm.png) right top no-repeat;
-}
-#user-nav .menu li a:hover{
-	text-decoration: underline;
-}
-/* 2. Sub Menu items */
-#user-nav ul .submenu {
-	border:solid 1px #c9dea1;
-	border-top:none;
-	background:#FFFFFF;
-	position:relative;
-	top:4px;
-	width:150px;
-	padding:6px 0;
-	clear:both;
-	z-index:100;
-	display:none;
-	text-align: left;
-}
-#user-nav ul .submenu li{
-	background:none;
-	display:block;
-	float:none;
-	margin:0 6px;
-	border:0;
-	height:auto;
-	line-height:normal;
-	border-top:solid 1px #DEDEDE;
-}
-#user-nav .submenu li a{
-	background:none;
-	display:block;
-	float:none;
-	padding:6px 6px;
-	margin:0;
-	border:0;
-	height:auto;
-	color:#105cbe;
-	line-height:normal;
-}
-#user-nav .submenu li a:hover{
-	background:#e3edef;
-}
+
 /* New Activity Bar / Input*****************************************/
 #new-activity {
 	background: #DDDDDD; /*#365461;*/
 	height: 40px;
 	text-align: left;
 	width: 700px;
-	line-height:3em;
 	/*vertical-align: middle;*/
 	font-size:14px;
 	margin: 0 auto; /*will center the div in the container */
-
 	z-index: 20; /* very high number to insure last one to be drawn */
 	position: relative;
-
 	-moz-border-radius:    3px;
  	-webkit-border-radius: 3px;
   	border-radius:         3px;
@@ -180,14 +32,10 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	color: white;
 }
 #new-activity .field {
-	padding: 0 10px;
-	width: 700px;
-	margin: auto;
-	background: #EEEEEE; /*#365461*/
-	vertical-align: middle;
+	
 }
 #new-activity .field-label {
-	font-size:14px;
+	font-size:13px;
 	width: 150px;
 	text-align: right;
 	color: #333333;
@@ -198,57 +46,43 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	padding-right: 10px;
 }
 
-#new-activity .input-name {
-	width: 500px;
-	padding: 6px 0px 0px 4px;
-	/*vertical-align: middle;*/
-	font-size: 14px;
-}
 #new-activity .input-invitees {
 	width: 500px;
 	padding: 6px 0px 0px 4px;
 	vertical-align: middle;
 	font-size: 14px;
 }
-#new-activity .input-date {
-	width: 100px;
-	padding: 6px 0px 0px 4px;
-	vertical-align: middle;
-	font-size: 14px;
-}
+
 /* this textarea is used by text_area_tag function - big input field (act. discription) */
 #new-activity .input-description {
-	width:500px;
+	width:385px;
 	height:100px;
 	text-align: left;
 	vertical-align: middle;
 	/*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
 	font-family: inherit;
 	padding: 6px 0px 0px 4px;
-	max-width: 500px;
-	max-height: 700px;
 	font-size: 14px;
+    border:none;
+
 }
 #new-activity .form-button {
-	width:100px;
 	margin: 0;
 	vertical-align: middle;
 	/*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
-	font-family: inherit;
 	position: relative;
-
 	text-align: center;
 	width: 140px;
 	color: #fff;
-	background: green;
-	border:1px solid #aaa;
+	background: #61b010;
+	border:1px solid #c0c0c0;
 	font-size: 110%;
 	font-weight: bold;
 	padding: 4px;
 	-moz-border-radius:    4px;
 	-webkit-border-radius: 4px;
 	border-radius:         4px;
-	margin-left: 20px;
+	margin-left: 10px;
 }
 /* Home Page - left navigation **************************************************/
 #homepage-left-nav-container {

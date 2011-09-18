@@ -156,6 +156,14 @@ class Activity < ActiveRecord::Base
 
   end	
 
+ def get_due_date
+ #return due date. If nill return empty string
+ 		if(self.due == nil)
+ 			return ""
+ 		else
+			return self.due
+		end
+  end	
 
  def get_owner
  #adding the user to the existing users on the task

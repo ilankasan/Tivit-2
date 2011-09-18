@@ -1,28 +1,28 @@
 <!-- Display a tivit within an activity on the  Dashboard -->
 
-<li class="record">
+
+<li class="record busy">
 	<div class="status">
-		<div class="icon inprog"></div>
+		<div class="icon"></div>
 	</div>
-
 	<div class="avatar">
-			 <%= render :partial => 'profile_images/profile_image', :collection =>  [tivit.get_owner], :as => :user%> 
-	 </div>
-	 
-	    <div class="text">
-	    	<div class="activity">
-	    		<div class="comments">
-	    			<i>2</i>
-	    		</div>
-	    	</div>
-
-	    <strong><%= tivit.name%></strong>
-	    
-	    
-	    
-
+		<%= render :partial => 'profile_images/profile_image', :collection =>  [tivit.get_owner], :as => :user%> 
+	</div>
+	<div class="text">
+		<div class="activity">
+		   	<div class="attach">
+		       	<i>1</i>
+		    </div>
+		   	<div class="comments">
+		       	<i>2</i>
+		    </div>
 		</div>
+		
+		<%= tivit.name%>
+		
+	</div>
 	<div class="clear"></div>
 </li>
-	        
-	    
+		            
+
+

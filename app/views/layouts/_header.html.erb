@@ -1,17 +1,30 @@
+<!-- Header - Main Navigation & New Activity Bar -->
+<div id="main-nav-background">
 
-	<nav id="main-nav">	
-		<div class="logo">	
-			<%= link_to logo, root_path %>
-		</div>
-  
-  <% if signed_in? %>
-	    <ul class="nav-item">
-	    	<li><%= link_to "Home", root_path %></li>
+    <nav id="main-nav">
+        <div class="logo">
+            <%= link_to logo, root_path %>
+        </div>
+
+<% if signed_in? %>
+ 
+        <ul class="nav-item">
+        	
+        	<li><%= link_to "Home", root_path, :class => "current" %></li>
 	    	<li><%= link_to "Activities", about_path %></li>
 	    	<li><%= link_to "Team", contact_path %></li>      
-		</ul>
-	<% end %>
-	
+<!--	    	
+            <li><a href="http://tiviti.heroku.com/" class="current">Home</a></li>
+            <li><a href="http://tiviti.heroku.com/">Meetings</a></li>
+            <li><a href="http://tiviti.heroku.com/about">Activities</a></li>
+            <li><a href="http://tiviti.heroku.com/">Files</a></li>
+            <li><a href="http://tiviti.heroku.com/contact">Team</a></li>
+-->
+        </ul>
+
+
+<% end %>
+
 		<div id="user-nav">
 			<ul class="menu">		
 				<% if signed_in? %>
@@ -26,19 +39,15 @@
 					<li><%= link_to "Sign in", signin_path %></li>	
 				<% end %>
 		</div>
-	
-	</nav>
+
+    </nav>
+<!--
 	 <%= %> 
 	<%= controller.action_name %> 
+-->
+
+</div>
 	
-	<!-- Create new activity form only for logged in users The second condition is to make sure not to display new activity when creating a new tivit -->  
-	<% if signed_in? && !(controller.controller_name=="activities" && controller.action_name == "new_tivit")%>
 	
-	<div id="new-activity-background">
-		<div id="new-activity">
-			<%= render 'shared/activity_form' %>
-		</div>
-	</div>
 	
-	<% end %>
 
