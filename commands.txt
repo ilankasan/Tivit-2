@@ -13,6 +13,7 @@ rails generate model Document activity_document_id:integer name:string note:stri
 Git Synch
 --------------
 
+
 rails generate model TivitUserStatus user_id:integer activity_id:integer status_id:string
 rails generate model TivitStatus status_id:string local:string
 
@@ -73,6 +74,7 @@ git merge yaniv-new_ui_1
 git push heroku
 $ 
 heroku rake db:migrate
+
 
  rename_column(:activities, :owner_id, :user_id)
 

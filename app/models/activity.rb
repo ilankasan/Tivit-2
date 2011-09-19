@@ -149,7 +149,9 @@ class Activity < ActiveRecord::Base
   	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if (tivit_user_status.last_reviewed != nil)
   		puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
-  		comments = self.tivitcomments.where("created_at < ?",tivit_user_status)
+  		comments = self.tivitcomments.where("created_at > ?",tivit_user_status.last_reviewed)
+  		#comments = self.tivitcomments.where("created_at < ?",tivit_user_status)
+  		
   		if(comments == nil)
   			return 0
   		else
@@ -275,7 +277,6 @@ def get_number_of_completed_tivits
 # Checking to see if tthe task was previously closed. This will be used before the email is sent out below
 	
   def update_activity_status (status)
-  	puts "_____________________________________________________"
   	puts "_____________________________________________________"
   	puts "_____________________________________________________"
   	puts "Changng status from " +self.status+" to = " +status
