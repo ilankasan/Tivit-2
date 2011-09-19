@@ -134,7 +134,7 @@ class Activity < ActiveRecord::Base
  
  
   
-#returns the comment associated with a specific user and this activity 
+#returns the comments associated with a specific user and this activity 
  def get_user_status_comment(user)
   	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if(tivit_user_status == nil)
@@ -142,6 +142,28 @@ class Activity < ActiveRecord::Base
   	end
     return tivit_user_status.comment	
   end
+ 
+ 
+ def get_number_of_unread_comments(user)
+ 	#get date of last unread 
+  	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
+  	if (tivit_user_status.last_reviewed != nil)
+  		puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
+  		comments = self.tivitcomments.where("created_at < ?",tivit_user_status)
+  		if(comments == nil)
+  			return 0
+  		else
+  			puts "number of unread tivits = " + comments.size.inspect
+  			return comments.size
+  		end
+  	else
+  		puts "tivit_user_status.last_reviewed = nill"
+  		return self.get_number_of_comments 
+  	end
+  		 
+  		
+  end
+ 
   
   def get_number_of_comments
   	if(self.tivitcomments == nil)

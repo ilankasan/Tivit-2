@@ -13,10 +13,10 @@
 		   	<div class="attach">
 		   		<i>1</i>
 		    </div>
-<!-- do not display chat icon if no new comments !-->		    
-		    <% unless tivit.get_number_of_comments == 0%>
+		    <%unread_comments = tivit.get_number_of_unread_comments(tivit.get_owner)%>
+		    <% unless  unread_comments == 0%>
 		   		<div class="comments">
-		   			<i><%=tivit.get_number_of_comments%></i>
+		   			<i><%=unread_comments%></i>
 		    	</div>
 		    <%end%>
 		</div>

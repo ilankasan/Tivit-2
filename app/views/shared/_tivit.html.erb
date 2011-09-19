@@ -6,11 +6,13 @@
 
 	<div id="tivit-container-background-activity">
 		
-		<div id="tivit-avatar">
+		<div class="avatar">
 			 <%= render :partial => 'profile_images/profile_image', :collection =>  [tivit.get_owner], :as => :user%> 
-	
 			
 		</div>
+		
+		
+
 		<div id="tivit-title" class="text">
 			
 			<%= link_to tivit.name, tivit, :action => "show",
