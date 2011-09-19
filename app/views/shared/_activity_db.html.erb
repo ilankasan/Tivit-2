@@ -7,8 +7,10 @@
 -->
 
  	<div class="calendar date earlyDay">
-		<div class="week"><%= (activity_db.due.strftime ("%a")).upcase %></div>
-	    <div class="text"><%= activity_db.due.strftime ("%d") %></div>
+		<%if (activity_db.due != nil && activity_db.due.inspect.size > 0 )%>
+			<div class="week"><%= (activity_db.due.strftime ("%a")).upcase %></div>
+	    	<div class="text"><%= activity_db.due.strftime ("%d") %></div>
+	    <%end%>
 	</div>	                
 	                       
 	<div class="tvit-list">

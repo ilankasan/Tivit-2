@@ -35,7 +35,7 @@ class Activity < ActiveRecord::Base
   has_many :tivit_user_statuses
   
   #has_many :activities, :as => :imageable
-  has_many :activities
+  #has_many :activities
   
   has_many :tivits, :class_name => "Activity",
     :foreign_key => "parent_id" 
@@ -86,16 +86,25 @@ class Activity < ActiveRecord::Base
   end
   
 # After the user viewed the tivit for the virst time, make sure status changes from New to Review 
-  def update_tivit_status_after_show(user)
- puts "------------------------------------------------------------"
- puts "attempting to change status" 	
+  def update_status_after_show(user)
+ 	puts "------------------------------------------------------------"
+ 	puts "attempting to change status" 	
  puts "------------------------------------------------------------" 	
- status = self.get_user_status(user) 	
- # ilan: the double comparison is temporary due to curroption of data
+    status = self.get_user_status(user) 	
   	if(status == "New")
   		change_status(user,"Reviewed","")
   		puts "chaging status from new to Review" 	
   	end
+	puts "Changing the date of last review og the comments"
+#updating the date/time a user reviewed this activity/tivit
+	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
+  	tivit_user_status.update_last_reviewed
+  	
+	if(self.tivits !=nil )
+		self.tivits.each do |tivit|
+			tivit.update_status_after_show(user)
+ 		end		
+	end 
   end
  
  def update_tivit_user_status_accept(user,comment)

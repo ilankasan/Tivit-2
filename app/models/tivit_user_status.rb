@@ -15,9 +15,17 @@
 class TivitUserStatus < ActiveRecord::Base
 
 	
-attr_accessible :status_id, :activity_id,:user_id,:comment
+attr_accessible :status_id, :activity_id,:user_id,:comment,:last_reviewed
 		
 	belongs_to :activity
 	belongs_to :user
 
+
+	def update_last_reviewed
+		time = Time.now()
+  		self.last_reviewed = time.localtime
+  		self.save
+	end
 end
+
+	
