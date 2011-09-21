@@ -114,8 +114,16 @@
     							:action      => "change_tivit_status",
     							:status      => "i_am_done",
     							:id          => tivit.id, 
-  							    :confirm     => "Are you sure you want to decline tivit" +tivit.name+"?",
+  							    :confirm     => "Are you sure you are done with tivit" +tivit.name+"?",
                                 :title       => tivit.name %>
+                                
+                                
+	<%= link_to "Propose new date",     :controller  => "activities",
+    									:action      => "change_tivit_status",
+    									:status      => "propose_new_date",
+    									:id          => tivit.id, 
+  							    		:confirm     => "Are you sure you want to propose a new date tivit" +tivit.name+"?",
+                                		:title       => tivit.name %>
 
   <% end %>
 

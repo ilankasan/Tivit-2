@@ -47,10 +47,14 @@ class Activity < ActiveRecord::Base
   
   
   validates_inclusion_of :activity_type, :in => %w(activity tivit),
+    :message => "%{value} is not a valid activity type"
+
+# an activity or a tivit have two statuses. In progress or Completed.    
+  validates_inclusion_of :status, :in => %w(in-progress Completed),
     :message => "%{value} is not a valid status"
 
 
-  default_scope :order => 'activities.created_at DESC'
+  default_scope :order => 'activities.due DESC'
 
 # Update status of theusers invites tot he activity
   def add_user_invitee(user)
@@ -155,15 +159,7 @@ class Activity < ActiveRecord::Base
  
  def get_number_of_unread_comments(user)
  	#get date of last unread
- 	puts "-------------------------------------------" 
- 	
- 	puts "get_number_of_unread_comments"
- 	puts "-------------------------------------------" 
- 	 
- 	puts "user = "+user.inspect
- 	puts "-------------------------------------------" 
- 	
-  	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
+ 	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
   		puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
   		comments = self.tivitcomments.where("created_at > ?",tivit_user_status.last_reviewed)

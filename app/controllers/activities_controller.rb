@@ -213,7 +213,7 @@ class ActivitiesController < ApplicationController
     
     status = params["status"]
     @action = status
-    
+# need to clean section below
     if(status.downcase == "i_am_done")
     	@title= "I Am Done!"
     else 

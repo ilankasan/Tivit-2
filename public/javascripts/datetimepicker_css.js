@@ -35,16 +35,16 @@ var CalPosOffsetX = 8; //X position offset relative to calendar icon, can be neg
 var CalPosOffsetY = 8; //Y position offset relative to calendar icon, can be negative value
 
 //Configurable parameters - start
-var SpanBorderColor = "#000000";//Calendar border color
+var SpanBorderColor = "#aaaaaa";//Calendar border color
 var MonthYearColor = "#cc0033"; //Font Color of Month and Year in Calendar header
-var WeekHeadColor = "#18861B"; //Background Color in Week header
-var SundayColor = "#C0F64F"; //Background color of Sunday
-var SaturdayColor = "#C0F64F"; //Background color of Saturday
-var WeekDayColor = "#FFEDA6"; //Background color of weekdays
+var WeekHeadColor = "#ffffff"; //Background Color in Week header
+var SundayColor = "#ccc"; //Background color of Sunday
+var SaturdayColor = "#aaa"; //Background color of Saturday
+var WeekDayColor = "#fff"; //Background color of weekdays
 var TodayColor = "#ffbd35"; //Background color of today
-var SelDateColor = "#8DD53C"; //Backgrond color of selected date in textbox
-var YrSelColor = "#cc0033"; //color of font of Month-Year selector.Applies only for Arrow navigation
-var HoverColor = "#E0FF38"; //color of cell background when mouse move over
+var SelDateColor = "#ff0000"; //Backgrond color of selected date in textbox
+var YrSelColor = "#888888"; //color of font of Month-Year selector.Applies only for Arrow navigation
+var HoverColor = "#eee"; //color of cell background when mouse move over
 var DisableColor = "#999966"; //color of disabled cell
 var CalBgColor = "#FFFFFF"; //Background color of Calendar window not cell
 
@@ -55,10 +55,10 @@ var DateSeparator = "-";//Date Separator, you can change it to "/" as you wish
 var ShowLongMonth = true;//Show long month name in Calendar header. example: "January"
 var ShowMonthYear = true;//Show Month and Year in Calendar header.Not applicable for Arrow navigation
 var PrecedeZero = true;//Preceding zero in date format
-var MondayFirstDay = true;//true:Use Monday as first day; false:Sunday as first day. [true|false] 
+var MondayFirstDay = true;//true:Use Monday as first day; false:Sunday as first day. [true|false]
 var UseImageFiles = true;//Use image files with "arrows" and "close" button
 var DisableBeforeToday = false; //Make date before today unclickable
-var imageFilesPath = "/images/calendarpicker/"; //Path of date time picker image files relative to HTML page.
+var imageFilesPath = "images/calendarpicker/"; //Path of date time picker image files relative to HTML page.
 //Configurable parameters - end
 
 //use the Month and Weekday in your preferred language.
@@ -436,7 +436,7 @@ Calendar.prototype.FormatDate = function (pDate)
 	if (PrecedeZero === true)
 	{
 		if ((pDate < 10) && String(pDate).length===1) //length checking added in version 2.2
-		{		
+		{
 			pDate = "0" + pDate;
 		}
 		if (MonthDigit < 10)
@@ -488,7 +488,7 @@ function GenCell(pValue, pHighLight, pColor, pClickable)
 
 	if (pColor === undefined)
 	    pColor = CalBgColor;
-	
+
 	if (pClickable !== undefined){
 		PClickable = pClickable;
 	}
@@ -668,7 +668,7 @@ function RenderCssCal(bNewCal)
 	}
 	for (i = 0; i < 7; i += 1)
 	{
-	    vCalHeader += "<td style='background-color:"+WeekHeadColor+";width:"+CellWidth+"px;color:#FFFFFF' class='calTD'>" + WeekDayName[i].substr(0, WeekChar) + "</td>";
+	    vCalHeader += "<td style='background-color:"+WeekHeadColor+";width:"+CellWidth+"px;color:#666666' class='calTD'>" + WeekDayName[i].substr(0, WeekChar) + "</td>";
 	}
 
 	calHeight += 19;
@@ -716,7 +716,7 @@ function RenderCssCal(bNewCal)
 		//if End Year + Current Year = Cal.Year. Disable.
 		else if (Cal.Year > (dtToday.getFullYear()+EndYear))
 		{
-		    strCell = GenCell(j, false, DisableColor, false); 
+		    strCell = GenCell(j, false, DisableColor, false);
 		}
 		else if ((j === dtToday.getDate()) && (Cal.Month === dtToday.getMonth()) && (Cal.Year === dtToday.getFullYear()))
 		{
@@ -1114,7 +1114,7 @@ function NewCssCal(pCtrl, pFormat, pScroller, pShowTime, pTimeMode, pShowSeconds
 		        Cal.Year = parseInt(strYear, 10);
 		}
 		//end parse year
-		
+
 		//parse Date
 		if ((parseInt(strDate, 10) <= Cal.GetMonDays()) && (parseInt(strDate, 10) >= 1)) {
 			Cal.Date = strDate;
@@ -1188,7 +1188,7 @@ function closewin(id) {
                 callback(id, Cal.FormatDate(Cal.Date));
         }
     }
-    
+
 	var CalId = document.getElementById(id);
 	CalId.focus();
 	winCal.style.visibility = 'hidden';

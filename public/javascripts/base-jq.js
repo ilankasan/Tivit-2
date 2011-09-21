@@ -85,9 +85,12 @@ jQuery.noConflict();
 
 
      $('body').click(function(event) {
-         if (!jQuery(event.target).closest('.status-list-dialog').length) {
+
+         if (!jQuery(event.target).closest('.status-list-dialog').length && jQuery('.status-list-dialog').is(':visible')) {
              jQuery('.status-list-dialog').remove();
-         };
+         }else if(!jQuery(event.target).closest('#user-nav').length && jQuery('#sm_1').is(':visible')){
+        	 jQuery('#sm_1').hide();
+         }
      });
 
      var statusCh = jQuery('.status-list-dialog .status-list li');
@@ -137,7 +140,7 @@ jQuery.noConflict();
      });
      jQuery('.confirmDialog .cancel-button').live('click', function(){
          jQuery('.confirmDialog').remove();
-         jQuery('#activity-overlay').hide();
+         jQuery('#activity-overlay').fadeOut();
          jQuery('#new-activity-background').removeClass('tempHide');
      });
      jQuery('.confirmDialog .submit-button').live('click', function(){
@@ -166,7 +169,7 @@ function closeNewActivity(){
         closewin("due"); stopSpin();
     }
     jQuery(layer).slideUp('slow',function(){
-		jQuery('#activity-overlay').hide();
+		jQuery('#activity-overlay').fadeOut();
     });
     jQuery(':input','#new-activity-form')
     .not(':button, :submit, :reset, :hidden')
