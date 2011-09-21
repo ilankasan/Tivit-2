@@ -154,9 +154,17 @@ class Activity < ActiveRecord::Base
  
  
  def get_number_of_unread_comments(user)
- 	#get date of last unread 
+ 	#get date of last unread
+ 	puts "-------------------------------------------" 
+ 	
+ 	puts "get_number_of_unread_comments"
+ 	puts "-------------------------------------------" 
+ 	 
+ 	puts "user = "+user.inspect
+ 	puts "-------------------------------------------" 
+ 	
   	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
-  	if (tivit_user_status.last_reviewed != nil)
+  	if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
   		puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
   		comments = self.tivitcomments.where("created_at > ?",tivit_user_status.last_reviewed)
   		#comments = self.tivitcomments.where("created_at < ?",tivit_user_status)
