@@ -117,7 +117,7 @@ class Activity < ActiveRecord::Base
  end
  
  def update_tivit_user_status_i_am_done(user,comment)
- 	change_status(user,"I Am Done",comment)
+ 	change_status(user,"Done",comment)
  end
 
 #returns the status of a user with respect to this activity 
@@ -133,6 +133,15 @@ class Activity < ActiveRecord::Base
   end
  
  
+ def get_owner_status
+    tivit_user_status = self.tivit_user_statuses.find_by_user_id(self.get_owner)
+    if(tivit_user_status == nil)
+      tivit_user_status = create_status_new(self.get_owner)     
+    end
+    
+    return tivit_user_status.status_id
+  
+  end
   
 #returns the comments associated with a specific user and this activity 
  def get_user_status_comment(user)
@@ -235,7 +244,7 @@ def get_number_of_completed_tivits
 		self.tivits.each do |tivit|
 			status = tivit.get_user_status(tivit.get_owner)
 			puts "status = "+ status
-			if (status == "I Am Done")
+			if (status == "Done")
 				count = count+1
 			end
 		end 
@@ -259,7 +268,7 @@ def get_number_of_completed_tivits
 		self.tivits.each do |tivit|
 			status = tivit.get_user_status(tivit.get_owner)
 			puts "status = "+ status
-			if (status == "I Am Done")
+			if (status == "Done")
 				count = count+1
 			end
 		end 

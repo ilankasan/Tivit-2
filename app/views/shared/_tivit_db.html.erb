@@ -1,7 +1,23 @@
 <!-- Display a tivit within an activity on the  Dashboard -->
 
+<% if tivit.get_owner_status == "Accepted" %>
+
+<li class="record inprog">
+	    
+<% elsif tivit.get_owner_status == "New" || tivit.get_owner_status == "Reviewed" %>
+
+<li class="record unread">
+	                      
+<% elsif tivit.get_owner_status == "Done" %>
+
+<li class="record complete">
+	                            
+<% else %>	                            
 
 <li class="record busy">
+	
+<%end%>
+
 	<div class="status">
 		<div class="icon"></div>
 	</div>
