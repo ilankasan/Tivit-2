@@ -123,6 +123,13 @@ class Activity < ActiveRecord::Base
  def update_tivit_user_status_i_am_done(user,comment)
  	change_status(user,"Done",comment)
  end
+ 
+ def update_tivit_user_propose_date(user,comment,date)
+ 	
+ 	change_user_status(user,"Proposed",comment,date)
+ end
+ 
+ 
 
 #returns the status of a user with respect to this activity 
 
@@ -361,16 +368,25 @@ private
   
   end 
  
-  
- def change_status(user, status,comment)
+ 
+ def change_user_status(user, status,comment, proposed_date)
   	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if(tivit_user_status == nil)
   		tivit_user_status = create_status(user,status)
   	end
+ 	if(proposed_date != nil)
+ 		tivit_user_status.proposed_date = proposed_date
+ 	end
+
   	tivit_user_status.status_id = status
   	tivit_user_status.comment   = comment
   	tivit_user_status.save()
     return tivit_user_status.status_id
+ end
+ 
+  
+ def change_status(user, status,comment)
+  	change_user_status(user, status,comment, nil)
  end
    
 end

@@ -4,8 +4,6 @@ class ActivitiesController < ApplicationController
   
    def create_activity(params, type)
    	puts "------>>>>>>>>>>>>  create_activity"
-   	puts "------>>>>>>>>>>>>  create_activity"
-   	puts "------>>>>>>>>>>>>  create_activity"
    	
    	params["due"] = convert_date_to_string(params,"due")
    	params["owner_id"] = current_user.id
@@ -101,8 +99,6 @@ class ActivitiesController < ApplicationController
   	@title = @activity.name
   	
   end
-  
-  
   
   
   
@@ -262,9 +258,6 @@ class ActivitiesController < ApplicationController
    
    
    puts "--------------->> create Tvit"
-  	puts "create Tvit"
-  	puts "create Tvit"
-  	puts "--------------->> create Tvit"
   	puts "--------------->> create Tvit"
 
 	
@@ -318,9 +311,11 @@ class ActivitiesController < ApplicationController
 
   
   def propose_date
-    
+    puts "-----------    propose date ---------------"
+    puts params.inspect  
+  
     @activity = Activity.find(params[:id])
-    @activity.update_tivit_user_propose_date(current_user,params["proposed_date"])  
+    @activity.update_tivit_user_propose_date(current_user,params["comment"], convert_date_to_string(params,"propose_date"))  
     #UserMailer.user_tivit_status_change_done_email(current_user,params["comment"],@activity).deliver
   	redirect_back_or root_path
   
@@ -328,7 +323,6 @@ class ActivitiesController < ApplicationController
 
   
  def decline
-  	puts "----------->>>>>>>>>>>"  
     puts "-----------    decline ---------------"  
   
     @activity = Activity.find(params[:id])

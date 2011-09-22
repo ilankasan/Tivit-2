@@ -3,7 +3,15 @@
 
  <%= form_tag(:controller => "activities" , :action => @action, :method => "put", :id => @activity.id) do %>
  <%if @action == "propose_date"%>
- 	
+ 	<!-- pROPOSED need it by -->
+    	<div class="field">
+
+			<%= label_tag(:propose_date, "Need it by: ", :class => "field-label") %>		
+	     	<%= text_field_tag(:propose_date, nil, :placeholder => "choose date", :class => "input-date") %> 
+	     	<img src="images/cal.gif" onclick="javascript:NewCssCal('propose_date', 'mmddyyyy', 'arrow')" class="ico_calc" style="cursor:pointer"/>
+	
+        </div>
+
  <%end%> 
   <div class="field">
   	<%= label_tag(:comment, "Details:") %><%= text_area_tag(:comment) %> 
