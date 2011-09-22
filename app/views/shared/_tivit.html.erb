@@ -112,7 +112,7 @@
 
 	<%= link_to "I Am Done",    :controller  => "activities",
     							:action      => "change_tivit_status",
-    							:status      => "i_am_done",
+    							:status      => "done",
     							:id          => tivit.id, 
   							    :confirm     => "Are you sure you are done with tivit" +tivit.name+"?",
                                 :title       => tivit.name %>
@@ -120,7 +120,7 @@
                                 
 	<%= link_to "Propose new date",     :controller  => "activities",
     									:action      => "change_tivit_status",
-    									:status      => "propose_new_date",
+    									:status      => "propose_date",
     									:id          => tivit.id, 
   							    		:confirm     => "Are you sure you want to propose a new date tivit" +tivit.name+"?",
                                 		:title       => tivit.name %>

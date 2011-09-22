@@ -20,6 +20,10 @@ jQuery.noConflict();
     	closeNewActivity();
     });
 
+     jQuery('#activity-overlay').live('click',function(){
+         closeNewActivity();
+     });
+
     $(".record").hover(
 	   function() {
 	      $(this).addClass('record-hovered');

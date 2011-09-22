@@ -42,7 +42,9 @@ resources :activities
 	match "activities/:id" => "activities#update"
 	match "/accept" => "activities#accept"
   	match "/decline" => "activities#decline"
-  	match "/iamdone" => "activities#i_am_done"
+  	match "/proposedate" => "activities#propose_date"
+  
+  	match "/done" => "activities#done"
   	match "/change_tivit_status" => "activities#change_tivit_status"
   	match "/new_tivit" => "activities#new_tivit"
   	match "/create_tivit" => "activities#create_tivit"

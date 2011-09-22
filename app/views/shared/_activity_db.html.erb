@@ -23,9 +23,9 @@
 	        <%= link_to activity_db.name, activity_db, :action => "show",
 	  									   :method => "get",
 	                                       :title  => activity_db.name,
-	                                       :class => "text" %>
+	                                       :class => "activity-name" %>
 	                                       
-	                        - 3 tivits to complete (static)
+	                        (by <%= (activity_db.get_owner).name %>)<!-- - 3 tivits to complete (static) -->
 	    </div>
 	        
 	        <!-- If activity has tivits, go a head and rended all the tivits in that activity -->

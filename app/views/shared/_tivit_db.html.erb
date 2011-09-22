@@ -1,14 +1,15 @@
 <!-- Display a tivit within an activity on the  Dashboard -->
+<% owner_tivit_status = tivit.get_owner_status %>
 
-<% if tivit.get_owner_status == "Accepted" %>
+<% if owner_tivit_status == "Accepted" %>
 
 <li class="record inprog">
 	    
-<% elsif tivit.get_owner_status == "New" || tivit.get_owner_status == "Reviewed" %>
+<% elsif owner_tivit_status == "New" || owner_tivit_status == "Reviewed" %>
 
 <li class="record unread">
 	                      
-<% elsif tivit.get_owner_status == "Done" %>
+<% elsif owner_tivit_status == "Done" %>
 
 <li class="record complete">
 	                            
@@ -21,7 +22,14 @@
 	<div class="status">
 		<div class="icon"></div>
 	</div>
+
+<!-- if the status is new, that means the owner didn't read it yet, dim avatar and put the remind link -->
+<% if owner_tivit_status == "New" %>
+
+	<div class="avatar attention">
+<% else %>
 	<div class="avatar">
+<%end%>
 		<%= render :partial => 'profile_images/profile_image', :collection =>  [tivit.get_owner], :as => :user%> 
 	</div>
 	<div class="text">
@@ -29,19 +37,28 @@
 		   	<div class="attach">
 		   		<i>1</i>
 		    </div>
-		    <%unread_comments = tivit.get_number_of_unread_comments(current_user)%>
-		    <% unless  unread_comments == 0%>
-		   		<div class="comments">
+		    
+		    <% unread_comments = tivit.get_number_of_unread_comments(tivit.get_owner)%>
+		    
+		   	<div class="comments">
+		   		<% if unread_comments > 0 %>
 		   			<i><%=unread_comments%></i>
-		    	</div>
-		    <%end%>
+		   		<%end%>
+		    </div>
+		  	    
 		</div>
 		<div class="wrapp">
 			<div class="twr">
 	              <h3><%= tivit.name%></h3>
 	              <span class="grey">
 	              	<%= tivit.get_owner.name %>
+	              	
+<% if owner_tivit_status == "New" %>
+					, Unread	              	
+	              	<a href=""> remind</a>
+<% end %>	              	
 	              </span>
+	              
             </div>
 		</div>
 	                                

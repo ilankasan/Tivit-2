@@ -214,7 +214,7 @@ class ActivitiesController < ApplicationController
     status = params["status"]
     @action = status
 # need to clean section below
-    if(status.downcase == "i_am_done")
+    if(status.downcase == "Done")
     	@title= "I Am Done!"
     else 
     	@title  = status.capitalize
@@ -225,8 +225,7 @@ class ActivitiesController < ApplicationController
    
   def accept
     
-   puts "----------->>>>>>>>>>>"  
-   puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Accept   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
+   
    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Accept   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
   
    # puts params.inspect  
@@ -308,11 +307,21 @@ class ActivitiesController < ApplicationController
   end
   
 
-  def i_am_done
+  def done
     
     @activity = Activity.find(params[:id])
     @activity.update_tivit_user_status_i_am_done(current_user,params["comment"])  
     UserMailer.user_tivit_status_change_done_email(current_user,params["comment"],@activity).deliver
+  	redirect_back_or root_path
+  
+  end
+
+  
+  def propose_date
+    
+    @activity = Activity.find(params[:id])
+    @activity.update_tivit_user_propose_date(current_user,params["proposed_date"])  
+    #UserMailer.user_tivit_status_change_done_email(current_user,params["comment"],@activity).deliver
   	redirect_back_or root_path
   
   end

@@ -19,7 +19,7 @@
    				<% case user_status%>
    				<% when "New"%>	
 	   				<span class="content"><%= user.email%> has not reviewed tivit</span><br>
-				<% when "I Am Done"%>	
+				<% when "Done"%>	
 					<span class="content"><%= user.email%> is done!</span><br>
 				<% else %>
 				 	<span class="content"><%= user.email%> <%= user_status%> tivit</span><br>

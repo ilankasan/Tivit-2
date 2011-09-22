@@ -121,11 +121,9 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 /* 2. Sub Menu items */
 #user-nav .submenu {
 	background:#FFFFFF;
-	position:relative;
-	top:4px;
 	width:150px;
 	clear:both;
-	z-index:100;
+	z-index:101;
 	display:none;
 	text-align: left;
 	border:1px solid #cfcfcf;
@@ -140,6 +138,8 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	height:auto;
 	line-height:normal;
 	margin: 0;
+    position:relative;
+    z-index:101;
 }
 #user-nav .submenu li a{
 	display:block;
@@ -152,6 +152,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	color:#000;
     font-size:13px;
     background:none;
+    z-index:101;
 }
 #user-nav .submenu li a:hover{
 	background:#eaeaea;
@@ -165,6 +166,11 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 .tabInfo{
 	display: none;
 }
+#new-activity-form,
+#new-activity-form input,
+#new-activity-form textarea{
+    font-family:Arial,'Liberation Sans',FreeSans,sans-serif;
+}
 #new-activity-background{
 	width: 780px;
 	margin: 0;
@@ -172,6 +178,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	top:0;
 	left:0;
 }
+/* lighbox effect behind new activity layer */
 #activity-overlay{
     position:fixed;
     height:100%;
@@ -260,6 +267,8 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     padding: 4px 0 4px 4px;
     font-size:13px;
     color: #6D6D6D;
+    font-family:Arial,'Liberation Sans',FreeSans,sans-serif;
+    
 }
 #new-activity .input-date{
     padding: 4px 0 4px 4px;
@@ -268,6 +277,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     border:none;
 	width: 200px;
 	color: #6D6D6D;
+	font-family:Arial,'Liberation Sans',FreeSans,sans-serif;
 }
 #new-activity-complete .buttons{
 	text-align: right;
@@ -437,7 +447,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 }
 
 .tvit-day{
-    padding:20px 0 0 45px;
+    padding:20px 0 0 60px;
     position:relative;
     }
     .tvit-day .calendar{
@@ -498,6 +508,9 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     }
     .tvit-list .label .progress{
         float:right;
+    }
+    .tvit-list .label .activity-name{
+        color: #8A8AD8;
     }
 
 .tvit-list .record{
@@ -749,6 +762,10 @@ footer {
 }
 footer a{
 	color:#aaa;
+}
+
+footer .copyR {
+	text-align: center;
 }
 
 footer nav {
