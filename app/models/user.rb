@@ -115,16 +115,8 @@ class User < ActiveRecord::Base
   #end
   
 #builds a new activity to a user (as an owner)
-def old_add_my_ativity (params)
+def add_my_ativity (params)
  # settign owner Id to be rqual to the current user
- puts "---------------- add_my_ativity  ----------------------" 
- puts "---------------- add_my_ativity  ----------------------" 
- puts "---------------- add_my_ativity  ----------------------" 
- puts "---------------- add_my_ativity  ----------------------" 
- puts "---------------- add_my_ativity  ----------------------" 
- puts "---------------- add_my_ativity  ----------------------" 
- puts "---------------- add_my_ativity  ----------------------" 
- puts "---------------- add_my_ativity  ----------------------" 
  puts "---------------- add_my_ativity  ----------------------" 
  
    
