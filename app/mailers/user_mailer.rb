@@ -34,6 +34,18 @@ class UserMailer < ActionMailer::Base
     mail(:to => invitee.email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => "New tivit!")
   end
+
+
+  def user_activity_status_change_done_email(user, comment,activity)
+    @owner    = activity.get_owner
+    @user     = user
+    @comment  = comment
+    @activity = activity
+    @url  	  = "http://tiviti.heroku.com"
+  	
+  	mail(:to => @owner.email, :cc => "tiviti.mailer.cc@gmail.com",
+         :subject => @user.name+" closed activity '"+activity.name+"'" )
+  end
   
   
   def user_tivit_status_change_done_email(user, comment,tivit)
@@ -44,7 +56,7 @@ class UserMailer < ActionMailer::Base
     @url  	  = "http://tiviti.heroku.com"
   	
   	mail(:to => @owner.email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => @user.name+" completed their share in the tivit '"+tivit.name+"'" )
+         :subject => @user.name+" completed their tivit '"+tivit.name+"'" + "in Activity "+tivit.get_parent.name )
   end
   
   def user_tivit_status_change_email(user, action,comment,tivit)

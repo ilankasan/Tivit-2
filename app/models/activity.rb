@@ -72,6 +72,12 @@ class Activity < ActiveRecord::Base
 		
   end	
 
+
+
+  def isActivity?
+  	return self.activity_type == "activity" 
+  end
+  
   def get_parent
   	
   	if(self.parent_id ==nil)

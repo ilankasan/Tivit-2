@@ -303,8 +303,12 @@ class ActivitiesController < ApplicationController
   def done
     
     @activity = Activity.find(params[:id])
-    @activity.update_tivit_user_status_i_am_done(current_user,params["comment"])  
-    UserMailer.user_tivit_status_change_done_email(current_user,params["comment"],@activity).deliver
+    @activity.update_tivit_user_status_i_am_done(current_user,params["comment"])
+    if(@activity.isActivity?)
+		UserMailer.user_activity_status_change_done_email(current_user,params["comment"],@activity).deliver
+    else  
+    	UserMailer.user_activity_status_change_done_email(current_user,params["comment"],@activity).deliver
+    end
   	redirect_back_or root_path
   
   end

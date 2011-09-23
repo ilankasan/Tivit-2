@@ -85,13 +85,15 @@ class User < ActiveRecord::Base
   end
    
   def update_last_signin
-  		time = Time.now()
-  		self.last_signin = time.localtime
-  		self.admin       = true	 
-  		puts "updatting last sign in !!!!!!!!!!!!!!!!!!!!!!!!! name" + self.name+"    time = "+self.last_signin.inspect
-  		self.save
+  		
+  		#time = Time.now()
+  		#self.last_signin = time.localtime
+  		#self.admin       = true	 
+  		#puts "updatting last sign in !!!!!!!!!!!!!!!!!!!!!!!!! name" + self.name+"    time = "+self.last_signin.inspect
+  		#self.save
   
   end
+  
   def self.authenticate(email, submitted_password)
     user = find_by_email(email)
     return nil  if user.nil?
