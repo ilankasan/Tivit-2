@@ -3,16 +3,21 @@
 
 <% if owner_tivit_status == "Accepted" %>
 
-<li class="record inprog">
+	<li class="record inprog">
 	    
 <% elsif owner_tivit_status == "New" || owner_tivit_status == "Reviewed" %>
 
-<li class="record unread">
+	<li class="record unread">
 	                      
 <% elsif owner_tivit_status == "Done" %>
 
-<li class="record complete">
-	                            
+	<li class="record complete">
+		
+<% elsif owner_tivit_status == "Proposed" %>
+
+	<li class="record attention">
+
+                            
 <% else %>	                            
 
 <li class="record busy">
@@ -51,12 +56,22 @@
 			<div class="twr">
 	              <h3><%= tivit.name%></h3>
 	              <span class="grey">
-	              	<%= tivit.get_owner.name %>
+	              	<%= tivit.get_owner.get_name %>
 	              	
-<% if owner_tivit_status == "New" %>
-					, Unread	              	
-	              	<a href=""> remind</a>
-<% end %>	              	
+					<% if owner_tivit_status == "New" %>
+						, Unread
+						<%if(current_user.id == tivit.get_parent.get_owner.id)%>	              	
+	              			<a href=""> remind</a>
+	              		<%end%>
+					<% end %>
+					
+					
+					<% if owner_tivit_status == "Proposed" %>
+						, New date proposed 
+						<a href=""> <%=tivit.get_owner_proposed_date%></a>
+	              		
+					<% end %>	              	
+	              	
 	              </span>
 	              
             </div>

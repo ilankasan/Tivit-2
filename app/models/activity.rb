@@ -162,7 +162,13 @@ class Activity < ActiveRecord::Base
   	end
     return tivit_user_status.comment	
   end
- 
+# return the proposed date of the owner
+ def get_owner_proposed_date
+ 	tivit_user_status = self.tivit_user_statuses.find_by_user_id(self.get_owner.id)
+  	return  tivit_user_status.last_reviewed if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
+  	return "no proposed date"
+  		
+ end
  
  def get_number_of_unread_comments(user)
  	#get date of last unread

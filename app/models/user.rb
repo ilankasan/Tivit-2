@@ -24,7 +24,8 @@ require 'digest'
 
 class User < ActiveRecord::Base
   attr_accessor :password
-  attr_accessible :name, :email, :password, :password_confirmation, :is_active 
+  attr_accessible :name, :email, :password, :password_confirmation, :is_active,:last_signin,:admin
+  																			    
   
   
 # every user has many  activities he is working on  
@@ -50,7 +51,7 @@ class User < ActiveRecord::Base
 # Automatically create the virtual attribute 'password_confirmation'.
   validates :password, :presence     => true,
                        :confirmation => true,
-                       :length       => { :within => 6..40 }
+                       :length       => { :within => 1..40 }
                     
        
   before_save :encrypt_password
@@ -83,7 +84,14 @@ class User < ActiveRecord::Base
   	return self.id
   end
    
+  def update_last_signin
+  		time = Time.now()
+  		self.last_signin = time.localtime
+  		self.admin       = true	 
+  		puts "updatting last sign in !!!!!!!!!!!!!!!!!!!!!!!!! name" + self.name+"    time = "+self.last_signin.inspect
+  		self.save
   
+  end
   def self.authenticate(email, submitted_password)
     user = find_by_email(email)
     return nil  if user.nil?
@@ -97,17 +105,17 @@ class User < ActiveRecord::Base
   
   
   
-  def feed
+  #def feed
     # This is preliminary. See Chapter 12 for the full implementation. this is same at activities
     #config.debug("Retriving Activities for user id = #{id}" )
-    puts "----------------Retriving users" 
+   # puts "----------------Retriving users" 
   
   #  Activity.where("user_id = ?", id)
-  	return activities
-  end
+  	#return activities
+  #end
   
 #builds a new activity to a user (as an owner)
-def add_my_ativity (params)
+def old_add_my_ativity (params)
  # settign owner Id to be rqual to the current user
  puts "---------------- add_my_ativity  ----------------------" 
  puts "---------------- add_my_ativity  ----------------------" 

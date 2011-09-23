@@ -35,8 +35,8 @@
 	                <a href="#tivit-desk">On Deck</a>
 	            </li>
 	            <li class="tab">
-	                <a href="#t2">All Updates</a>
-	                <i>5</i>
+	                <a href="#completed-items">All Completed</a>
+	                <i><%=@tivits_completed.count%></i>
 	            </li>
 	            <li class="tab">
 	                <a href="#new-requests">New Requests</a>
@@ -60,7 +60,10 @@
 
 			</div>
 
-			<div id="t2" class="t2 tabInfo">
+			<div id="completed-items" class="completed-items tabInfo">
+				<% unless @tivits_completed == nil %>
+					<%= render :partial => 'shared/activity_object_db', :collection =>  @tivits_completed %>
+				<% end %>
 			</div>
 			
 			<div id="new-requests" class="new-requests tabInfo">

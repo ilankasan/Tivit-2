@@ -154,6 +154,10 @@ rails generate migration add_comment_to_tivit_user_statuses comment:string
 rails generate migration add_last_reviewed_to_tivit_user_statuses last_reviewed:datetime
 rails generate migration add_proposed_date_to_tivit_user_statuses proposed_date:datetime
 
+rails generate migration add_last_signin_to_users last_signin:datetime
+
+last_signin
+
 rails generate migration add_avatar_columns_to_users avatar_file_name:string avatar_content_type:string avatar_file_size:integer avatar_updated_at:datetime
 
 

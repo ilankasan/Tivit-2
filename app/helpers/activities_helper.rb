@@ -16,7 +16,7 @@ module ActivitiesHelper
 	#create an inactive user
 			config.debug("--->>> creating a skeloton user for email: "+email)
 			temppassword = "234F5(67890GDFasdgqoSF" 
-			params = {:name => "not active",:email => email, :password => temppassword ,:password_confirmation => temppassword}
+			params = {:name => email,:email => email, :password => temppassword ,:password_confirmation => temppassword}
 			
 	#ilan: using temporary password. Deactivated user should not have passwords	
 			puts "------------------ creating new user: " + email 

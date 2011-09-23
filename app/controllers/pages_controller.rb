@@ -47,7 +47,7 @@ class PagesController < ApplicationController
       				   		 )
       				   )
       				   ORDER BY activities.due"
-	 
+################################# NEW ACTITVITIES #######################################################################################
 	  sql_new_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses
       				   WHERE NOT activities.status         = 'Completed'  
       				   AND activities.activity_type 	   = 'activity' 
@@ -60,6 +60,23 @@ class PagesController < ApplicationController
 	 
 	 
 	  @tivits_new          = Activity.find_by_sql(sql_new_tivits)
+	  
+	  
+	  
+################################# Completed ACTITVITIES #######################################################################################
+	  
+	  sql_completed_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
+      				   WHERE activities.status      = 'Completed'  
+      				   AND activities.activity_type 	= 'activity' 
+      				   AND (activities.owner_id    		= "+current_user_id+"
+      				   OR ( 
+      				   tivits.owner_id 			= "+current_user_id+" 
+      				   AND tivits.parent_id 	= activities.id))
+      				   ORDER BY activities.due"
+      				           
+      	@tivits_completed = Activity.find_by_sql(sql_completed_activities)
+      	
+      	
      end
   end
 

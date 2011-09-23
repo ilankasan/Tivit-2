@@ -15,9 +15,10 @@ class SessionsController < ApplicationController
       @title = "Sign in"
       render 'new'
     else
+      
       sign_in user
-    #  redirect_back_or user
-    redirect_to root_path
+      user.update_last_signin
+      redirect_to root_path
     end
   end
 
