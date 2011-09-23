@@ -32,7 +32,7 @@ class UserMailer < ActionMailer::Base
 	@url  = "http://tiviti.heroku.com"
     
     mail(:to => invitee.email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => "New tivit!")
+         :subject => @owner.get_name+ " needs your help with "+tivit.get_parent.name)
   end
 
 
@@ -55,9 +55,12 @@ class UserMailer < ActionMailer::Base
     @tivit    = tivit
     @url  	  = "http://tiviti.heroku.com"
   	
-  	mail(:to => @owner.email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => @user.name+" completed their tivit '"+tivit.name+"'" + "in Activity "+tivit.get_parent.name )
+  	mail(:to => @tivit.get_parent.get_owner.email, :cc => "tiviti.mailer.cc@gmail.com",
+         :subject => @user.name+" completed their tivit '"+tivit.name+"'" + "in Activity "+@tivit.get_parent.name )
   end
+  
+  
+  
   
   def user_tivit_status_change_email(user, action,comment,tivit)
     @owner    = tivit.get_owner

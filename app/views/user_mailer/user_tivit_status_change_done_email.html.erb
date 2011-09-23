@@ -5,9 +5,9 @@
   </head>
   <body>
     <p>
-<%= @user.name %> indicated he/she completed their share in the tivit '<%= @tivit.name %>'<br>
-       <%= @summary %><br>
-		Click here <%= @url %>/activities/<%=@tivit.id%> to view tivit progress.
+<%= @user.name %> indicated he/she completed their tivit '<%= @tivit.name %>' in <%=@tivit.get_parent.name%><br>
+       <%= @comment %><br>
+		Click here <%= @url %>/activities/<%=@tivit.id%> to view activity progress.
     </p>
     <p>Thanks for using tiviti and have a great day!</p>
   </body>

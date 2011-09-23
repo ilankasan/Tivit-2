@@ -34,6 +34,9 @@ class ActivitiesController < ApplicationController
 #Adding invitees to activity
 		if (invitees != nil && invitees.empty? == false)
     		add_activity_participants(invitees, @activity)
+# email invitee an email
+			#UserMailer.new_tivit_email(user,owner,self).deliver
+
     	end     
 
         config.debug("------>>>>> creating activity" + @activity.name )
@@ -288,6 +291,8 @@ class ActivitiesController < ApplicationController
 	if(@activity!=nil)
       config.debug("------>>>>> creating activity" + @activity.name )
         flash[:success] = "tivit " +@activity.name + " created!"
+        UserMailer.new_tivit_email(user,@activity.get_parent.get_owner,@activity).deliver
+
         redirect_to root_path
     else
         config.debug("creating activity failed")
@@ -307,7 +312,7 @@ class ActivitiesController < ApplicationController
     if(@activity.isActivity?)
 		UserMailer.user_activity_status_change_done_email(current_user,params["comment"],@activity).deliver
     else  
-    	UserMailer.user_activity_status_change_done_email(current_user,params["comment"],@activity).deliver
+    	UserMailer.user_tivit_status_change_done_email(current_user,params["comment"],@activity).deliver
     end
   	redirect_back_or root_path
   

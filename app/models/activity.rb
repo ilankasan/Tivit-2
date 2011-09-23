@@ -63,8 +63,6 @@ class Activity < ActiveRecord::Base
 	puts "&&&&&&&&&&&&&        updating user task status &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 # sending invitee an email invite
 	owner = self.get_owner
-# ilan: email invites shouldbein controllers not models
-	UserMailer.new_tivit_email(user,owner,self).deliver
 	
 	self.update_user_tivit_status(user)
 
