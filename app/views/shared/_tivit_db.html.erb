@@ -43,7 +43,7 @@
 		   		<i>1</i>
 		    </div>
 		    
-		    <% unread_comments = tivit.get_number_of_unread_comments(tivit.get_owner)%>
+		    <% unread_comments = tivit.get_number_of_unread_comments(current_user)%>
 		    
 		   	<div class="comments">
 		   		<% if unread_comments > 0 %>
