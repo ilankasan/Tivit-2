@@ -16,8 +16,11 @@
 	<div class="tvit-list">
 		<div class="label">
 	    	<div class="progress">
-	            	<strong>static%</strong>
-	                	<%= activity_db.get_activity_tivit_status %> (temp) 
+	    		<%unless activity_db.get_number_of_tivits == 0%>
+	            	<strong> %<%=(( 100 * activity_db.get_number_of_completed_tivits) / activity_db.get_number_of_tivits)%> </strong>
+	            	<%= activity_db.get_number_of_completed_tivits %>/<%= activity_db.get_number_of_tivits %> tivits completed
+	        		
+	        	<%end%>   
 	        </div>
 	        
 	        <%= link_to activity_db.name, activity_db, :action => "show",

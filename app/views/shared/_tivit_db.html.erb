@@ -20,7 +20,7 @@
                             
 <% else %>	                            
 
-<li class="record busy">
+	<li class="record busy">
 	
 <%end%>
 
@@ -60,7 +60,7 @@
 	              	
 					<% if owner_tivit_status == "New" %>
 						, Unread
-						<%if(current_user.id == tivit.get_parent.get_owner.id)%>	              	
+						<%if(current_user.id == tivit.get_parent.get_owner.id && current_user.id != tivit.get_owner.id )%>	              	
 	              			<a href=""> remind</a>
 	              		<%end%>
 					<% end %>
@@ -74,7 +74,15 @@
 							<a href=""> Accept</a>	
 						<%end%>
 	              		
+					<% end %>
+						              	
+<!-- If tivit was reviewed but no other action taken, add a comment when it was read -->
+ 
+	              	<% if owner_tivit_status == "Reviewed" %>
+						<a href=""> reviewed <%= time_ago_in_words(tivit.get_owner_last_review_date)%> ago</a>
 					<% end %>	              	
+	              	
+	              	
 	              	
 	              </span>
 	              

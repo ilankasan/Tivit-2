@@ -132,11 +132,9 @@ class Activity < ActiveRecord::Base
  	change_status(user,"Done",comment)
  end
  
- def update_tivit_user_propose_date(user,comment,date)
- 	
+ def update_tivit_user_propose_date(user,comment,date)	
  	change_user_status(user,"Proposed",comment,date)
  end
- 
  
 
 #returns the status of a user with respect to this activity 
@@ -148,7 +146,6 @@ class Activity < ActiveRecord::Base
   	end
   	
     return tivit_user_status.status_id
- 	
   end
  
  
@@ -156,10 +153,8 @@ class Activity < ActiveRecord::Base
     tivit_user_status = self.tivit_user_statuses.find_by_user_id(self.get_owner)
     if(tivit_user_status == nil)
       tivit_user_status = create_status_new(self.get_owner)     
-    end
-    
+    end  
     return tivit_user_status.status_id
-  
   end
   
 #returns the comments associated with a specific user and this activity 
@@ -170,12 +165,18 @@ class Activity < ActiveRecord::Base
   	end
     return tivit_user_status.comment	
   end
+  
+  
 # return the proposed date of the owner
  def get_owner_proposed_date
  	tivit_user_status = self.tivit_user_statuses.find_by_user_id(self.get_owner.id)
   	return  tivit_user_status.last_reviewed if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
-  	return "no proposed date"
-  		
+  	return "no proposed date"	
+ end
+ 
+ 
+ def get_owner_last_review_date
+ 	return self.tivit_user_statuses.find_by_user_id(self.get_owner.id).last_reviewed
  end
  
  def get_number_of_unread_comments(user)
@@ -185,12 +186,11 @@ class Activity < ActiveRecord::Base
   	if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
   		#puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
   		comments = self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id)
-  		#comments = self.tivitcomments.where("created_at < ?",tivit_user_status)
   		
   		if(comments == nil)
   			return 0
   		else
-  			puts "number of unread tivits = " + comments.size.inspect + " user id = "+user.id.inspect+""
+  		#	puts "number of unread tivits = " + comments.size.inspect + " user id = "+user.id.inspect+""
   			return comments.size
   		end
   	else
@@ -259,32 +259,30 @@ class Activity < ActiveRecord::Base
 	end
  end
   
-def get_number_of_completed_tivits
-#returns the number of completed tivits 
-	if(self.tivits == nil || self.tivits.size == 0)
-		return "0"
-	else
-		count = 0
-#		puts "get_activity_tivit_status = " +self.tivits.size.inspect
 
-		self.tivits.each do |tivit|
-			status = tivit.get_user_status(tivit.get_owner)
-		#	puts "status = "+ status
+  
+  def get_number_of_completed_tivits
+  	return 0 if (self.tivits == nil || self.tivits.size == 0)
+  	count = 0
+  	self.tivits.each do |tivit|
+		status = tivit.get_user_status(tivit.get_owner)
 			if (status == "Done")
 				count = count+1
 			end
-		end 
 	end
-	return count 
-	
+  	return count	
   end
-
+  
+  def get_total_tivits
+  	return 0 if(self.tivits == nil || self.tivits.size == 0)
+#	return TivitUserStatus.where(:activity_id => self.id.inspect, ).count
+	return self.tivits.size  		
+  	
+  end
   
   def get_activity_tivit_status
 #returns a string of how many tivits have been completed
 # need to remove business logic from model
-#puts "get_activity_tivit_status"
-#puts "_____________________________________________________"
 	if(self.tivits == nil || self.tivits.size == 0)
 		return "no tivits"
 	else
