@@ -78,7 +78,7 @@
 						              	
 <!-- If tivit was reviewed but no other action taken, add a comment when it was read -->
  
-	              	<% if owner_tivit_status == "Reviewed" %>
+	              	<% if owner_tivit_status == "Reviewed"  && tivit.get_owner_last_review_date != nil%>
 						<a href=""> reviewed <%= time_ago_in_words(tivit.get_owner_last_review_date)%> ago</a>
 					<% end %>	              	
 	              	
