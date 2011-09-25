@@ -3,7 +3,12 @@ module SessionsHelper
   def sign_in(user)
     cookies.permanent.signed[:remember_token] = [user.id, user.salt]
     self.current_user = user
-    self.current_user.update_last_signin
+    
+    puts "****************  update last sign in *****************************"
+     
+    user.update_last_signin
+    puts "****************  update last sign in *****************************"
+    
   end
   
   

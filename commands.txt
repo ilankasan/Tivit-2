@@ -67,7 +67,7 @@ heroku pg:reset --db SHARED_DATABASE_URL
 
 
 $ git add .
-$ git commit -am "9-18-11-c"
+$ git commit -am "9-24-11-1"
 git checkout master
 git merge updating-users
 git merge yaniv-new_ui_1

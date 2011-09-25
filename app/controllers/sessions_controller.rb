@@ -15,9 +15,11 @@ class SessionsController < ApplicationController
       @title = "Sign in"
       render 'new'
     else
-      
+      puts "*********************************************"
       sign_in user
-      user.update_last_signin
+      #user.update_last_signin
+      puts "*********************************************"
+      
       redirect_to root_path
     end
   end

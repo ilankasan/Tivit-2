@@ -56,13 +56,13 @@ class Activity < ActiveRecord::Base
 
   default_scope :order => 'activities.due DESC'
 
-# Update status of theusers invites tot he activity
+# Update status of the users invites to he activity
   def add_user_invitee(user)
  #adding the user to the existing users on the task
 	self.users << user
 	puts "&&&&&&&&&&&&&        updating user task status &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 # sending invitee an email invite
-	owner = self.get_owner
+#	owner = self.get_owner
 	
 	self.update_user_tivit_status(user)
 
@@ -86,7 +86,7 @@ class Activity < ActiveRecord::Base
 
 
 
-  def update_user_tivit_status(user)
+  def update_user_tivit_status_new(user)
  	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
  	tivit_status = create_status_new(user)
  	puts "creating a task with status new"	
@@ -117,6 +117,10 @@ class Activity < ActiveRecord::Base
  
  def update_tivit_user_status_accept(user,comment)
  	change_status(user,"Accepted",comment)
+ end
+ 
+ def update_tivit_user_status_reviewed(user,comment)
+ 	change_status(user,"Reviewed",comment)
  end
  
  def update_tivit_user_status_decline(user,comment)
@@ -175,21 +179,22 @@ class Activity < ActiveRecord::Base
  end
  
  def get_number_of_unread_comments(user)
+ # het number of unread comment (do not include new comments from user)
  	#get date of last unread
  	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
-  		puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
-  		comments = self.tivitcomments.where("created_at > ?",tivit_user_status.last_reviewed)
+  		#puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
+  		comments = self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id)
   		#comments = self.tivitcomments.where("created_at < ?",tivit_user_status)
   		
   		if(comments == nil)
   			return 0
   		else
-  			puts "number of unread tivits = " + comments.size.inspect
+  			puts "number of unread tivits = " + comments.size.inspect + " user id = "+user.id.inspect+""
   			return comments.size
   		end
   	else
-  		puts "tivit_user_status.last_reviewed = nill"
+  		#puts "tivit_user_status.last_reviewed = nill"
   		return self.get_number_of_comments 
   	end
   		 
@@ -264,7 +269,7 @@ def get_number_of_completed_tivits
 
 		self.tivits.each do |tivit|
 			status = tivit.get_user_status(tivit.get_owner)
-			puts "status = "+ status
+		#	puts "status = "+ status
 			if (status == "Done")
 				count = count+1
 			end
@@ -288,7 +293,7 @@ def get_number_of_completed_tivits
 
 		self.tivits.each do |tivit|
 			status = tivit.get_user_status(tivit.get_owner)
-			puts "status = "+ status
+			#puts "status = "+ status
 			if (status == "Done")
 				count = count+1
 			end
@@ -362,7 +367,6 @@ private
  
  def create_status(user, status)
  	tivit_status = user.tivit_user_statuses.new()
- 	puts " ----------------------------------------- "
  	puts " ----------------  Changing status ------------------------- "
  	if(tivit_status.status_id == nil)
  		puts " nil -->>> " + status

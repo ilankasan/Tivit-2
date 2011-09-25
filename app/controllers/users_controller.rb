@@ -84,7 +84,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     
 #save email address lower case
-    params[:user]["email"] = params[:user]["email"].downcase 
+	time = Time.now()
+  	
+  		
+    params[:user]["email"]       = params[:user]["email"].downcase
+    params[:user]["last_signin"] =  time.localtime 
+     
     if @user.update_attributes(params[:user])
      
      # @user.profile_image = @profile_image 	

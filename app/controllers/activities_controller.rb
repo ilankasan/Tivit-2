@@ -12,7 +12,8 @@ class ActivitiesController < ApplicationController
 
    	puts "Inspect Params " +params.inspect
    	@activity = current_user.add_my_ativity(params)    
-	
+#Updateting status as Reviewed. New tivits should for current user should be at REviewed status
+	@activity.update_status_after_show(current_user)
    	#current.ueractivities.create(params)
  	
    end
@@ -250,28 +251,16 @@ class ActivitiesController < ApplicationController
   def create_tivit
   	
   	puts "--------------->> create Tvit"
-  	puts "create Tvit"
-  	puts "create Tvit"
-  	puts "--------------->> create Tvit"
-  	puts "--------------->> create Tvit"
   	puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-   puts "Inspect Params " +params.inspect
-   puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+   	puts "Inspect Params " +params.inspect
+   	puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
    
-   
-   
-   puts "--------------->> create Tvit"
-  	puts "--------------->> create Tvit"
-
-	
 #adding a strign representation of due date 
   	params["due"] 		= convert_date_to_string(params,"due")
   	params["parent_id"] = params[:id] 						#   adding Parent ID
-  	params["invited_by"] = current_user.id 						#   adding invite by	
-		
+  	params["invited_by"] = current_user.id 						#   adding invite by		
 	params["status"]    = "in-progress"
-	
-        
+	 
     invitees = params["invitees"]	
 		
 	
@@ -279,14 +268,13 @@ class ActivitiesController < ApplicationController
 	params["owner_id"] =  user.id
 	params["activity_type"] = "tivit"
 	
-	puts "Inspect!!!!!!!!!!!!!!!!!"
 	puts "Inspect Params " +params.inspect
 	puts "--------------->>>>  creatintg  activity"
-   
+
    
 	@activity = user.activities.create(params)	 						
-
-
+	#@activity.create_status(current_user, "Reviewed")
+	@activity.update_tivit_user_status_reviewed(current_user,"")
 #Adding invitees to activity
 	if(@activity!=nil)
       config.debug("------>>>>> creating activity" + @activity.name )
@@ -300,10 +288,7 @@ class ActivitiesController < ApplicationController
         @feed_items = []
         render 'pages/home'
     end
-
-   
   end
-  
 
   def done
     

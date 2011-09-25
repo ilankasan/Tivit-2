@@ -85,12 +85,17 @@ class User < ActiveRecord::Base
   end
    
   def update_last_signin
-  		
-  		#time = Time.now()
-  		#self.last_signin = time.localtime
-  		#self.admin       = true	 
-  		#puts "updatting last sign in !!!!!!!!!!!!!!!!!!!!!!!!! name" + self.name+"    time = "+self.last_signin.inspect
-  		#self.save
+  		puts "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
+  		time = Time.now()
+  		self.last_signin = time.localtime
+  	#	self.admin       = true
+  		#attr = Hash.new
+  	#	attr = {"last_signin" => time.localtime}
+  		#attributes = ["last_signin"][time.localtime]
+  		puts "updatting last sign in !!!!!!!!!!!!!!!!!!!!!!!!! name " + name+"    time = "+self.last_signin.inspect
+  	#	puts attr.inspect
+  	#	self.update_attributes(attr)
+  		self.save()
   
   end
   
