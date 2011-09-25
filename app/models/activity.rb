@@ -120,7 +120,7 @@ class Activity < ActiveRecord::Base
  end
  
  def update_tivit_user_status_reviewed(user,comment)
- 	change_status(user,"Reviewed",comment)
+ 	change_status(user,"Reviewed",comment,nil,Time.now().localtime)
  end
  
  def update_tivit_user_status_decline(user,comment)
@@ -133,7 +133,7 @@ class Activity < ActiveRecord::Base
  end
  
  def update_tivit_user_propose_date(user,comment,date)	
- 	change_user_status(user,"Proposed",comment,date)
+ 	change_user_status(user,"Proposed",comment,date,Time.now().localtime)
  end
  
 
@@ -381,13 +381,18 @@ private
   end 
  
  
- def change_user_status(user, status,comment, proposed_date)
+ def change_user_status(user, status,comment, proposed_date, last_reviewed)
   	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if(tivit_user_status == nil)
   		tivit_user_status = create_status(user,status)
   	end
+  	
  	if(proposed_date != nil)
  		tivit_user_status.proposed_date = proposed_date
+ 	end
+ 	
+	if(last_reviewed != nil)
+ 		tivit_user_status.last_reviewed = last_reviewed
  	end
 
   	tivit_user_status.status_id = status
@@ -398,7 +403,7 @@ private
  
   
  def change_status(user, status,comment)
-  	change_user_status(user, status,comment, nil)
+  	change_user_status(user, status,comment, nil,nil)
  end
    
 end

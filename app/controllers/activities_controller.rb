@@ -307,9 +307,10 @@ class ActivitiesController < ApplicationController
   def propose_date
     puts "-----------    propose date ---------------"
     puts params.inspect  
-  
-    @activity = Activity.find(params[:id])
-    @activity.update_tivit_user_propose_date(current_user,params["comment"], convert_date_to_string(params,"propose_date"))  
+  	unless params["propose_date"] != nil
+    	@activity = Activity.find(params[:id])
+    	@activity.update_tivit_user_propose_date(current_user,params["comment"], convert_date_to_string(params,"propose_date"))
+    end  
     #UserMailer.user_tivit_status_change_done_email(current_user,params["comment"],@activity).deliver
   	redirect_back_or root_path
   
