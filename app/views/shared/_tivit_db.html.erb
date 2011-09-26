@@ -66,7 +66,7 @@
 	              	
 					<% if owner_tivit_status == "New" %>
 						, Unread
-						<%if(current_user.id == tivit.get_parent.get_owner.id && current_user.id != tivit.get_owner.id )%>	              	
+						<%if((current_user.id == tivit.get_parent.get_owner.id && current_user.id != tivit.get_owner.id)|| (current_user.id == tivit.get_invited_by.id) )%>	              	
 	              			<a>
 							<%= link_to "remind",    :controller  => "activities",
     												:action      => "change_tivit_status",
