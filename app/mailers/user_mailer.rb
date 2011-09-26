@@ -38,12 +38,12 @@ class UserMailer < ActionMailer::Base
   
   def new_tivit_email(invitee, inviter,tivit)
     @invitee   = invitee
-    @inveter   = inviter
+    @inviter   = inviter
     @tivit     = tivit
 	@url       = "http://tiviti.heroku.com"
     
     mail(:to => invitee.email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => @inviter.get_name+ " needs your help with "+tivit.get_parent.name)
+         :subject => inviter.get_name + " needs your help with "+tivit.get_parent.name)
   end
 
 

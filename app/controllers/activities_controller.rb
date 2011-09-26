@@ -258,30 +258,19 @@ class ActivitiesController < ApplicationController
     invitees = params["invitees"]	
 		
 	
-	user = user_by_email(invitees.strip)
-	params["owner_id"] =  user.id
+	@invited_user = user_by_email(invitees.strip)
+	params["owner_id"] =  @invited_user.id
 	params["activity_type"] = "tivit"
 	
-	puts "Inspect Params " +params.inspect
-	puts "--------------->>>>  creatintg  activity"
+#	puts "Inspect Params " +params.inspect
+	puts "--------------->>>>  creatintg  tiviti"
 
    
-	@activity = user.activities.create(params)	 						
-	#@activity.create_status(current_user, "Reviewed")
+	@activity = @invited_user.activities.create(params)	 						
 	@activity.update_tivit_user_status_reviewed(current_user,"")
-#Adding invitees to activity
-	if(@activity!=nil)
-      config.debug("------>>>>> creating activity" + @activity.name )
-        flash[:success] = "tivit " +@activity.name + " created!"
-        UserMailer.new_tivit_email(user,current_user,@activity).deliver
-
-        redirect_to root_path
-    else
-        config.debug("creating activity failed")
-#ilan: not sure why we need the below row 
-        @feed_items = []
-        render 'pages/home'
-    end
+	config.debug("------>>>>> creating activity" + @activity.name )
+    UserMailer.new_tivit_email(@invited_user,current_user,@activity).deliver
+    redirect_to root_path
   end
 
   def done
