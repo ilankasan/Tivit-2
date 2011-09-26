@@ -44,6 +44,9 @@ resources :activities
   	match "/decline" => "activities#decline"
   	match "/proposedate" => "activities#propose_date"
   	match "/acceptdate" => "activities#accept_date"
+  	match "/remind" => "activities#remind"
+  	
+  	
   	  	
   
   	match "/done" => "activities#done"

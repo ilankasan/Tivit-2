@@ -344,6 +344,18 @@ class ActivitiesController < ApplicationController
   	redirect_back_or root_path
   end
 
+ def remind
+    puts "-----------    remind ---------------"  
+  
+    @activity = Activity.find(params[:id])
+# ilan: need to change status to reminded. next version
+    #@activity.update_tivit_user_status_reminded(current_user,params["comment"])
+    #log_action_as_comment(@activity,params["comment"],"Declined",current_user)
+
+    UserMailer.remind_user_to_review_tivit(current_user, params["comment"],@activity).deliver
+    		   
+  	redirect_back_or root_path
+  end
  
   private
   

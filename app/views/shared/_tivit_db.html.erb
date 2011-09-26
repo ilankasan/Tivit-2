@@ -68,16 +68,14 @@
 						, Unread
 						<%if(current_user.id == tivit.get_parent.get_owner.id && current_user.id != tivit.get_owner.id )%>	              	
 	              			<a>
-							<%= link_to "Remind",      :controller  => "activities",
+							<%= link_to "Remind",    :controller  => "activities",
     												:action      => "change_tivit_status",
-    												:status      => "Reminded",
+    												:status      => "remind",
     												:id          => tivit.id, 
   							    					:confirm     => "Are you sure you want to accepet new date " +tivit.name+"?",
                                 					:title       => tivit.name %>
-						
-						
 							</a>
-	              		<%end%>
+						<%end%>
 					<% end %>
 					
 					

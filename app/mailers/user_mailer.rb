@@ -12,6 +12,17 @@ class UserMailer < ActionMailer::Base
          :subject => "Welcome to tiviti!")
   end
   
+  def remind_user_to_review_tivit (user_reminding, message,tivit)
+  	
+    @user_reminding     = user_reminding
+    @tivit   			= tivit
+    @message 			= message
+    @url     			= "http://tiviti.heroku.com"
+    invitees			= tivit.get_owner.email
+    
+    mail(:to => invitees, :cc => "tiviti.mailer.cc@gmail.com",
+         :subject =>"REMINDER: Please review my request for your help with " +tivit.name)  
+  end
   
   
   def user_tivit_status_completed_email (user, invitees,summary,tivit)
