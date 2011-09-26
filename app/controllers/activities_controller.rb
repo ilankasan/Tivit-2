@@ -248,10 +248,7 @@ class ActivitiesController < ApplicationController
   def create_tivit
   	
   	puts "--------------->> create Tvit"
-  	puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-   	puts "Inspect Params " +params.inspect
-   	puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-   
+  	
 #adding a strign representation of due date 
   	params["due"] 		= convert_date_to_string(params,"due")
   	params["parent_id"] = params[:id] 						#   adding Parent ID
@@ -276,7 +273,7 @@ class ActivitiesController < ApplicationController
 	if(@activity!=nil)
       config.debug("------>>>>> creating activity" + @activity.name )
         flash[:success] = "tivit " +@activity.name + " created!"
-        UserMailer.new_tivit_email(user,@activity.get_parent.get_owner,@activity).deliver
+        UserMailer.new_tivit_email(user,current_user,@activity).deliver
 
         redirect_to root_path
     else
