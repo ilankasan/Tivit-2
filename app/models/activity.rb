@@ -87,6 +87,9 @@ class Activity < ActiveRecord::Base
   	return Activity.find(self.parent_id)
   end
 
+  def get_open_or_recently_done_tivits
+	self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id AND ((NOT tivit_user_statuses.status_id = 'Done') OR ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now.localtime-1.day) 	
+  end
 
 
   def update_user_tivit_status_new(user)
@@ -400,6 +403,7 @@ private
 
   	tivit_user_status.status_id = status
   	tivit_user_status.comment   = comment
+  	tivit_user_status.last_status_change = Time.now.localtime
   	tivit_user_status.save()
     return tivit_user_status.status_id
  end

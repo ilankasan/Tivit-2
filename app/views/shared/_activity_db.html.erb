@@ -17,7 +17,7 @@
 		<div class="label">
 	    	<div class="progress">
 	    		<%unless activity_db.get_number_of_tivits == 0%>
-	            	<strong> %<%=(( 100 * activity_db.get_number_of_completed_tivits) / activity_db.get_number_of_tivits)%> </strong>
+	            	<strong> <%=(( 100 * activity_db.get_number_of_completed_tivits) / activity_db.get_number_of_tivits)%>%</strong>
 	            	(<%= activity_db.get_number_of_completed_tivits %>/<%= activity_db.get_number_of_tivits %> tivits completed)
 	        		
 	        	<%end%>   
@@ -36,8 +36,12 @@
 <% if activity_db.tivits !=nil && activity_db.tivits.size > 0%>
 	        	
 		<ul class="list">
-	
-			<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.tivits, :as => :tivit  %>
+			<!--%= render :partial => 'shared/tivit_db', 
+					   :collection =>  activity_db.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id AND ((NOT tivit_user_statuses.status_id = 'Done') OR ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now.localtime-1.day), 
+					   :as => :tivit  %!-->
+			
+			<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_open_or_recently_done_tivits, :as => :tivit  %>
+			<!--%= render :partial => 'shared/tivit_db', :collection =>  activity_db.tivits.where("status = 'Completed' AND completed_at > )"), :as => :tivit  %-->
 		        
 		</ul>
 		    	
