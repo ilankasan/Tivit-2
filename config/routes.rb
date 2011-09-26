@@ -21,7 +21,6 @@ resources :activity_documents
   #match "/edit" => "profile_images#edit"
   #match "/show" => "profile_images#show"
     
-
   resources :activities do
   resources :tivitcomments
 end
