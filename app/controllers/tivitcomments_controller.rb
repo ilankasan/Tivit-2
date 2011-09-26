@@ -15,6 +15,8 @@ class TivitcommentsController < ApplicationController
 	end
 
 	params["tivitcomment"]["user_id"] = current_user.id
+# add action type Note
+	params["tivitcomment"]["action"] = "Note"
 	
 #		puts "params ----------   " + params["tiviticomment"].inspect 
 	@comment = @activity.tivitcomments.create(params["tivitcomment"])

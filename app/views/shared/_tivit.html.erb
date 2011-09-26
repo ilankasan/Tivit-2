@@ -92,9 +92,9 @@
 		<!--%tivit.update_tivit_status_after_show(current_user)%-->
 
 <!-- tivit action to take-->
-     <%= link_to "accept", 		:controller  => "activities", 
+     <%= link_to "I am on it", 		:controller  => "activities", 
    								:action      => "change_tivit_status",
-   								:status      => "accept",
+   								:status      => "on_it",
  								:id          => tivit.id, 
   							    :confirm     => "Are you sure you want to accept tivit" +tivit.name+"?", 
                                 :title       => tivit.name %>

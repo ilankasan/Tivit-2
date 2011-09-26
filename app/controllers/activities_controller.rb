@@ -223,21 +223,18 @@ class ActivitiesController < ApplicationController
   end
 
    
-  def accept
-    
+  def on_it
    
-   puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Accept   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
-  
-   # puts params.inspect  
-   
+    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   On It   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
     @activity = Activity.find(params[:id])
     puts "Activity is " + @activity.name  
    
-    @activity.update_tivit_user_status_accept(current_user,params["comment"])
+    @activity.update_tivit_user_status_onit(current_user,params["comment"])
+    log_action_as_comment(@activity,params["comment"],"OnIt",current_user)
+
     UserMailer.user_tivit_status_change_email(current_user, "Acceped",params["comment"],@activity).deliver
   
 	redirect_back_or root_path
-  	
   end
   
   def new_tivit
@@ -294,6 +291,8 @@ class ActivitiesController < ApplicationController
     
     @activity = Activity.find(params[:id])
     @activity.update_tivit_user_status_i_am_done(current_user,params["comment"])
+    log_action_as_comment(@activity,params["comment"],"Done",current_user)
+
     if(@activity.isActivity?)
 		UserMailer.user_activity_status_change_done_email(current_user,params["comment"],@activity).deliver
     else  
@@ -310,7 +309,23 @@ class ActivitiesController < ApplicationController
   	unless params["propose_date"] != nil
     	@activity = Activity.find(params[:id])
     	@activity.update_tivit_user_propose_date(current_user,params["comment"], convert_date_to_string(params,"propose_date"))
+    	log_action_as_comment(@activity,params["comment"],"Proposed",user_id)    	
     end  
+    #UserMailer.user_tivit_status_change_done_email(current_user,params["comment"],@activity).deliver
+  	redirect_back_or root_path
+  
+  end
+
+  
+  def accept_date
+    puts "-----------    Accept Date ---------------"
+    puts params.inspect
+    log_action_as_comment(@activity,params["comment"],"Accepted",current_user)
+  
+  	#unless params["propose_date"] != nil
+   # 	@activity = Activity.find(params[:id])
+   # 	@activity.update_tivit_user_propose_date(current_user,params["comment"], convert_date_to_string(params,"propose_date"))
+   # end  
     #UserMailer.user_tivit_status_change_done_email(current_user,params["comment"],@activity).deliver
   	redirect_back_or root_path
   
@@ -322,17 +337,17 @@ class ActivitiesController < ApplicationController
   
     @activity = Activity.find(params[:id])
     @activity.update_tivit_user_status_decline(current_user,params["comment"])
+    log_action_as_comment(@activity,params["comment"],"Declined",current_user)
+
     UserMailer.user_tivit_status_change_email(current_user, "Declined",params["comment"],@activity).deliver
     		   
   	redirect_back_or root_path
   end
 
-   
-  
-  
+ 
   private
   
-	    def authorized_user
+	def authorized_user
       @activity = Activity.find(params[:id])
       redirect_to root_path unless current_user
     end

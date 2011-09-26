@@ -55,7 +55,7 @@
 
 			<% unless @tivits_participate == nil %>
 			 
-			     <%= render :partial => 'shared/activity_object_db', :collection =>  @tivits_participate %>
+			     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_participate %>
 		     
 			<% end %>
 
@@ -63,14 +63,14 @@
 
 			<div id="completed-items" class="completed-items tabInfo">
 				<% unless @tivits_completed == nil %>
-					<%= render :partial => 'shared/activity_object_db', :collection =>  @tivits_completed %>
+					<%= render :partial => 'shared/activity_db', :collection =>  @tivits_completed %>
 				<% end %>
 			</div>
 			
 			<div id="new-requests" class="new-requests tabInfo">
 				<% unless @tivits_new == nil %>
 				 
-				     <%= render :partial => 'shared/activity_object_db', :collection =>  @tivits_new %>
+				     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_new %>
 			     
 				<% end %>
 			</div>

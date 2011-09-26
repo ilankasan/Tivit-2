@@ -18,7 +18,7 @@ class TivitUserStatus < ActiveRecord::Base
 # Status id values are: 
 # New 		- never read by the user
 # Reviewed  - REviewed by the User
-# Accepted  - The user agreed to do the tivit
+# OnIt  - The user agreed to do the tivit
 # Done      - User has completed the Tivit
 # Declined  - User declined to do the tivit for some reason
 # Proposed (not inplmeneted yet) - user proposes a change int he tivit (initially a new date)	

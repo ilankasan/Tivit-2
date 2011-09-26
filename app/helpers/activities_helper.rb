@@ -32,6 +32,19 @@ module ActivitiesHelper
   
  end
 
+
+###################################################### 
+# Add any change of user status to a commetn in the activity feed 
+######################################################
+
+
+    def log_action_as_comment(activity,comment,action,user_id)
+    	params = Hash.new
+    	params["user_id"] = user_id
+    	params["comment"] = comment
+    	params["action"]  = action
+    	activity.tivitcomments.create(params)
+	end
 ###################################################### 
 # add participants to activity 
 ######################################################

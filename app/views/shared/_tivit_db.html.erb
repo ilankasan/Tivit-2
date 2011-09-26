@@ -1,7 +1,7 @@
 <!-- Display a tivit within an activity on the  Dashboard -->
 <% owner_tivit_status = tivit.get_owner_status %>
 
-<% if owner_tivit_status == "Accepted" %>
+<% if (owner_tivit_status == "OnIt" || owner_tivit_status == "Accepted")%>
 
 	<li class="record inprog">
 	    
@@ -61,7 +61,16 @@
 					<% if owner_tivit_status == "New" %>
 						, Unread
 						<%if(current_user.id == tivit.get_parent.get_owner.id && current_user.id != tivit.get_owner.id )%>	              	
-	              			<a href=""> remind</a>
+	              			<a>
+							<%= link_to "Remind",      :controller  => "activities",
+    												:action      => "change_tivit_status",
+    												:status      => "Reminded",
+    												:id          => tivit.id, 
+  							    					:confirm     => "Are you sure you want to accepet new date " +tivit.name+"?",
+                                					:title       => tivit.name %>
+						
+						
+							</a>
 	              		<%end%>
 					<% end %>
 					
@@ -71,7 +80,16 @@
 						<a href=""> <%=tivit.get_owner_proposed_date%></a>
 						
 						<%if (current_user.id == tivit.get_parent.get_owner.id) %>
-							<a href=""> Accept</a>	
+						<a>
+						<%= link_to "Accepet",      :controller  => "activities",
+    												:action      => "change_tivit_status",
+    												:status      => "accept_date",
+    												:id          => tivit.id, 
+  							    					:confirm     => "Are you sure you want to accepet new date " +tivit.name+"?",
+                                					:title       => tivit.name %>
+						
+						
+						</a>	
 						<%end%>
 	              		
 					<% end %>
@@ -82,10 +100,8 @@
 						<a href=""> reviewed <%= time_ago_in_words(tivit.get_owner_last_review_date)%> ago</a>
 					<% end %>	              	
 	              	
-	              	
-	              	
 	              </span>
-	              
+	         
             </div>
 		</div>
 	                                

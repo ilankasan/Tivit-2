@@ -34,8 +34,6 @@ class Activity < ActiveRecord::Base
 # each tivit has many user status (show the specific status for each user)
   has_many :tivit_user_statuses
   
-  #has_many :activities, :as => :imageable
-  #has_many :activities
   
   has_many :tivits, :class_name => "Activity",
     :foreign_key => "parent_id" 
@@ -115,8 +113,8 @@ class Activity < ActiveRecord::Base
 	end 
   end
  
- def update_tivit_user_status_accept(user,comment)
- 	change_status(user,"Accepted",comment)
+ def update_tivit_user_status_onit(user,comment)
+ 	change_status(user,"OnIt",comment)
  end
  
  def update_tivit_user_status_reviewed(user,comment)
