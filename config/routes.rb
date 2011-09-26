@@ -22,6 +22,7 @@ resources :activity_documents
   #match "/show" => "profile_images#show"
     
   resources :activities do
+  	
   resources :tivitcomments
 end
   resources :tivitcomments
