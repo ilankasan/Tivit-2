@@ -58,6 +58,12 @@
 	              <span class="grey">
 	              	<%= tivit.get_owner.get_name %>
 	              	
+	              	
+	              	<% if !tivit.invitedByOwner?%>
+	              		invited by <%=tivit.get_invited_by.get_name%> <%= time_ago_in_words(tivit.created_at)%> ago
+	              	<%end%>
+					
+	              	
 					<% if owner_tivit_status == "New" %>
 						, Unread
 						<%if(current_user.id == tivit.get_parent.get_owner.id && current_user.id != tivit.get_owner.id )%>	              	

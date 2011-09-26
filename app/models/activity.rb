@@ -68,12 +68,17 @@ class Activity < ActiveRecord::Base
 		
   end	
 
-
+  def invitedByOwner?
+  	return (self.invited_by == self.get_parent.get_owner.id) 
+  end
 
   def isActivity?
   	return self.activity_type == "activity" 
   end
   
+ # def get_invited_by
+ # 	return if 
+ # end
   def get_parent
   	
   	if(self.parent_id ==nil)
@@ -118,7 +123,7 @@ class Activity < ActiveRecord::Base
  end
  
  def update_tivit_user_status_reviewed(user,comment)
- 	change_status(user,"Reviewed",comment,nil,Time.now().localtime)
+ 	change_user_status(user,"Reviewed",comment,nil,Time.now().localtime)
  end
  
  def update_tivit_user_status_decline(user,comment)

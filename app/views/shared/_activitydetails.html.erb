@@ -56,7 +56,12 @@
   
   
   <td>
-  	
+  
+   <h1><%= link_to "Add tivit", 		:controller  => "activities", 
+   											:action      => "new_tivit",
+   											:id          => activitydetails.id, 
+  							    			:title       => activitydetails.name %>,<h1>
+	
   <% if current_user.id == (activitydetails.owner_id) %>
   	<%= link_to "edit", edit_activity_path(activitydetails) %>
   	
@@ -68,11 +73,7 @@
     </br>                                
 	
 	
-	 <h1><%= link_to "Add a tivit", 		:controller  => "activities", 
-   											:action      => "new_tivit",
-   											:id          => activitydetails.id, 
-  							    			:title       => activitydetails.name %>,<h1>
-  <% end %>
+	  <% end %>
   
   
 			  
