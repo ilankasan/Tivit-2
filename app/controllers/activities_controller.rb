@@ -232,7 +232,7 @@ class ActivitiesController < ApplicationController
     @activity.update_tivit_user_status_onit(current_user,params["comment"])
     log_action_as_comment(@activity,params["comment"],"OnIt",current_user)
 
-    UserMailer.user_tivit_status_change_email(current_user, "Acceped",params["comment"],@activity).deliver
+    UserMailer.user_tivit_status_change_email(current_user, "On it",params["comment"],@activity).deliver
   
 	redirect_back_or root_path
   end
@@ -291,11 +291,19 @@ class ActivitiesController < ApplicationController
   
   def propose_date
     puts "-----------    propose date ---------------"
+    puts "-----------    propose date ---------------"
+    puts "-----------    propose date ---------------"
+    puts "-----------    propose date ---------------" + params["propose_date"]
+   
+    
     puts params.inspect  
-  	unless params["propose_date"] != nil
+  	unless (params["propose_date"] == nil)
     	@activity = Activity.find(params[:id])
+    	puts "old date = "+@activity.due.inspect
+    	puts "new date = "+ params["propose_date"]
+    	
     	@activity.update_tivit_user_propose_date(current_user,params["comment"], convert_date_to_string(params,"propose_date"))
-    	log_action_as_comment(@activity,params["comment"],"Proposed",user_id)    	
+    	log_action_as_comment(@activity,params["comment"],"Proposed",current_user)    	
     end  
     #UserMailer.user_tivit_status_change_done_email(current_user,params["comment"],@activity).deliver
   	redirect_back_or root_path
@@ -306,13 +314,19 @@ class ActivitiesController < ApplicationController
   def accept_date
     puts "-----------    Accept Date ---------------"
     puts params.inspect
+   	@activity = Activity.find(params[:id])
+    
     log_action_as_comment(@activity,params["comment"],"Accepted",current_user)
-  
-  	#unless params["propose_date"] != nil
-   # 	@activity = Activity.find(params[:id])
-   # 	@activity.update_tivit_user_propose_date(current_user,params["comment"], convert_date_to_string(params,"propose_date"))
-   # end  
-    #UserMailer.user_tivit_status_change_done_email(current_user,params["comment"],@activity).deliver
+    puts "Old date = "+ @activity.due.inspect + "   accepted new date  = "+ @activity.get_owner_proposed_date.inspect 
+    
+    @activity.due = @activity.get_owner_proposed_date
+    
+  	@activity.update_tivit_user_status_onit(@activity.get_owner,"")
+ #ilan: do i need to change the owner status as accepted? maybe later
+ 
+ # we need to send an email to the owner of the tivit the the activity owner accepted the proposed date
+    UserMailer.user_tivit_status_change_email(current_user, "Accepted proposed date",params["comment"],@activity).deliver
+
   	redirect_back_or root_path
   
   end
@@ -336,8 +350,7 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:id])
 # ilan: need to change status to reminded. next version
     @activity.update_tivit_user_status_reminded(@activity.get_owner,params["comment"])
-    #log_action_as_comment(@activity,params["comment"],"Declined",current_user)
-
+  
     UserMailer.remind_user_to_review_tivit(current_user, params["comment"],@activity).deliver
     		   
   	redirect_back_or root_path

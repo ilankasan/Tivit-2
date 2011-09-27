@@ -38,9 +38,9 @@ module ActivitiesHelper
 ######################################################
 
 
-    def log_action_as_comment(activity,comment,action,user_id)
+    def log_action_as_comment(activity,comment,action,user)
     	params = Hash.new
-    	params["user_id"] = user_id
+    	params["user_id"] = user.id
     	params["comment"] = comment
     	params["action"]  = action
     	activity.tivitcomments.create(params)
