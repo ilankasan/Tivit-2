@@ -76,15 +76,26 @@ class PagesController < ApplicationController
       				           
       	@tivits_completed = Activity.find_by_sql(sql_completed_activities)
       	
-     # 	@user = User.find(current_user.get_id)
-      	
-      #	time = Time.now()
-  	#	@user.last_signin = time.localtime
-  		#current_user.update_attributes ({:last_signin => time.localtime.inspect})
-  	#	@user.save()
-  	 #   puts "--------->>>>>>>090909090909090>>>>> update attributes name " + current_user.name+"    time = "+current_user.last_signin.inspect
-  	
-      #	current_user.update_last_signin
+################################# Need Attension #######################################################################################
+	  	sql_need_attention_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses
+      				   WHERE NOT activities.status         = 'Completed'  
+      				   AND activities.activity_type 	   = 'activity' 
+      				   AND tivits.owner_id 				   = "+current_user_id+" 
+      				   AND tivits.parent_id 			   = activities.id
+      				   AND tivit_user_statuses.activity_id = tivits.id 
+      				   AND 
+      				   (     tivit_user_statuses.status_id = 'New'
+    				   	 OR tivit_user_statuses.status_id  = 'Proposed'
+    				   )
+    				   
+ 
+      				   AND tivit_user_statuses.user_id     = "+current_user_id+"
+      				   ORDER BY activities.due"
+	 
+	 
+	  	@need_attention_activities          = Activity.find_by_sql(sql_need_attention_activities)
+	  
+
       	
       	
      end

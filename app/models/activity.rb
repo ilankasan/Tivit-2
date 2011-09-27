@@ -121,6 +121,11 @@ class Activity < ActiveRecord::Base
 	end 
   end
  
+ 
+ def update_tivit_user_status_reminded(user,comment)
+ 	change_status(user,"Reminded",comment)
+ end
+ 
  def update_tivit_user_status_onit(user,comment)
  	change_status(user,"OnIt",comment)
  end
@@ -175,14 +180,18 @@ class Activity < ActiveRecord::Base
   
 # return the proposed date of the owner
  def get_owner_proposed_date
- 	tivit_user_status = self.tivit_user_statuses.find_by_user_id(self.get_owner.id)
+ 	tivit_user_status = self.tivit_user_statuses.find_by_user_id(self.owner_id)
   	return  tivit_user_status.last_reviewed if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
   	return "no proposed date"	
  end
  
  
+ def get_owner_last_status_change
+ 	return self.tivit_user_statuses.find_by_user_id(self.owner_id).last_status_change
+ end
+ 
  def get_owner_last_review_date
- 	return self.tivit_user_statuses.find_by_user_id(self.get_owner.id).last_reviewed
+ 	return self.tivit_user_statuses.find_by_user_id(self.owner_id).last_reviewed
  end
  
  def get_number_of_unread_comments(user)

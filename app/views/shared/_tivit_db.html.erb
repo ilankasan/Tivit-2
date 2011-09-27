@@ -5,7 +5,7 @@
 
 	<li class="record inprog">
 	    
-<% elsif owner_tivit_status == "New" || owner_tivit_status == "Reviewed" %>
+<% elsif owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed"%>
 
 	<li class="record unread">
 	                      
@@ -29,7 +29,7 @@
 	</div>
 
 <!-- if the status is new, that means the owner didn't read it yet, dim avatar and put the remind link -->
-<% if owner_tivit_status == "New" %>
+<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
 
 	<div class="avatar attention">
 <% else %>
@@ -60,15 +60,25 @@
 	              	
 	              	
 	              	<% if !tivit.invitedByOwner?%>
-	              		invited by <%=tivit.get_invited_by.get_name%> <%= time_ago_in_words(tivit.created_at)%> ago
+	              		invited by <%=tivit.get_invited_by.get_name%>
+	              		<% if owner_tivit_status != "Reminded"%>
+	              			 <%= time_ago_in_words(tivit.created_at)%> ago
+	              		<%end%>
+							 
 	              	<%end%>
 					
-	              	
-					<% if owner_tivit_status == "New" %>
-						, Unread
+	              	<%action = "remind"%>
+					<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
+						
+						, unread. 
+						<%if owner_tivit_status == "Reminded" %>
+							<% action = "remind again" %>
+							last reminded <%= time_ago_in_words(tivit.get_owner_last_status_change)%> ago
+						<%end%>
+
 						<%if((current_user.id == tivit.get_parent.get_owner.id && current_user.id != tivit.get_owner.id)|| (current_user.id == tivit.get_invited_by.id) )%>	              	
 	              			<a>
-							<%= link_to "remind",    :controller  => "activities",
+							<%= link_to action,    :controller  => "activities",
     												:action      => "change_tivit_status",
     												:status      => "remind",
     												:id          => tivit.id, 
@@ -103,7 +113,7 @@
 <!-- If tivit was reviewed but no other action taken, add a comment when it was read -->
  
 	              	<% if owner_tivit_status == "Reviewed"  && tivit.get_owner_last_review_date != nil%>
-						<a href=""> reviewed <%= time_ago_in_words(tivit.get_owner_last_review_date)%> ago</a>
+						<a href=""> last reviewed <%= time_ago_in_words(tivit.get_owner_last_review_date)%> ago</a>
 					<% end %>	              	
 	              	
 	              </span>

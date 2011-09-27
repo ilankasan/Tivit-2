@@ -45,6 +45,14 @@
 	                	<i><%=@tivits_new.count%></i>
 	                <%end%>
             	</li>
+            	
+            	<li class="tab">
+	                <a href="#need-attention">Needs Attention</a>
+	                <%if @tivits_new.count > 0%>
+	                	<i><%=@tivits_new.count%></i>
+	                <%end%>
+            	</li>
+            	
             </ul>
         </div>
     
@@ -75,6 +83,13 @@
 				<% end %>
 			</div>
 		
+			<div id="need-attention" class="need-attention tabInfo">
+				<% unless @need_attention_activities == nil %>
+				 
+				     <%= render :partial => 'shared/activity_db', :collection =>  @need_attention_activities %>
+			     
+				<% end %>
+			</div>
 		
 		</div>
 		  
