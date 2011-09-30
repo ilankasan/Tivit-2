@@ -265,7 +265,8 @@ class ActivitiesController < ApplicationController
 #	puts "Inspect Params " +params.inspect
 	puts "--------------->>>>  creatintg  tiviti"
 
-   
+   	current_user.addContect(@invited_user)
+   	@invited_user.addContect(current_user)
 	@activity = @invited_user.activities.create(params)	 						
 	@activity.update_tivit_user_status_reviewed(current_user,"")
 	config.debug("------>>>>> creating activity" + @activity.name )

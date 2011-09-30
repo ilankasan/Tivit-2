@@ -9,6 +9,8 @@ rails generate model ProfileImage user_id:integer parent_id:integer content_type
 
 rails generate model ActivityDocument activity_id:integer document_id:integer
 rails generate model Document activity_document_id:integer name:string note:string version:string
+rails generate model UserContacts user_id:integer contact_id:integer 
+
 
 Git Synch
 --------------

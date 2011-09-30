@@ -23,12 +23,15 @@
 require 'digest'
 
 class User < ActiveRecord::Base
+	
   attr_accessor :password
-  attr_accessible :name, :email, :password, :password_confirmation, :is_active,:last_signin,:admin
-  																			    
+  attr_accessible :name, :email, :password, :password_confirmation, :is_active,:last_signin,:admin,:user_email
   
   
-# every user has many  activities he is working on  
+# each user has many contacts
+  has_many :contacts
+  has_many :mycontacts, :through => :contacts, :class_name => "User"
+  
   has_and_belongs_to_many :activities
   
 # each user has many user status (show the specific status for each task)
@@ -82,6 +85,21 @@ class User < ActiveRecord::Base
   
   def get_id
   	return self.id
+  end
+  
+# check is use is a contact. Ifnot, adds it
+  def addContect(user)
+  	puts "addContect"
+  	if(!self.isContact?(user))
+  		#self.contacts.create(:user_id => self.id, :contact_id => user.get_id)
+  		self.mycontacts << user
+
+  	end
+  end
+  
+  def isContact?(user)
+  	
+  	return self.mycontacts.exists?(user)
   end
    
   def update_last_signin

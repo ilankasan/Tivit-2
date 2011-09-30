@@ -1,3 +1,5 @@
+<%= javascript_include_tag "autocomplete-rails.js" %>
+
 <h1>Edit user</h1>
 
 <% form_for :user, @user, :url => user_path,  :html => { :multipart => true } do |f| %>
@@ -26,6 +28,7 @@
   </p>
 <% end %>
       
+   <%=f.autocomplete_field :email, autocomplete_user_email_users_path%>
    
   </div>
   <div class="actions">

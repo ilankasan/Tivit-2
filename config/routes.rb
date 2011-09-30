@@ -74,6 +74,10 @@ resources :pages
 
   get "pages/signout"
 
+resources :users do
+  get :autocomplete_user_email, :on => :collection
+end
+
 resources :users
   get "users/show"
   match '/signup',  :to => 'users#new'

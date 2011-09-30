@@ -1,10 +1,12 @@
+  require "rails3-jquery-autocomplete"
+
 class UsersController < ApplicationController
   
  before_filter :authenticate, :only => [:allusers, :edit, :update]
  before_filter :correct_user, :only => [:edit, :update]
  before_filter :admin_user,   :only => :destroy
  
-  
+ autocomplete :user, :email
   
   def show
     @user = User.find(params[:id])
