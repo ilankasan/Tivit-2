@@ -104,13 +104,16 @@ class Activity < ActiveRecord::Base
 	self.tivits.joins(:tivit_user_statuses).where("not activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id 
 	AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",current_user.id)
 	
+	results3 = self.tivits.joins(:tivit_user_statuses).where("activities.due < ? and tivit_user_statuses.user_id = activities.owner_id 
+	AND NOT tivit_user_statuses.status_id = 'Done' ", Time.now)
+	
 	#results2 = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
 	#AND (tivit_user_statuses.status_id = 'Proposed' or tivit_user_statuses.status_id = 'Declined')")
 
 	puts "total tivits "+tivits.size.to_s
 										  
 	puts " restuns size "+results2.size.to_s
-	return results1 + results2  	 	
+	return (results1 + results2) | results3  	 	
   end
 
 

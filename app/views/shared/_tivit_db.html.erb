@@ -54,7 +54,14 @@
 		</div>
 		<div class="wrapp">
 			<div class="twr">
-	              <h3><%= tivit.name%></h3>
+	              <h3><%= tivit.name%>       
+	              	
+	              	<% if tivit.due != nil && tivit.due < Time.now %>
+      					<span class="timestamp"> - <%= time_ago_in_words(tivit.due) %> ovberdue! </span>
+   					<% end %>
+	              	
+	              	
+	              </h3>
 	              <span class="grey">
 	              	<%= tivit.get_owner.get_name %>
 	              	
