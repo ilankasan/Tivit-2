@@ -46,9 +46,6 @@ resources :activities
   	match "/acceptdate" => "activities#accept_date"
   	match "/remind" => "activities#remind"
   	
-  	
-  	  	
-  
   	match "/done" => "activities#done"
   	match "/change_tivit_status" => "activities#change_tivit_status"
   	match "/new_tivit" => "activities#new_tivit"
@@ -57,11 +54,7 @@ resources :activities
   	match "/edit_tivit" => "activities#edit_tivit"
   	match "/update_tivit" => "activities#update_tivit"
   	
-  	
-  	
-  	
-  	
-        
+  	    
 resources :pages  
   match '/about',   :to => 'pages#about'
   match '/home',    :to => 'pages#home'

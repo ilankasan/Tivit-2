@@ -6,7 +6,19 @@ class UsersController < ApplicationController
  before_filter :correct_user, :only => [:edit, :update]
  before_filter :admin_user,   :only => :destroy
  
- autocomplete :user, :email
+ autocomplete :user, :email, :extra_data => [:slogan], :display_value => :funky_method
+  
+ 
+  def get_autocomplete_items(parameters)
+  	puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"
+  	puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"
+    puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"
+    puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"
+    puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"
+    
+    items = super(parameters)
+    items = items.where(:user_id => current_user.id)
+  end
   
   def show
     @user = User.find(params[:id])

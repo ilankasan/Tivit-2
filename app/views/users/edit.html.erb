@@ -28,7 +28,9 @@
   </p>
 <% end %>
       
-   <%=f.autocomplete_field :email, autocomplete_user_email_users_path%>
+    
+   <%=f.autocomplete_field :user_email, autocomplete_user_email_users_path, :id_element => '#some_element'%>
+   
    
   </div>
   <div class="actions">

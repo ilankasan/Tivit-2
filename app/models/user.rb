@@ -24,8 +24,8 @@ require 'digest'
 
 class User < ActiveRecord::Base
 	
-  attr_accessor :password
-  attr_accessible :name, :email, :password, :password_confirmation, :is_active,:last_signin,:admin,:user_email
+  attr_accessor :password,:user_email
+  attr_accessible :name, :email, :password, :password_confirmation, :is_active,:last_signin,:admin
   
   
 # each user has many contacts
@@ -58,6 +58,18 @@ class User < ActiveRecord::Base
                     
        
   before_save :encrypt_password
+  
+  def funky_method
+  	puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    "#{self.name}.camelize"
+  end
+
+  
+  def get_autocomplete_items(parameters)
+    items = super(parameters)
+    items = items.where(:user_id => current_user.id)
+  end
+  
   
   def has_password?(submitted_password)
     encrypted_password == encrypt(submitted_password)
