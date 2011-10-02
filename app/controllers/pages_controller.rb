@@ -94,9 +94,10 @@ class PagesController < ApplicationController
     				     AND tivit_user_statuses.user_id     = "+current_user_id+")
     				   OR 
     				   (
-    				    ( NOT tivits.owner_id 				    = "+current_user_id+" 
-      				      AND tivits.parent_id 			    = activities.id
-      				      AND tivit_user_statuses.activity_id = tivits.id 
+    				    ( NOT tivits.owner_id 				    = "+current_user_id+"
+    				      AND activities.owner_id				= " +current_user_id+"
+      				      AND tivits.parent_id 			    	= activities.id
+      				      AND tivit_user_statuses.activity_id 	= tivits.id 
       				      AND 
       				    (   tivit_user_statuses.status_id  = 'Declined'
     				   	 OR tivit_user_statuses.status_id  = 'Proposed'
