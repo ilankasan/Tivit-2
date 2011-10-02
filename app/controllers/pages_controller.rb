@@ -78,24 +78,53 @@ class PagesController < ApplicationController
       	
 ################################# Need Attension #######################################################################################
 	  	sql_need_attention_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses
-      				   WHERE NOT activities.status         = 'Completed'  
-      				   AND activities.activity_type 	   = 'activity' 
-      				   AND tivits.owner_id 				   = "+current_user_id+" 
-      				   AND tivits.parent_id 			   = activities.id
-      				   AND tivit_user_statuses.activity_id = tivits.id 
+      				   WHERE NOT activities.status          = 'Completed'  
+      				   AND activities.activity_type 	    = 'activity' 
       				   AND 
-      				   (     tivit_user_statuses.status_id = 'New'
+      				   (
+      				   (tivits.owner_id 				    = "+current_user_id+" 
+      				    AND tivits.parent_id 			    = activities.id
+      				    AND tivit_user_statuses.activity_id = tivits.id 
+      				    AND 
+      				    (   tivit_user_statuses.status_id  = 'New'
     				   	 OR tivit_user_statuses.status_id  = 'Proposed'
-    				   )
-    				   
- 
-      				   AND tivit_user_statuses.user_id     = "+current_user_id+"
+    				   	 OR tivit_user_statuses.status_id  = 'Reviewed'
+    				   	 OR tivit_user_statuses.status_id  = 'Reminded'
+    				    )
+    				     AND tivit_user_statuses.user_id     = "+current_user_id+")
+    				   OR 
+    				   (
+    				    ( NOT tivits.owner_id 				    = "+current_user_id+" 
+      				      AND tivits.parent_id 			    = activities.id
+      				      AND tivit_user_statuses.activity_id = tivits.id 
+      				      AND 
+      				    (   tivit_user_statuses.status_id  = 'Declined'
+    				   	 OR tivit_user_statuses.status_id  = 'Proposed'
+    				   	 )
+    				     
+    				   )))
       				   ORDER BY activities.due"
 	 
 	 
 	  	@need_attention_activities          = Activity.find_by_sql(sql_need_attention_activities)
 	  
-
+	sql_need_attention_activities_old = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses
+      				   WHERE NOT activities.status         = 'Completed'  
+      				   AND activities.activity_type 	   = 'activity' 
+      				   AND 
+      				   ((tivits.owner_id 				   = "+current_user_id+" 
+      				   AND tivits.parent_id 			   = activities.id
+      				   AND tivit_user_statuses.activity_id = tivits.id 
+      				   AND 
+      				   (    tivit_user_statuses.status_id  = 'New'
+    				   	 OR tivit_user_statuses.status_id  = 'Proposed'
+    				   	 OR tivit_user_statuses.status_id  = 'Reviewed'
+    				   	 OR tivit_user_statuses.status_id  = 'Reminded'
+    				   )
+    				   AND tivit_user_statuses.user_id     = "+current_user_id+")
+    				   OR ()
+      				   ORDER BY activities.due"
+	 
       	
       	
      end

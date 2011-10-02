@@ -58,8 +58,7 @@ class Activity < ActiveRecord::Base
   def add_user_invitee(user)
  #adding the user to the existing users on the task
 	self.users << user
-	puts "&&&&&&&&&&&&&        updating user task status &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-# sending invitee an email invite
+	# sending invitee an email invite
 #	owner = self.get_owner
 	
 	self.update_user_tivit_status(user)
@@ -88,15 +87,36 @@ class Activity < ActiveRecord::Base
   end
 
   def get_open_or_recently_done_tivits
-	self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id AND ((NOT tivit_user_statuses.status_id = 'Done') OR ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now.localtime-1.day) 	
+	self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
+	AND ((NOT tivit_user_statuses.status_id = 'Done') 
+	OR  ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now.localtime-1.day) 	
+  end
+  	  
+  def get_need_attention_tivits (current_user)
+  	
+  	puts " current user = "+ current_user.id.to_s
+  	results1 = 
+	self.tivits.joins(:tivit_user_statuses).where("activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id 
+	AND ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",current_user.id)
+	
+#return Tivits that belong to my activities but are not mine and need my attension
+	results2 = 
+	self.tivits.joins(:tivit_user_statuses).where("not activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id 
+	AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",current_user.id)
+	
+	#results2 = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
+	#AND (tivit_user_statuses.status_id = 'Proposed' or tivit_user_statuses.status_id = 'Declined')")
+
+	puts "total tivits "+tivits.size.to_s
+										  
+	puts " restuns size "+results2.size.to_s
+	return results1 + results2  	 	
   end
 
 
   def update_user_tivit_status_new(user)
- 	puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
  	tivit_status = create_status_new(user)
- 	puts "creating a task with status new"	
- 		
+ 	puts "creating a task with status new"			
   end
   
 # After the user viewed the tivit for the virst time, make sure status changes from New to Review 

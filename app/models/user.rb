@@ -64,6 +64,9 @@ class User < ActiveRecord::Base
     "#{self.name}.camelize"
   end
 
+def user_email
+     self.email  # or whatever you want to return when account_name is called.
+end
   
   def get_autocomplete_items(parameters)
     items = super(parameters)

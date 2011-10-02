@@ -70,7 +70,7 @@
 	              	<%action = "remind"%>
 					<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
 						
-						, unread. 
+						, <b>unread</b> 
 						<%if owner_tivit_status == "Reminded" %>
 							<% action = "remind again" %>
 							last reminded <%= time_ago_in_words(tivit.get_owner_last_status_change)%> ago
@@ -110,10 +110,14 @@
 	              		
 					<% end %>
 						              	
-<!-- If tivit was reviewed but no other action taken, add a comment when it was read -->
+<!-- If tivit was reviewed but no other action taken, add a comment when it was read and  -->
  
 	              	<% if owner_tivit_status == "Reviewed"  && tivit.get_owner_last_review_date != nil%>
+	              		<%if (current_user.id == tivit.get_owner.id)%>
+							<b> Owner Awaiting Response </b> </br>
+						<%end%>
 						<a href=""> last reviewed <%= time_ago_in_words(tivit.get_owner_last_review_date)%> ago</a>
+						
 					<% end %>	              	
 	              	
 	              </span>

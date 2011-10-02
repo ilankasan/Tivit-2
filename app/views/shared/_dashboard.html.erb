@@ -48,8 +48,8 @@
             	
             	<li class="tab">
 	                <a href="#need-attention">Needs Attention</a>
-	                <%if @tivits_new.count > 0%>
-	                	<i><%=@tivits_new.count%></i>
+	                <%if @need_attention_activities.count > 0%>
+	                	<i><%=@need_attention_activities.count%></i>
 	                <%end%>
             	</li>
             	
@@ -63,7 +63,7 @@
 
 			<% unless @tivits_participate == nil %>
 			 
-			     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_participate %>
+			     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_participate, :locals => {:tabview => "On Deck"} %>
 		     
 			<% end %>
 
@@ -71,14 +71,14 @@
 
 			<div id="completed-items" class="completed-items tabInfo">
 				<% unless @tivits_completed == nil %>
-					<%= render :partial => 'shared/activity_db', :collection =>  @tivits_completed %>
+					<%= render :partial => 'shared/activity_db', :collection =>  @tivits_completed,:locals => {:tabview => "Completed"} %>
 				<% end %>
 			</div>
 			
 			<div id="new-requests" class="new-requests tabInfo">
 				<% unless @tivits_new == nil %>
 				 
-				     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_new %>
+				     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_new,:locals => {:tabview => "New"} %>
 			     
 				<% end %>
 			</div>
@@ -86,15 +86,12 @@
 			<div id="need-attention" class="need-attention tabInfo">
 				<% unless @need_attention_activities == nil %>
 				 
-				     <%= render :partial => 'shared/activity_db', :collection =>  @need_attention_activities %>
+				     <%= render :partial => 'shared/activity_db', :collection =>  @need_attention_activities,:locals => {:tabview => "Need Attention"} %>
 			     
 				<% end %>
 			</div>
-		
-		</div>
-		  
+		</div>  
 	</div>
-		
 </div>
  
  		
