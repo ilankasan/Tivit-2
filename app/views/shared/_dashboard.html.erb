@@ -17,6 +17,7 @@
             <dd>
                 <input type="checkbox" value="" id="my_activ"/>
                 <label for="my_activ">My Activities</label>
+                <%= check_box_tag '', nil, '', { :onclick => "$('your_form').onsubmit();" } %>
             </dd>
             <dd>
                 <input type="checkbox" value="" id="my_tivit"/>

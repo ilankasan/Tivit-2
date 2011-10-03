@@ -1,6 +1,7 @@
 <h1><%= @title %></h1>
 
-<%= form_tag(:controller => "activities" , :action => "update_tivit", :method => "put") do %>
+<%= form_tag(:controller => "activities" , :action => "update_tivit", :id => @activity.id  ,:method => "put") do %>
+
 
   <div class="field">
   	<%= label_tag(:name, "Name:") %> <%= text_field_tag(:name,@activity.name) %> 

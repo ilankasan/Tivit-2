@@ -60,11 +60,12 @@ class User < ActiveRecord::Base
   before_save :encrypt_password
   
   def funky_method
-  	puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+  	puts "^^^^^^^^^^^^^^^^9090909090909090^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
     "#{self.name}.camelize"
   end
 
 def user_email
+	puts "!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!!!!!!!!!!!!"
      self.email  # or whatever you want to return when account_name is called.
 end
   

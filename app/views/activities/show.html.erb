@@ -3,9 +3,8 @@
    
 	<%= render :partial => 'shared/activitydetails', :collection =>  [@activity] %>
 <% else %>
-	<span class="content"> Old code, clean and replace!!!!!!!!!!!!!!!!!!!!!!!!</span><br>	
-
-	<%= render :partial => 'shared/tivitdetails', :collection =>  [@activity] %>
+	
+	<%= render :partial => 'shared/activitydetails', :collection =>  [@activity.get_parent] %>
 <% end %>
    
      

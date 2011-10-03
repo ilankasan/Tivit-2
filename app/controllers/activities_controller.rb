@@ -85,6 +85,8 @@ class ActivitiesController < ApplicationController
   
   def edit_tivit
   	puts "edit tivit"
+  	puts params.inspect  
+    
     @activity = Activity.find(params[:id])
     @title = "Edit tivit: " +@activity.name
       	
@@ -109,6 +111,8 @@ class ActivitiesController < ApplicationController
   def update_tivit
 #under construction
 
+    puts "-----------    UPDATE tivit"  
+    puts params.inspect
     puts "-----------    UPDATE tivit"  
     
     @activity = Activity.find(params[:id])   

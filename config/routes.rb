@@ -39,20 +39,19 @@ end
 
 resources :activities
 #match '/activities',    :to => 'activities#update'
-	match "activities/:id" => "activities#update"
-	match "/onit" => "activities#on_it"
-  	match "/decline" => "activities#decline"
-  	match "/proposedate" => "activities#propose_date"
-  	match "/acceptdate" => "activities#accept_date"
-  	match "/remind" => "activities#remind"
-  	
-  	match "/done" => "activities#done"
+	match "activities/:id"  	 => "activities#update"
+	match "/onit" 				 => "activities#on_it"
+  	match "/decline" 			 => "activities#decline"
+  	match "/proposedate" 		 => "activities#propose_date"
+  	match "/acceptdate" 		 => "activities#accept_date"
+  	match "/remind" 			 => "activities#remind"
+  	match "/done" 				 => "activities#done"
   	match "/change_tivit_status" => "activities#change_tivit_status"
-  	match "/new_tivit" => "activities#new_tivit"
-  	match "/create_tivit" => "activities#create_tivit"
-  	match "/remove_tivit" => "activities#remove_tivit"
-  	match "/edit_tivit" => "activities#edit_tivit"
-  	match "/update_tivit" => "activities#update_tivit"
+  	match "/new_tivit" 			 => "activities#new_tivit"
+  	match "/create_tivit" 		 => "activities#create_tivit"
+  	match "/remove_tivit" 		 => "activities#remove_tivit"
+  	match "/edit_tivit" 		 => "activities#edit_tivit"
+  	match "/update_tivit/:id" 	 => "activities#update_tivit"
   	
   	    
 resources :pages  
