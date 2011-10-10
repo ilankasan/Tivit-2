@@ -140,7 +140,7 @@ def  add_tivit_to_user(emails, activity)
    			if(params[parameter_name] == nil || params[parameter_name].empty?)
    				return ""
    			end
-   			date = params[parameter_name].split ('-')
+   			date = params[parameter_name].split('-')
    			puts date.inspect
    			params[parameter_name]= {"year"  => date[2],
    									 "month" => date[0],
