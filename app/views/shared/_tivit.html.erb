@@ -85,11 +85,11 @@
 	
 
 
-<% if current_user.id == (tivit.owner_id) %>
+<% if current_account.user.id == (tivit.owner_id) %>
 
 
 <!-- Changing Tivit status to Reviwed -->
-		<!--%tivit.update_tivit_status_after_show(current_user)%-->
+		<!--%tivit.update_tivit_status_after_show(current_account.user)%-->
 
 <!-- tivit action to take-->
      <%= link_to "I am on it", 		:controller  => "activities", 
@@ -131,7 +131,7 @@
 <!-- Actions only the activity owner can take >
 	
 	<!-- tivit action to take-->
-<% if current_user.id == tivit.get_parent.owner_id %>
+<% if current_account.user.id == tivit.get_parent.owner_id %>
   	    
    
      <%= link_to "Remove", 		:controller  => "activities", 

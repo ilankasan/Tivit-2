@@ -22,6 +22,8 @@ group :development do
 gem 'rails3-jquery-autocomplete'
   gem 'annotate-models', '1.0.4'
   gem 'faker', '0.3.1'
+  gem  'devise'
+  gem 'annotate'
 end
 
 group :test do

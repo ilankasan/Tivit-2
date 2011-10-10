@@ -2,22 +2,16 @@
 
 class UsersController < ApplicationController
   
- before_filter :authenticate, :only => [:allusers, :edit, :update]
- before_filter :correct_user, :only => [:edit, :update]
- before_filter :admin_user,   :only => :destroy
- 
+ before_filter :authenticate_account!
+  
  autocomplete :user, :email, :extra_data => [:slogan], :display_value => :funky_method
   
  
   def get_autocomplete_items(parameters)
   	puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"
-  	puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"
-    puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"
-    puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"
-    puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"
-    
+  	
     items = super(parameters)
-    items = items.where(:user_id => current_user.id)
+    items = items.where(:user_id => current_account.user.id)
   end
   
   def show
@@ -33,7 +27,9 @@ class UsersController < ApplicationController
   end
   
       
-
+	def activity_name
+		
+	end
   def new
     @user = User.new
     @title = "New User Sign up"
@@ -43,6 +39,7 @@ class UsersController < ApplicationController
  def create
  	params[:user][:email] = params[:user][:email].downcase 
 	@user = User.find_by_email( params[:user]["email"])
+	
 	
 	puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
 	puts "before testing is active user"
@@ -128,12 +125,12 @@ class UsersController < ApplicationController
  
  def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_path) unless current_user?(@user)
+      redirect_to(root_path) unless current_account.user?(@user)
  end
   
   
   def admin_user
-      redirect_to(root_path) unless current_user.admin?
+      redirect_to(root_path) unless current_account.user.admin?
   end
   
 end

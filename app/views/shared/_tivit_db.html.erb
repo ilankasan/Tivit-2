@@ -43,7 +43,7 @@
 		   		<i>1</i>
 		    </div>
 		    
-		    <% unread_comments = tivit.get_number_of_unread_comments(current_user)%>
+		    <% unread_comments = tivit.get_number_of_unread_comments(current_account.user)%>
 		    
 		   	<div class="comments">
 		   		<% if unread_comments > 0 %>
@@ -83,7 +83,7 @@
 							last reminded <%= time_ago_in_words(tivit.get_owner_last_status_change)%> ago
 						<%end%>
 
-						<%if((current_user.id == tivit.get_parent.get_owner.id && current_user.id != tivit.get_owner.id)|| (current_user.id == tivit.get_invited_by.id) )%>	              	
+						<%if((current_account.user.id == tivit.get_parent.get_owner.id && current_account.user.id != tivit.get_owner.id)|| (current_account.user.id == tivit.get_invited_by.id) )%>	              	
 	              			<a>
 							<%= link_to action,    :controller  => "activities",
     												:action      => "change_tivit_status",
@@ -102,7 +102,7 @@
 						, New date proposed 
 						<a href=""> <%=tivit.get_owner_proposed_date%></a>
 						
-						<%if (current_user.id == tivit.get_parent.get_owner.id) %>
+						<%if (current_account.user.id == tivit.get_parent.get_owner.id) %>
 						<a>
 						<%= link_to "Accepet",      :controller  => "activities",
     												:action      => "change_tivit_status",
@@ -120,7 +120,7 @@
 <!-- If tivit was reviewed but no other action taken, add a comment when it was read and  -->
  
 	              	<% if owner_tivit_status == "Reviewed"  && tivit.get_owner_last_review_date != nil%>
-	              		<%if (current_user.id == tivit.get_owner.id)%>
+	              		<%if (current_account.user.id == tivit.get_owner.id)%>
 							<b> Owner Awaiting Response </b> </br>
 						<%end%>
 						<a href=""> last reviewed <%= time_ago_in_words(tivit.get_owner_last_review_date)%> ago</a>

@@ -1,13 +1,14 @@
 <!-- Creat new Activity -->   
    
-<% if signed_in? %>
+<% if account_signed_in? %>
 	
 		  <%= render 'shared/dashboard' %>
 		  
 <% else %>
 
 	<h1>Get stuff done faster!</h1>
-   	 <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+   	 <%= link_to 'Register', new_account_registration_path %> or <%= link_to 'Sign in', new_account_session_path %>
+
    	 
 <% end %>
 

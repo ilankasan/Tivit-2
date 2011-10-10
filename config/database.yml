@@ -6,15 +6,17 @@
 #  pool: 5
 #  timeout: 5000
 
-
 development:
   adapter: mysql2
   encoding: utf8
-  database: tiviti1
+  database: test
   pool: 5
   username: root
   password:
   socket: /tmp/mysql.sock
+
+
+
 
 
 

@@ -16,16 +16,15 @@
 #  avatar_content_type :string(255)
 #  avatar_file_size    :integer(4)
 #  avatar_updated_at   :datetime
-#
-
 
 
 require 'digest'
 
 class User < ActiveRecord::Base
 	
-  attr_accessor :password,:user_email
-  attr_accessible :name, :email, :password, :password_confirmation, :is_active,:last_signin,:admin
+  #attr_accessor :user_email
+  #attr_accessible :name, :email, :password, :password_confirmation, :is_active,:last_signin,:admin
+  attr_accessible :name, :is_active,:admin,:account_id,:clone_email
   
   
 # each user has many contacts
@@ -38,26 +37,15 @@ class User < ActiveRecord::Base
   has_many :tivit_user_statuses
   has_one :profile_image
 
+  belongs_to :account 
+  
+  
   
  
-  email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-
+  
   validates :name,  :presence => true,
                     :length   => { :maximum => 50 }
- 
-                    
-  validates :email, :presence   => true,
-                    :format     => { :with => email_regex },
-                    :uniqueness => { :case_sensitive => false }
-                    
-                    
-# Automatically create the virtual attribute 'password_confirmation'.
-  validates :password, :presence     => true,
-                       :confirmation => true,
-                       :length       => { :within => 1..40 }
-                    
-       
-  before_save :encrypt_password
+   
   
   def funky_method
   	puts "^^^^^^^^^^^^^^^^9090909090909090^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
@@ -66,18 +54,18 @@ class User < ActiveRecord::Base
 
 def user_email
 	puts "!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!!!!!!!!!!!!"
-     self.email  # or whatever you want to return when account_name is called.
+	return self.clone_email    if  self.account.nil?
+	return self.account.email  if !self.account.nil?
+	
 end
   
   def get_autocomplete_items(parameters)
     items = super(parameters)
-    items = items.where(:user_id => current_user.id)
+    items = items.where(:user_id => current_account.user.id)
   end
   
   
-  def has_password?(submitted_password)
-    encrypted_password == encrypt(submitted_password)
-  end
+
   
   def deactivate_user
     self.is_active = false
@@ -92,11 +80,14 @@ end
   end
   
   def get_name
-  	if(self.is_active == false)
-  		return self.email
-  	else
-    	return self.name
-    end 
+  	return self.name 		if  self.is_active
+  	return self.clone_email if !self.is_active
+  end
+  
+  def get_email
+  	return self.clone_email    if  self.account.nil?
+	return self.account.email  if !self.account.nil?
+	
   end
   
   def get_id
@@ -117,44 +108,7 @@ end
   	
   	return self.mycontacts.exists?(user)
   end
-   
-  def update_last_signin
-  		puts "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
-  		time = Time.now()
-  		self.last_signin = time.localtime
-  	#	self.admin       = true
-  		#attr = Hash.new
-  	#	attr = {"last_signin" => time.localtime}
-  		#attributes = ["last_signin"][time.localtime]
-  		puts "updatting last sign in !!!!!!!!!!!!!!!!!!!!!!!!! name " + name+"    time = "+self.last_signin.inspect
-  	#	puts attr.inspect
-  	#	self.update_attributes(attr)
-  		self.save()
-  
-  end
-  
-  def self.authenticate(email, submitted_password)
-    user = find_by_email(email)
-    return nil  if user.nil?
-    return user if user.has_password?(submitted_password)
-  end
-
-  def self.authenticate_with_salt(id, cookie_salt)
-    user = find_by_id(id)
-    (user && user.salt == cookie_salt) ? user : nil
-  end
-  
-  
-  
-  #def feed
-    # This is preliminary. See Chapter 12 for the full implementation. this is same at activities
-    #config.debug("Retriving Activities for user id = #{id}" )
-   # puts "----------------Retriving users" 
-  
-  #  Activity.where("user_id = ?", id)
-  	#return activities
-  #end
-  
+     
 #builds a new activity to a user (as an owner)
 def add_my_ativity (params)
  # settign owner Id to be rqual to the current user
@@ -170,24 +124,6 @@ def add_my_ativity (params)
   	return  activities.create(params)		
    end
 
-
   private
-
-    def encrypt_password
-      self.salt = make_salt if new_record?
-      self.encrypted_password = encrypt(password)
-    end
-
-    def encrypt(string)
-       secure_hash("#{salt}--#{string}")
-    end
-
-    def make_salt
-      secure_hash("#{Time.now.utc}--#{password}")
-    end
-
-    def secure_hash(string)
-      Digest::SHA2.hexdigest(string)
-    end       
                     
 end

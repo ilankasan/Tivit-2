@@ -18,7 +18,7 @@
 
 class Activity < ActiveRecord::Base
   
-  attr_accessible :name, :description, :status, :due,:invited_by,:owner_id, :users, :completed_at, :summary,:activity_type, :parent_id
+  attr_accessible :name, :description, :status, :due,:invited_by,:owner_id, :users, :completed_at, :summary,:activity_type, :parent_id,:activity_name
 # each Tivit has many participants 
   has_and_belongs_to_many :users
 
@@ -53,7 +53,9 @@ class Activity < ActiveRecord::Base
 
 
   default_scope :order => 'activities.due DESC'
-
+  def activity_name
+  	return self.name
+  end 
 # Update status of the users invites to he activity
   def add_user_invitee(user)
  #adding the user to the existing users on the task
@@ -92,17 +94,17 @@ class Activity < ActiveRecord::Base
 	OR  ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now.localtime-1.day) 	
   end
   	  
-  def get_need_attention_tivits (current_user)
+  def get_need_attention_tivits (currentuser)
   	
-  	puts " current user = "+ current_user.id.to_s
+  	puts " current user = "+ currentuser.id.to_s
   	results1 = 
 	self.tivits.joins(:tivit_user_statuses).where("activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id 
-	AND ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",current_user.id)
+	AND ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",currentuser.id)
 	
 #return Tivits that belong to my activities but are not mine and need my attension
 	results2 = 
 	self.tivits.joins(:tivit_user_statuses).where("not activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id 
-	AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",current_user.id)
+	AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",currentuser.id)
 	
 	results3 = self.tivits.joins(:tivit_user_statuses).where("activities.due < ? and tivit_user_statuses.user_id = activities.owner_id 
 	AND NOT tivit_user_statuses.status_id = 'Done' ", Time.now)

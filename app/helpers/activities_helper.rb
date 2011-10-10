@@ -8,6 +8,33 @@ module ActivitiesHelper
  
   def user_by_email (email_input)
   	if(email_input != nil && !email_input.empty? )
+		@email = email_input.downcase
+  	
+		puts "------------------ adding new invitee: " + @email 
+	  	account  = Account.find_by_email(@email)
+	  	
+	  	return account.user if !account.nil?
+	  	
+	  	if(account  == nil)
+	#create an inactive user
+		#	config.debug("--->>> creating a skeloton user for email: "+email)
+		#	temppassword = "234F5(67890GDFasdgqoSF" 
+			params = {:name => "not active",:clone_email => @email, :is_active  => false}
+			
+			puts "------------------ creating new user: " + @email 
+			
+			@user = User.new(params)
+			@user.save
+			return @user
+	  	end
+	  end
+end
+
+
+
+
+ def old_user_by_email (email_input)
+  	if(email_input != nil && !email_input.empty? )
 		email = email_input.downcase
   	
 		#puts "------------------ adding new invitee: " + email 
@@ -31,6 +58,8 @@ module ActivitiesHelper
   return user
   
  end
+
+
 
 
 ###################################################### 

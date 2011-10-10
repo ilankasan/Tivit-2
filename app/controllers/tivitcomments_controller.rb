@@ -1,7 +1,6 @@
 class TivitcommentsController < ApplicationController
-  #before_filter :authenticate, :only => [:create, :new,:update, :destroy]
-  #before_filter :authorized_user, :only => :destroy
-
+  before_filter :authenticate_account!
+  
   def create
   	puts "---------    create comment -----------------------"
   	puts "_________________________________________________________________________________"
@@ -14,7 +13,7 @@ class TivitcommentsController < ApplicationController
 			puts "activtity ========= nill !!!!!!!!!!!!!!!!!!!!"
 	end
 
-	params["tivitcomment"]["user_id"] = current_user.id
+	params["tivitcomment"]["user_id"] = current_account.user.id
 # add action type Note
 	params["tivitcomment"]["action"] = "Note"
 	

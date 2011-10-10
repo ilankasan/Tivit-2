@@ -56,6 +56,9 @@ and then:
 heroku rake db:schema:load
 which has the effect of dropping tables and then re-creating them, without running through your entire battery of migrations.
 
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+<%= link_to "Have and account? Sign in here", new_session_path(resource_name) %><br />
+  
 
 
 

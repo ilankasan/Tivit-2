@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
     @user = user
     @url     = "http://tiviti.heroku.com" # ilan: need to pass url dynamically or through a config file
     
-    mail(:to => user.email, :cc => "tiviti.mailer.cc@gmail.com",
+    mail(:to => user.get_email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => "Welcome to tiviti!")
   end
   
@@ -18,7 +18,7 @@ class UserMailer < ActionMailer::Base
     @tivit   			= tivit
     @message 			= message
     @url     			= "http://tiviti.heroku.com"
-    invitees			= tivit.get_owner.email
+    invitees			= tivit.get_owner.get_email
     
     mail(:to => invitees, :cc => "tiviti.mailer.cc@gmail.com",
          :subject =>"REMINDER: Please review my request for your help with " +tivit.name)  
@@ -31,7 +31,7 @@ class UserMailer < ActionMailer::Base
     @summary = summary
     @url     = "http://tiviti.heroku.com"
     
-    mail(:to => invitees, :cc => "tiviti.mailer.cc@gmail.com,"+user.email,
+    mail(:to => invitees, :cc => "tiviti.mailer.cc@gmail.com,"+user.get_email,
          :subject =>"tivit" +" '"+tivit.name+"' " + "is completed!" )  
   end
   
@@ -41,8 +41,8 @@ class UserMailer < ActionMailer::Base
     @inviter   = inviter
     @tivit     = tivit
 	@url       = "http://tiviti.heroku.com"
-    
-    mail(:to => invitee.email, :cc => "tiviti.mailer.cc@gmail.com",
+    puts "to  email  "+ invitee.get_email
+    mail(:to => invitee.get_email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => inviter.get_name + " needs your help with "+tivit.get_parent.name)
   end
 
@@ -54,7 +54,7 @@ class UserMailer < ActionMailer::Base
     @activity = activity
     @url  	  = "http://tiviti.heroku.com"
   	
-  	mail(:to => @owner.email, :cc => "tiviti.mailer.cc@gmail.com",
+  	mail(:to => @owner.get_email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => @user.name+" closed activity '"+activity.name+"'" )
   end
   
@@ -66,7 +66,7 @@ class UserMailer < ActionMailer::Base
     @tivit    = tivit
     @url  	  = "http://tiviti.heroku.com"
   	
-  	mail(:to => @tivit.get_parent.get_owner.email, :cc => "tiviti.mailer.cc@gmail.com",
+  	mail(:to => @tivit.get_parent.get_owner.get_email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => @user.name+" completed their tivit '"+tivit.name+"'" + "in Activity "+@tivit.get_parent.name )
   end
   
@@ -82,7 +82,7 @@ class UserMailer < ActionMailer::Base
     @url  	  = "http://tiviti.heroku.com"
     
      
-    mail(:to => @owner.email, :cc => "tiviti.mailer.cc@gmail.com",
+    mail(:to => @owner.get_email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => @user.name+" has "+ action + " tivit '"+tivit.name+"'" )
   end
   

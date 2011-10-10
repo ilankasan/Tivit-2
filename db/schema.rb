@@ -10,22 +10,50 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110930055438) do
+ActiveRecord::Schema.define(:version => 20111009073445) do
+
+  create_table "accounts", :force => true do |t|
+    t.string   "email",                                 :default => "", :null => false
+    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                         :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "password_salt"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.integer  "failed_attempts",                       :default => 0
+    t.string   "unlock_token"
+    t.datetime "locked_at"
+    t.string   "authentication_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "accounts", ["authentication_token"], :name => "index_accounts_on_authentication_token", :unique => true
+  add_index "accounts", ["confirmation_token"], :name => "index_accounts_on_confirmation_token", :unique => true
+  add_index "accounts", ["email"], :name => "index_accounts_on_email", :unique => true
+  add_index "accounts", ["reset_password_token"], :name => "index_accounts_on_reset_password_token", :unique => true
+  add_index "accounts", ["unlock_token"], :name => "index_accounts_on_unlock_token", :unique => true
 
   create_table "activities", :force => true do |t|
     t.string   "name"
     t.text     "description"
     t.string   "status"
     t.datetime "due"
-    t.integer  "owner_id"
-    t.string   "who"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.datetime "completed_at"
-    t.text     "summary"
-    t.string   "activity_type"
+    t.integer  "owner_id"
     t.integer  "parent_id"
     t.integer  "invited_by"
+    t.string   "activity_type"
+    t.text     "summary"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "activities_users", :id => false, :force => true do |t|
@@ -69,9 +97,9 @@ ActiveRecord::Schema.define(:version => 20110930055438) do
     t.integer  "user_id"
     t.integer  "activity_id"
     t.string   "status_id"
+    t.string   "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "comment"
     t.datetime "last_reviewed"
     t.datetime "proposed_date"
     t.datetime "last_status_change"
@@ -88,16 +116,12 @@ ActiveRecord::Schema.define(:version => 20110930055438) do
 
   create_table "users", :force => true do |t|
     t.string   "name"
-    t.string   "email"
-    t.string   "encrypted_password"
+    t.string   "clone_email"
+    t.integer  "account_id"
+    t.boolean  "admin",       :default => false
+    t.boolean  "is_active",   :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "salt"
-    t.boolean  "admin",              :default => false
-    t.boolean  "is_active",          :default => true
-    t.datetime "last_signin"
   end
-
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
 
 end

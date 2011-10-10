@@ -18,7 +18,14 @@
 		<%= javascript_include_tag "dragdrop.js" %>
 		<%= javascript_include_tag "controls.js" %>
 		<%= javascript_include_tag "rails.js" %>
+	
 		<%= javascript_include_tag "application.js" %>
+		<script>
+  // this allows jquery to be called along with scriptaculous and YUI without any conflicts
+  // the only difference is all jquery functions should be called with $j instead of $
+  // e.g. $j('#div_id').stuff instead of $('#div_id').stuff
+  			var $j = jQuery.noConflict();
+	</script>
 		
     <script type="text/javascript">
         function callback(id, datum) {

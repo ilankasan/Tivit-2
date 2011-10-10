@@ -2,12 +2,24 @@ FirstApp::Application.routes.draw do
   
   
   
+  #devise_for :accounts
+  devise_for :accounts, :controllers => {:registrations  => "my_devise/registrations",
+  										 :sessions       => "my_devise/sessions"}
+  										 #:confirmations  => "my_devise/confirmations"}
+  
+ 
+  match "profile_images/:id" 	  => "profile_images#update"
+ 
+  #devise_for :accounts, :controllers => { :sessions => "sessions" }
+  
+  #devise_for :accounts
+
   resources :profile_images do
   resources :users
 end
 
 resources :profile_images do
-  match "profile_images/:id" => "profile_images#update"
+  match "profile_images/:id" 	  => "profile_images#update"
   match "profile_images/:id/edit" => "profile_images#update"
   
   match "/edit" => "profile_images#edit"
@@ -34,8 +46,8 @@ end
   #resources :activities, :only => [:create, :destroy, :update, :show, :edit]
 
 
-  match '/signin',  :to => 'sessions#new'
-  match '/signout', :to => 'sessions#destroy'
+  #match '/signin',  :to => 'sessions#new'
+  #match '/signout', :to => 'sessions#destroy'
 
 resources :activities
 #match '/activities',    :to => 'activities#update'
@@ -57,14 +69,14 @@ resources :activities
 resources :pages  
   match '/about',   :to => 'pages#about'
   match '/home',    :to => 'pages#home'
-  match '/signout',   :to => 'pages#signout'
+  #match '/signout',   :to => 'pages#signout'
   match '/myteam',   :to => 'pages#myteam'
   match '/help',    :to => 'pages#help'
   match '/contact', :to => 'pages#contact'
   match '/myaccount', :to => 'pages#myaccount'
   
 
-  get "pages/signout"
+  #get "pages/signout"
 
 resources :users do
   get :autocomplete_user_email, :on => :collection
@@ -72,7 +84,7 @@ end
 
 resources :users
   get "users/show"
-  match '/signup',  :to => 'users#new'
+  #match '/signup',  :to => 'users#new'
   match '/allusers',  :to => 'users#allusers'
   match "users/:id" => "users#update"
   	

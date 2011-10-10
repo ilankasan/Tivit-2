@@ -6,20 +6,14 @@
             <%= link_to logo, root_path %>
         </div>
 
-<% if signed_in? %>
+<% if account_signed_in? %>
  
         <ul class="nav-item">
         	
         	<li><%= link_to "Home", root_path, :class => "current" %></li>
 	    	<li><%= link_to "Activities", about_path %></li>
 	    	<li><%= link_to "Team", contact_path %></li>      
-<!--	    	
-            <li><a href="http://tiviti.heroku.com/" class="current">Home</a></li>
-            <li><a href="http://tiviti.heroku.com/">Meetings</a></li>
-            <li><a href="http://tiviti.heroku.com/about">Activities</a></li>
-            <li><a href="http://tiviti.heroku.com/">Files</a></li>
-            <li><a href="http://tiviti.heroku.com/contact">Team</a></li>
--->
+
         </ul>
 
 
@@ -27,16 +21,16 @@
 
 		<div id="user-nav">
 			<ul class="menu">		
-				<% if signed_in? %>
-					<li><a href="#" onclick="javascript:showlayer('sm_1')"> Hello, <b><%= current_user.name %> </b></a></li>
+				<% if account_signed_in? %>
+					<li><a href="#" onclick="javascript:showlayer('sm_1')"> Hello, <b><%= current_account.get_name%> </b></a></li>
 						<ul class="submenu" id="sm_1">
-							<li><%= link_to "Profile", current_user %></li>
-							<li><%= link_to "Settings", edit_user_path(current_user) %></li>
-							<li><%= link_to "Sign out", signout_path, :method => :delete %></li>
+							<li><%= link_to "Profile", current_account.user %></li>
+							<li><%= link_to "Settings", edit_user_path(current_account.user) %></li>
+							<li><%= link_to "Sign out", destroy_account_session_path, :method => :delete %></li>
 						</ul>
 					</ul>
 				<% else %>
-					<li><%= link_to "Sign in", signin_path %></li>	
+					<li><%= link_to 'Sign in', new_account_session_path %></li>	
 				<% end %>
 		</div>
 

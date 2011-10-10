@@ -1,16 +1,10 @@
 
 <%= javascript_include_tag "autocomplete-rails.js" %>
-
+<script type="text/javascript">
+        jQuery.noConflict();
+        var $j = jQuery;
+ </script>
 <h1>Edit user</h1>
-<% form_for @user do |g|%>
-  <%=g.autocomplete_field :user_email, autocomplete_user_email_users_path%>
-<%end%>
-
-test
-
-<%= form_tag do %>
-  <%=text_field_tag :user_email, 'aaaa', :autocomplete => autocomplete_user_email_users_path %>
-<% end %>
 
 <% form_for :user, @user, :url => user_path,  :html => { :multipart => true } do |f| %>
   
@@ -21,28 +15,11 @@ test
   </div>
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.text_field :email %>
+    <%= current_account.email %>
   </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirmation" %><br />
-    <%= f.password_field :password_confirmation %><br />
-   
-<% if false %>   
-   <p>
-    <label for="profile_image">Upload A Mugshot:</label>
-    <%= f.file_field :uploaded_data %>
-  </p>
-<% end %>
+  
+
       
-   
-   <%=f.autocomplete_field :user_email, autocomplete_user_email_users_path, :display_value => :funky_method%>
-   
-   
-  </div>
   <div class="actions">
     <%= f.submit "Update" %>
   </div>

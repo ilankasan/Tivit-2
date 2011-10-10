@@ -1,6 +1,22 @@
-<h1>Edit user</h1>
 
-<%= form_for(@user) do |f| %>
+<%= javascript_include_tag "autocomplete-rails.js" %>
+<script type="text/javascript">
+        jQuery.noConflict();
+        var $j = jQuery;
+ </script>
+<h1>Edit user</h1>
+<% form_for @user do |g|%>
+  <%=g.autocomplete_field :user_email, autocomplete_user_email_users_path%>
+<%end%>
+
+
+
+<%= form_tag do %>
+  <%=text_field_tag :user_email, 'aaaa', :autocomplete => autocomplete_user_email_users_path %>
+<% end %>
+
+<% form_for :user, @user, :url => user_path,  :html => { :multipart => true } do |f| %>
+  
   <%= render 'shared/error_messages', :object => f.object %>
   <div class="field">
     <%= f.label :name %><br />
@@ -8,26 +24,23 @@
   </div>
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.text_field :email %>
+    <%= current_account.email %>
   </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirmation" %><br />
-    <%= f.password_field :password_confirmation %>
+  
+<% end %>
+      
+   
+   <!--%=f.autocomplete_field :user_email, autocomplete_user_email_users_path, :display_value => :funky_method, :column_name => 'email'%!-->
+   
+   
   </div>
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
 <% end %>
 
-<div>
-  <% form_for :user, @user, :url => user_path, :html => { :multipart => true } do |form| %>
-  <%= form.file_field :avatar %>
-</div>
-<div class="actions">
-    <%= form.submit "Update" %>
-  </div>
-<% end %>
+
+
+
+
+

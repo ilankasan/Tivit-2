@@ -1,4 +1,8 @@
 class ProfileImagesController < ApplicationController
+	
+	before_filter :authenticate_account!
+  
+	
 	def edit
 		@user = User.find(params[:id])
 	    render 'edit_profile_image'

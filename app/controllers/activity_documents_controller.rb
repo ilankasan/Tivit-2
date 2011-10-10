@@ -1,6 +1,7 @@
 class ActivityDocumentsController < ApplicationController
 	
-	
+	before_filter :authenticate_account!
+  
 	def edit
 		puts "&&&&&&&&&&&&   ActivityDocuments Controller &&&&&&&&&&&&&&&&"
 		puts "&&&&&&&&&&&&           Edit                 &&&&&&&&&&&&&&&&"
@@ -12,7 +13,7 @@ class ActivityDocumentsController < ApplicationController
 		puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 		@activity = Activity.find(params[:activity_id])
 		puts "current user"
-		puts current_user.inspect
+		puts current_account.user.inspect
 		puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 		
 		puts @activity.inspect

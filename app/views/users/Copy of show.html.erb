@@ -1,0 +1,32 @@
+<table class="profile" summary="Profile information">
+  <tr>
+    <td class="main">
+      <h1>
+     <%= render :partial => 'profile_images/profile_image', :collection =>  [@user], :as => :user%> 
+	 </h1>
+      
+      <h1>
+      	 <%= link_to "Edit Profile Picture",:controller  => "profile_images", 
+   											:action      => "edit",
+   										    :id          => @user.id, 
+  							    			:title       => "Edit picture for "+ @user.name %>
+      </h1>
+      
+      
+      <h1>
+      <%= link_to "Edit My Account", edit_user_path(current_account.user) %>
+      </h1>
+    </td>
+    <td class="sidebar round">
+      <strong>Name</strong> <%= @user.name %><br />
+      <strong>email</strong> <%= @user.email %><br />
+      <strong>URL</strong>  <%= link_to "My account", user_path(@user) %>
+      
+	  <h1>Profile Image Test</h1>
+
+	</td>
+    
+  </tr>
+</table>
+
+
