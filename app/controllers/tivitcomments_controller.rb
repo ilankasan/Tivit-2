@@ -23,7 +23,7 @@ class TivitcommentsController < ApplicationController
 			puts "@comment =======  " +@comment.inspect
 	end
 	#redirect_to @activity
-	redirect_back_or root_path
+	redirect_to root_path
 	#render @activity
  end
 
