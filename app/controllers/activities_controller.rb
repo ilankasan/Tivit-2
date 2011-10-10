@@ -239,7 +239,8 @@ class ActivitiesController < ApplicationController
 
     UserMailer.user_tivit_status_change_email(current_account.user, "On it",params["comment"],@activity).deliver
   
-	redirect_back_or root_path
+	redirect_to  root_path
+  	
   end
   
   def new_tivit
@@ -290,7 +291,9 @@ class ActivitiesController < ApplicationController
     else  
     	UserMailer.user_tivit_status_change_done_email(current_account.user,params["comment"],@activity).deliver
     end
-  	redirect_back_or root_path
+  	redirect_to  root_path
+  	#render 'shared/activitydetails'
+  				
   
   end
 
@@ -308,8 +311,8 @@ class ActivitiesController < ApplicationController
     	log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)    	
     end  
     #UserMailer.user_tivit_status_change_done_email(current_account.user,params["comment"],@activity).deliver
-  	redirect_back_or root_path
-  
+  	rredirect_to  root_path
+  	
   end
 
   
@@ -342,9 +345,9 @@ class ActivitiesController < ApplicationController
     log_action_as_comment(@activity,params["comment"],"Declined",current_account.user)
 
     UserMailer.user_tivit_status_change_email(current_account.user, "Declined",params["comment"],@activity).deliver
-    		   
-  	redirect_back_or root_path
-  end
+    redirect_to  root_path
+  	 
+ end
 
  def remind
     puts "-----------    remind ---------------"  
@@ -355,7 +358,8 @@ class ActivitiesController < ApplicationController
   
     UserMailer.remind_user_to_review_tivit(current_account.user, params["comment"],@activity).deliver
     		   
-  	redirect_back_or root_path
+  	redirect_to  root_path
+  	
   end
  
   private
