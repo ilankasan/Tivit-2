@@ -147,7 +147,7 @@ class PagesController < ApplicationController
   end
 
   def signout
-     @title = "tiviti - Sign in"
+     @title = "Sign in"
   end
 
   def myaccount

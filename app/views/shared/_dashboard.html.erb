@@ -1,3 +1,5 @@
+<title>Home</title>
+
 <!-- Create new activity form only for logged in users The second condition is to make sure not to display new activity when creating a new tivit -->  
 <% if signed_in? && !(controller.controller_name=="activities" && controller.action_name == "new_tivit")%>
 	

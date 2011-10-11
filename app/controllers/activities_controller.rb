@@ -103,7 +103,7 @@ class ActivitiesController < ApplicationController
    
     @activity.update_status_after_show(current_account.user)
     
-  	@title = @activity.name
+  	@title = "Activity Details - "+@activity.name
   	
   end
   

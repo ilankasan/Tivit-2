@@ -8,8 +8,10 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 	
   	puts "NNNNEEEEEEEEEEEEEEEEWWWWWWWWWWWWWWWWWWWWW"
 	puts params.inspect
-	
+	@title = "Sign Up"
+    
     super
+    
   end
 
    def update

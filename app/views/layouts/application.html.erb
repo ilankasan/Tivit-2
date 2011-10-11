@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>tiviti - <%= @title %> </title>
+		<title><%= @title %></title>
 		<%= csrf_meta_tag %>
 		<%= render 'layouts/stylesheets' %>
 		<%= javascript_include_tag :defaults %>
@@ -18,14 +18,7 @@
 		<%= javascript_include_tag "dragdrop.js" %>
 		<%= javascript_include_tag "controls.js" %>
 		<%= javascript_include_tag "rails.js" %>
-	
 		<%= javascript_include_tag "application.js" %>
-		<script>
-  // this allows jquery to be called along with scriptaculous and YUI without any conflicts
-  // the only difference is all jquery functions should be called with $j instead of $
-  // e.g. $j('#div_id').stuff instead of $('#div_id').stuff
-  			var $j = jQuery.noConflict();
-	</script>
 		
     <script type="text/javascript">
         function callback(id, datum) {
@@ -53,6 +46,22 @@
         text-align: center;
         font-weight: bold;
     }</style>
+
+<!-- Googld Analytics Tracking -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26243257-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<!-- end Google Analytics Tracking -->
 
 	</head>
   
@@ -93,6 +102,31 @@
     	<%= debug(params) if Rails.env.development? %>
       
 	</body>
-
+	
+<!-- Beta Easy Widget -->
+<script type="text/javascript">
+// <![CDATA[
+    if ("http:" == document.location.protocol) {
+        document.write(unescape("%3Cscript src='" + (("https:" == document.location.protocol) ? "http://cdn.betaeasy.com" : "http://cdn.betaeasy.com") + "/betaeasy.js' type='text/javascript'%3E%3C/script%3E"))
+    }
+   // ]]>
+</script>
+<script type="text/javascript">
+// <![CDATA[
+try {
+    BetaEasy.init({
+        betaId: '863',
+        styleType: 'new',
+        buttonAlign: 'left',
+        language: 'en',
+        buttonBackgroundColor: '#f00',
+        buttonMouseHoverBackgroundColor: '#06C',
+        buttonImageActive: 'en/newbtn-5.png',
+        buttonImageHover: 'none'
+    });
+} catch(err) {}
+// ]]>
+</script>
+<!-- End Beta Easy Widget -->
   
 </html>

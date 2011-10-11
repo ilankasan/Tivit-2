@@ -4,6 +4,7 @@ class  MyDevise::SessionsController < Devise::SessionsController
  
   def new
   	puts "In MyDevise Session Controller - New ++++ sessions ++++++++++++++++++++++++++++++++++++++++++++++"
+  	@title = "Sign In"
     super
     #redirect_to root_path
   end
