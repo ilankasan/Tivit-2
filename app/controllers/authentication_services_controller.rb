@@ -81,7 +81,7 @@ def create
               # map this new login method via a service provider to an existing account if the email address is the same
               existingaccount.authentication_services.create(:provider => provider, :uid => uid, :uname => name, :uemail => email)
               flash[:notice] = 'Sign in via ' + provider.capitalize + ' has been added to your account ' + existingaccount.email + '. Signed in successfully!'
-              sign_in_and_redirect(:account, existinguser)
+              sign_in_and_redirect(:account, existingaccount)
             else
               # let's create a new user: register this user and add this authentication method for this user
               puts "creating a new account"
