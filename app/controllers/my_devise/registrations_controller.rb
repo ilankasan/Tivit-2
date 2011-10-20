@@ -26,7 +26,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 
  
  def create
- 	puts "In Regitration Creat Controller"
+ 	puts "In Regitration Create Controller"
  	puts " Params "+params.inspect
 	super	
 	email = params[:account][:email]

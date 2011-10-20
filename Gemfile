@@ -11,6 +11,7 @@ gem 'sqlite3-ruby', '1.3.2'
 gem 'will_paginate', '3.0.pre2'
 gem 'rails3-jquery-autocomplete'
 gem 'devise'
+gem 'omniauth'
   
 
 
@@ -24,6 +25,7 @@ group :development do
   gem 'annotate-models', '1.0.4'
   gem 'faker', '0.3.1'
   gem  'devise'
+  gem 'omniauth'
   gem 'annotate'
 end
 

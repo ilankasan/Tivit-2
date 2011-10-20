@@ -2,7 +2,13 @@ FirstApp::Application.routes.draw do
   
   
   
-  #devise_for :accounts
+  match '/auth/facebook/callback' => 'authentication_services#create'
+  match '/auth/twitter/callback'  => 'authentication_services#create' 
+   
+  resources :authentication_services, :only => [:index, :create]
+  
+   
+
   devise_for :accounts, :controllers => {:registrations  => "my_devise/registrations",
   										 :sessions       => "my_devise/sessions"}
   										 #:confirmations  => "my_devise/confirmations"}

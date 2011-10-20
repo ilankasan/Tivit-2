@@ -6,6 +6,9 @@ class Account < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,:confirmable
 
+# each account can be authnticated using FB, gmail and others services
+  has_many :authentication_services, :dependent => :destroy
+  
   # Setup accessible (or protected) attributes for your model, :,
   attr_accessible  :password, :password_confirmation, :remember_me, :email
   

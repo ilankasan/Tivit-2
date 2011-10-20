@@ -1,0 +1,21 @@
+
+<li>
+	
+	
+	<%= image_tag @user.avatar.url %>
+	<%= image_tag @user.avatar.url(:medium) %>
+	<%= image_tag @user.avatar.url(:thumb) %>	
+    <%= link_to user.name, user %>
+  (<%= user.email%>)
+  
+  
+   <% if user.admin? %>
+  is an admin
+  <% end %>
+  
+
+  <% if current_account.user.admin? %>
+  | <%= link_to "delete", user, :method => :delete, :confirm => "You sure?",
+                                :title => "Delete #{user.name}" %>
+  <% end %>
+</li>

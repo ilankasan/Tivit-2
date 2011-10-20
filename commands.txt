@@ -1,3 +1,10 @@
+Omniauth
+----------
+rails generate model authntication_service account_id:integer provider:string uid:string uname:string uemail:string
+rails generate controller authntication_service
+
+
+
 Attachement_fu
 ----------------
 http://thewebfellas.com/blog/2008/2/18/imagescience-on-windows-without-the-pain/comments/931
@@ -66,9 +73,6 @@ heroku create
 git push heroku master
 heroku rename tivit1
 heroku pg:reset --db SHARED_DATABASE_URL
-
-
-
 
 
 $ git add .
