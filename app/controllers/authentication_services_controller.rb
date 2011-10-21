@@ -46,6 +46,14 @@ def create
     elsif service_route == 'twitter'
       puts " twitter not supported"
     	
+    	
+   	elsif service_route == 'google'
+   		  puts " google sign in"
+    
+       omniauth['user_info']['email'] ? email =  omniauth['user_info']['email'] : email = ''
+       omniauth['user_info']['name'] ? name =  omniauth['user_info']['name'] : name = ''
+       omniauth['uid'] ? uid =  omniauth['uid'] : uid = ''
+       omniauth['provider'] ? provider =  omniauth['provider'] : provider = ''
     else
       # we have an unrecognized service, just output the hash that has been returned
       render :text => omniauth.to_yaml
@@ -56,6 +64,8 @@ def create
     # continue only if provider and uid exist
     if uid != '' and provider != ''
         puts "user id not nil"
+        puts "email = "+email+" name = "+name+" uid = "+uid+" provider = "+provider
+        
         
       # nobody can sign in twice, nobody can sign up while being signed in (this saves a lot of trouble)
       if !account_signed_in?

@@ -95,9 +95,10 @@ class UsersController < ApplicationController
 #save email address lower case
 	time = Time.now()
   	
-  		
-    params[:user]["email"]       = params[:user]["email"].downcase
-    params[:user]["last_signin"] =  time.localtime 
+  	if(params[:user]["email"] != nil)	
+    	params[:user]["email"]       = params[:user]["email"].downcase
+   end
+    	
      
     if @user.update_attributes(params[:user])
      

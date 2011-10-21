@@ -12,6 +12,7 @@ gem 'will_paginate', '3.0.pre2'
 gem 'rails3-jquery-autocomplete'
 gem 'devise'
 gem 'omniauth'
+gem 'mongrel', '1.2.0.pre2'
   
 
 
@@ -26,6 +27,7 @@ group :development do
   gem 'faker', '0.3.1'
   gem  'devise'
   gem 'omniauth'
+  gem 'mongrel', '1.2.0.pre2'
   gem 'annotate'
 end
 

@@ -3,7 +3,7 @@ FirstApp::Application.routes.draw do
   
   
   match '/auth/facebook/callback' => 'authentication_services#create'
-  match '/auth/twitter/callback'  => 'authentication_services#create' 
+  match '/auth/google/callback'  => 'authentication_services#create' 
    
   resources :authentication_services, :only => [:index, :create]
   
