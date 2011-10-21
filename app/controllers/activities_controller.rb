@@ -311,7 +311,7 @@ class ActivitiesController < ApplicationController
     	log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)    	
     end  
     #UserMailer.user_tivit_status_change_done_email(current_account.user,params["comment"],@activity).deliver
-  	rredirect_to  root_path
+  	redirect_to  root_path
   	
   end
 
