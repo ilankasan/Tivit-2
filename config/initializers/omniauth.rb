@@ -4,7 +4,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
  
 ########################################################################################## 
  #provider :facebook, 'local host'
- provider :facebook, '223270434403133', '08c76edf24f62d71a732cd8818140b62'
+ #provider :facebook, '223270434403133', '08c76edf24f62d71a732cd8818140b62'
  
 #provider :facebook, 'heroku'
  provider :facebook, '261808970530645', '3c67e54b6ceb8d2f316c0c99ecbd63b0'
