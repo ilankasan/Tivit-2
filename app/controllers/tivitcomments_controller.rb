@@ -3,8 +3,7 @@ class TivitcommentsController < ApplicationController
   
   def create
   	puts "---------    create comment -----------------------"
-  	puts "_________________________________________________________________________________"
-   	puts "********************************************"
+  	puts "********************************************"
   	puts "param - " +params.inspect
   	puts "********************************************"
 
@@ -19,6 +18,11 @@ class TivitcommentsController < ApplicationController
 	
 #		puts "params ----------   " + params["tiviticomment"].inspect 
 	@comment = @activity.tivitcomments.create(params["tivitcomment"])
+# send a comment to invited by id owner writes a comment
+	#puts "sending notification+ "+@comment.inspect
+
+	UserMailer.notify_comment_added_to_tivit(current_account.user, @comment,@activity, [@activity.get_invited_by]).deliver
+
     if (@comment != nil)
 			puts "@comment =======  " +@comment.inspect
 	end

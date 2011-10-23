@@ -4,14 +4,7 @@ class UserMailer < ActionMailer::Base
    #//:url =>"http://"+Socket.gethostname
   	
   
-  def welcome_email(user)
-    @user = user
-    @url     = "http://tiviti.heroku.com" # ilan: need to pass url dynamically or through a config file
-    
-    mail(:to => user.get_email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => "Welcome to tiviti!")
-  end
-  
+ 
   def remind_user_to_review_tivit (user_reminding, message,tivit)
   	
     @user_reminding     = user_reminding
@@ -47,6 +40,20 @@ class UserMailer < ActionMailer::Base
   end
 
 
+
+  def notify_comment_added_to_tivit(commenter, comment,activity, send_to)
+    @user     = commenter
+    @comment  = comment
+    @tivit    = activity
+    @url  	  = "http://tiviti.heroku.com"
+  	puts " SENDING  EMAIL to " + send_to[0].get_email
+  	puts @comment.inspect
+  	toemail = send_to[0].get_email
+  	mail(:to => toemail, :cc => "tiviti.mailer.cc@gmail.com",
+         :subject => @user.get_name+" left a commented on '"+@tivit.name+"'" )
+  end
+  
+
   def user_activity_status_change_done_email(user, comment,activity)
     @owner    = activity.get_owner
     @user     = user
@@ -74,15 +81,15 @@ class UserMailer < ActionMailer::Base
   
   
   def user_tivit_status_change_email(user, action,comment,tivit)
-    @owner    = tivit.get_owner
-    @user     = user
-    @action   = action
-    @comment  = comment
-    @tivit    = tivit
-    @url  	  = "http://tiviti.heroku.com"
+    @invited_by    = tivit.get_invited_by
+    @user     	   = user
+    @action        = action
+    @comment       = comment
+    @tivit         = tivit
+    @url  	       = "http://tiviti.heroku.com"
     
      
-    mail(:to => @owner.get_email, :cc => "tiviti.mailer.cc@gmail.com",
+    mail(:to => @invited_by.get_email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => @user.name+" has "+ action + " tivit '"+tivit.name+"'" )
   end
   
