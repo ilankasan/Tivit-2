@@ -1,0 +1,68 @@
+<%= render :partial => 'email_header' %>
+<% puts " composing notification email "%>
+
+<div align="center">
+
+  <center>
+
+<table border="0" cellpadding="16" cellspacing="0" style="border-collapse:collapse" width="100%" bgcolor="#FFFFFF">
+
+  <tr>
+    <td width="100%">
+
+    <div align="center">
+
+      <center>
+
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="100%">
+
+        <tr style="font-family:arial,sans-serif;font-size:150%">
+
+          
+ </td>
+
+        </tr>
+
+      </table>
+
+      </center>
+
+    </div>
+
+<font size="-1">
+
+    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="100%">
+
+      <tr style="font-family:arial,sans-serif;font-size:100%">
+
+
+      <td width="100%"><%= @user.get_name %> comment on tivit: '<%=@tivit.name%>'.<br/> 
+      "<%=@comment%><br/>
+      Click here <%= @url %>/activities/<%=@tivit.get_parent.id%> for more detailes.<br/>
+      
+    <p>Thanks for using tiviti and have a great day!</p>
+
+            <p> </p></td>
+
+      </tr>
+
+    </table>
+
+
+
+</font>
+
+    </td>
+
+  </tr>
+
+</table>
+
+  </center>
+
+</div>
+
+</html>
+<% puts " composing notification email 2"%>
+
+<%= render :partial => 'email_footer' %>
