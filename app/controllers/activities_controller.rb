@@ -111,8 +111,6 @@ class ActivitiesController < ApplicationController
 
     puts "-----------    UPDATE tivit"  
     puts params.inspect
-    puts "-----------    UPDATE tivit"  
-    
     @activity = Activity.find(params[:id])   
     
     puts params.inspect

@@ -1,4 +1,6 @@
 <!-- Header - Main Navigation & New Activity Bar -->
+<% if account_signed_in? %>
+
 <div id="main-nav-background">
 
     <nav id="main-nav">
@@ -40,8 +42,10 @@
 	<%= controller.action_name %> 
 -->
 
+
 </div>
-	
+
+<% end %>	
 	
 	
 

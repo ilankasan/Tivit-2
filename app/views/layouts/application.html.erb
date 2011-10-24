@@ -68,9 +68,9 @@
 	<body>
    		
    		<!-- Header - Main Navigation & New Activity Bar -->
-	  	<div id="main-nav-background">
+	  	<!-- <div id="main-nav-background"> -->
 	      	<%= render 'layouts/header' %>
-	    </div>
+	    <!-- </div> -->
      	
      	<!-- Page Content Area -->
 		<div id="page-container">
@@ -104,6 +104,7 @@
 	</body>
 	
 <!-- Beta Easy Widget -->
+<!--
 <script type="text/javascript">
 // <![CDATA[
     if ("http:" == document.location.protocol) {
@@ -127,6 +128,18 @@ try {
 } catch(err) {}
 // ]]>
 </script>
+-->
 <!-- End Beta Easy Widget -->
+
+<!-- User Voice Feedback Widget START -->
+<script type="text/javascript">
+  var uvOptions = {};
+  (function() {
+    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/Lv94vAUgz4sVo9HCcNtcHQ.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+  })();
+</script>
+<!-- User Voice Feedback Widget END -->
   
 </html>

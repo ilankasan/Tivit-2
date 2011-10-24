@@ -1,43 +1,72 @@
-<title>Sign Up</title>
-<h2>Sign up now!</h2>
+<title>tiviti - Sign Up</title>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+<div id="sign-in-up-box"> 
+	<h1>tiviti</h1>
+	
+	<div id="sign-in-up-form">	
+		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+ 		<%= devise_error_messages! %>
+		
+		<div class ="fieldset">			
+		
+			<%= f.fields_for :user do |user| %>
+			
+				<!-- User Name -->
+				<div class="label">
+					<%= user.label :name %>
+				</div>
+				
+				<%= user.text_field :name, :class => "input", :autofocus => "true" %>
+			
+			<% end %>
+				
+			<!-- User Email Address -->	
+			<div class="label">
+				<%= f.label :email %>
+			</div>
+			
+			<%= f.email_field :email, :class => "input", :autofocus => "true" %>
+			
+			<div class="clear"></div>
+			
+			<!-- User Password -->	
+			<div class="label">
+				<%= f.label :password %>
+			</div>
+			
+			<%= f.password_field :password, :class => "input" %>
+				
+			<div class="clear"></div>
+	        
+	        <!-- User Password Confirmation -->	
+			<div class="label">
+					<%= f.label :password_confirmation %>
+			</div>
+			
+			<%= f.password_field :password_confirmation, :class => "input" %>
+				
+			<div class="clear"></div>
+	        				  		
+	  		<div><%= f.submit "Sign up", :class => "button" %></div>
+	  		
+		<% end %>
+		
+		<br />
+		<br />
+					
+		<%= render :partial => "my_devise/shared/links" %>
+			
 
-
-
-<%= f.fields_for :user do |user| %>
-
-  <div><%= user.label :name %><br />
-      <%= user.text_field :name %></div>
- <% end %>
-
-
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
-
-<!--div id="terms" class="box">
-            <%= link_to "Terms of Service", "#" %> 
-        </div!-->  
-
-
-<%= render :partial => "my_devise/shared/links" %>
-
-<div id="remote2">
-		<b>Sign up using the following services:</b>
-    
-                <div id="authentication_services" class="box">
-            <a href="/auth/facebook" class="authentication_services"><%= image_tag "facebook_64.png", :size => "64x64",  :alt => "Facebook" %>Facebook</a>
-            <a href="/auth/google" class="authentication_services"><%= image_tag "google_64.png", :size => "64x64",  :alt => "Google" %>Google</a>
-          </div>  
+	</div>
+  
+  </div>
+  
+  <div id="remote2">
+	<b>Or, sign in with</b>
+        <div id="authentication_services" class="box">
+        	<a href="/auth/facebook"><%= image_tag "facebook_64.png", :size => "64x64",  :alt => "Facebook", :class =>  "authentication_services" %></a>
+            <a href="/auth/google"><%= image_tag "google_64.png", :size => "64x64",  :alt => "Google", :class =>"services" %></a>            
+        </div>
     </div>
+</div>
+
