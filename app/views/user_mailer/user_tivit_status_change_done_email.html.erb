@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
-    <p>
-<%= @user.name %> indicated he/she completed their tivit '<%= @tivit.name %>' in <%=@tivit.get_parent.name%><br>
+<%= render :partial => 'email_header' %>
+<%= @user.name %> indicated he/she completed their tivit '<%= @tivit.name %>' in activity '<%=@tivit.get_parent.name%><br>
        <%= @comment %><br>
 		Click here <%= @url %>/activities/<%=@tivit.id%> to view activity progress.
     </p>
     <p>Thanks for using tiviti and have a great day!</p>
-  </body>
-</html>
-
+ <%= render :partial => 'email_footer' %>
     

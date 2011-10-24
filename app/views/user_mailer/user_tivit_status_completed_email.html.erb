@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
-    <p>
-tivit '<%= @tivit.name %>' was closed and marked as completed by <%= @user.name %> <br>
+<%= render :partial => 'email_header' %>
+
+tivit '<%= @tivit.name %>' was marked as completed by <%= @user.name %> <br>
 Tivit Summary: <%=@summary %><br>
 Click here <%= @url %>/activities/<%=@tivit.id%> for more details.
     </p>
     <p>Thanks for you assistance on this tivit! </p>
-  </body>
-</html>
+<%= render :partial => 'email_footer' %>
 
     
