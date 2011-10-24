@@ -65,7 +65,7 @@ class ActivitiesController < ApplicationController
   	end 
     @activity.destroy
       
-    redirect_back_or root_path
+    redirect_to root_path
   end
   
   
@@ -96,17 +96,12 @@ class ActivitiesController < ApplicationController
   end
 
   
-  
   def show
-    
    puts "----------->>>>>>>>>>> sho activity detailed page"  
     @activity = Activity.find(params[:id])
     #updating tivit status New -> Reviewed and last update to current time
-   
     @activity.update_status_after_show(current_account.user)
-    
   	@title = "Activity Details - "+@activity.name
-  	
   end
   
   
@@ -160,9 +155,6 @@ class ActivitiesController < ApplicationController
       render 'edit'
     end  
   end
-
-  
-  
   
   def update
    
@@ -334,8 +326,8 @@ class ActivitiesController < ApplicationController
  # we need to send an email to the owner of the tivit the the activity owner accepted the proposed date
     UserMailer.user_tivit_status_change_email(current_account.user, "Accepted proposed date",params["comment"],@activity).deliver
 
-  	redirect_back_or root_path
-  
+  	redirect_to  root_path
+  	
   end
 
   
