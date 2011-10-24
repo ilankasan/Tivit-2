@@ -80,7 +80,7 @@ $ git commit -am "10-01-11"
 git checkout master
 git merge updating-users
 git merge yaniv-new_ui_1
-git push heroku
+
 $ 
 heroku rake db:migrate
 

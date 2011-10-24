@@ -78,8 +78,10 @@ class ActivitiesController < ApplicationController
   def remove_tivit
 	puts "Remove Tivit"
 	@tivit = Activity.find(params[:id])
+	@activity = @tivit.get_parent
 	@tivit.destroy
-	redirect_back_or root_path
+	#redirect_back_or root_path
+	redirect_to @activity
       	
   end
   
