@@ -32,7 +32,7 @@ resources :profile_images do
   match "/show" => "profile_images#show"
 end
 resources :activity_documents
-  match "activity_documents/:id" => "activity_documents#update"
+  match "activity_documents/:id" => "activity_documents#add"
   match "activity_documents/:id/edit" => "activity_documents#update"
   match "activity_documents/new" => "activity_documents#new"
   
@@ -42,6 +42,8 @@ resources :activity_documents
   resources :activities do
   	
   resources :tivitcomments
+  resources :activities_documents
+  resources :documents
 end
   resources :tivitcomments
 
@@ -94,6 +96,11 @@ resources :users
   match '/allusers',  :to => 'users#allusers'
   match "users/:id" => "users#update"
   	
+resources :activity_documents
+  #match "activity_documents/:id" => "activity_documents#add_file"
+  match "activity_documents/:id/edit" => "activity_documents#update"
+  match "activity_documents/new" => "activity_documents#new"
+  #match "activities/:id"     => "activities#update"
   
   
 #  match '/signup',  :to => 'users#new'

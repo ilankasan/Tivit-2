@@ -22,11 +22,12 @@ class ActivitiesController < ApplicationController
    def create
 
 # Create Activity
+puts "Action ->  Create Activity"
+puts params.inspect
 	params["due"] = convert_date_to_string(params,"due")
    		
    @activity = current_account.user.add_my_ativity(params)    
-	
- 	
+	 
 # Adding activity to current user	
         
     if (@activity != nil)

@@ -18,6 +18,10 @@ rails generate model ActivityDocument activity_id:integer document_id:integer
 rails generate model Document activity_document_id:integer name:string note:string version:string
 rails generate model UserContacts user_id:integer contact_id:integer 
 
+rails generate model ActivityDocuments activity_id:integer document_id:integer user_id:integer
+rails destroy model ActivityDocument
+
+
 
 Git Synch
 --------------
@@ -26,7 +30,7 @@ Git Synch
 rails generate model TivitUserStatus user_id:integer activity_id:integer status_id:string
 rails generate model TivitStatus status_id:string local:string
 
- 
+rails generate model Activities_documents 
 
 
 rails remove model Tivitcomment 
@@ -61,6 +65,7 @@ heroku rake db:schema:dump
 and then:
 
 heroku rake db:schema:load
+rake db:schema:load
 which has the effect of dropping tables and then re-creating them, without running through your entire battery of migrations.
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
@@ -131,6 +136,11 @@ rails -d mysql my_rails_app
  rails generate migration add_parent_id_to_activities parent_id:integer
  
  rails generate migration remove_avatar_columns_from_users avatar_file_name:string avatar_content_type:string avatar_file_size:integer avatar_updated_at:datetime
+ 
+ rails generate migration add_file_name_to_document file_name:string
+ 
+ rails generate migration add_user_id_to_documents user_id:integer
+ 
  
 #  avatar_file_name    :string(255)
 #  avatar_content_type :string(255)

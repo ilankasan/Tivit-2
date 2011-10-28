@@ -40,8 +40,13 @@ class TivitDocUploader < CarrierWave::Uploader::Base
   # end
 
   # Override the filename of the uploaded files:
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
+  #def filename
+    # if(original_filename != nil )
+     #   return original_filename
+     #else  
+     # return "no name"
+     #end
+   #  super
+  #end
 
 end

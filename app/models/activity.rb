@@ -18,12 +18,14 @@
 
 class Activity < ActiveRecord::Base
   
-  attr_accessible :name, :description, :status, :due,:invited_by,:owner_id, :users, :completed_at, :summary,:activity_type, :parent_id,:activity_name
+  attr_accessible :name, :description, :status, :due,:invited_by,:owner_id, :users, :completed_at, :summary,:activity_type, :parent_id,:activity_name, :documents
 # each Tivit has many participants 
   has_and_belongs_to_many :users
+  has_and_belongs_to_many :documents
+
 
 # every activity has many document asign to it
-  has_many :activity_documents
+ # has_many :activity_documents
   #has_many :documents, :through => :activity_documents 
 
 
@@ -128,13 +130,13 @@ class Activity < ActiveRecord::Base
   def update_status_after_show(user)
  	puts "------------------------------------------------------------"
  	puts "attempting to change status" 	
- puts "------------------------------------------------------------" 	
+ #puts "------------------------------------------------------------" 	
     status = self.get_user_status(user) 	
   	if(status == "New")
   		change_status(user,"Reviewed","")
   		puts "chaging status from new to Review" 	
   	end
-	puts "Changing the date of last review og the comments"
+#	puts "Changing the date of last review og the comments"
 #updating the date/time a user reviewed this activity/tivit
 	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	tivit_user_status.update_last_reviewed

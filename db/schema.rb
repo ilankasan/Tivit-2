@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111018052756) do
+ActiveRecord::Schema.define(:version => 20111028054548) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -56,16 +56,16 @@ ActiveRecord::Schema.define(:version => 20111018052756) do
     t.datetime "updated_at"
   end
 
-  create_table "activities_users", :id => false, :force => true do |t|
+  create_table "activities_documents", :id => false, :force => true do |t|
     t.integer  "activity_id"
-    t.integer  "user_id"
+    t.integer  "document_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "activity_documents", :force => true do |t|
+  create_table "activities_users", :id => false, :force => true do |t|
     t.integer  "activity_id"
-    t.integer  "document_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -94,6 +94,8 @@ ActiveRecord::Schema.define(:version => 20111018052756) do
     t.integer  "document_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
+    t.string   "file_name"
   end
 
   create_table "profile_images", :force => true do |t|

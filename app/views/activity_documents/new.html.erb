@@ -1,0 +1,19 @@
+<h1><%= @title %></h1>
+
+<h1>Upload Document</h1>
+
+<%= form_for [@activity, @activity.documents.build], :html => { :multipart => true } do |f| %>
+   
+  
+   <p>
+    <label for="activity_documents">1 Upload document!:</label>
+    <%= f.file_field :name %>
+	<%= f.hidden_field :activity_id, :value => @activity.id %>    
+    </p>
+     
+  <div class="actions">
+  	
+    <%= f.submit "Update" %>
+  </div>
+<% end %>
+

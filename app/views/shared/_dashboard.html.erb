@@ -5,7 +5,7 @@
 	
 	<div id="new-activity-background">
 		<div id="new-activity">
-			<%= render 'shared/activity_form' %>
+			<%= render 'activities/activity_form',:collection =>  [Activity.new], :as => @activity, :locals => {:activity => @activity} %>
 		</div>
 	</div>
 	
@@ -41,13 +41,7 @@
 	                <a href="#completed-items">All Completed</a>
 	                <i><%=@tivits_completed.count%></i>
 	            </li>
-	            <li class="tab">
-	                <a href="#new-requests">New Requests</a>
-	                <%if @tivits_new.count > 0%>
-	                	<i><%=@tivits_new.count%></i>
-	                <%end%>
-            	</li>
-            	
+	            
             	<li class="tab">
 	                <a href="#need-attention">Needs Attention</a>
 	                <%if @need_attention_activities.count > 0%>

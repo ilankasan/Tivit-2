@@ -1,0 +1,28 @@
+<h1><%= @title %></h1>
+
+
+
+<h1>Upload Document</h1>
+
+<h1><%= @title %></h1>
+
+
+
+  <!-- Here we call fields_for on the customer_form builder instance.
+   The block is called for each member of the orders collection. -->
+  
+
+<% form_for @activity.documents.buils, :html => { :multipart => true } do |f| %>
+   
+  <!--% f.fields_for :documents do |doc| %-->
+  
+   <p>
+    <label for="activity_documents">1 Upload document!:</label>
+    <%= f.file_field :name %>
+    
+  </p>
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+<% end %>
+

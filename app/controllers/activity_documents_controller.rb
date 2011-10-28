@@ -2,12 +2,23 @@ class ActivityDocumentsController < ApplicationController
 	
 	before_filter :authenticate_account!
   
+	
+	def new
+    puts "&&&&&&&&&&&&   ActivityDocuments Controller Action = add &&&&&&&&&&&&&&&&"
+  
+    puts "Upload Document Page"
+    puts params.inspect
+    puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+    @activity = Activity.find(params[:id])
+    
+    puts "before render!"
+  end
+  
+	
+	
 	def edit
 		puts "&&&&&&&&&&&&   ActivityDocuments Controller &&&&&&&&&&&&&&&&"
-		puts "&&&&&&&&&&&&           Edit                 &&&&&&&&&&&&&&&&"
-		puts "&&&&&&&&&&&&           Edit                 &&&&&&&&&&&&&&&&"
-		puts "&&&&&&&&&&&&           Edit                 &&&&&&&&&&&&&&&&"
-		
+	
 		puts "Upload Document Page"
 		puts params.inspect
 		puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
@@ -22,46 +33,56 @@ class ActivityDocumentsController < ApplicationController
 	    render 'edit_activity_document'
 	end
 	
-	def update
+	def create
 		puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-	    puts " -------  Activity Controller  UPDATE --------"
+	    puts " -------  Activity Controller  CREATE --------"
 	 #  puts params.inspect  
-	 #  puts params["activity_document"].inspect
-	    
-		@activity= Activity.find(params[:id])
+	   puts params.inspect
+	   @activity= Activity.find(params[:document][:activity_id])
 		
-		if(params["activity_document"] == nil || params["activity_document"]["name"] == nil)
-	    	render 'edit_profile_image'
-	    else
+#		if(params["activity_document"] == nil || params["activity_document"]["name"] == nil)
+	#    	render 'edit_profile_image'
+	 #   else
 	    #ilan: assumming one file verison only
-		    activity_doc  = ActivityDocument.new
-		    #activity_doc  = @activity.activity_documents.new
-		    #documents     = activity_doc.documents
-		    document	  = Document.new				
-	    	document.name          = params["activity_document"]["name"]
-	    	document.version  	   = "1.0"
-	    	document.note     	   = document.name.url
-	    	document.document_id   = activity_doc.id
-	    	
-	    	#@activity.activity_documents = activity_doc  
-	    	@activity.activity_documents << activity_doc
-	    	activity_doc.documents << document
-	    	 
-	    	#document.save
+		    @document	  = Document.new(params[:document]) 				
+	    	@document.name          = params["document"]["name"]
+	    	@document.version  	   = "1.0"
+	    	@document.note     	   = @document.name.url
+	    	@document.user_id      = current_account.user.id
+	    	@document.file_name    = @document.name.filename
+        
+        @document.save
+	    	@activity.documents << @document
 	    	@activity.save
 	    	  	
-		  	flash[:success] = "tivit " + @activity.name + " updated"
-	  	end
-		puts document.inspect
+		  	#flash[:success] = "tivit " + @activity.name + " updated"
+	  	#end
+	  puts "niiiiiiiiiiiiiiiiiiiiiiiiiiiil" if @document ==  nil
+		unless @document == nil
+		  puts "= document.name is:"
+		  puts "_____________________________________________________________________"
+    puts "__________dddddddddddddd___________________________________________________________"
+    
+		if(@document.name == nil)
+		  puts "nnniiilllll"
+		end
 		puts "_____________________________________________________________________"
-		puts "URL          = " + document.name.url # => '/url/to/file.png'
-		puts "Current path = " + document.name.current_path # => 'path/to/file.png'else
+		puts "URL          = " + @document.name.url # => '/url/to/file.png'
+		puts "Current path = " + @document.name.current_path # => 'path/to/file.png'else
+		puts "Current path = " + @document.name.filename# => 'path/to/file.png'else
+    
 		puts "_____________________________________________________________________"
+		end
 		
-    	redirect_to @activity
+		
+    redirect_to @activity
 		
 	end
-
+def show_e
+    puts "&&&&&&&&&&&&   ActivityDocuments Controller Action = show &&&&&&&&&&&&&&&&"
+  
+      end
+  
 	
 	
 end
