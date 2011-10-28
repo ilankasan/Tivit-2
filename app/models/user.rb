@@ -51,6 +51,16 @@ class User < ActiveRecord::Base
   	puts "^^^^^^^^^^^^^^^^9090909090909090^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
     "#{self.name}.camelize"
   end
+def isAdmin?
+ # ilan need to rewrite
+  email = self.account.email
+  if(email =="ilan.kasan@gmail.com" || email =="yanivlevi1@gmail.com" || email =="jon.nakasone@gmail.com")
+    return true
+  else
+    return false
+  end
+  #return self.admin
+end
 
 def user_email
 	puts "!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!!!!!!!!!!!!"
