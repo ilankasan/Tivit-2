@@ -47,8 +47,8 @@ class ActivityDocumentsController < ApplicationController
 		    @document	  = Document.new(params[:document]) 				
 	    	@document.name          = params["document"]["name"]
 	    	@document.version  	   = "1.0"
-	    	@document.note     	   = @document.name.url
-	    	@document.user_id      = current_account.user.id
+	    	@document.note     	   = @document.name.url if @document.name  
+	    	@document.user_id      = current_account.user.id 
 	    	@document.file_name    = @document.name.filename
         
         @document.save

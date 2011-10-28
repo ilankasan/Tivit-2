@@ -1,7 +1,7 @@
 <%if document != nil  && document.name.url != nil%>
 	
 	<%if(TivitDocUploader.storage.kind_of?(File))%>
-		<%= link_to "link to document "+document.file_name, document.name.url, :size => "80x80" %>
+		<%= link_to "link to document "+document.file_name, document.name.url %>
 		<%=  puts "file system"%>
 
 	<%else%>

@@ -29,8 +29,6 @@ GEM
       activesupport (= 3.0.3)
     activesupport (3.0.3)
     addressable (2.2.4)
-    annotate (2.4.0)
-    annotate-models (1.0.4)
     arel (2.0.9)
     bcrypt-ruby (3.0.1-x86-mingw32)
     builder (2.1.2)
@@ -183,8 +181,6 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  annotate
-  annotate-models (= 1.0.4)
   carrierwave (= 0.5.1)
   devise
   factory_girl_rails (= 1.0)
