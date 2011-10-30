@@ -9,9 +9,10 @@ FirstApp::Application.routes.draw do
   
    
 
-  devise_for :accounts, :controllers => {:registrations  => "my_devise/registrations",
-  										 :sessions       => "my_devise/sessions",
-  										 :mailer  		 => "my_devise/mailer"}
+  devise_for :accounts, :controllers => {
+                          :registrations  => "my_devise/registrations",
+  										    :sessions       => "my_devise/sessions",
+  										    :mailer  		    => "my_devise/mailer"}
   
  
   match "profile_images/:id" 	  => "profile_images#update"
@@ -31,10 +32,14 @@ resources :profile_images do
   match "/edit" => "profile_images#edit"
   match "/show" => "profile_images#show"
 end
-resources :activity_documents
-  match "activity_documents/:id" => "activity_documents#add"
-  match "activity_documents/:id/edit" => "activity_documents#update"
-  match "activity_documents/new" => "activity_documents#new"
+resources :documents
+  #match "documents/:id"      => "documents#add"
+  match "documents/:id/edit" => "documents#update"
+  match "documents/new"      => "documents#new"
+  match "documents/delete"   => "documents#delete"
+ # match "documents/show"   => "documents#show"
+  
+  
   
   #match "/edit" => "profile_images#edit"
   #match "/show" => "profile_images#show"
@@ -42,7 +47,7 @@ resources :activity_documents
   resources :activities do
   	
   resources :tivitcomments
-  resources :activities_documents
+  #resources :activities_documents
   resources :documents
 end
   resources :tivitcomments
@@ -59,18 +64,18 @@ end
 
 resources :activities
 #match '/activities',    :to => 'activities#update'
-	match "activities/:id"  	 => "activities#update"
-	match "/onit" 				 => "activities#on_it"
-  	match "/decline" 			 => "activities#decline"
-  	match "/proposedate" 		 => "activities#propose_date"
-  	match "/acceptdate" 		 => "activities#accept_date"
-  	match "/remind" 			 => "activities#remind"
-  	match "/done" 				 => "activities#done"
+	  match "activities/:id"  	   => "activities#update"
+	  match "/onit" 				       => "activities#on_it"
+  	match "/decline" 			       => "activities#decline"
+  	match "/proposedate" 		     => "activities#propose_date"
+  	match "/acceptdate" 		     => "activities#accept_date"
+  	match "/remind" 			       => "activities#remind"
+  	match "/done" 				       => "activities#done"
   	match "/change_tivit_status" => "activities#change_tivit_status"
-  	match "/new_tivit" 			 => "activities#new_tivit"
-  	match "/create_tivit" 		 => "activities#create_tivit"
-  	match "/remove_tivit" 		 => "activities#remove_tivit"
-  	match "/edit_tivit" 		 => "activities#edit_tivit"
+  	match "/new_tivit" 			     => "activities#new_tivit"
+  	match "/create_tivit" 		   => "activities#create_tivit"
+  	match "/remove_tivit" 		   => "activities#remove_tivit"
+  	match "/edit_tivit" 		     => "activities#edit_tivit"
   	match "/update_tivit/:id" 	 => "activities#update_tivit"
   	
   	    
@@ -96,15 +101,12 @@ resources :users
   match '/allusers',  :to => 'users#allusers'
   match "users/:id" => "users#update"
   	
-resources :activity_documents
+#resources :activity_documents
   #match "activity_documents/:id" => "activity_documents#add_file"
-  match "activity_documents/:id/edit" => "activity_documents#update"
-  match "activity_documents/new" => "activity_documents#new"
+  #match "activity_documents/:id/edit" => "activity_documents#update"
+  #match "activity_documents/new" => "activity_documents#new"
   #match "activities/:id"     => "activities#update"
   
-  
-#  match '/signup',  :to => 'users#new'
- # match '/show',   :to => 'users#show'
   
   
   # The priority is based upon order of creation:

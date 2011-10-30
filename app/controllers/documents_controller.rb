@@ -1,6 +1,30 @@
-class ActivityDocumentsController < ApplicationController
+class DocumentsController < ApplicationController
 	
 	before_filter :authenticate_account!
+
+   def show
+     
+     puts "SSSSSHHOOOOOOWWWWWWWWWWWW"
+     puts params.inspect
+  end  
+   def destroy
+    
+    puts " ______________________________________"
+    puts " DELTE Document "+params.inspect
+    doc       = Document.find_by_id(params[:id])
+    doc.destroy
+    #@activity = doc.activity     
+#ilan: Need to send an email notifying all participants the activity and tivit
+  #related_tivits = @activity.tivits
+   # related_tivits.each do |tivit|
+   #   tivit.destroy
+   # end 
+   # @activity.destroy
+   redirect_to :back
+   # redirect_back 
+    #redirect_to @activity
+  end
+  
   
 	
 	def new
@@ -24,8 +48,6 @@ class ActivityDocumentsController < ApplicationController
 		puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 		@activity = Activity.find(params[:activity_id])
 		puts "current user"
-		puts current_account.user.inspect
-		puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 		
 		puts @activity.inspect
 		
@@ -78,10 +100,7 @@ class ActivityDocumentsController < ApplicationController
     redirect_to @activity
 		
 	end
-def show_e
-    puts "&&&&&&&&&&&&   ActivityDocuments Controller Action = show &&&&&&&&&&&&&&&&"
-  
-      end
+
   
 	
 	

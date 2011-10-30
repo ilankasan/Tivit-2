@@ -62,17 +62,17 @@
   							    			:title       => activitydetails.name %><h1>
 	
    
-   <h1><%= link_to "Add file", 		:controller  => "activity_documents", 
+   <h1><%= link_to "Add file", 		:controller  => "documents", 
    											:action      => "new",
    											:id          => activitydetails.id, 
-  							    			:title       => "add document" %>,<h1>
+  							    			:title       => "Manage Files" %>,<h1>
 	
 	
 	 	<% if activitydetails.documents == nil %>
  			<span class="content"> No file attached to this Activity</span><br>
  		<% else %>
 		 
-			<%= render :partial => 'activity_documents/document', :collection =>  activitydetails.documents %> 
+			<%= render :partial => 'documents/document', :collection =>  activitydetails.documents %> 
  		<% end %> 
  		
  		
