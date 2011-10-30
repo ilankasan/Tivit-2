@@ -15,7 +15,9 @@ module PagesHelper
   def get_tivits_stats
      activities         = Activity.where(:activity_type => "activity").count
      tivits             = Activity.count - activities 
-     avg_t_per_a        = Float (Float(tivits) /  Float(activities))
+     tmp                = Float (Float(tivits) /  Float(activities))
+# display only two decimals
+     avg_t_per_a        = Integer(tmp * 100) / Float(100)
      
      @tivits_stats = {"activities" => activities.to_s, "tivits" => tivits.to_s,  "avg_t_per_a" => avg_t_per_a.to_s}
      puts @tivits_stats .inspect 
