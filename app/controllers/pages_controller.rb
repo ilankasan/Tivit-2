@@ -132,6 +132,16 @@ class PagesController < ApplicationController
   def signout
      @title = "Sign in"
   end
+  def bireport
+     @title = "Product Adoption Dashboard"
+     activated         = User.where("is_active = ?", '1').count
+     total_users       = User.count
+     non_activated     = total_users - activated 
+     puts "activated = "+activated.to_s+ " non activate = "+non_activated.to_s+ " total = "+total_users.to_s
+
+     @user_adopt = {"activated" => activated.to_s, "non_activated" => non_activated.to_s, "total" => total_users.to_s}
+     #@user_adopt = Hash.new("activated" => activated.to_s, "non_activated" => non_activated.to_s, "total" => total_users.to_s)
+  end
 
   def myaccount
      @title = "My Account"

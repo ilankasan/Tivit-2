@@ -15,6 +15,9 @@
         	<li><%= link_to "Home", root_path, :class => "current" %></li>
 	    	<li><%= link_to "Activities", about_path %></li>
 	    	<li><%= link_to "Team", contact_path %></li>      
+			<%if current_account.user.isAdmin?%>
+				<li><%= link_to "BI Dashboard", bireport_path%></li>
+			<%end%>
 
         </ul>
 
@@ -30,7 +33,7 @@
 							<li><%= link_to "Settings", edit_user_path(current_account.user) %></li>
 							<li><%= link_to "Sign out", destroy_account_session_path, :method => :delete %></li>
 						<%if current_account.user.isAdmin?%>
-							<li><%= link_to "Dashboard"%></li>
+							<li><%= link_to "BI Dashboard", bireport_path%></li>
 						<%end%>
 						</ul>
 					</ul>

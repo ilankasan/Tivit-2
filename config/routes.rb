@@ -37,7 +37,6 @@ resources :documents
   match "documents/:id/edit" => "documents#update"
   match "documents/new"      => "documents#new"
   match "documents/delete"   => "documents#delete"
- # match "documents/show"   => "documents#show"
   
   
   
@@ -78,14 +77,16 @@ resources :activities
   	match "/edit_tivit" 		     => "activities#edit_tivit"
   	match "/update_tivit/:id" 	 => "activities#update_tivit"
   	
+#resources :bireports  
+ #match "bireports/show"   => "bireports#show"
   	    
 resources :pages  
-  match '/about',   :to => 'pages#about'
-  match '/home',    :to => 'pages#home'
-  #match '/signout',   :to => 'pages#signout'
-  match '/myteam',   :to => 'pages#myteam'
-  match '/help',    :to => 'pages#help'
-  match '/contact', :to => 'pages#contact'
+  match '/about',     :to => 'pages#about'
+  match '/home',      :to => 'pages#home'
+  match '/bireport',  :to => 'pages#bireport'
+  match '/myteam',    :to => 'pages#myteam'
+  match '/help',      :to => 'pages#help'
+  match '/contact',   :to => 'pages#contact'
   match '/myaccount', :to => 'pages#myaccount'
   
 
