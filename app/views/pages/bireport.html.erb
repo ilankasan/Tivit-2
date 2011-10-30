@@ -3,11 +3,22 @@
 <b>User Count</b> 
   <tr> <td>Activated     : </td> <td><%=@user_adopt["activated"]%></td> </tr>
   <tr> <td>Non Activated : </td> <td><%=@user_adopt["non_activated"]%></td> </tr>
-  <tr> <td>Totale Users  : </td> <td><%=@user_adopt["total"]%></td> </tr>
+  <tr> <td>Total  Users  : </td> <td><%=@user_adopt["total"]%></td> </tr>
   
   <tr></tr><tr></tr>
   <tr> <td>Joined Viraly : </td> <td><%=@user_adopt["viraly_joined"]%></td> </tr>
-  
-  
-  
 </table>
+
+<br>
+  
+<table class="profile" summary="Profile information">
+<b>Tivits stats</b> 
+  <tr> <td>Activities     		 : </td> <td><%=@tivits_stats["activities"]%></td> </tr>
+  <tr> <td>Tivits 				 : </td> <td><%=@tivits_stats["tivits"]%></td> </tr>
+  <tr> <td>Avg Tivits / Activity : </td> <td><%=@tivits_stats["avg_t_per_a"]%></td> </tr>
+       
+</table>
+  
+     
+  
+  

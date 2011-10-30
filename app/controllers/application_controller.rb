@@ -4,5 +4,7 @@ class ApplicationController < ActionController::Base
   #include SessionsHelper
   include ActivitiesHelper
   include UsersHelper
+  include PagesHelper
+
   
 end

@@ -6,9 +6,24 @@ module PagesHelper
      viraly_joined     = User.where("is_active = ? AND clone_email is not null", '1').count
       
      #puts "activated = "+activated.to_s+ " non activate = "+non_activated.to_s+ " total = "+total_users.to_s+ " viraly_joined = " + viraly_joined.to_s
-     puts @user_adopt.inspect 
-
+    
      @user_adopt = {"activated" => activated.to_s, "non_activated" => non_activated.to_s, "total" => total_users.to_s, "viraly_joined" => viraly_joined.to_s}
      return @user_adopt
   end
+  
+  
+  def get_tivits_stats
+     activities         = Activity.where(:activity_type => "activity").count
+     tivits             = Activity.count - activities 
+     avg_t_per_a        = Float (Float(tivits) /  Float(activities))
+     
+     @tivits_stats = {"activities" => activities.to_s, "tivits" => tivits.to_s,  "avg_t_per_a" => avg_t_per_a.to_s}
+     puts @tivits_stats .inspect 
+
+     return @tivits_stats
+    
+  end
+  
+  
+  
 end
