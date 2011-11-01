@@ -1,7 +1,7 @@
 jQuery.noConflict();
 
- jQuery(document).ready(function($){
-
+jQuery(document).ready(function($){
+	
 	$("#tivit-container").jTabs({
 	    nav: "ul#tabs-nav",
 	    tab: ".tabContent .tabInfo",
@@ -9,6 +9,8 @@ jQuery.noConflict();
 	    effect: "fade",
 	    hashchange: false
 	});
+
+	console.log('[Yaniv] in document ready function');
 
 	var inputEl = jQuery('#new-activity input#name');
     inputEl.live('focus',function(){
@@ -24,6 +26,8 @@ jQuery.noConflict();
          closeNewActivity();
      });
 
+/* Dashboard - hover over record show highlight blue color */
+/*
     $(".record").hover(
 	   function() {
 	      $(this).addClass('record-hovered');
@@ -32,6 +36,7 @@ jQuery.noConflict();
 	      $(this).removeClass('record-hovered');
 	   }
 	);
+*/
 
     /*jQuery(document).click(function(){
          console.log('click');
@@ -183,4 +188,10 @@ function closeNewActivity(){
     jQuery('#new-activity-form textarea').val('');
 
 }
-
+/* This is not in use */
+function changeBackground(color){
+	
+	jQuery('#page-container').css('background', color);	
+	jQuery('body').css('background', color);	
+	
+}

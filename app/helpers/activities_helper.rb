@@ -19,12 +19,16 @@ module ActivitiesHelper
 	#create an inactive user
 		#	config.debug("--->>> creating a skeloton user for email: "+email)
 		#	temppassword = "234F5(67890GDFasdgqoSF" 
-			params = {:name => "not active",:clone_email => @email, :is_active  => false}
 			
 			puts "------------------ creating new user: " + @email 
-			
-			@user = User.new(params)
-			@user.save
+			@user = User.find_by_clone_email(@email)
+			if(@user == nil)
+		 
+		    params = {:name => "not active",:clone_email => @email, :is_active  => false}
+    
+			  @user = User.new(params)
+			  @user.save
+			end
 			return @user
 	  	end
 	  end

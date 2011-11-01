@@ -1,23 +1,22 @@
-/* this is the entire page container that hols all the content. 
- * The '#' is in the front because in the HTML we use 'id' and not class <div id="page-container">.
+/* this is the entire page container that hols all the content. The '#' is in the front because in the HTML we use 'id' and not class <div id="page-container">.
  * For classes, the CSS will be defined with '.' <div class="page-container">
  */
 html, body {
 	margin: 0;
 	padding: 0;
 }
-.bk1 {
-	background: white;
-}
-.bk2 {
-	background: #333333;	
-}
-
 body {
 	font-family: Arial, 'Liberation Sans', FreeSans, sans-serif; /*Arial, Helvetica, Verdana, Sans-serif;*/
 	font-size: 12px;
 	color: #666666;
 	background:#fff; /*orange;*//*#EEEEEE;/*#e3edef;*/
+}
+
+.flash {
+	background: yellow;
+	text-align: center;
+	padding: 6px;
+	/*visibility:hidden;*/
 }
 .hidden {
 	display: none;
@@ -36,7 +35,7 @@ a:visited {
   color: #069;
 }
 #page-container{
-	/*background: white;*/
+	background: white;
 	position: relative;
 	/*top: 32px;*/
 	/* if no width is specified, the whole browser will be take over */
@@ -186,6 +185,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	top:0;
 	left:0;
 }
+/* lighbox effect behind new activity layer */
 #activity-overlay{
     position:fixed;
     height:100%;
@@ -274,6 +274,8 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     padding: 4px 0 4px 4px;
     font-size:13px;
     color: #6D6D6D;
+    font-family:Arial,'Liberation Sans',FreeSans,sans-serif;
+    
 }
 #new-activity .input-date{
     padding: 4px 0 4px 4px;
@@ -282,6 +284,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     border:none;
 	width: 200px;
 	color: #6D6D6D;
+	font-family:Arial,'Liberation Sans',FreeSans,sans-serif;
 }
 #new-activity-complete .buttons{
 	text-align: right;
@@ -302,9 +305,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	font-size: 12px;
 	cursor: default;
 }
-#new-activity .ico_calc,
-.ico_calc /* add from Sorokina */
-{
+#new-activity .ico_calc{
     cursor:pointer;
     position:relative;
     top:4px;
@@ -332,9 +333,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 }
 
 
-#new-activity .form-button ,
-.activities .form-button, /* Add from Sorokina */
-.post-button /* Add from Sorokina */{
+#new-activity .form-button {
 	margin: 0;
 	vertical-align: middle;
 	/*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
@@ -478,7 +477,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     .tvit-day .calendar .earlyDay{
         background:url("../images/day_bg.jpg") 0 0 no-repeat;
     }
-    .tvit-day .date .week,.tivits .calendar .week{
+    .tvit-day .date .week{
         color:#fff;
         font-size:9px;
         font-weight:bold;
@@ -486,7 +485,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
         padding-left:3px;
         line-height:14px;
     }
-    .tvit-day .date .text,.tivits .calendar .text{
+    .tvit-day .date .text{
         color:#000;
         font-size:15px;
         text-align:center;
@@ -518,6 +517,9 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     .tvit-list .label .progress{
         float:right;
     }
+    .tvit-list .label .activity-name{
+        color: #8A8AD8;
+    }
 
 .tvit-list .record{
     padding:5px;
@@ -533,43 +535,32 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     height:44px;
     position:relative;
     }
-    .record .status .icon{
+    .tvit-list .record .status .icon{
             width:16px;
             height:16px;
             position:absolute;
             left:2px;
             bottom:12px;
-			cursor:pointer;
         }
-        .complete .status .icon{
+        .tvit-list .complete .status .icon{
             background:url("../images/status_complete.png") 0 0 no-repeat;
             width:19px;
             height:20px;
         }
-        .inprog .status .icon{
+        .tvit-list .inprog .status .icon{
             background:url("../images/status_inprog.png") 0 0 no-repeat;
         }
-        
-        /*************/
-        /* Yaniv */
-        .unread .avatar {
-       		opacity: 0.6;
-       	}
-      	/*************/
-       	
-        /* Add from Sorokina
-		.attention .avatar,
-        .attention .text{
+        .tvit-list .attention .avatar,
+        .tvit-list .attention .text{
         	opacity: 0.5;
-        } 
-        */
-        .attention .status .icon{
+        }
+        .tvit-list .attention .status .icon{
             background:url("../images/status_attention.png") 0 0 no-repeat;
         }
-        .busy .status .icon{
+        .tvit-list .busy .status .icon{
             background:url("../images/status_busy.png") 0 0 no-repeat;
         }
-        .unread .status .icon{
+        .tvit-list .unread .status .icon{
             background:url("../images/status_unread.png") 0 0 no-repeat;
         }
 .tvit-list .record .avatar{
@@ -577,9 +568,8 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     height: 44px;
     width: 44px;
     position:relative;
-    border-radius: 4px;
+    border-radius: 4px 4px 4px 4px;
 }
-	.tvit-list .record .avatar img{border-radius: 4px;}
 .tvit-list .avatar .rc{
     position:absolute;
     height:44px;
@@ -600,7 +590,6 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     	position: relative;
     	top:-50%;
     }
-		.twr h3{margin-top:0 !important;}
     .tvit-list .record .text h3{
     	font-size: 14px;
     	margin: 0;
@@ -783,6 +772,10 @@ footer a{
 	color:#aaa;
 }
 
+footer .copyR {
+	text-align: center;
+}
+
 footer nav {
   float: none;
   padding-bottom: 5px;
@@ -792,126 +785,6 @@ footer li{
 	padding-right: 10px;
 }
 
-
-
-/*******************************************************************************
-  Styles for Activities Page from Irina Sorokina
-*******************************************************************************/
-a img{border:none;}
-.activities{font-size:13px;}
-.activities p, .activities h1, .activities h2{margin:0;padding:0;}
-.activities h1{font-size:24px;font-weight:bold;color:#000;margin:9px 0 2px;}
-.activities h2{font-size:18px;color:#333;font-weight:normal;border-bottom:1px dotted #eaeaea;}
-.activities h2 span{color:#969696;}
-.activities h3,.tvit-list .record .text h3{margin:6px 0 0;font-size:15px;color:#000;font-weight:bold;}
-.activities small{color:#8d8d8d;font-size:12px;}
-.activities a{color:#7b7bd2;}
-
-/* main top info conteiner */
-.act-main{padding:4px 0 0;position:relative;width:960px;}
-.act-main .avatar{float:left;position:relative;z-index:100;margin:-4px 13px 0 0;width:94px;height:94px;border-radius:10px;}
-.act-main .info{height:77px;background:#ddd;border-top:1px solid #f6f6f6;border-bottom:1px solid #e4e4e4;}
-.act-main .calendar{width:92px;height:84px;overflow:hidden;position:absolute;top:2px;right:-6px;padding-left:10px;
-		text-align:center;font-weight:bold;text-transform:uppercase;}
-	.act-main .calendar.red{background: url("../images/cal-1b.png") no-repeat;}
-.act-main .calendar .week{color:#FFF;font-size:22px;line-height:1.5;}
-.act-main .calendar .text{color:#000;font-size:40px;line-height:1;}
-
-.progress-complete{position:absolute;top:20px;right:120px;text-align:right;font-size:16px;color:#4c4c4c;}
-.progress-complete span{font-weight:bold;font-size:19px;color:#6666cc;}
-.info ul{position:absolute;top:62px;right:120px;}
-.info ul li{display:inline;padding:4px 8px;border:1px solid #c0c0c0;border-left:none;border-bottom:1px solid #c9c9c9;cursor:pointer;
-	background:#dadada url(../images/bg_info.png) bottom repeat-x;}
-.info ul li:hover{color:#000;}
-.info ul li:first-child{border-left:1px solid #c0c0c0;}
-.description{width:680px;padding:18px 25px 15px 45px;background:#f8f8f8;color:#505050;
-	border-left:1px solid #fdfdfd;border-right:1px solid #fdfdfd;border-radius:0 0 7px 7px;}
-.description small{padding-left:10px;}
-
-.body{}
-.rightCol{float:right;width:166px;margin:-25px 7px 0;padding:0 21px;border-left:1px dotted #eaeaea;}
-.leftCol{float:left;width:750px;}
-
-/* File col*/
-.files h2{margin-top:-12px;}
-.file{position:relative;margin:12px 0 0;padding:2px;text-align:center;color:#8d8d8d;}
-.file.new{border:1px solid #ffd940;}
-.file i{font-size: 9px;font-style: normal;font-weight: bold;padding: 0 4px;position: absolute;right: 30%;top: 4px;
-	background: red;border: 1px solid #C0C0C0;border-radius: 9px;color: #FFFFFF;}
-.file span{font-size:13px;}
-
-/* Blocks: My tivits, Team tivits */
-.tivits{position:relative;margin:45px 0 40px;padding:4px 8px 12px 12px;background:#f8f8f8;border-radius:7px;}
-	.tivits.active,.record.active,.team .tvit-list .record.active{background:#ffffcc;}
-.tivits .form-button{width:auto;padding:8px 10px 8px 40px;text-align:right;font-size:15px;position:absolute;top:-20px;right:0;
-	background:#61B010 url(../images/icon_add_tivit.png) 6px center no-repeat}
-.tivits .tvit-list .record .status{width:33px;}
-.tivits .calendar{display:inline-block;width:46px;height:38px;overflow:hidden;
-	background:url(../images/cal-1a.png) no-repeat;}
-.tivits .calendar .week{padding-left:7px;height:14px;}
-.tivits .calendar .text{font-size:18px;padding-left:7px;}
-.tivits .record{padding-right:0;}
-.tivits .record .activity{position:relative;width:116px;padding:0;margin:2px 0 0;}
-.tivits .record .unreaded{position:absolute;top:9px;left:-105px;}
-.tivits .record .attach{position:absolute;top:9px;left:-40px;}
-.tivits .record .comments{position:absolute;top:9px;left:0;}
-.tivits .record .calendar{position:absolute;top:0;left:45px;}
-.tivits .record .edit-menu{position:absolute;top:22px;right:8px;z-index:100;cursor:pointer;}
-	.edit-menu .icon{width:16px;height:17px;background:url(../images/icon_edit_menu.png) no-repeat;}
-.tivits li ul.list{margin:10px 0 0 85px;}
-.tivits li ul.list li{position:relative;}
-.tivits li ul.list .text{width:425px;padding-top:3px;color:#242424;}
-.tivits li ul.list .text .start, .fupload{padding:0 0 2px;border-bottom: 1px dotted #EAEAEA;color: #8D8D8D;}
-.start.attention{padding-left:26px !important;background:url(../images/status_attention.png) no-repeat;}
-.start.complete{padding-left:26px !important;background:url(../images/status_complete_small.png) no-repeat;}
-.request{font-size:11px;}
-.request span{color:red;}
-.request a{color:#2525f8;display:inline-block;padding:0 6px;}
-.request .form-button{position:relative;top:0;display:inline-block;background: #fff;padding:3px 15px;margin:20px 0 5px 5px;color:#929292;
-		border: 1px solid #C0C0C0;border-radius:4px;}
-.request .form-button:first-child{background-image:none;background-color:#61B010;color:#fff;margin:20px 0 5px 215px;}
-.fupload{padding:3px 0 3px 50px !important;height:38px;}
-.fupload.pptx{background:url(../images/file_pptx.gif) no-repeat;}
-.fupload span{color:#2525f8;font-weight:bold;}
-.tivits small{font-size:11px;}
-.respond{position:absolute;top:0;right:0;width:163px;}
-.respond .form-button{position:relative;top:0;left:32px;font-size:13px;margin:0;padding:5px 0 5px 15px;text-align:center;width:90px;
-	background:#61B010 url(../images/status_unread.png) 4px center no-repeat;}
-.respond .form-button.inprog{background:#61B010 url(../images/status_inprog.png) 4px center no-repeat;}
-.respond .form-button.complete{background:#61B010 url(../images/status_complete.png) 4px center no-repeat;}
-.respond .form-button.attention{background:#61B010 url(../images/status_attention.png) 4px center no-repeat;}
-.respond .status-list-dialog{top:27px;left:32px;width:131px;}
-.team h2{margin-top:-30px;}
-.team, .team .tvit-list .record{background:#fff;}
-.menu-dialog{position:absolute;color:#3a3a3a;background:#f8f8f8;padding:2px;border:1px solid #cfcfcf;}
-	.edit-menu .menu-dialog ul li{padding:2px 22px 2px 28px;}
-.menu-dialog ul li:hover{background-color:#eaeaea;}
-	.edit{background:url(../images/icon_edit.png) 2px center no-repeat;}
-	.del{background:url(../images/icon_delete.png) left center no-repeat;}
-.tivits li ul.list .text input,
-.post input{width:415px;margin:10px 0 0;padding:0 4px;height:20px;color:#929292;font-style:italic;background:#fff;border:1px solid #e6e6e6;}
-	.tivits .post{padding-left:60px;position:relative;}
-.post .post-button{display:block;width:auto;height:22px;padding:0 12px 2px;background:#61B010;color:#fff;
-	font:normal bold 13px/13px Arial, 'Liberation Sans', FreeSans,sans-serif;border: 1px solid #C0C0C0;}
-.attach-file{display:block;width:70px;padding:0 0 0 27px;line-height:1.6;
-	background:url(../images/ico_attach.png) no-repeat;}
-	.post .attach-file{position:absolute;bottom:0;left:388px;}
-	.post .attach-file.long{left:500px;}
-.show-more{padding:5px 0 0 148px;margin:0 0 -10px;font-size:12px;}
-.delete{width:18px;height:18px;display:block;position:absolute;top:8px;right:130px;background:url(../images/icon_delete.gif) no-repeat;}
-
-/* Styles for popup windows */
-.popup{position:relative;z-index:1200;width:500px;margin:0 auto;padding:10px;color:#000;
-	background:#fff;border-radius:10px;border:1px solid #eaeaea;}
-.popup h3{padding:5px 0 5px 38px;margin:0;background:url(../images/icon_add_tivit.gif) no-repeat;}
-.popup label{font-size:14px;vertical-align:top;display:inline-block;width:50px;padding-right:5px;text-align:right;line-height:2.1;}
-.popup input,.popup textarea{width:400px;height:27px;border:1px solid #d0d0d0;}
-.popup textarea{height:70px;}
-.popup .input-date label{width:275px;}
-.popup .input-date input{width:175px;height:20px;}
-.popup .request .form-button:first-child{background-color:#fff;color:#929292;margin-left:323px;}
-.popup .request .form-button{background-color:#61B010;color:#fff;cursor:pointer;}
-.popup .close{position:absolute;top:-15px;right:-15px;width:30px;height:30px;cursor:pointer;background:url(../images/icon_close.png) no-repeat;}	
 /******************************************************************************************************
 /* SIGN IN/UP PAGEs */
 
@@ -1011,9 +884,89 @@ a img{border:none;}
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 	margin: 20px 0 0 199px;
-	font-size: 18px;
-	cursor: pointer;
+	font-size: 18px;	
 }
 
 #sign-in-up-form a { font-size: 12px; width: 200px; padding: 16px; }
 
+
+/*******************************************************************************
+  Styles for Activities Page from Irina Sorokina
+*******************************************************************************/
+a img{border:none;}
+.activities{font-size:13px;}
+.activities p, .activities h1, .activities h2{margin:0;padding:0;}
+.activities h1{font-size:24px;font-weight:bold;color:#000;margin:9px 0 2px;}
+.activities h2{font-size:18px;color:#333;font-weight:normal;border-bottom:1px dotted #eaeaea;}
+.activities h2 span{color:#969696;}
+.activities h3,.tvit-list .record .text h3{margin:6px 0 0;font-size:15px;color:#000;font-weight:bold;}
+.activities small{color:#8d8d8d;font-size:12px;}
+.activities a{color:#7b7bd2;}
+
+/* main top info conteiner */
+.act-main{padding:4px 0 0;position:relative;width:960px;}
+.act-main .avatar{float:left;position:relative;z-index:100;margin:-4px 13px 0 0;width:94px;height:94px;border-radius:10px;}
+.act-main .info{height:77px;background:#ddd;border-top:1px solid #f6f6f6;border-bottom:1px solid #e4e4e4;}
+.act-main .calendar{width:92px;height:84px;overflow:hidden;position:absolute;top:2px;right:-6px;padding-left:10px;
+		text-align:center;font-weight:bold;text-transform:uppercase;}
+	.act-main .calendar.red{background: url("../images/cal-1b.png") no-repeat;}
+.act-main .calendar .week{color:#FFF;font-size:22px;line-height:1.5;}
+.act-main .calendar .text{color:#000;font-size:40px;line-height:1;}
+
+.progress-complete{position:absolute;top:20px;right:120px;text-align:right;font-size:16px;color:#4c4c4c;}
+.progress-complete span{font-weight:bold;font-size:19px;color:#6666cc;}
+.info ul{position:absolute;top:62px;right:120px;}
+.info ul li{display:inline;padding:4px 8px;border:1px solid #c0c0c0;border-left:none;border-bottom:1px solid #c9c9c9;cursor:pointer;
+	background:#dadada url(../images/bg_info.png) bottom repeat-x;}
+.info ul li:hover{color:#000;}
+.info ul li:first-child{border-left:1px solid #c0c0c0;}
+.description{width:680px;padding:18px 25px 15px 45px;background:#f8f8f8;color:#505050;
+	border-left:1px solid #fdfdfd;border-right:1px solid #fdfdfd;border-radius:0 0 7px 7px;}
+.description small{padding-left:10px;}
+
+.body{}
+.rightCol{float:right;width:166px;margin:-25px 7px 0;padding:0 21px;border-left:1px dotted #eaeaea;}
+.leftCol{float:left;width:750px;}
+
+/* File col*/
+.files h2{margin-top:-12px;}
+.file{position:relative;margin:12px 0 0;padding:2px;text-align:center;color:#8d8d8d;}
+.file.new{border:1px solid #ffd940;}
+.file i{font-size: 9px;font-style: normal;font-weight: bold;padding: 0 4px;position: absolute;right: 30%;top: 4px;
+	background: red;border: 1px solid #C0C0C0;border-radius: 9px;color: #FFFFFF;}
+.file span{font-size:13px;}
+
+/* Blocks: My tivits, Team tivits */
+.tivits{position:relative;margin:45px 0 40px;padding:4px 8px 12px 12px;background:#f8f8f8;border-radius:7px;}
+	.tivits.active,.record.active{background:#ffffcc;}
+.tivits .form-button{width:auto;padding:8px 10px 8px 40px;text-align:right;font-size:15px;position:absolute;top:-20px;right:0;
+	background:#61B010 url(../images/icon_add_tivit.png) 6px center no-repeat}
+.tivits .tvit-list .record .status{width:33px;}
+.tivits .calendar{display:inline-block;width:46px;height:38px;overflow:hidden;
+	background:url(../images/cal-1a.png) no-repeat;}
+.tivits .calendar .week{padding-left:7px;}
+.tivits .calendar .text{font-size:18px;padding-left:7px;}
+.tivits .record{padding-right:0;}
+.tivits .record .activity{position:relative;width:116px;padding:0;margin:2px 0 0;}
+.tivits .record .unreaded{position:absolute;top:9px;left:-105px;}
+.tivits .record .comments{position:absolute;top:9px;left:0;}
+.tivits .record .calendar{position:absolute;top:0;left:45px;}
+.tivits .record .edit-menu{position:absolute;top:22px;right:8px;z-index:100;cursor:pointer;}
+	.edit-menu .icon{width:16px;height:17px;background:url(../images/icon_edit_menu.png) no-repeat;}
+.tivits li ul.list{margin:10px 0 0 85px;}
+.tivits li ul.list li{position:relative;}
+.tivits li ul.list .text{width:425px;padding-top:3px;color:#242424;}
+.tivits li ul.list .text input{width:415px;margin:10px 0 0;padding:0 4px;height:20px;color:#929292;font-style:italic;background:#fff;border:1px solid #e6e6e6;}
+.respond{position:absolute;top:0;right:0;width:163px;}
+.respond .form-button{position:relative;top:0;left:32px;font-size:13px;margin:0;padding:5px 0 5px 15px;text-align:center;width:80px;
+	background:#61B010 url(../images/status_unread.png) 4px center no-repeat;}
+.respond .status-list-dialog{top:27px;left:32px;width:131px;}
+.team h2{margin-top:-30px;}
+.menu-dialog{position:absolute;color:#3a3a3a;background:#f8f8f8;padding:2px;border:1px solid #cfcfcf;}
+	.edit-menu .menu-dialog ul li{padding:2px 22px 2px 28px;}
+.menu-dialog ul li:hover{background-color:#eaeaea;}
+	.edit{background:url(../images/icon_edit.png) 2px center no-repeat;}
+	.del{background:url(../images/icon_delete.png) left center no-repeat;}
+.attach-file{position:relative;}
+.attach-file a{display:block;position:absolute;top:11px;right:0;width:70px;padding:0 0 0 27px;line-height:1.6;
+	background:url(../images/ico_attach.png) no-repeat;}

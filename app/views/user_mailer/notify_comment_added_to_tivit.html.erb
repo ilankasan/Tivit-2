@@ -1,5 +1,5 @@
 <%= render :partial => 'email_header' %>
-<% puts " composing notification email "%>
+
 
 <div align="center">
 
@@ -8,6 +8,7 @@
 <table border="0" cellpadding="16" cellspacing="0" style="border-collapse:collapse" width="100%" bgcolor="#FFFFFF">
 
   <tr>
+
     <td width="100%">
 
     <div align="center">
@@ -35,21 +36,17 @@
 
       <tr style="font-family:arial,sans-serif;font-size:100%">
 
-
       <td width="100%"><%= @user.get_name %> comment on tivit: '<%=@tivit.name%>'.<br/> 
       "<%=@comment.comment%><br/>
-      Click here <%= @url %>/activities/<%=@tivit.get_parent.id%> for more detailes.<br/>
+      Click <b><%= link_to 'here', activity_url(@tivit.get_parent) %></b> for more detailes.<br/>
+      
       
     <p>Thanks for using tiviti and have a great day!</p>
-
+    
             <p> </p></td>
-
       </tr>
 
     </table>
-
-
-
 </font>
 
     </td>
@@ -57,12 +54,9 @@
   </tr>
 
 </table>
-
   </center>
-
 </div>
 
-</html>
-<% puts " composing notification email 2"%>
 
 <%= render :partial => 'email_footer' %>
+#103 Tivit - New Comment(s)

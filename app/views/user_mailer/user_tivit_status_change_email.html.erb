@@ -7,7 +7,7 @@
     <p>
       <%= @user.name %> has <%=@action%> your invitation to participate in tivit '<%= @tivit.name %>'<br>
        <%= @comment %><br>
-      Click here <%= @url %>/activities/<%=@tivit.id%> for more detailes.<br/>
+      Click here activity_url(@tivit.get_parent) for more detailes.<br/>
     </p>
     <p>Thanks for using tiviti and have a great day!</p>
   </body>

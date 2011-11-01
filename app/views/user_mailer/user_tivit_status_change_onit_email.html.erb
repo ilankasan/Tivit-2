@@ -1,0 +1,10 @@
+<%= render :partial => 'email_header' %>
+<%= @user.name %> indicated he/she is on on it  - tivit '<%= @tivit.name %>' in activity '<%=@tivit.get_parent.name%><br>
+       <%= @comment %><br>
+		Click here activity_url(@tivit.get_parent)  to view activity progress.
+    </p>
+    <p>Thanks for using tiviti and have a great day!</p>
+ <%= render :partial => 'email_footer' %>
+<small>#105 Tivit - Started</small>
+
+    

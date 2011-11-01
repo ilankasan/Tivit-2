@@ -1,0 +1,25 @@
+
+<%if tivit != nil%>
+	<%= render :partial => 'shared/tivit_adp_comment', :collection =>  tivit.tivitcomments, :as => :comment%> 
+<% end %>
+
+<!-- add comment input field -->  
+  
+ 
+  
+  <!-- <div class="post"><input type="text" value="Leave a note..." /> -->
+  	
+  <div class="post">
+  	
+   <%= form_for([tivit, tivit.tivitcomments.build]) do |f| %>
+    
+	 <%= f.text_field :comment %>
+	 
+	 </div>
+
+    	<%= f.submit "post" %>
+ 
+ 	 <% end %>
+ 	   
+	
+	

@@ -24,9 +24,6 @@ class Activity < ActiveRecord::Base
   has_and_belongs_to_many :documents
 
 
-# every activity has many document asign to it
- # has_many :activity_documents
-  #has_many :documents, :through => :activity_documents 
 
 
 

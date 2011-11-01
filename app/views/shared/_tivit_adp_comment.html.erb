@@ -1,0 +1,60 @@
+<%if   comment.comment != nil && comment.user != nil%>
+
+	<li class="record">
+		<!-- <div class="avatar"><img src="images/avatar_2.png" alt="Pete Campbell"></div> -->
+					
+		<!-- comment user avatar -->
+		<div class="avatar">
+			<%= render :partial => 'profile_images/profile_image', :collection =>  [comment.user], :as => :user, :class => "avatar" %> 
+		</div>
+			
+		<!-- If comment is associated with action, show the action -->											
+		<div class="text">
+			<%case comment.action%>
+		  	  	<%when ("OnIt")%>
+		  	  		<p class="start"><%= comment.user.name %> started <%= time_ago_in_words(comment.created_at) %> ago.</p>
+		   	  
+		  	  	<%when ("Done")%>
+		  	  		<p class="start complete"><%= comment.user.name %> completed his tivit <%= time_ago_in_words(comment.created_at) %> ago.</p>
+		  	  		
+		   	  	<%when ("Declined")%>
+		  	  		<p class="start"><%= comment.user.name %> cannot help with this tivit. <%= time_ago_in_words(comment.created_at) %> ago.</p>
+		  	  		
+		   	  	<%when ("Proposed")%>
+		  	  		<p class="start attention">New time proposed: Thusday, Nov. 25</p>
+			<%end%>
+		
+			<!-- Display actual comment -->
+			<p><%= comment.comment%></p>
+			<!-- User name and time -->
+			<% if comment.user.id == current_account.user.id %>
+			<% username = "You" %>
+			<%else%>
+			<% username = comment.user.name %>
+			<%end%>
+			<p><small><strong><%= username %></strong>, <%= time_ago_in_words(comment.created_at) %> ago.</small></p>
+						
+			<!-- <p><input type="text" value="Leave a note..." /></p> -->
+		</div>
+<!--									
+		<div class="respond">
+			<div class="form-button">respond</div>
+			<div class="status-list-dialog menu-dialog" style="display: block;">
+				<ul class="status-list">
+					<li class="inprog"><div class="ico"></div>I'm on it</li>
+					<li class="complete"><div class="ico"></div>I'm finished</li>
+					<li class="busy"><div class="ico"></div>I'm too busy</li>
+					<li class="attention"><div class="ico"></div>Propose new time</li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div>
+-->	
+
+		
+			
+		<div class="clear"></div>
+	</li>
+	  	  
+<% end %>
+	

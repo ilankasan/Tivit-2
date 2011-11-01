@@ -4,6 +4,6 @@
 <%= @inviter.get_name %> needs your help with: '<%=@tivit.get_parent.name%>'.
 You've been asked to: <%=@tivit.name%> by  <%= @tivit.due %>.
       
-Click here <%= @url %>/activities/<%=@tivit.id%> for more detailes.
+Click <%= link_to 'here', activity_url(@tivit.get_parent) %> for more detailes.
 
 Thanks for using tiviti and have a great day!

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html>
 	<head>
 		<title><%= @title %></title>
@@ -64,17 +64,23 @@
 <!-- end Google Analytics Tracking -->
 
 	</head>
-  
-	<body>
-   		
+
+<% if account_signed_in? %>
+	<body class="bk1">
+<% else %>
+	<body class="bk2">		
+<% end %>  		
    		<!-- Header - Main Navigation & New Activity Bar -->
 	  	<!-- <div id="main-nav-background"> -->
 	      	<%= render 'layouts/header' %>
 	    <!-- </div> -->
      	
      	<!-- Page Content Area -->
-		<div id="page-container">
-      		
+<% if account_signed_in? %>
+		<div id="page-container" class="bk1">
+<%else%>
+		<div id="page-container" class="bk2">
+<%end%>    		
 			<% flash.each do |key, value| %>
 				<div class="flash <%= key %>"><%= value %></div>
 			<% end %>

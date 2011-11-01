@@ -15,11 +15,12 @@
 
 		<div id="tivit-title" class="text">
 			
+			
 			<%= link_to tivit.name, tivit, :action => "show",
 	  									   :method => "get",
 	                                       :title  => tivit.name,
 	                                       :class => "text" %>
-	            
+	           
 	            <% parent = tivit.get_parent %>
    					
    				
@@ -92,7 +93,7 @@
 		<!--%tivit.update_tivit_status_after_show(current_account.user)%-->
 
 <!-- tivit action to take-->
-     <%= link_to "I am on it", 		:controller  => "activities", 
+     <%= link_to "I am on it", 	:controller  => "activities", 
    								:action      => "change_tivit_status",
    								:status      => "on_it",
  								:id          => tivit.id, 
@@ -154,7 +155,7 @@
 <!-- tivit comments-->
 
 <div id="tivit-content">
-<%= render :partial => 'shared/tivit_comments', :collection =>  [tivit], :as => :tivit%>
+	<%= render :partial => 'shared/tivit_comments', :collection =>  [tivit], :as => :tivit%>
 </div>	
 
 				

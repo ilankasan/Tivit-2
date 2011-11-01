@@ -2,6 +2,6 @@
 
  <%= @user.get_name %> comment on tivit: '<%=@tivit.name%>'.
       "<%=@comment.comment%>
-      Click here <%= @url %>/activities/<%=@tivit.get_parent.id%> for more detailes.
+      Click here <%=activity_url(@tivit.get_parent)%> for more detailes.
       
     <p>Thanks for using tiviti and have a great day!

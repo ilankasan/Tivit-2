@@ -40,6 +40,8 @@
       <td width="100%"><%= @inviter.get_name %> needs your help with: '<%=@tivit.get_parent.name%>'.<br/> 
       You've been asked to: <%=@tivit.name%> by  <%= @tivit.due %>.<br/>
       Click here <%= @url %>/activities/<%=@tivit.get_parent.id%> for more detailes.<br/>
+      Click <b><%= link_to 'here', activity_url(@tivit.get_parent) %></b> for more details.
+      
     <p>Thanks for using tiviti and have a great day!</p>
 
             <p> </p></td>
@@ -48,8 +50,6 @@
 
     </table>
 
-
-
 </font>
 
     </td>
@@ -57,10 +57,8 @@
   </tr>
 
 </table>
-
   </center>
-
 </div>
 
-</html>
 <%= render :partial => 'email_footer' %>
+<small>#101 Tivit - New</small>

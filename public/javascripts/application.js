@@ -19,3 +19,20 @@ function setFocus(field)
      document.getElementById(field).focus();
 }
 
+function changeBackground() {
+	
+	if (document.getElementsByTagName("BODY")[0].style.background == "#333333")
+	{
+		document.getElementsByTagName("BODY")[0].style.background = "white";
+	}
+	
+	alert ("change background js called");
+  	var body = document.body(layer);
+	if (myLayer.style.background=="white")
+	{
+		myLayer.style.background="red";
+	} 
+	
+   
+}
+
