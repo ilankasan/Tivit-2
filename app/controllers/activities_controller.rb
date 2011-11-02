@@ -192,13 +192,16 @@ puts params.inspect
  
       invitee_emails = params["invitees"]	
       
+#ilan: need to revisit this fucntion. not sure weneed it
       update_activity_participants_by_email(invitee_emails, @activity)
       @activity.save
       
 #send email to all parcicipants that tivit was completed (not including owner):
-	  if(was_completed != "Completed" && @activity.status == "Completed" )
-	 		UserMailer.activity_completed_email(current_account.user, invitee_emails,params["summary"],@activity).deliver
-	  end
+	   #if(was_completed != "Completed" && @activity.status == "Completed" )
+	   if(@activity.status == "Completed" )
+     
+	      notify_users_activity_is_closed(@activity,params["summary"])
+	 	 end
 
 	  flash[:success] = "tivit " + @activity.name + " updated"
       redirect_to @activity
@@ -290,6 +293,7 @@ puts params.inspect
 
     if(@activity.isActivity?)
 		UserMailer.user_activity_status_change_done_email(current_account.user,params["comment"],@activity).deliver
+		puts " is this possible?"
     else  
     	UserMailer.user_tivit_status_change_done_email(current_account.user,params["comment"],@activity).deliver
     end
