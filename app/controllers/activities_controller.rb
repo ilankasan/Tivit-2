@@ -274,13 +274,16 @@ puts params.inspect
 	params["activity_type"] = "tivit"
 	
 	puts "Inspect Params " +params.inspect
-	puts "--------------->>>>  creatintg  tiviti"
+	puts "----%%%%%%%%%%%%%%%%%%%%%%----------->>>>  creatintg  tiviti"
 
    	current_account.user.addContect(@invited_user)
    	@invited_user.addContect(current_account.user)
 	@activity = @invited_user.activities.create(params)	 						
 	@activity.update_tivit_user_status_reviewed(current_account.user,"")
 	config.debug("------>>>>> creating activity" + @activity.name )
+	
+	log_action_as_comment(@activity,params["description"],"TivitDetails",current_account.user)
+
     UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
     redirect_to root_path
   end
