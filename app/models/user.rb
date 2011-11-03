@@ -105,13 +105,18 @@ end
   end
   
 # check is use is a contact. Ifnot, adds it
-  def addContect(user)
-  	puts "addContect"
+  def addContact(user)
+  	puts "addContact"
   	if(!self.isContact?(user))
   		#self.contacts.create(:user_id => self.id, :contact_id => user.get_id)
   		self.mycontacts << user
 
   	end
+  end
+  
+  def addTwoWayContact(user)
+    self.addContact(user)
+    user.addContact(self)
   end
   
   def isContact?(user)

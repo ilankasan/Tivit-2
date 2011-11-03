@@ -251,10 +251,43 @@ puts params.inspect
   def new_tivit
   	@activity = Activity.find(params[:id])
     puts "Addign Tivit to Activity " + @activity.name
-    render 'new_tivit'   
-   
+    render 'new_tivit'     
   end
   
+  
+  def reassign
+# reasign tivit to a different user
+puts " Reasign tivit "
+puts params.inspect
+
+    assigned_to = params["assign_to"] 
+puts "---->>> Assining tivit to = "+assigned_to
+    @assined_user = user_by_email(assigned_to)
+    @activity = Activity.find(params[:id])
+    
+    if(@assined_user == nil || @activity == nil)
+      flash[:failed] = "Failed to Reasign tivit"
+      redirect_to root_path if @activity == nil
+puts "not a user email"
+      redirect_to @activity if @assined_user == nil   
+    else
+puts " Reasign tivit "+@activity.name
+      if (params["comment"] == nil)
+ puts "comment is nill"
+        params["comment"] = ""
+      end
+            @activity.owner_id = @assined_user.id
+      @activity.users << @assined_user
+      current_account.user.addTwoWayContact(@assined_user)
+      @activity.update_tivit_status_reassiged(current_account.user,params["comment"],@assined_user)
+      
+    
+      log_action_as_comment(@activity,"Asigned to "+@assined_user.get_name+":" + params["comment"],"Reasign",current_account.user)
+      flash[:success] = "Successfuly reasigned tivit to "
+      @activity.save
+      redirect_to  @activity   
+    end
+  end
   
   def create_tivit
   	
@@ -264,25 +297,24 @@ puts params.inspect
   	params["due"] 		= convert_date_to_string(params,"due")
   	params["parent_id"] = params[:id] 						#   adding Parent ID
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
-	params["status"]    = "in-progress"
+	  params["status"]    = "in-progress"
 	 
     invitees = params["invitees"]	
 		
 	
-	@invited_user = user_by_email(invitees.strip)
-	params["owner_id"] =  @invited_user.id
-	params["activity_type"] = "tivit"
+	  @invited_user = user_by_email(invitees.strip)
+	  params["owner_id"] =  @invited_user.id
+	  params["activity_type"] = "tivit"
 	
-	puts "Inspect Params " +params.inspect
-	puts "----%%%%%%%%%%%%%%%%%%%%%%----------->>>>  creatintg  tiviti"
+	  #puts "Inspect Params " +params.inspect
+	  #puts "----%%%%%%%%%%%%%%%%%%%%%%----------->>>>  creatintg  tiviti"
 
-   	current_account.user.addContect(@invited_user)
-   	@invited_user.addContect(current_account.user)
-	@activity = @invited_user.activities.create(params)	 						
-	@activity.update_tivit_user_status_reviewed(current_account.user,"")
-	config.debug("------>>>>> creating activity" + @activity.name )
+    current_account.user.addTwoWayContact(@invited_user)
+    @activity = @invited_user.activities.create(params)	 						
+	  @activity.update_tivit_user_status_reviewed(current_account.user,"")
+	  config.debug("------>>>>> creating activity" + @activity.name )
 	
-	log_action_as_comment(@activity,params["description"],"TivitDetails",current_account.user)
+	  log_action_as_comment(@activity,params["description"],"TivitDetails",current_account.user)
 
     UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
     redirect_to root_path

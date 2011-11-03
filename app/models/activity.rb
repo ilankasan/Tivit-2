@@ -123,6 +123,7 @@ class Activity < ActiveRecord::Base
  	puts "creating a task with status new"			
   end
   
+  
 # After the user viewed the tivit for the virst time, make sure status changes from New to Review 
   def update_status_after_show(user)
  	puts "------------------------------------------------------------"
@@ -155,7 +156,7 @@ class Activity < ActiveRecord::Base
  end
  
  def update_tivit_user_status_reviewed(user,comment)
- 	change_user_status(user,"Reviewed",comment,nil,Time.now().localtime)
+ 	change_user_status(user,"Reviewed",comment,nil,Time.now().localtime,nil)
  end
  
  def update_tivit_user_status_decline(user,comment)
@@ -168,10 +169,14 @@ class Activity < ActiveRecord::Base
  end
  
  def update_tivit_user_propose_date(user,comment,date)	
- 	change_user_status(user,"Proposed",comment,date,Time.now().localtime)
+ 	change_user_status(user,"Proposed",comment,date,Time.now().localtime,nil)
  end
  
-
+ def update_tivit_status_reassiged(user,comment,assined_user)
+  change_user_status(user,"Reasigned",comment,nil,Time.now().localtime,assined_user)
+   
+ end
+      
 #returns the status of a user with respect to this activity 
 
   def get_user_status(user)
@@ -249,19 +254,6 @@ class Activity < ActiveRecord::Base
   	end
   end
   
-###################################################
-#      Get status givven one user per tivit       #
-###################################################
-
-#returns the status of a user with respect to this activity and this activity 
- # def get_user_status 	
- # 	return self.get_user_status(self.get_owner)
- # end
-  
-#returns the comment associated with a specific user and this activity 
- #def get_user_status_comment
-#	return self.get_user_status_comment(self.get_owner)
-# end
  def clean_user_invitees
  #clean users accept the task owber
  	owner = self.get_owner
@@ -410,7 +402,6 @@ private
  	else
  		puts tivit_status.status_id + "-->>> " + status
  	end
- 	puts " ----------------------------------------- "
  	
  	tivit_status.status_id = status
  	tivit_status.activity_id = self.id
@@ -420,7 +411,8 @@ private
   end 
  
  
- def change_user_status(user, status,comment, proposed_date, last_reviewed)
+ def change_user_status(user, status,comment, proposed_date, last_reviewed, assigned_to)
+ puts "changing status for "+user.get_name+" to "+status
   	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if(tivit_user_status == nil)
   		tivit_user_status = create_status(user,status)
@@ -433,6 +425,11 @@ private
 	if(last_reviewed != nil)
  		tivit_user_status.last_reviewed = last_reviewed
  	end
+ 	
+  if(assigned_to != nil)
+    puts "updtating assign to: = "+assigned_to.id.to_s
+    tivit_user_status.assigned_to = assigned_to.id
+  end
 
   	tivit_user_status.status_id = status
   	tivit_user_status.comment   = comment
@@ -443,7 +440,7 @@ private
  
   
  def change_status(user, status,comment)
-  	change_user_status(user, status,comment, nil,nil)
+  	change_user_status(user, status,comment, nil,nil,nil)
  end
    
 end

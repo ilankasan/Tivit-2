@@ -21,6 +21,8 @@ rails generate model UserContacts user_id:integer contact_id:integer
 rails generate model ActivityDocuments activity_id:integer document_id:integer user_id:integer
 rails destroy model ActivityDocument
 
+assigned_to
+
 
 
 Git Synch
@@ -175,6 +177,10 @@ rails generate migration add_last_reviewed_to_tivit_user_statuses last_reviewed:
 rails generate migration add_proposed_date_to_tivit_user_statuses proposed_date:datetime
 rails generate migration add_last_signin_to_users last_signin:datetime
 rails generate migration add_action_to_tivitcomments action:string
+
+
+rails generate migration add_assigned_to_to_tivit_user_statuses assigned_to:id
+
 
 rails generate migration add_last_status_change_to_tivit_user_statuses last_status_change:datetime
 

@@ -65,6 +65,7 @@ resources :activities
 #match '/activities',    :to => 'activities#update'
 	  match "activities/:id"  	   => "activities#update"
 	  match "/onit" 				       => "activities#on_it"
+	  match "/reassign"               => "activities#reassign"
   	match "/decline" 			       => "activities#decline"
   	match "/proposedate" 		     => "activities#propose_date"
   	match "/acceptdate" 		     => "activities#accept_date"

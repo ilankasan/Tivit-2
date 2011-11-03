@@ -12,7 +12,19 @@
 	
         </div>
 
+ <%end%>
+ 
+ <%if @action == "reassign"%>
+ 	<!-- Choose who to reaisgn it-->
+			  <div class="field">
+			  	<div class="field-label">
+			  		<%= label_tag(:assign_to, "Ask someelse to help with tivit", :class => "field-label") %>
+			  	</div>
+			  	<%= text_field_tag(:assign_to, nil, :placeholder => "enter one email address...", :class => "input-invitees") %> 
+			  </div>
+
  <%end%> 
+ 
   <div class="field">
   	<%= label_tag(:comment, "Details:") %><%= text_area_tag(:comment) %> 
   </div>

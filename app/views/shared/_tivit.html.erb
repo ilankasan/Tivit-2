@@ -93,38 +93,42 @@
 		<!--%tivit.update_tivit_status_after_show(current_account.user)%-->
 
 <!-- tivit action to take-->
-     <%= link_to "I am on it", 	:controller  => "activities", 
+     <%= link_to "I'm On It", 	:controller  => "activities", 
    								:action      => "change_tivit_status",
    								:status      => "on_it",
  								:id          => tivit.id, 
-  							    :confirm     => "Are you sure you want to accept tivit" +tivit.name+"?", 
-                                :title       => tivit.name %>
+  						        :title       => tivit.name %>
 
         
                                      
+    <%= link_to "Reassing", 	:controller  => "activities", 
+   								:action      => "change_tivit_status",
+   								:status      => "reassign",
+ 								:id          => tivit.id, 
+                                :title       => tivit.name %>
+
+
+    
     
 	<%= link_to "decline",      :controller  => "activities",
     							:action      => "change_tivit_status",
     							:status      => "decline",
     							:id          => tivit.id, 
-  							    :confirm     => "Are you sure you want to decline tivit" +tivit.name+"?",
-                                :title       => tivit.name %>
+    							:title       => tivit.name %>
 
 
 	<%= link_to "I Am Done",    :controller  => "activities",
     							:action      => "change_tivit_status",
     							:status      => "done",
     							:id          => tivit.id, 
-  							    :confirm     => "Are you sure you are done with tivit" +tivit.name+"?",
-                                :title       => tivit.name %>
+  						        :title       => tivit.name %>
                                 
                                 
 	<%= link_to "Propose new date",     :controller  => "activities",
     									:action      => "change_tivit_status",
     									:status      => "propose_date",
     									:id          => tivit.id, 
-  							    		:confirm     => "Are you sure you want to propose a new date tivit" +tivit.name+"?",
-                                		:title       => tivit.name %>
+  						        		:title       => tivit.name %>
 
   <% end %>
 

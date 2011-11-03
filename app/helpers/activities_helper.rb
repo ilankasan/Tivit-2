@@ -77,7 +77,7 @@ end
     	params["comment"] = comment
     	params["action"]  = action
     	activity.tivitcomments.create(params)
-	end
+	  end
 ###################################################### 
 # add participants to activity 
 ######################################################
