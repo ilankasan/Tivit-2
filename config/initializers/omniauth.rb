@@ -1,6 +1,6 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
  #provider :twitter, 'CONSUMER_KEY', 'CONSUMER_SECRET'
- provider :twitter, 'RzO86jtopIkEAludN2gdg', 'JJ6hHnuhs1JcCwuXt5t9DnD5R6GEVC0i1l76tenqTL4'
+ #provider :twitter, 'RzO86jtopIkEAludN2gdg', 'JJ6hHnuhs1JcCwuXt5t9DnD5R6GEVC0i1l76tenqTL4'
  
 ########################################################################################## 
  #provider :facebook, 'local host'
@@ -10,7 +10,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
  provider :facebook, '261808970530645', '3c67e54b6ceb8d2f316c0c99ecbd63b0'
 ##########################################################################################
  #provider :github, 'CLIENT ID', 'SECRET'
- provider :github, '681ef4a52f33b237f7b8', 'cb1efb799d24a3e52baee03e5554c3b53d3c2a32'
+ #provider :github, '681ef4a52f33b237f7b8', 'cb1efb799d24a3e52baee03e5554c3b53d3c2a32'
  
  
  # Google sign in

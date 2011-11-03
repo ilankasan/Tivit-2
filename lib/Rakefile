@@ -13,11 +13,11 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = true 
 end 
  
-desc 'Generate documentation for auto_complete plugin.' 
-RDoc::Task.new do |rdoc|
-  rdoc.rdoc_dir = 'rdoc' 
-  rdoc.title    = 'Auto Complete' 
-  rdoc.options << '--line-numbers' << '--inline-source' 
-  rdoc.rdoc_files.include('README') 
-  rdoc.rdoc_files.include('lib/**/*.rb') 
-end
+#desc 'Generate documentation for auto_complete plugin.' 
+#RDoc::Task.new do |rdoc|
+#  rdoc.rdoc_dir = 'rdoc' 
+#  rdoc.title    = 'Auto Complete' 
+#  rdoc.options << '--line-numbers' << '--inline-source' 
+#  rdoc.rdoc_files.include('README') 
+#  rdoc.rdoc_files.include('lib/**/*.rb') 
+#end
