@@ -13,7 +13,7 @@ gem 'rails3-jquery-autocomplete'
 gem 'devise'
 gem 'omniauth'
 gem 'mongrel', '1.2.0.pre2'
-gem 'rdoc'  
+gem 'rake', '0.8.7'  
 
 
 group :development do
@@ -21,7 +21,8 @@ group :development do
   gem 'rspec', '2.3.0'
   gem 'mysql2'
   gem 'sqlite3-ruby', '1.3.2', :group => :development
-  gem 'rdoc'  
+ # gem 'rdoc'  
+gem 'rake', '0.8.7'  
 
   #gem 'sqlite3-ruby', '1.3.2', :require => 'sqlite3'
   gem 'rails3-jquery-autocomplete'
