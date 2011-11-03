@@ -1,3 +1,4 @@
+require 'rake/dsl_definition'
 source :gemcutter
 
 gem 'rails', '3.0.3'
