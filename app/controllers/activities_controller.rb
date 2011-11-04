@@ -263,29 +263,30 @@ puts params.inspect
     assigned_to = params["assign_to"] 
 puts "---->>> Assining tivit to = "+assigned_to
     @assined_user = user_by_email(assigned_to)
-    @activity = Activity.find(params[:id])
+    @tivit = Activity.find(params[:id])
     
-    if(@assined_user == nil || @activity == nil)
+    if(@assined_user == nil || @tivit == nil)
       flash[:failed] = "Failed to Reasign tivit"
-      redirect_to root_path if @activity == nil
+      redirect_to root_path if @tivit == nil
 puts "not a user email"
-      redirect_to @activity if @assined_user == nil   
+      redirect_to @tivit if @assined_user == nil   
     else
-puts " Reasign tivit "+@activity.name
+puts " Reasign tivit "+@tivit.name
       if (params["comment"] == nil)
  puts "comment is nill"
         params["comment"] = ""
       end
-            @activity.owner_id = @assined_user.id
-      @activity.users << @assined_user
+      @tivit.owner_id = @assined_user.id
+      @tivit.users << @assined_user
       current_account.user.addTwoWayContact(@assined_user)
-      @activity.update_tivit_status_reassiged(current_account.user,params["comment"],@assined_user)
+      @tivit.update_tivit_status_reassiged(current_account.user,params["comment"],@assined_user)
       
     
-      log_action_as_comment(@activity,"Asigned to "+@assined_user.get_name+":" + params["comment"],"Reasign",current_account.user)
+      log_action_as_comment(@tivit,"Asigned to "+@assined_user.get_name+":" + params["comment"],"Reasign",current_account.user)
+      UserMailer.reassign_tivit(current_account.user, @assined_user, params["comment"],@tivit)
       flash[:success] = "Successfuly reasigned tivit to "
-      @activity.save
-      redirect_to  @activity   
+      @tivit.save
+      redirect_to  @tivit   
     end
   end
   

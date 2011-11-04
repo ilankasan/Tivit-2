@@ -3,7 +3,44 @@ class UserMailer < ActionMailer::Base
    default :from => "tiviti.mailer@gmail.com"
    #//:url =>"http://"+Socket.gethostname
   	
-  
+   def new_tivit_email(invitee, inviter,tivit)
+#101 Tivit - New. When: Assigner creates tivit, Who: Assignee
+
+    @invitee   = invitee
+    @inviter   = inviter
+    @tivit     = tivit
+    puts "to  email  "+ invitee.get_email
+    mail(:to => invitee.get_email, :cc => "tiviti.mailer.cc@gmail.com",
+         :subject => inviter.get_name + " needs your help with "+tivit.get_parent.name)
+  end
+
+
+ def notify_comment_added_to_tivit(commenter, comment,activity, send_to)
+#103 Tivit - New Comment(s). When: Comment added (non-self), Who: Assigner, Assignee, Commentors  Ilan: sent only to asigner if asigne comments
+
+    @user     = commenter
+    @comment  = comment
+    @tivit    = activity
+    
+    toemail = send_to[0].get_email
+    mail(:to => toemail, :cc => "tiviti.mailer.cc@gmail.com",
+         :subject => @user.get_name+" left a commented on '"+@tivit.name+"'" )
+  end
+
+ 
+ def reassign_tivit(old_owner, new_owner, comment,tivit)
+#111 Tivit - Reassign. When: Assignee reassigns the tivit to another person. Who: New Assignee, Activity owner
+
+    @old_owner     = old_owner
+    @new_owner     = new_owner
+    @comment       = comment
+    @tivit         = tivit
+    senlist = create_recipient_list([@new_owner,tivit.get_parent.get_owner])
+    mail(:to => senlist, :cc => "tiviti.mailer.cc@gmail.com",
+         :subject => @old_owner.get_name+" needs your help with "+"'"+@tivit.get_parent.name+"'" )
+  end
+
+ 
  
   def remind_user_to_review_tivit (user_reminding, message,tivit)
 #112  Tivit - Remind. When: Assigner sends reminder, Who: Assignee
@@ -27,34 +64,7 @@ class UserMailer < ActionMailer::Base
     
     mail(:to => invitees, :cc => "tiviti.mailer.cc@gmail.com,"+user.get_email,
          :subject =>"tivit" +" '"+tivit.name+"' " + "is completed!" )  
-  end
-  
-  
-  def new_tivit_email(invitee, inviter,tivit)
-#101 Tivit - New. When: Assigner creates tivit, Who: Assignee
-
-    @invitee   = invitee
-    @inviter   = inviter
-    @tivit     = tivit
-	  puts "to  email  "+ invitee.get_email
-    mail(:to => invitee.get_email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => inviter.get_name + " needs your help with "+tivit.get_parent.name)
-  end
-
-
-
-  def notify_comment_added_to_tivit(commenter, comment,activity, send_to)
-#103 Tivit - New Comment(s). When:  Comment added (non-self), Who: Assigner, Assignee, Commentors  Ilan: sent only to asigner if asigne comments
-
-    @user     = commenter
-    @comment  = comment
-    @tivit    = activity
-  	
-  	toemail = send_to[0].get_email
-  	mail(:to => toemail, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => @user.get_name+" left a commented on '"+@tivit.name+"'" )
-  end
-  
+  end 
 
   def activity_completed_email(user, comment,activity)
 #ilan: not sure this is in use.
@@ -105,6 +115,16 @@ class UserMailer < ActionMailer::Base
     mail(:to => @invited_by.get_email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => @user.name+" has "+ action + " tivit '"+tivit.name+"'" )
   end
-  
+ 
+ 
+private
+  def create_recipient_list(users)
+    str = []
+    users.each do |user|
+      str << user.get_email
+    end
+    return str
+    
+  end
   
 end
