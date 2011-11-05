@@ -56,6 +56,11 @@ class Activity < ActiveRecord::Base
   	return self.name
   end 
 # Update status of the users invites to he activity
+  
+  def get_description
+    return self.description
+  end
+  
   def add_user_invitee(user)
  #adding the user to the existing users on the task
 	self.users << user

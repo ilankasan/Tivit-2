@@ -1,63 +1,69 @@
 <%= render :partial => 'email_header' %>
 
 
+
 <div align="center">
-
   <center>
-
-<table border="0" cellpadding="16" cellspacing="0" style="border-collapse:collapse" width="100%" bgcolor="#FFFFFF">
-
+<table border="0" cellpadding="16" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" bgcolor="#FFFFFF">
   <tr>
-
     <td width="100%">
-
     <div align="center">
-
       <center>
-
-      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="100%">
-
-        <tr style="font-family:arial,sans-serif;font-size:150%">
-
-          
- </td>
-
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+        <tr style="font-family: arial,sans-serif; font-size: 90%">
+        	
+        	             	
+        	
+          <td width="100%"><%= @invitee.get_name %>,<b> </b>
+          <p><b><%= @inviter.get_name %></b> is working on '<%=@tivit.get_parent.name%>' and needs your help!<br>
+&nbsp;</td>
         </tr>
-
       </table>
-
       </center>
-
     </div>
+<font size=-1>
+    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+      <tr style="font-family: arial,sans-serif; font-size: 90%">
+        <td width="100%">
+        <div align="left">
+          <table border="0" cellpadding="6" cellspacing="0" style="border-collapse: collapse" "font-family: arial,sans-serif; font-size: 90%">
+            <tr>
+              <td align="left" valign="top">
+              <p align="left">
+              </td>
+              
+          <div class="avatar">
+		<%= render :partial => 'profile_images/profile_image', :collection =>  [@inviter], :as => :user%> 
+	</div>
+	    
+              
+              <td align="left" valign="top">
+              <%= @inviter.get_name %> says: "Please help me with '<%=@tivit.name%>'"</td>
+            </tr>
+          </table>
+        </div>
+        <p><i><font color="#333333"><%=@tivit.get_description%> <br>
+&nbsp;</font></i></p>
 
-<font size="-1">
-
-    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="100%">
-
-      <tr style="font-family:arial,sans-serif;font-size:100%">
-
-
-      <td width="100%"><%= @inviter.get_name %> needs your help with: '<%=@tivit.get_parent.name%>'.<br/> 
-      You've been asked to: <%=@tivit.name%> by  <%= @tivit.due %>.<br/>
-      Click <b><%= link_to 'here', activity_url(@tivit.get_parent) %></b> for more details.
-      
-    <p>Thanks for using tiviti and have a great day!</p>
-
-            <p> </p></td>
-
+        	<p><%= link_to image_tag("http://www.tiviti.net/email/respond.png"), activity_url(@tivit.get_parent) %></p>
+        	
+        	
+        	
+        	
+        <p>&nbsp;</p>
+        
+        <p>&nbsp;</p>
+        <p>&nbsp;</td>
       </tr>
-
     </table>
 
 </font>
-
     </td>
-
   </tr>
-
 </table>
   </center>
 </div>
 
+
+
 <%= render :partial => 'email_footer' %>
-<small>#101 Tivit - New</small>

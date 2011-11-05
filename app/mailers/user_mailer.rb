@@ -5,7 +5,10 @@ class UserMailer < ActionMailer::Base
   	
    def new_tivit_email(invitee, inviter,tivit)
 #101 Tivit - New. When: Assigner creates tivit, Who: Assignee
-
+    #attachments.inline['respong.png'] = File.read('/images/respond.png')
+    #attachments.inline['respong.png'] = File.read("/images/default-avatar.jpg")
+    
+                                                  
     @invitee   = invitee
     @inviter   = inviter
     @tivit     = tivit
