@@ -5,16 +5,14 @@ class UserMailer < ActionMailer::Base
   	
    def new_tivit_email(invitee, inviter,tivit)
 #101 Tivit - New. When: Assigner creates tivit, Who: Assignee
-    #attachments.inline['respong.png'] = File.read('/images/respond.png')
-    #attachments.inline['respong.png'] = File.read("/images/default-avatar.jpg")
-    
-                                                  
+                                                      
     @invitee   = invitee
     @inviter   = inviter
     @tivit     = tivit
-    puts "to  email  "+ invitee.get_email
+    
     mail(:to => invitee.get_email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => inviter.get_name + " needs your help with "+tivit.get_parent.name)
+         :subject => "Tiviti:"+ inviter.get_name + " needs your help with "+tivit.name)
+         
   end
 
 
@@ -117,6 +115,7 @@ class UserMailer < ActionMailer::Base
      
     mail(:to => @invited_by.get_email, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => @user.name+" has "+ action + " tivit '"+tivit.name+"'" )
+         
   end
  
  

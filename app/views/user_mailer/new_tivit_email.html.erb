@@ -38,14 +38,14 @@
 	    
               
               <td align="left" valign="top">
-              <%= @inviter.get_name %> says: "Please help me with '<%=@tivit.name%>'"</td>
+              <%= @inviter.get_name %> says: "Please help me with '<%= link_to @tivit.name, activity_url(@tivit.get_parent) %>'"</td>
             </tr>
           </table>
         </div>
         <p><i><font color="#333333"><%=@tivit.get_description%> <br>
 &nbsp;</font></i></p>
 
-        	<p><%= link_to image_tag("http://www.tiviti.net/email/respond.png"), activity_url(@tivit.get_parent) %></p>
+        	<p><%= link_to image_tag("/images/respond.png"), activity_url(@tivit.get_parent) %></p>
         	
         	
         	
