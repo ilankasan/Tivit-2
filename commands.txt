@@ -105,7 +105,8 @@ rake db:migrate
 
 rename_column :products, :upccode, :upc_code
 
-rails generate model UserPreference id:user_id section_name:string setting_name:string setting_value:string
+rails generate model UserPreference id:user_id preference_id:integer
+rails generate model Preference preference:string
 
 
 git fetch git@github.com:ilankasan/Tivit-2.git/yaniv-new_ui_1
