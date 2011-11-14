@@ -360,7 +360,45 @@ class ActivitiesController < ApplicationController
   	 
  end
 
+ def reassign
+# reasign tivit to a different user
+puts " Reasign tivit "
+puts params.inspect
+
+    assigned_to = params["assign_to"] 
+puts "---->>> Assining tivit to = "+assigned_to
+    @assined_user = user_by_email(assigned_to)
+    @tivit = Activity.find(params[:id])
+    
+    if(@assined_user == nil || @tivit == nil)
+      flash[:failed] = "Failed to Reasign tivit"
+      redirect_to root_path if @tivit == nil
+puts "not a user email"
+      redirect_to @tivit if @assined_user == nil   
+    else
+puts " Reasign tivit "+@tivit.name
+      if (params["comment"] == nil)
+ puts "comment is nill"
+        params["comment"] = ""
+      end
+      @tivit.owner_id = @assined_user.id
+      @tivit.users << @assined_user
+      current_account.user.addTwoWayContact(@assined_user)
+      @tivit.update_tivit_status_reassiged(current_account.user,params["comment"],@assined_user)
+      
+    
+      log_action_as_comment(@tivit,"Asigned to "+@assined_user.get_name+":" + params["comment"],"Reasign",current_account.user)
+      UserMailer.reassign_tivit(current_account.user, @assined_user, params["comment"],@tivit)
+      flash[:success] = "Successfuly reasigned tivit to "
+      @tivit.save
+      redirect_to  @tivit   
+    end
+  end
+  
+
+ 
  def remind
+   
     puts "-----------    remind ---------------"  
   
     @activity = Activity.find(params[:id])
