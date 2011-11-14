@@ -39,15 +39,30 @@ cache_classes = false
   config.action_mailer.asset_host = "http://localhost:3000"  
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-	  :address        => 'smtp.gmail.com',
-	  :port           => 25,
-	  :domain         => 'gmail.com',
-	  :authentication => :login,
-	  :user_name      => 'tiviti.mailer',
-	  :password       => 'gotiviti'
+#  config.action_mailer.smtp_settings = {
+#	  :address        => 'smtp.gmail.com',
+#	  :port           => 25,
+#	  :domain         => 'gmail.com',
+#	  :authentication => :login,
+#	  :user_name      => 'tiviti.mailer',
+#	  :password       => 'gotiviti'
+
+
+#  }
+  
+  
+    config.action_mailer.smtp_settings = {
+    :address        => 'smtpout.secureserver.net',
+    :port           => 25,
+    :domain         => 'tiviti.net',
+    :authentication => :login,
+    :user_name      => 'Tiviti',
+    :password       => 'tiviti'
 
   }
+  
+  
+  
 #  CarrierWave.configure do |config|
   	#config.storage_engines = :file
   	#config.storage = :file	

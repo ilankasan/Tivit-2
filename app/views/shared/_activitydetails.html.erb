@@ -1,3 +1,74 @@
+<!-- Full window overlay -->
+<div id="activity-overlay"></div>
+
+<!-- Add New Tivit Form -->
+<!--
+<div class="popup" id="add-tivit-window">
+
+	<form action="/">
+		<h3>Add a tivit for youself or for others</h3>
+		<p><label for="tivit">tivit:</label><input type="text" id="tivit" /></p>
+		<p><label for="who">Who:</label><input type="text" id="who" /></p>
+		<p class="assign"><i></i> assign myself</p>
+		<p><label for="what">What:</label><textarea id="what" cols="10" rows="10"></textarea></p>
+		<p class="input-date"><label for="due">Needed by:</label>
+		<input type="text" autocomplete="off" name="due" id="due" />
+		<img class="ico_calc" onclick="javascript:NewCssCal('due', 'mmddyyyy', 'arrow')" src="images/cal.gif" alt="date" /></p>
+		<div class="request">
+			<div class="form-button" id="cancel">Cancel</div>
+			<div class="form-button">Create</div>
+		</div>
+	</form>
+	
+	<div class="close" id="popup-close"></div>
+</div>
+-->
+
+<div class="popup" id="add-tivit-window">
+
+	<!-- Popup title -->
+	<h3>Add a tivit for youself or for others</h3>
+
+	<!-- in the form tag below, the second id is the actual HTML ID of the form which I use in jQuery -->
+	<%= form_tag({:controller => "activities", :action => "create_tivit", :method => "post", :id => @activity.id}, :id => "create-new-tivit-form") do %>
+	
+		<!-- tivit name -->
+		<!-- <p><label for="tivit">tivit:</label><input type="text" id="tivit" /></p> -->	
+		<p><label for="tivit">tivit:</label>
+			<%= text_field_tag(:name, nil) %> 
+		</p>
+		
+		<!-- tivit invitee -->
+		<!-- <p><label for="who">Who:</label><input type="text" id="who" /></p> -->
+		<p><label for="who">Who:</label>
+			<%= text_field_tag(:invitees, nil, :placeholder => "enter email address, separated by ; ") %> 
+			</p>
+		<p class="assign"><i></i> assign myself</p>
+		
+		<!-- tivit description -->
+		<!-- <p><label for="what">What:</label><textarea id="what" cols="10" rows="10"></textarea></p>-->
+		<p><label for="what">What:</label>
+			<%= text_area_tag(:description, nil) %> 
+			</p>
+	
+		<!-- need by date -->		  	
+		<p class="input-date"><label for="due">Needed by:</label>
+	     	<%= text_field_tag(:due, nil, :placeholder => "choose date", :name => "due",  :id => "due", :autocomplete => "off", :class => "input-date") %> 
+	     	<img class="ico_calc" src="/images/cal.gif" onclick="javascript:NewCssCal('due', 'mmddyyyy', 'arrow')" class="ico_calc" style="cursor:pointer"/> 	
+		</p>
+		 	
+		<div class="request">
+			<div class="form-button" id="cancel">Cancel</div>
+			  <%= submit_tag("Create", :class => "form-button") %>
+		</div>
+		
+	<% end %> 
+	
+	<!-- Popup close button -->
+	<div class="close" id="popup-close"></div>
+	
+</div>
+
 <div class="activities">
 	<!-- Top Activities Panel -->
 	<div class="act-main">
@@ -37,13 +108,14 @@
 	    	<div class="text">26</div>
 		</div>
 		-->
-		<div class="calendar red">
+		<div class="calendar new">
 			<%if (activitydetails.due != nil && activitydetails.due.inspect.size > 0 )%>
 				<div class="week"><%= (activitydetails.due.strftime ("%a")).upcase %></div>
 	    		<div class="text"><%= activitydetails.due.strftime ("%d") %></div>
 	    	<%end%>
 		</div>
 		
+		<!-- Activity Description -->
 		<div class="description">
 			<p><%= activitydetails.description %> 
 			 <a class="more" href="#">...more</a> <!-- <small>Don Drapper 5 min ago</small></p> -->
@@ -72,12 +144,14 @@
 		<!-- Left col: tivities -->		
 		<div class="leftCol">
 			<!-- My tivits -->
-			<div class="tivits">
+			<div class="tivits main-tivit" id="alltivits">
 				<!-- <h2>my tivits <span>(1)</span></h2> -->		
 				<% mytivits = activitydetails.tivits.where("owner_id = ? " ,current_account.user.id) %>
 				<% if mytivits !=nil && mytivits.size > 0 %>
 					<h2>my tivits <span>(<%= mytivits.size %>)</span></h2>
-					<%= render :partial => 'shared/tivit_adp', :collection =>  mytivits %>
+					<div class="tvit-list" id="mytivits">
+						<%= render :partial => 'shared/tivit_adp', :collection =>  mytivits %>
+					</div>
 				<%end%>
 				
 				<!-- add tivit button -->
@@ -98,12 +172,14 @@
 			
 			<!-- Team tivits -->
 		
-			<div class="team tivits">
+			<div class="team tivits" id="team-tivits">
 				<!-- <h2>team tivits<span>(4)</span></h2> -->
 				<% teamtivits = activitydetails.tivits.where("NOT owner_id = ? " ,current_account.user.id) %>
-				<% if teamtivits !=nil && mytivits.size > 0 %>
+				<% if teamtivits !=nil && teamtivits.size > 0 %>
 					<h2>team tivits <span>(<%= teamtivits.size %>)</span></h2>
-					<%= render :partial => 'shared/tivit_adp', :collection =>  teamtivits %>
+					<div class="tvit-list" id="teamtivits">
+						<%= render :partial => 'shared/tivit_adp', :collection =>  teamtivits %>
+					</div>
 				<%end%>
 				
 			</div> <!-- team tivits -->
@@ -112,7 +188,7 @@
 	
 	</div> <!-- "body" -->
 	
-</div> <!--"activities" -->
+</div> <!--"activities" --> 
 
 
 <!-- Old Activity Details Page code -->
@@ -185,9 +261,7 @@
   	
     <%= link_to "delete", activitydetails, :method => :delete,
                                      :confirm => "You sure you want to delete" +activitydetails.name+"?",
-                                     :title => activitydetails.name %>
-                                     
-                                     
+                                     :title => activitydetails.name %>                                       
     </br>                                
   <% end %>
   
@@ -231,3 +305,5 @@
 	<%end%>
   </td>
 </tr>
+<% activitydetails.update_status_after_show(current_account.user)%>
+  

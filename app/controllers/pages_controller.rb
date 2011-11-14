@@ -65,6 +65,7 @@ class PagesController < ApplicationController
 	  
 	  
 ################################# Completed ACTITVITIES #######################################################################################
+# Returns activities completed the last 15 days
 	  
 	  sql_completed_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
       				   WHERE activities.status      = 'Completed'  
@@ -76,7 +77,8 @@ class PagesController < ApplicationController
       				   ORDER BY activities.due"
       				           
       	@tivits_completed = Activity.find_by_sql(sql_completed_activities)
-      	
+#AND activities.completed_at    > ? 15.days.ago  
+                 
 ################################# Need Attension #######################################################################################
 	  	sql_need_attention_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses
       				   WHERE NOT activities.status          = 'Completed'  

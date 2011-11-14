@@ -13,9 +13,18 @@ ActionMailer::Base.smtp_settings = {
    :domain => "gmail.com",
    :authentication => :login,
    :user_name => "tiviti.mailer@gmail.com",
+   #:user_name => "tiviti.ilan.kasan@gmail.com",
+   
    :password => "gotiviti",
-}
+   
+#   :address        => 'smtpout.secureserver.net',
+#    :port           => 25,
+#    :domain         => 'tiviti.net',
+#    :authentication => :login,
+#    :user_name      => 'tiviti.mailer@tiviti.net',
+#    :password       => 'tiviti'
 
+}
 
 
  

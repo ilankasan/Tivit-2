@@ -1,0 +1,125 @@
+/*alert ('Ajax Works');*/
+console.log('in create_tivit.js.erb function');  
+
+/*
+console.log('in comment block');  
+ 
+jQuery("team-tivits").append ('<div class="avatar"><img alt="Pete Campbell" src="images/avatar_2.png"></div>');
+
+$("team-tivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");
+
+jQuery('#alltivits').append ('<h2>my tivits <span>(1)</span></h2>');
+
+	
+1. If new activity that means no tivits were created, we need to insert the my tivits or team tivits headers. 
+2. If empty and new tivit created for the owner, add the my tivits header. else, insert the team tivits header
+*/
+
+var content_to_add = '';
+
+<% activityparent = @activity.get_parent() %>
+
+console.log('[Yaniv] Checking number of tivits in activity');  
+console.log('[Yaniv] current user id=', <%= current_account.user.id %>);  
+console.log('[Yaniv] activity owner user id=', <%= @activity.owner_id %>);  
+
+//if creating tivit for myself
+<% if current_account.user.id == (@activity.owner_id) %>
+
+	console.log('[Yaniv] creating tivit for myself'); 
+	// check if we need to add the my tivits title	
+	<% mytivits = activityparent.tivits.where("owner_id = ? " ,current_account.user.id) %>
+	
+	console.log('[Yaniv] mytivits.size=', <%= mytivits.size %>);  
+	
+	<% if mytivits == nil || mytivits.size == 1 %>
+		// need to add the my tivits header
+		console.log('[Yaniv] first tivit for myself');  
+		jQuery('#alltivits').append('<h2>my tivits <span>(1)</span></h2>');	
+		jQuery('#alltivits').append('<div class="tvit-list" id="mytivits"></div>');			
+	<% end %>
+	
+	jQuery("#mytivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");	
+
+	// Need to update the tivits counter
+	
+<% else %>
+	//creating tivit for someone else
+	console.log('[Yaniv] creating for someone else'); 
+	<% teamtivits = activityparent.tivits.where("NOT owner_id = ? ", current_account.user.id) %>
+	
+	console.log('[Yaniv] teamtivits.size=', <%= teamtivits.size %>);  
+		
+	<% if teamtivits == nil || teamtivits.size == 1 %>
+		console.log('[Yaniv] first tivit for someone else!');  
+		jQuery('#team-tivits').append('<h2>team tivits <span>(1)</span></h2>');
+		jQuery('#team-tivits').append('<div class="tvit-list" id="teamtivits"></div>');	
+	<%end%>
+	
+	console.log('[Yaniv] trying to run the partial...'); 
+	jQuery("#teamtivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");
+	
+	// Need to update the tivits counter
+
+<% end %>
+
+closeNewActivity();
+console.log('[Yaniv] succeeded?'); 
+console.log('new tivit should be rendered by now...'); 
+
+
+// at this point, we are ready to add the activity to the page. 
+//jQuery('#alltivits').append (content_to_add);
+
+/*
+closeNewActivity();
+console.log('[Yaniv] trying to run the partial...'); 
+jQuery("#mytivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");
+console.log('[Yaniv] succeeded?'); 
+console.log('new tivit should be rendered by now...'); 
+*/	
+/*
+content_to_add = '<div class="tvit-list">'+
+					'<ul class="list">' +
+						'<li class="record unread">'+
+							'<div class="status"><div class="icon"></div></div>'+
+							'<div class="avatar"><img src="images/avatar_1.png" alt="Don-profile"></div>'+
+							'<div class="text">'+
+								'<div class="activity">'+
+									'<div class="comments"></div>'+
+									''<div class="calendar">'+
+										'<div class="week">MON</div>'+
+										''<div class="text">26</div>'+
+									'</div>'+
+								'</div>'+
+								'<h3>Finish Competitive Analysis</h3>'+
+								'<p><small><strong>Don Draper</strong>, Yesterday @ 8:09 AM</small></p>'+
+							'</div>'+
+							'<div class="clear"></div>'+
+							'<ul class="list">'+
+								'<li class="record unread">'+
+									'<div class="avatar"><img src="images/avatar_2.png" alt="Pete Campbell"></div>'+
+									'<div class="text">'+
+										'<p>I uploaded a file that has some data points I collected earlier this year on some of Kodak's competitors. Check it out.</p>'+
+										'<p><small><strong>Pete Campbell</strong>, 3 hours ago</small></p>'
+									'</div>'+
+									'<div class="respond">'+
+										'<div class="form-button">respond</div>'+
+										'<div class="status-list-dialog">'+
+											'<ul class="status-list">'+
+												'<li class="inprog"><div class="ico"></div>I'm on it</li>'+
+												'<li class="complete"><div class="ico"></div>I'm finished</li>'+
+												'<li class="busy"><div class="ico"></div>I'm too busy</li>'+
+												'<li class="attention"><div class="ico"></div>Propose new time</li>'+
+											'</ul>'+
+										'</div>'+
+									'</div>'+
+									'<div class="post"><textarea cols="10" rows="1">Leave a note...</textarea></div>'+
+									'<div class="clear"></div>'+
+								'</li>'+
+							'</ul>'+
+						'</li>'+
+					'</ul>'+
+				'</div>';
+
+*/	

@@ -3,30 +3,36 @@ class TivitcommentsController < ApplicationController
   
   def create
   	puts "---------    create comment -----------------------"
-  	puts "********************************************"
+  	puts "_________________________________________________________________________________"
+   	puts "********************************************"
   	puts "param - " +params.inspect
   	puts "********************************************"
 
   	@activity= Activity.find(params[:activity_id])
-  	if (@activity == nil)
+    
+    if (@activity == nil)
 			puts "activtity ========= nill !!!!!!!!!!!!!!!!!!!!"
-	end
+    end
 
-	params["tivitcomment"]["user_id"] = current_account.user.id
-# add action type Note
-	params["tivitcomment"]["action"] = "Note"
+    params["tivitcomment"]["user_id"] = current_account.user.id
+    # add action type Note
+    params["tivitcomment"]["action"] = "Note"
 	
-#		puts "params ----------   " + params["tiviticomment"].inspect 
-	@comment = @activity.tivitcomments.create(params["tivitcomment"])
-# send a comment to invited by id owner writes a comment
-	#puts "sending notification+ "+@comment.inspect
-
-	UserMailer.notify_comment_added_to_tivit(current_account.user, @comment,@activity, [@activity.get_invited_by]).deliver
-
+    #		puts "params ----------   " + params["tiviticomment"].inspect 
+    @comment = @activity.tivitcomments.create(params["tivitcomment"])
+    
     if (@comment != nil)
-			puts "@comment =======  " +@comment.inspect
-	end
-	redirect_to @activity
+      puts "@comment =======  " +@comment.inspect
+    end
+	
+	#respond with Ajax when needed...
+  respond_to do |format|
+      format.html { redirect_to @activity }
+      format.js
+      puts "--------------->> after responding to Ajax"
+  end
+    
+	#redirect_to @activity
 	#redirect_to root_path
 
  end

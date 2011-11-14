@@ -6,13 +6,6 @@ html, body {
 	margin: 0;
 	padding: 0;
 }
-.bk1 {
-	background: white;
-}
-.bk2 {
-	background: #333333;	
-}
-
 body {
 	font-family: Arial, 'Liberation Sans', FreeSans, sans-serif; /*Arial, Helvetica, Verdana, Sans-serif;*/
 	font-size: 12px;
@@ -36,7 +29,7 @@ a:visited {
   color: #069;
 }
 #page-container{
-	/*background: white;*/
+	background: white;
 	position: relative;
 	/*top: 32px;*/
 	/* if no width is specified, the whole browser will be take over */
@@ -518,6 +511,12 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     .tvit-list .label .progress{
         float:right;
     }
+    /***********************************/
+    /* Yaniv */
+    .tvit-list .label .activity-name{
+        color: #8A8AD8;
+    }
+	/***********************************/    
 
 .tvit-list .record{
     padding:5px;
@@ -549,20 +548,15 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
         .inprog .status .icon{
             background:url("../images/status_inprog.png") 0 0 no-repeat;
         }
-        
         /*************/
         /* Yaniv */
-        .unread .avatar {
-       		opacity: 0.6;
-       	}
+        
       	/*************/
-       	
         /* Add from Sorokina
 		.attention .avatar,
         .attention .text{
         	opacity: 0.5;
-        } 
-        */
+        } */
         .attention .status .icon{
             background:url("../images/status_attention.png") 0 0 no-repeat;
         }
@@ -572,6 +566,10 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
         .unread .status .icon{
             background:url("../images/status_unread.png") 0 0 no-repeat;
         }
+/*************/
+/* Yaniv - must add this so avatar unread will work properly */
+.record .unread .avatar {opacity: 0.6;}
+/*************/    	
 .tvit-list .record .avatar{
     float:left;
     height: 44px;
@@ -798,6 +796,7 @@ footer li{
   Styles for Activities Page from Irina Sorokina
 *******************************************************************************/
 a img{border:none;}
+.team .wrapper h2{font-size:24px;font-weight:bold;border:none;margin:0;}
 .activities{font-size:13px;}
 .activities p, .activities h1, .activities h2{margin:0;padding:0;}
 .activities h1{font-size:24px;font-weight:bold;color:#000;margin:9px 0 2px;}
@@ -806,14 +805,21 @@ a img{border:none;}
 .activities h3,.tvit-list .record .text h3{margin:6px 0 0;font-size:15px;color:#000;font-weight:bold;}
 .activities small{color:#8d8d8d;font-size:12px;}
 .activities a{color:#7b7bd2;}
+.activities #new-activity{display:none;background:none;width:764px;}
+.activities #new-activity .field {width:auto;}
+.activities #new-activity-complete {border-radius:0;}
+.visible{display:block !important;}
+.invisible{display:none !important;}
 
 /* main top info conteiner */
 .act-main{padding:4px 0 0;position:relative;width:960px;}
-.act-main .avatar{float:left;position:relative;z-index:100;margin:-4px 13px 0 0;width:94px;height:94px;border-radius:10px;}
+.act-main .avatar{float:left;position:relative;z-index:10;margin:-4px 13px 0 0;width:94px;height:94px;border-radius:10px;}
 .act-main .info{height:77px;background:#ddd;border-top:1px solid #f6f6f6;border-bottom:1px solid #e4e4e4;}
 .act-main .calendar{width:92px;height:84px;overflow:hidden;position:absolute;top:2px;right:-6px;padding-left:10px;
 		text-align:center;font-weight:bold;text-transform:uppercase;}
-	.act-main .calendar.red{background: url("../images/cal-1b.png") no-repeat;}
+	.act-main .calendar.new{background: url("../images/cal-1b.png") no-repeat;}
+	.act-main .calendar.past{background: url("../images/cal-2b.png") no-repeat;}
+	.act-main .calendar{background: url("../images/cal-3b.png") no-repeat;}
 .act-main .calendar .week{color:#FFF;font-size:22px;line-height:1.5;}
 .act-main .calendar .text{color:#000;font-size:40px;line-height:1;}
 
@@ -841,26 +847,37 @@ a img{border:none;}
 .file span{font-size:13px;}
 
 /* Blocks: My tivits, Team tivits */
-.tivits{position:relative;margin:45px 0 40px;padding:4px 8px 12px 12px;background:#f8f8f8;border-radius:7px;}
+.tivits{position:relative;margin:0;padding:4px 8px 4px 12px;background:#f8f8f8;border-radius:7px;}
 	.tivits.active,.record.active,.team .tvit-list .record.active{background:#ffffcc;}
+	.tivits li ul.list li.active{background:none !important;}
+	.tivits li ul.list .active .record-conteiner{background:#ffffcc;}
+		.record-conteiner{width:461px;padding:5px;}
+	.tivits.main-tivit{margin:50px 0;}
 .tivits .form-button{width:auto;padding:8px 10px 8px 40px;text-align:right;font-size:15px;position:absolute;top:-20px;right:0;
 	background:#61B010 url(../images/icon_add_tivit.png) 6px center no-repeat}
 .tivits .tvit-list .record .status{width:33px;}
 .tivits .calendar{display:inline-block;width:46px;height:38px;overflow:hidden;
-	background:url(../images/cal-1a.png) no-repeat;}
+	background:url(../images/cal-3a.png) no-repeat;}
+	.tivits .calendar.past{background:url(../images/cal-2a.png) no-repeat;}
+	.tivits .calendar.new{background:url(../images/cal-1a.png) no-repeat;}
 .tivits .calendar .week{padding-left:7px;height:14px;}
 .tivits .calendar .text{font-size:18px;padding-left:7px;}
 .tivits .record{padding-right:0;}
+.tivits .record .text-conteiner{width:465px;cursor:hover;}
 .tivits .record .activity{position:relative;width:116px;padding:0;margin:2px 0 0;}
 .tivits .record .unreaded{position:absolute;top:9px;left:-105px;}
 .tivits .record .attach{position:absolute;top:9px;left:-40px;}
 .tivits .record .comments{position:absolute;top:9px;left:0;}
 .tivits .record .calendar{position:absolute;top:0;left:45px;}
-.tivits .record .edit-menu{position:absolute;top:22px;right:8px;z-index:100;cursor:pointer;}
+.tivits .record .edit-menu{position:absolute;top:22px;right:8px;z-index:40;cursor:pointer;}
 	.edit-menu .icon{width:16px;height:17px;background:url(../images/icon_edit_menu.png) no-repeat;}
-.tivits li ul.list{margin:10px 0 0 85px;}
-.tivits li ul.list li{position:relative;}
-.tivits li ul.list .text{width:425px;padding-top:3px;color:#242424;}
+.tivits li ul.list{margin:10px 0 0 85px;display:none;}
+.tivits li ul.list{margin:10px 0 0 85px;display:none;}
+.tivits li ul.list li{position:relative;padding:0;}
+.tivits li ul.list li:first-child.active{margin-top:15px;}
+.tivits li ul.list .avatar,.tivits li ul.list .avatar img{width:26px;height:26px;}
+.tivits li ul.list .text{width:425px;padding:0 0 0 10px;color:#242424;line-height:1.2;}
+.tivits li ul.list .text p{padding:1px 0 2px;}
 .tivits li ul.list .text .start, .fupload{padding:0 0 2px;border-bottom: 1px dotted #EAEAEA;color: #8D8D8D;}
 .start.attention{padding-left:26px !important;background:url(../images/status_attention.png) no-repeat;}
 .start.complete{padding-left:26px !important;background:url(../images/status_complete_small.png) no-repeat;}
@@ -869,12 +886,12 @@ a img{border:none;}
 .request a{color:#2525f8;display:inline-block;padding:0 6px;}
 .request .form-button{position:relative;top:0;display:inline-block;background: #fff;padding:3px 15px;margin:20px 0 5px 5px;color:#929292;
 		border: 1px solid #C0C0C0;border-radius:4px;}
-.request .form-button:first-child{background-image:none;background-color:#61B010;color:#fff;margin:20px 0 5px 215px;}
+.request .form-button:first-child{background-image:none;background-color:#61B010;color:#fff;margin:20px 0 5px 200px;}
 .fupload{padding:3px 0 3px 50px !important;height:38px;}
 .fupload.pptx{background:url(../images/file_pptx.gif) no-repeat;}
 .fupload span{color:#2525f8;font-weight:bold;}
 .tivits small{font-size:11px;}
-.respond{position:absolute;top:0;right:0;width:163px;}
+.respond{position:absolute;top:0;right:0;z-index:1;width:163px;}
 .respond .form-button{position:relative;top:0;left:32px;font-size:13px;margin:0;padding:5px 0 5px 15px;text-align:center;width:90px;
 	background:#61B010 url(../images/status_unread.png) 4px center no-repeat;}
 .respond .form-button.inprog{background:#61B010 url(../images/status_inprog.png) 4px center no-repeat;}
@@ -882,36 +899,54 @@ a img{border:none;}
 .respond .form-button.attention{background:#61B010 url(../images/status_attention.png) 4px center no-repeat;}
 .respond .status-list-dialog{top:27px;left:32px;width:131px;}
 .team h2{margin-top:-30px;}
-.team, .team .tvit-list .record{background:#fff;}
-.menu-dialog{position:absolute;color:#3a3a3a;background:#f8f8f8;padding:2px;border:1px solid #cfcfcf;}
+.team, .team .tvit-list .record,.team  ul ul .record{background:#fff;}
+.menu-dialog{position:absolute;color:#3a3a3a;background:#f8f8f8;padding:2px;border:1px solid #cfcfcf;display:none;}
 	.edit-menu .menu-dialog ul li{padding:2px 22px 2px 28px;}
 .menu-dialog ul li:hover{background-color:#eaeaea;}
 	.edit{background:url(../images/icon_edit.png) 2px center no-repeat;}
 	.del{background:url(../images/icon_delete.png) left center no-repeat;}
 .tivits li ul.list .text input,
-.post input{width:415px;margin:10px 0 0;padding:0 4px;height:20px;color:#929292;font-style:italic;background:#fff;border:1px solid #e6e6e6;}
-	.tivits .post{padding-left:60px;position:relative;}
-.post .post-button{display:block;width:auto;height:22px;padding:0 12px 2px;background:#61B010;color:#fff;
+.post textarea{width:415px;margin:10px 0 0;padding:0 4px;height:20px;color:#929292;
+	background:#fff;border:1px solid #e6e6e6;
+	font:italic 13px Arial,'Liberation Sans',FreeSans,sans-serif;}
+	.tivits .post{position:relative;padding-left:36px;}
+	.tivits li ul.list .post{width:425px;}
+	.post textarea{padding-top:2px; resize:none; autocomplete="off" ; overflow: hidden; line-height: 18px;}
+	.post-style textarea{color:#242424;font-style:normal;}
+	
+	
+.post .post-button{display:block;width:auto;height:22px;margin:10px 0 0;padding:0 12px 2px;background:#61B010;color:#fff;
 	font:normal bold 13px/13px Arial, 'Liberation Sans', FreeSans,sans-serif;border: 1px solid #C0C0C0;}
+.new-record{border:1px solid #ffcc00;}
 .attach-file{display:block;width:70px;padding:0 0 0 27px;line-height:1.6;
 	background:url(../images/ico_attach.png) no-repeat;}
-	.post .attach-file{position:absolute;bottom:0;left:388px;}
+	.post .attach-file{position:absolute;bottom:0;left:365px;}
 	.post .attach-file.long{left:500px;}
-.show-more{padding:5px 0 0 148px;margin:0 0 -10px;font-size:12px;}
-.delete{width:18px;height:18px;display:block;position:absolute;top:8px;right:130px;background:url(../images/icon_delete.gif) no-repeat;}
+.show-more{padding:5px 0 0 125px;margin:0 0 -7px;font-size:12px;display:none;}
+.more.less{display:block;margin:10px 0 0;}
+small.less{display:block;padding:0;}
+.delete{width:18px;height:18px;display:none;position:absolute;top:8px;right:130px;z-index:10;background:url(../images/icon_delete.gif) no-repeat;}
+	.tivits ul.list ul.list li:hover .delete{display:block;}
 
 /* Styles for popup windows */
-.popup{position:relative;z-index:1200;width:500px;margin:0 auto;padding:10px;color:#000;
+.popup{position:absolute;top:70px;left:239px;z-index:100;width:480px;padding:10px;color:#000;display:none;
 	background:#fff;border-radius:10px;border:1px solid #eaeaea;}
 .popup h3{padding:5px 0 5px 38px;margin:0;background:url(../images/icon_add_tivit.gif) no-repeat;}
 .popup label{font-size:14px;vertical-align:top;display:inline-block;width:50px;padding-right:5px;text-align:right;line-height:2.1;}
-.popup input,.popup textarea{width:400px;height:27px;border:1px solid #d0d0d0;}
-.popup textarea{height:70px;}
-.popup .input-date label{width:275px;}
+.popup input,.popup textarea{width:400px;height:27px;border:1px solid #d0d0d0;font:normal 14px Arial,'Liberation Sans',FreeSans,sans-serif;}
+.popup textarea{height:70px;resize:none;}
+.popup form p{margin:12px 0;}
+.popup .input-date label{width:271px;}
 .popup .input-date input{width:175px;height:20px;}
-.popup .request .form-button:first-child{background-color:#fff;color:#929292;margin-left:323px;}
-.popup .request .form-button{background-color:#61B010;color:#fff;cursor:pointer;}
-.popup .close{position:absolute;top:-15px;right:-15px;width:30px;height:30px;cursor:pointer;background:url(../images/icon_close.png) no-repeat;}	
+.popup .input-date .ico_calc{float:right;}
+.popup .assign{padding-left:56px;cursor:pointer;}
+.popup .assign i{display:inline-block;width:14px;height:14px;border:1px solid #d0d0d0;
+		position:relative;top:3px;background:none;}
+.popup .assign.active i{background:url('../images/icon_assign.gif') no-repeat;}
+.popup .request .form-button:first-child{background-color:#fff;color:#929292;margin-left:298px;padding:2px 15px;}
+.popup .request .form-button{margin-top:0;background-color:#61B010;color:#fff;cursor:pointer;width:auto;padding:2px 20px;}
+.popup .close{position:absolute;top:-15px;right:-15px;width:30px;height:30px;cursor:pointer;background:url(../images/icon_close.png) no-repeat;}
+
 /******************************************************************************************************
 /* SIGN IN/UP PAGEs */
 

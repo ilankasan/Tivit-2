@@ -3,6 +3,8 @@ puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
 puts "Carrierwave Initialization"
 puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
 
+
+ 
 if Rails.env.development? || Rails.env.test?
 	 puts "in development using file system "
 		 

@@ -1,0 +1,32 @@
+//alert ('Ajax Works');
+
+console.log('[Yaniv] Comments - Ajax Create call. in create.js.erb function');  
+
+<% if @comment != nil %>
+
+		console.log('[Yaniv] comment != nil...we have a comment to render.'); 
+		
+		//console.log('[Yaniv] @comment =', <%= @comment.comment %>);  
+		
+		console.log('[Yaniv] trying to run the new comment partial...'); 
+				
+		//var newcommentId = "#activities164tivitcomments";
+		
+		// This is how we construct the specific div in the base-jq.js file for the new comment.
+		// They have to match, otherwise the new comment will not show up. the unique identifier is the activity ID 
+		// which is basically the tivit ID.
+		var newcommentId = "#activities" + "<%= @activity.id %>" + "tivitcomments";
+		
+		console.log('[Yaniv] create.js.erb: newcommentId=', newcommentId);  
+		
+		jQuery(newcommentId).append("<%= escape_javascript(render(:partial => 'shared/tivit_adp_comment', :collection =>  [@comment])) %>");		
+						
+		console.log('[Yaniv] succeeded?'); 
+		console.log('[Yaniv] new comment should be rendered by now...'); 
+		
+<% else %>
+
+	console.log('[Yaniv] seems like the comment we need to render is nil.'); 
+
+<% end %>
+

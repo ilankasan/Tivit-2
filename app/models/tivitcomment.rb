@@ -26,14 +26,17 @@ class Tivitcomment < ActiveRecord::Base
 	belongs_to :user
 	
 	validates :comment,  :presence => true
-# Returns true is this tivit was reviewed in the past and false if did not.
-# The way it is determined is by looking at when the user last reviewed the activity page and the date the comment creates  
-	def wasReviewed?(user)
-	   tivit_user_status = self.activity.tivit_user_statuses.find_by_user_id(user.id)
+     
+     
+  # Returns true is this tivit was reviewed in the past and false if did not.
+  # The way it is determined is by looking at when the user last reviewed the activity page and the date the comment creates  
+  def wasReviewed?(user)
+     tivit_user_status = self.activity.tivit_user_statuses.find_by_user_id(user.id)
      if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
-       if (self.user.id != user.id && self.created_at > tivit_user_status.last_reviewed)
+       if (self.user.id != user.id && self.created_at > tivit_user_status.last_reviewed)     
          return true
        else
+         puts "[Yaniv] Found new comment for logged in user!"
          return false
        end
          
@@ -42,6 +45,6 @@ class Tivitcomment < ActiveRecord::Base
        return true
      end
       
-	end
-                    
+  end
+                 
 end

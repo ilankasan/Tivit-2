@@ -1,38 +1,52 @@
-<%if   comment.comment != nil && comment.user != nil%>
 
-	<li class="record">
-		<!-- <div class="avatar"><img src="images/avatar_2.png" alt="Pete Campbell"></div> -->
-					
+<!-- Answer (second) tivit -->
+<%if   tivit_adp_comment.comment != nil && tivit_adp_comment.user != nil%>
+
+<!-- if new comment for this user, paint background yellow -->
+<% if tivit_adp_comment.wasReviewed? (current_account.user) %>
+	<!-- use class="record invisible" for comments you want to show in "view more comments" (when there's more that 2). Also, class="record active" will paint the background yellow. Use this for new comments -->
+	<li class="record">		
+<% else %> 
+	<!-- Paints the comment background yellow -->
+	<li class="record active">
+<% end %>
+		
+	<div class="record-conteiner">
+		
+		<!-- Delete button -->
+		<a href="#" class="delete"></a>
+		
 		<!-- comment user avatar -->
 		<div class="avatar">
-			<%= render :partial => 'profile_images/profile_image', :collection =>  [comment.user], :as => :user, :class => "avatar" %> 
+			<%= render :partial => 'profile_images/profile_image', :collection =>  [tivit_adp_comment.user], :as => :user, :class => "avatar" %> 
 		</div>
 			
 		<!-- If comment is associated with action, show the action -->											
 		<div class="text">
-			<%case comment.action%>
+			<%case tivit_adp_comment.action%>
 		  	  	<%when ("OnIt")%>
-		  	  		<p class="start"><%= comment.user.name %> started <%= time_ago_in_words(comment.created_at) %> ago.</p>
+		  	  		<p class="start"><%= tivit_adp_comment.user.name %> started <%= time_ago_in_words(tivit_adp_comment.created_at) %> ago.</p>
 		   	  
 		  	  	<%when ("Done")%>
-		  	  		<p class="start complete"><%= comment.user.name %> completed his tivit <%= time_ago_in_words(comment.created_at) %> ago.</p>
+		  	  		<p class="start complete"><%= tivit_adp_comment.user.name %> completed his tivit <%= time_ago_in_words(tivit_adp_comment.created_at) %> ago.</p>
 		  	  		
 		   	  	<%when ("Declined")%>
-		  	  		<p class="start"><%= comment.user.name %> cannot help with this tivit. <%= time_ago_in_words(comment.created_at) %> ago.</p>
+		  	  		<p class="start"><%= tivit_adp_comment.user.name %> cannot help with this tivit. <%= time_ago_in_words(tivit_adp_comment.created_at) %> ago.</p>
 		  	  		
 		   	  	<%when ("Proposed")%>
 		  	  		<p class="start attention">New time proposed: Thusday, Nov. 25</p>
 			<%end%>
 		
 			<!-- Display actual comment -->
-			<p><%= comment.comment%></p>
+			<p><%= tivit_adp_comment.comment%></p>
 			<!-- User name and time -->
-			<% if comment.user.id == current_account.user.id %>
-			<% username = "You" %>
+			
+			<% if tivit_adp_comment.user.id == current_account.user.id %>
+				<% username = "You" %>
 			<%else%>
-			<% username = comment.user.name %>
+				<% username = tivit_adp_comment.user.name %>
 			<%end%>
-			<p><small><strong><%= username %></strong>, <%= time_ago_in_words(comment.created_at) %> ago.</small></p>
+			<p><small><strong><%= username %></strong>, <%= time_ago_in_words(tivit_adp_comment.created_at) %> ago.</small></p>
 						
 			<!-- <p><input type="text" value="Leave a note..." /></p> -->
 		</div>
@@ -52,8 +66,10 @@
 -->	
 
 		
-			
+	
 		<div class="clear"></div>
+	</div>
+	
 	</li>
 	  	  
 <% end %>

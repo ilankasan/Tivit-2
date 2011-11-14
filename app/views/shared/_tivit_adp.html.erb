@@ -1,104 +1,128 @@
 
-<div class="tvit-list">
-					
+				
 	<ul class="list">
-		<!-- Main (first) tivit -->
 				
 		<!-- Display a tivit within an activity on the Activity Details page -->
 		<% owner_tivit_status = tivit_adp.get_owner_status %>
 		
 		<% if (owner_tivit_status == "OnIt" || owner_tivit_status == "Accepted")%>
 		
-			<li class="record inprog">
+		<li class="record inprog">
 			    
 		<% elsif owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed"%>
 		
-			<li class="record unread">
+		<li class="record unread">
 			                      
 		<% elsif owner_tivit_status == "Done" %>
 		
-			<li class="record complete">
+		<li class="record complete">
 				
 		<% elsif owner_tivit_status == "Proposed" %>
 		
-			<li class="record attention">
+		<li class="record attention">
 				                            
 		<% else %>	                            
 		
-			<li class="record busy">
+		<li class="record busy">
 			
 		<%end%>
 		
-			<div class="status">
-				<div class="icon"></div>
-			</div>
+			<div class="conteiner">
+				
+				<div class="status">
+					<div class="icon"></div>
+				</div>
+		
+				<!-- Render User Avatar -->
+				<!-- if the status is new, that means the owner didn't read it yet, dim avatar and put the remind link -->
+	<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
 	
-			<!-- Render User Avatar -->
-			<!-- if the status is new, that means the owner didn't read it yet, dim avatar and put the remind link -->
-<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
-
-	<div class="avatar unread">
-<% else %>
-	<div class="avatar">
-<%end%>
-				<%= render :partial => 'profile_images/profile_image', :collection =>  [tivit_adp.get_owner], :as => :user, :class => "avatar" %> 
-			</div>
-						 
-			<div class="text">
-				<div class="activity">
-					
-					<!-- comments icon -->
-					
-					<div class="comments"></div>
-					
-					<!-- calendar icon -->
-					
-	    			<!-- Yaniv to-do: change calendar rendering to be partial, adjust label from day/number to Month/number and different bacgkround icon as needed depending on when the tivit is due -->
-					<div class="calendar">
-						<%if (tivit_adp.due != nil && tivit_adp.due.inspect.size > 0 )%>
-							<div class="week"><%= (tivit_adp.due.strftime ("%a")).upcase %></div>
-	    					<div class="text"><%= tivit_adp.due.strftime ("%d") %></div>
-	    				<%else%>
-	    					<div class="week"></div>
-	    					<div class="text">?</div>
-	    				<%end%>
+			<div class="avatar unread">
+	<% else %>
+				<div class="avatar read">
+		<%end%>
+					<%= render :partial => 'profile_images/profile_image', :collection =>  [tivit_adp.get_owner], :as => :user, :class => "avatar" %> 
+				</div>
+								 
+				<div class="text">
+					<div class="activity">
+							
+						<!-- comments icon -->
+						<% unread_comments = tivit_adp.get_number_of_unread_comments(current_account.user)%>	
+						<div class="comments">
+				   		<% if unread_comments > 0 %>
+				   			<i><%=unread_comments%></i>
+				   		<%end%>
+		    			</div>
+						
+						<!-- calendar icon -->
+						<!-- Yaniv to-do: change calendar rendering to be partial, adjust label from day/number to Month/number and different bacgkround icon as needed depending on when the tivit is due -->
+						<div class="calendar">
+							<%if (tivit_adp.due != nil && tivit_adp.due.inspect.size > 0 )%>
+								<div class="week"><%= (tivit_adp.due.strftime ("%a")).upcase %></div>
+			    				<div class="text"><%= tivit_adp.due.strftime ("%d") %></div>
+			    			<%else%>
+			    				<div class="week"></div>
+			    				<div class="text">?</div>
+			    			<%end%>
+						</div>
+					</div>
+							
+					<div class="text-conteiner">
+																	
+						<!-- tiviti name -->
+						<h3><%= tivit_adp.name %></h3>
+						
+						<!-- status line -->	
+						
+						<% if owner_tivit_status == "Proposed" %>
+				
+							<p class="request"><span><%= tivit_adp.get_owner.name %> is requestiong a new date <strong><%= tivit_adp.get_owner_proposed_date %></strong></span>
+								<%= link_to "accept",	:controller  => "activities",
+		    											:action      => "change_tivit_status",
+		    											:status      => "accept_date",
+		    											:id          => tivit_adp.id, 
+		  							    				:confirm     => "Are you sure you want to accepet new date " +tivit_adp.name+"?",
+		                                				:title       => tivit_adp.name %>
+		                                					
+								
+								 | <a href="#">decline</a> | <a href="#">counter</a>
+							</p>
+						<% else %>                  
+		   					<% if tivit_adp.get_invited_by !=nil %>
+			   					<!-- <p><small><strong>Don Draper</strong>, Yesterday @ 8:09 AM</small></p> -->
+			   					<p><small>invited by <strong><%= tivit_adp.get_invited_by.name %></strong>, <%= time_ago_in_words(tivit_adp.created_at) %> ago</small></p>
+		   					<% end %>
+		   				<% end %>
+		   						
 					</div>
 				</div>
-				
-				<!-- tiviti name -->
-				<h3><%= tivit_adp.name %></h3>
-				
-				<!-- status line -->	
-				
-				<% if owner_tivit_status == "Proposed" %>
-		
-					<p class="request"><span><%= tivit_adp.get_owner.name %> is requestiong a new date <strong><%= tivit_adp.get_owner_proposed_date %></strong></span>
-						<%= link_to "accept",	:controller  => "activities",
-    											:action      => "change_tivit_status",
-    											:status      => "accept_date",
-    											:id          => tivit_adp.id, 
-  							    				:confirm     => "Are you sure you want to accepet new date " +tivit_adp.name+"?",
-                                				:title       => tivit_adp.name %>
-                                					
-						
-						 | <a href="#">decline</a> | <a href="#">counter</a>
-					</p>
-				<% else %>                  
-   					<% if tivit_adp.get_invited_by !=nil %>
-	   					<!-- <p><small><strong>Don Draper</strong>, Yesterday @ 8:09 AM</small></p> -->
-	   					<p><small>invited by <strong><%= tivit_adp.get_invited_by.name %></strong>, <%= time_ago_in_words(tivit_adp.created_at) %> ago</small></p>
-   					<% end %>
-   				<% end %>
-   						
-			</div>
-			<div class="clear"></div>
-							
+					
+				<div class="edit-menu">
+					<div class="icon"></div>
+					<div class="menu-dialog">
+						<ul>
+							<li class="edit">edit</li>
+							<li class="del">delete</li>
+						</ul>
+					</div>
+				</div>
+									
+				<div class="clear"></div>
+		</div>	
+	
+		<div class="show-more"><a href="#">Show 2 more comment</a></div>
+	
+<!-- Figure out if we need to open tivits that has new comments for this user. If new comments, add "display: block" otherwise, collapse the comments -->
+
+<% if unread_comments > 0 %> 					
 			<!-- tivit comments / answer -->
-			<ul class="list">
-				
+			<ul class="list" style="display: block">
+<% else %>	
+			<ul class="list">	
+<% end %>			
 				<%= render :partial => 'shared/tivit_adp_comments_list', :collection =>  [tivit_adp], :as => :tivit %>
-		
+			
 			</ul>
 		</li>
 	</ul>
-</div>
