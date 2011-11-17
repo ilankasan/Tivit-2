@@ -17,9 +17,9 @@ FirstApp::Application.routes.draw do
  
   match "profile_images/:id" 	  => "profile_images#update"
  
-  #devise_for :accounts, :controllers => { :sessions => "sessions" }
+  devise_for :accounts, :controllers => { :sessions => "sessions" }
   
-  #devise_for :accounts
+  devise_for :accounts
 
   resources :profile_images do
   resources :users

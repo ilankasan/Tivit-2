@@ -6,8 +6,9 @@
 		<%= render 'layouts/stylesheets' %>
 		<%= javascript_include_tag :defaults %>
 		<%= javascript_include_tag "datetimepicker_css" %>
-		<%= javascript_include_tag "application.js" %>
-				
+		
+		<%= javascript_include_tag "base-jq.js" %>
+		
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 		<%= javascript_include_tag "jquery.hashchange.js" %>
 		<%= javascript_include_tag "jquery.jtabs.0.1.min.js" %>
@@ -17,15 +18,7 @@
 		<%= javascript_include_tag "dragdrop.js" %>
 		<%= javascript_include_tag "controls.js" %>
 		<%= javascript_include_tag "rails.js" %>
-		
-		<%= javascript_include_tag "jquery-1.6.4.min.js" %>
-		<%= javascript_include_tag "autoresize.jquery.min.js" %>
-		<%= javascript_include_tag "jquery.truncate.min.js" %>
-		
-
-
-	
-    
+		<%= javascript_include_tag "application.js" %>
 		
     <script type="text/javascript">
         function callback(id, datum) {
@@ -54,19 +47,6 @@
         font-weight: bold;
     }</style>
 
-<script type="text/javascript">
-
-	jQuery(function()
-	{
-		jQuery('.post textarea').autoResize({extraSpace : 0});
-		
-		jQuery('.description p span').truncate({
-			width: '1100',
-			after: '&hellip;'
-		});
-	});
-</script>
-	
 <!-- Googld Analytics Tracking -->
 <script type="text/javascript">
 

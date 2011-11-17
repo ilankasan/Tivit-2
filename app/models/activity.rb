@@ -227,21 +227,15 @@ class Activity < ActiveRecord::Base
  def get_owner_last_review_date
  	return self.tivit_user_statuses.find_by_user_id(self.owner_id).last_reviewed
  end
+
+# Get's the number of unread comments (do not include new comments from user)
  
  def get_number_of_unread_comments(user)
- # het number of unread comment (do not include new comments from user)
- 	#get date of last unread
+#get date of last unread
  	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
   		#puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
-  		comments = self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id)
-  		
-  		if(comments == nil)
-  			return 0
-  		else
-  		#	puts "number of unread tivits = " + comments.size.inspect + " user id = "+user.id.inspect+""
-  			return comments.size
-  		end
+  		return self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id).count
   	else
   		#puts "tivit_user_status.last_reviewed = nill"
   		return self.get_number_of_comments 
