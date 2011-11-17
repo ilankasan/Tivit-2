@@ -6,6 +6,12 @@ html, body {
 	margin: 0;
 	padding: 0;
 }
+.bk1 {
+	background: white;
+}
+.bk2 {
+	background: #333333;	
+}
 body {
 	font-family: Arial, 'Liberation Sans', FreeSans, sans-serif; /*Arial, Helvetica, Verdana, Sans-serif;*/
 	font-size: 12px;
@@ -29,7 +35,7 @@ a:visited {
   color: #069;
 }
 #page-container{
-	background: white;
+	/*background: white;*/
 	position: relative;
 	/*top: 32px;*/
 	/* if no width is specified, the whole browser will be take over */
