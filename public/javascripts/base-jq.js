@@ -350,7 +350,7 @@ jQuery(document).ready(function($){
 		$('#add-tivit-window').show();
 		var myDate = new Date();
 		var prettyDate =(myDate.getMonth()+1) + '/' + (myDate.getDate()+1);
-		$('#due').val('tommorrow ' + '(' + prettyDate + ')');
+		/*$('#due').val('tommorrow ' + '(' + prettyDate + ')');*/
 	});	
 	$('.popup .close').click(function(){
 		closeNewActivity();

@@ -58,14 +58,23 @@ class ActivitiesController < ApplicationController
   def destroy
     
     
-#ilan: Need to send an email notifying all participants the activity and tivit
-	related_tivits = @activity.tivits
-    related_tivits.each do |tivit|
-    	tivit.destroy
-  	end 
-    @activity.destroy
-      
-    redirect_back_or root_path
+ puts "in destroy"
+    puts params.inspect
+    @activity = Activity.find(params[:id])
+    
+  #ilan: Need to send an email notifying all participants the activity and tivit
+  related_tivits = @activity.tivits
+  related_tivits.each do |tivit|
+    tivit.destroy
+  end
+  docs  = @activity.documents
+  docs.each do |doc|
+    doc.destroy
+  end
+  
+  @activity.destroy 
+    
+  redirect_to root_path
   end
   
   
