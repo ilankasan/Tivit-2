@@ -335,8 +335,6 @@ function closeNewActivity(){
     jQuery('#new-activity-form textarea').val('');
 }
 
-
-
 // Scripts for Activity Page
 // from Irina Sorokina (sorokina333@gmail.com)
 jQuery(document).ready(function($){
@@ -347,10 +345,15 @@ jQuery(document).ready(function($){
 	//add tivit
 	$('#add-tivit').click(function(){
 		openNewActivity();
+		/* Yaniv - clear the form before creating new tivit **/
+		$("#create-new-tivit-form")[0].reset();
+		/*****************************************************/
 		$('#add-tivit-window').show();
+		/**** Yaniv **** this should be commented out so the choose date in the new tivit popup can be empty
 		var myDate = new Date();
 		var prettyDate =(myDate.getMonth()+1) + '/' + (myDate.getDate()+1);
-		/*$('#due').val('tommorrow ' + '(' + prettyDate + ')');*/
+		$('#due').val('tommorrow ' + '(' + prettyDate + ')');
+		*/
 	});	
 	$('.popup .close').click(function(){
 		closeNewActivity();
