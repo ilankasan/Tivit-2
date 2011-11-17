@@ -251,6 +251,21 @@
   
   <td>
   
+<h1><%= link_to "Add file", 		:controller  => "documents", 
+   											:action      => "new",
+   											:id          => activitydetails.id, 
+  							    			:title       => "Manage Files" %>,<h1>
+
+
+	 	<% if activitydetails.documents == nil %>
+ 			<span class="content"> No file attached to this Activity</span><br>
+ 		<% else %>
+
+			<%= render :partial => 'documents/document', :collection =>  activitydetails.documents %> 
+ 		<% end %> 
+ 		
+  	
+  
    <h1><%= link_to "Add tivit", 		:controller  => "activities", 
    											:action      => "new_tivit",
    											:id          => activitydetails.id, 
