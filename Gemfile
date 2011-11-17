@@ -10,14 +10,15 @@ gem 'sqlite3-ruby', '1.3.2', :require => 'sqlite3'
 gem 'sqlite3-ruby', '1.3.2'
 gem 'will_paginate', '3.0.pre2'
 gem 'rails3-jquery-autocomplete'
-gem 'devise'
-gem 'omniauth'
 gem 'mongrel', '1.2.0.pre2'
+
+#gem 'devise'
+#gem 'omniauth'
 #gem 'rake', '0.8.7'  
 
 group :production do
-#gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git' , :tag => 'v0.3.0.rc3'
-#gem 'devise', '1.4.5'
+gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git' , :tag => 'v0.3.0.rc3'
+gem 'devise', '1.4.5'
   
 end
 
