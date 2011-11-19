@@ -47,6 +47,20 @@
         font-weight: bold;
     }</style>
 
+
+<script type="text/javascript">
+
+    jQuery(function()
+    {
+        jQuery('.post textarea').autoResize({extraSpace : 0});
+        
+        jQuery('.description p span').truncate({
+            width: '1100',
+            after: '&hellip;'
+        });
+    });
+</script>
+
 <!-- Googld Analytics Tracking -->
 <script type="text/javascript">
 
