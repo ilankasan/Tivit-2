@@ -1,0 +1,165 @@
+	<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= @title %></title>
+		<%= csrf_meta_tag %>
+		<%= render 'layouts/stylesheets' %>
+		<%= javascript_include_tag :defaults %>
+		<%= javascript_include_tag "datetimepicker_css" %>
+		
+		<%= javascript_include_tag "base-jq.js" %>
+		
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<%= javascript_include_tag "jquery.hashchange.js" %>
+		<%= javascript_include_tag "jquery.jtabs.0.1.min.js" %>
+		<%= javascript_include_tag "base-jq.js" %>
+		<%= javascript_include_tag "prototype.js" %>
+		<%= javascript_include_tag "effects.js" %>
+		<%= javascript_include_tag "dragdrop.js" %>
+		<%= javascript_include_tag "controls.js" %>
+		<%= javascript_include_tag "rails.js" %>
+		<%= javascript_include_tag "application.js" %>
+		
+    <script type="text/javascript">
+        function callback(id, datum) {
+             var CalId = document.getElementById(id); if (datum=== 'undefined') { var d = new Date(); datum = d.getDate() + '/' +(d.getMonth()+1) + '/' + d.getFullYear(); } window.calDatum=datum;CalId.value=datum;
+             if (Cal.ShowTime) {
+                 CalId.value+=' '+Cal.getShowHour()+':'+Cal.Minutes;
+                 if (Cal.ShowSeconds)
+                  CalId.value+=':'+Cal.Seconds;
+                 if (TimeMode === 12)
+                  CalId.value+=''+Cal.getShowAMorPM();
+             }
+             winCal.style.visibility='hidden';
+        }
+    </script>
+    <style type="text/css">.calTD {
+        font-family: verdana;
+        font-size: 12px;
+        text-align: center;
+        border: 0;
+    }
+
+    .calR {
+        font-family: verdana;
+        font-size: 12px;
+        text-align: center;
+        font-weight: bold;
+    }</style>
+
+
+<script type="text/javascript">
+
+    jQuery(function()
+    {
+        jQuery('.post textarea').autoResize({extraSpace : 0});
+        
+        jQuery('.description p span').truncate({
+            width: '1100',
+            after: '&hellip;'
+        });
+    });
+</script>
+
+<!-- Googld Analytics Tracking -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26243257-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<!-- end Google Analytics Tracking -->
+
+	</head>
+
+<% if account_signed_in? %>
+	<body class="bk1">
+<% else %>
+	<body class="bk2">		
+<% end %>  		
+   		<!-- Header - Main Navigation & New Activity Bar -->
+	  	<!-- <div id="main-nav-background"> -->
+	      	<%= render 'layouts/header' %>
+	    <!-- </div> -->
+     	
+     	<!-- Page Content Area -->
+<% if account_signed_in? %>
+		<div id="page-container" class="bk1">
+<%else%>
+		<div id="page-container" class="bk2">
+<%end%>    		
+			<% flash.each do |key, value| %>
+				<div class="flash <%= key %>"><%= value %></div>
+			<% end %>
+
+		     
+		     	<%= yield %>	     	 
+		     
+	       
+	       <div style="clear: both;"></div>
+	       
+    	</div>    
+    
+	    <!-- Lighbox effect! -->
+		<div style="clear: both;"></div>
+	 		<div id="activity-overlay"></div>
+		</div>
+    
+    	<!-- Footer -->
+	    <div id="footer">
+	    	<%= render 'layouts/footer' %>
+	    </div>
+    
+    <div style="clear: both;"></div>
+    
+    	<%= debug(params) if Rails.env.development? %>
+      
+	</body>
+	
+<!-- Beta Easy Widget -->
+<!--
+<script type="text/javascript">
+// <![CDATA[
+    if ("http:" == document.location.protocol) {
+        document.write(unescape("%3Cscript src='" + (("https:" == document.location.protocol) ? "http://cdn.betaeasy.com" : "http://cdn.betaeasy.com") + "/betaeasy.js' type='text/javascript'%3E%3C/script%3E"))
+    }
+   // ]]>
+</script>
+<script type="text/javascript">
+// <![CDATA[
+try {
+    BetaEasy.init({
+        betaId: '863',
+        styleType: 'new',
+        buttonAlign: 'left',
+        language: 'en',
+        buttonBackgroundColor: '#f00',
+        buttonMouseHoverBackgroundColor: '#06C',
+        buttonImageActive: 'en/newbtn-5.png',
+        buttonImageHover: 'none'
+    });
+} catch(err) {}
+// ]]>
+</script>
+-->
+<!-- End Beta Easy Widget -->
+
+<!-- User Voice Feedback Widget START -->
+<script type="text/javascript">
+  var uvOptions = {};
+  (function() {
+    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/Lv94vAUgz4sVo9HCcNtcHQ.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+  })();
+</script>
+<!-- User Voice Feedback Widget END -->
+  
+</html>
