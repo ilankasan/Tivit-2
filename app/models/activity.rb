@@ -100,7 +100,7 @@ class Activity < ActiveRecord::Base
   	  
   def get_need_attention_tivits (currentuser)
   	
-  	puts " current user = "+ currentuser.id.to_s
+  	#puts " current user = "+ currentuser.id.to_s
   	results1 = 
 	self.tivits.joins(:tivit_user_statuses).where("activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id 
 	AND ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",currentuser.id)

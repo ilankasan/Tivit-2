@@ -285,8 +285,15 @@ class ActivitiesController < ApplicationController
 	  
 	  config.debug("------>>>>> creating activity" + @activity.name )
 	  log_action_as_comment(@activity,params["description"],"TivitDetails",current_account.user)
+	  puts "inveted user id = "+@invited_user.get_id.to_s
+	  puts "invetee user id = "+current_account.user.get_id.to_s
     
-    UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
+	  if(@invited_user.get_id != current_account.user.get_id)
+    
+      UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
+    end
+      
+      
     
     
    #respond with Ajax when needed...
