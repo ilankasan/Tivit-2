@@ -129,11 +129,11 @@ class Activity < ActiveRecord::Base
   end
   
   
-# After the user viewed the tivit for the virst time, make sure status changes from New to Review 
+# After the user viewed the tivit for the first time, make sure status changes from New to Review 
   def update_status_after_show(user)
  	puts "------------------------------------------------------------"
- 	puts "attempting to change status" 	
- #puts "------------------------------------------------------------" 	
+ 	puts "AFTER show attempting to change status for activity "+self.id.to_s+ " "+self.activity_name 	
+ puts "------------------------------------------------------------" 	
     status = self.get_user_status(user) 	
   	if(status == "New")
   		change_status(user,"Reviewed","")
@@ -232,10 +232,31 @@ class Activity < ActiveRecord::Base
  
  def get_number_of_unread_comments(user)
 #get date of last unread
+puts "get_number_of_unread_comments"
+puts "tivit: "+self.activity_name+ " id = "+self.id.to_s
+puts "checking status for user "+user.get_name
+
  	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
-  		#puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
-  		return self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id).count
+  		puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
+  		size = self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id).count
+  		#size = 1
+  		if(size > 0)
+  		  
+  		  puts "________________________________________________________"
+        puts "________________________________________________________"
+        puts "________________________________________________________"
+        puts "________________________________________________________"
+        puts "________________________________________________________"
+  		  puts "number of unread comment "+size.to_s
+  		  puts "________________________________________________________"
+        puts "________________________________________________________"
+        puts "________________________________________________________"
+        puts "________________________________________________________"
+        
+  		  
+  		end
+  		return size
   	else
   		#puts "tivit_user_status.last_reviewed = nill"
   		return self.get_number_of_comments 

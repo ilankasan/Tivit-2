@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
   before_filter :authenticate_account!
-  
+  after_filter :update_view_status, :only => :show 
   
   
    def create_activity(params, type)
@@ -107,17 +107,22 @@ class ActivitiesController < ApplicationController
   
   def show
     
-   puts "----------->>>>>>>>>>> sho activity detailed page"  
+   puts "----------->>>>>>>>>>> show activity detailed page"  
     @activity = Activity.find(params[:id])
     #updating tivit status New -> Reviewed and last update to current time
    
-    @activity.update_status_after_show(current_account.user)
+   # @activity.update_status_after_show(current_account.user)
     
   	@title = "Activity Details - "+@activity.name
   	
   end
   
-  
+ def update_view_status
+   puts "----------->>>>>>>>>>> update_view_status"  
+   
+    @activity.update_status_after_show(current_account.user)
+   
+ end 
   
   def update_tivit
     puts "-----------    UPDATE tivit"  
