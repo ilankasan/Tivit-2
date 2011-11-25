@@ -17,13 +17,13 @@ class UserMailer < ActionMailer::Base
 
 
  def notify_comment_added_to_tivit(commenter, comment,activity, send_to)
-#103 Tivit - New Comment(s). When: Comment added (non-self), Who: Assigner, Assignee, Commentors  Ilan: sent only to asigner if asigne comments
+#103 Tivit - New Comment(s). When: Comment added (non-self), Who: Assigner, Assignee, Commenters  Ilan: sent only to asigner if asigne comments
 
     @user     = commenter
     @comment  = comment
     @tivit    = activity
-    
-    toemail = send_to[0].get_email
+    tomail = create_recipient_list(send_to)
+    #DElete - toemail = send_to[0].get_email
     mail(:to => toemail, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => @user.get_name+" left a commented on '"+@tivit.name+"'" )
   end

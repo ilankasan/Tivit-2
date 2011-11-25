@@ -4,7 +4,6 @@ class TivitcommentsController < ApplicationController
   def create
   	puts "---------    create comment -----------------------"
   	puts "_________________________________________________________________________________"
-   	puts "********************************************"
   	puts "param - " +params.inspect
   	puts "********************************************"
 
@@ -31,29 +30,13 @@ class TivitcommentsController < ApplicationController
       format.js
       puts "--------------->> after responding to Ajax"
   end
-    
+  UserMailer.notify_comment_added_to_tivit(current_account.user, @comment,@activity, send_to).deliver
 	#redirect_to @activity
 	#redirect_to root_path
 
  end
 
-
-
-
-# not in use
-  def notinuse_edit
-	if(params == nil)
-		puts "param is nill !!!!!!!!!!!!!!!!!!!!"
-	else	
-		puts "param - " +params.inspect
-	end
-	puts "------------------------- edit new comment ----------------------  " 
-  	
-  	@activity = Activity.find(params[:id])
-    @title = "Add new comment to "+@activity.name
-    
-	puts "------------->>>>>>>>>>> " + @activity.name 
-  end
+ 
 end
   
 
