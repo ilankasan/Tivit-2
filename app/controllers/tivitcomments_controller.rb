@@ -30,7 +30,8 @@ class TivitcommentsController < ApplicationController
       format.js
       puts "--------------->> after responding to Ajax"
   end
-  UserMailer.notify_comment_added_to_tivit(current_account.user, @comment,@activity, send_to).deliver
+  puts "sending notification "
+  UserMailer.notify_comment_added_to_tivit(current_account.user, @comment,@activity, [@activity.get_owner,@activity.get_parent.get_owner]).deliver
 	#redirect_to @activity
 	#redirect_to root_path
 

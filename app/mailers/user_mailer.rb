@@ -22,7 +22,7 @@ class UserMailer < ActionMailer::Base
     @user     = commenter
     @comment  = comment
     @tivit    = activity
-    tomail = create_recipient_list(send_to)
+    toemail = create_recipient_list(send_to)
     #DElete - toemail = send_to[0].get_email
     mail(:to => toemail, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => @user.get_name+" left a commented on '"+@tivit.name+"'" )
