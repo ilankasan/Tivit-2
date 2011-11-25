@@ -285,7 +285,7 @@ class ActivitiesController < ApplicationController
 	  
 	  config.debug("------>>>>> creating activity" + @activity.name )
 	  log_action_as_comment(@activity,params["description"],"TivitDetails",current_account.user)
-
+    
     UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
     
     
