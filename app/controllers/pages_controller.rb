@@ -85,8 +85,8 @@ class PagesController < ApplicationController
       				   AND activities.activity_type 	    = 'activity' 
       				   AND 
       				   (
-      				   (tivits.owner_id 				    = "+current_user_id+" 
-      				    AND tivits.parent_id 			    = activities.id
+      				    (   tivits.owner_id 				        = "+current_user_id+" 
+      				    AND tivits.parent_id 			          = activities.id
       				    AND tivit_user_statuses.activity_id = tivits.id 
       				    AND 
       				    (   tivit_user_statuses.status_id  = 'New'
@@ -94,13 +94,13 @@ class PagesController < ApplicationController
     				   	 OR tivit_user_statuses.status_id  = 'Reviewed'
     				   	 OR tivit_user_statuses.status_id  = 'Reminded'
     				    )
-    				     AND tivit_user_statuses.user_id     = "+current_user_id+")
+    				     AND tivit_user_statuses.user_id   = "+current_user_id+")
     				   OR 
     				   (
-    				    ( NOT tivits.owner_id 				    = "+current_user_id+"
-    				      AND activities.owner_id				= " +current_user_id+"
-      				      AND tivits.parent_id 			    	= activities.id
-      				      AND tivit_user_statuses.activity_id 	= tivits.id 
+    				    ( NOT tivits.owner_id 				          = "+current_user_id+"
+    				        AND activities.owner_id				      = "+current_user_id+"
+      				      AND tivits.parent_id 			    	    = activities.id
+      				      AND tivit_user_statuses.activity_id	= tivits.id 
       				      AND 
       				    (   tivit_user_statuses.status_id  = 'Declined'
     				   	 OR tivit_user_statuses.status_id  = 'Proposed'
@@ -118,7 +118,6 @@ class PagesController < ApplicationController
     	@need_attention_activities = {}
     	@tivits_participate        = {}
     	@tivits_completed		   = {}
-    	@tivits_new				   = {}
     end
      
   end

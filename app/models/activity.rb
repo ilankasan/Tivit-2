@@ -101,25 +101,35 @@ class Activity < ActiveRecord::Base
   def get_need_attention_tivits (currentuser)
   	
   	#puts " current user = "+ currentuser.id.to_s
-  	results1 = 
-	self.tivits.joins(:tivit_user_statuses).where("activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id 
-	AND ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",currentuser.id)
+# Returns tivits i own and required my response or in play (awaiting the assiger to response with my proposal). 
+   results1 = self.tivits.joins(:tivit_user_statuses).where("activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id 
+	   AND ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",currentuser.id)
 	
-#return Tivits that belong to my activities but are not mine and need my attension
-	results2 = 
-	self.tivits.joins(:tivit_user_statuses).where("not activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id 
-	AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",currentuser.id)
 	
-	results3 = self.tivits.joins(:tivit_user_statuses).where("activities.due < ? and tivit_user_statuses.user_id = activities.owner_id 
-	AND NOT tivit_user_statuses.status_id = 'Done' ", Time.now)
+# Returns tivits that belong to my activity but are not mine and need my attention or awaiting response from the assignee
+  if(currentuser.id == self.owner_id)
+
+	results2 = self.tivits.joins(:tivit_user_statuses).where("not activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id 
+	  AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",currentuser.id)
+	  
+	results3 = self.tivits.joins(:tivit_user_statuses).where("activities.due > ? and tivit_user_statuses.user_id = activities.owner_id 
+  AND NOT tivit_user_statuses.status_id = 'Done' ", Time.now)
+  
+  else
+    results2 = []
+    results3 = []
+  end
+  
+	
 	
 	#results2 = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
 	#AND (tivit_user_statuses.status_id = 'Proposed' or tivit_user_statuses.status_id = 'Declined')")
 
 	puts "total tivits "+tivits.size.to_s
 										  
-	puts " restuns size "+results2.size.to_s
-	return (results1 + results2) | results3  	 	
+	results =(results1 + results2) | results3
+	puts " restuns size "+results.size.to_s
+	return results    	 	
   end
 
 
