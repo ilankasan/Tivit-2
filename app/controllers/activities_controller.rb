@@ -89,7 +89,6 @@ class ActivitiesController < ApplicationController
 	@tivit    = Activity.find(params[:id])
 	@activity = @tivit.get_parent
 	@tivit.destroy
-	#redirect_back_or root_path
 	redirect_to @activity
   end
   
@@ -364,8 +363,8 @@ class ActivitiesController < ApplicationController
  
  # we need to send an email to the owner of the tivit the the activity owner accepted the proposed date
     UserMailer.user_tivit_status_change_email(current_account.user, "Accepted proposed date",params["comment"],@activity).deliver
-
-  	redirect_back_or root_path
+    redirect_to @activity
+  	#redirect_back_or root_path
   
   end
 

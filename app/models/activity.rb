@@ -232,29 +232,19 @@ class Activity < ActiveRecord::Base
  
  def get_number_of_unread_comments(user)
 #get date of last unread
-puts "get_number_of_unread_comments"
-puts "tivit: "+self.activity_name+ " id = "+self.id.to_s
-puts "checking status for user "+user.get_name
+#puts "get_number_of_unread_comments"
+#puts "tivit: "+self.activity_name+ " id = "+self.id.to_s
+#puts "checking status for user "+user.get_name
 
  	tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
   	if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
-  		puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
+ # 		puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
   		size = self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id).count
   		#size = 1
   		if(size > 0)
-  		  
-  		  puts "________________________________________________________"
-        puts "________________________________________________________"
-        puts "________________________________________________________"
-        puts "________________________________________________________"
         puts "________________________________________________________"
   		  puts "number of unread comment "+size.to_s
   		  puts "________________________________________________________"
-        puts "________________________________________________________"
-        puts "________________________________________________________"
-        puts "________________________________________________________"
-        
-  		  
   		end
   		return size
   	else
@@ -362,9 +352,7 @@ puts "checking status for user "+user.get_name
 	
   def update_activity_status (status)
   	puts "_____________________________________________________"
-  	puts "_____________________________________________________"
   	puts "Changng status from " +self.status+" to = " +status
-  	puts "_____________________________________________________"
   	puts "_____________________________________________________"
   	
   	if(self.status == status)
