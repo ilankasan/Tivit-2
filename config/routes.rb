@@ -89,6 +89,8 @@ resources :pages
   match '/help',      :to => 'pages#help'
   match '/contact',   :to => 'pages#contact'
   match '/myaccount', :to => 'pages#myaccount'
+  match '/filter',     :to => 'pages#filter'
+  
   
 
   #get "pages/signout"

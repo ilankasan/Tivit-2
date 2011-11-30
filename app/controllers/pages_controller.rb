@@ -3,127 +3,40 @@ class PagesController < ApplicationController
   
   def home
     @title = "Home"
-    if  account_signed_in? && current_account.user != nil      
+    #if  account_signed_in? && current_account.user != nil      
 # returns all activities that are not completed abd i either own or i have a a tivit (tivit can be completed or not)
-   		current_user_id = current_account.user.get_id.inspect
+  	current_user_id = current_account.user.get_id.inspect
 
-      	sql_activities_i_participate = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
-      				   WHERE NOT activities.status      = 'Completed'  
-      				   AND activities.activity_type 	= 'activity' 
-      				   AND (activities.owner_id    		= "+current_user_id+"
-      				   OR ( 
-      				   tivits.owner_id 			= "+current_user_id+" 
-      				   AND tivits.parent_id 	= activities.id))
-      				   ORDER BY activities.due"
-      				           
-      	@tivits_participate = Activity.find_by_sql(sql_activities_i_participate)
-      	
-      	
-# Return all new activities
-      	sql_new_tivits_old = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
-      				   WHERE NOT activities.status         = 'Completed' 
-      				   AND activities.activity_type 	   = 'activity' 
-      				   AND   NOT activities.owner_id       = "+current_user_id+" 
-      				   AND tivit_user_statuses.activity_id = activities.id 
-      				   AND tivit_user_statuses.status_id   = 'New' 
-      				   AND tivit_user_statuses.user_id     = "+current_user_id+"
-      				   ORDER BY activities.due"
-      				   
-      				   
-      sql_new_tivits_old2 = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses
-      				   WHERE NOT activities.status      = 'Completed'  
-      				   AND activities.activity_type 	= 'activity' 
-      				   AND 
-      				   (    activities.owner_id    		= "+current_user_id+"
-      				   	AND tivit_user_statuses.activity_id = activity.id 
-      				    AND tivit_user_statuses.status_id   = 'New' 
-      				    AND tivit_user_statuses.user_id     = "+current_user_id+"
-      				   
-      				   		OR 
-      				   		(    tivits.owner_id 	= "+current_user_id+" 
-      				   		 AND tivits.parent_id 	= activities.id
-      				   		 AND tivit_user_statuses.activity_id = tivits.id 
-      				   		 AND tivit_user_statuses.status_id   = 'New' 
-      				   		 AND tivit_user_statuses.user_id     = "+current_user_id+"
-      				   		 )
-      				   )
-      				   ORDER BY activities.due"
-################################# NEW ACTITVITIES #######################################################################################
-	  sql_new_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses
-      				   WHERE NOT activities.status         = 'Completed'  
-      				   AND activities.activity_type 	   = 'activity' 
-      				   AND tivits.owner_id 				   = "+current_user_id+" 
-      				   AND tivits.parent_id 			   = activities.id
-      				   AND tivit_user_statuses.activity_id = tivits.id 
-      				   AND tivit_user_statuses.status_id   = 'New' 
-      				   AND tivit_user_statuses.user_id     = "+current_user_id+"
-      				   ORDER BY activities.due"
-	 
-	 
-	#  @tivits_new          = Activity.find_by_sql(sql_new_tivits)
-	  
-	  
-	  
-################################# Completed ACTITVITIES #######################################################################################
-# Returns activities completed the last 15 days
-	  
-	  sql_completed_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
-      				   WHERE activities.status      = 'Completed'  
-      				   AND activities.activity_type 	= 'activity' 
-      				   AND (activities.owner_id    		= "+current_user_id+"
-      				   OR ( 
-      				   tivits.owner_id 			= "+current_user_id+" 
-      				   AND tivits.parent_id 	= activities.id))
-      				   ORDER BY activities.due"
-      				           
-      	@tivits_completed = Activity.find_by_sql(sql_completed_activities)
-#AND activities.completed_at    > ? 15.days.ago  
-                 
-################################# Need Attension #######################################################################################
-	  	sql_need_attention_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses
-      				   WHERE NOT activities.status          = 'Completed'  
-      				   AND activities.activity_type 	    = 'activity' 
-      				   AND 
-      				   (
-      				    (   tivits.owner_id 				        = "+current_user_id+" 
-      				    AND tivits.parent_id 			          = activities.id
-      				    AND tivit_user_statuses.activity_id = tivits.id 
-      				    AND 
-      				    (   tivit_user_statuses.status_id  = 'New'
-    				   	 OR tivit_user_statuses.status_id  = 'Proposed'
-    				   	 OR tivit_user_statuses.status_id  = 'Reviewed'
-    				   	 OR tivit_user_statuses.status_id  = 'Reminded'
-    				    )
-    				     AND tivit_user_statuses.user_id   = "+current_user_id+")
-    				   OR 
-    				   (
-    				    ( NOT tivits.owner_id 				          = "+current_user_id+"
-    				        AND activities.owner_id				      = "+current_user_id+"
-      				      AND tivits.parent_id 			    	    = activities.id
-      				      AND tivit_user_statuses.activity_id	= tivits.id 
-      				      AND 
-      				    (   tivit_user_statuses.status_id  = 'Declined'
-    				   	 OR tivit_user_statuses.status_id  = 'Proposed'
-    				   	 )
-    				     
-    				   )))
-      				   ORDER BY activities.due"
-	 
-	 
-	  	@need_attention_activities          = Activity.find_by_sql(sql_need_attention_activities)
-	  
-	    	
-      	
-    else
-    	@need_attention_activities = {}
-    	@tivits_participate        = {}
-    	@tivits_completed		   = {}
-    end
-     
+   	@tivits_completed          = get_activities_completed(current_user_id)
+    @tivits_ondeck             = get_activities_i_participate (current_user_id)
+    @need_attention_activities = get_need_attention (current_user_id)
   end
   
   def activities
     @title = "Activities"
+  end
+  
+  def filter
+    puts "Filterintg"
+    puts "Params = "+params.inspect
+    current_user_id = current_account.user.get_id.inspect
+    @title = "Home"
+    
+    
+    case params[:filter_id]
+      when ("1") # All
+        @tivits_ondeck             = get_activities_i_participate (current_user_id)
+              
+      when ("2")
+        @tivits_ondeck             = get_my_activities(current_user_id)
+        
+      end
+
+    @tivits_completed          = get_activities_completed(current_user_id)
+    @need_attention_activities = get_need_attention (current_user_id)
+
+    render 'home'
+    
   end
 
   def myteam

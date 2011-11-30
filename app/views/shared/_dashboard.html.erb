@@ -15,23 +15,23 @@
 	
     <div class="filter">
         <dl>
-            <dt>Show:</dt>
+            <dt>Filter:</dt>
             <dd>
-                <input type="checkbox" value="" id="my_activ"/>
-                <label for="my_activ">My Activities</label>
-                <%= check_box_tag '', nil, '', { :onclick => "$('your_form').onsubmit();" } %>
+	            <% form_tag(:controller => "pages", :action => "filter", :method => "put") do %>
+	            	<%= select_tag(:filter_id, options_for_select([['All', 1], ['My Activities', 2]],1)) %>
+					<%= submit_tag("Show") %>
+	            	
+	           	<% end %>            
             </dd>
-            <dd>
-                <input type="checkbox" value="" id="my_tivit"/>
-                <label for="my_tivit">My tivits</label>
-            </dd>
+            
+            
         </dl>
     </div>
 	
 	<div id="tivit-container" class="tab-content">
 
 		<div class="tabs">
-             <div class="status">You have <%= @tivits_participate.count%> activities / tivits </div>
+             <div class="status">You have <%= @tivits_ondeck.count%> activities / tivits </div>
 
 			<ul id="tabs-nav">
 				<li class="tab open">
@@ -57,9 +57,9 @@
 					
 	        <div id="tivit-desk" class="tivit-desk tabInfo"> 
 
-			<% unless @tivits_participate == nil %>
+			<% unless @tivits_ondeck == nil %>
 			 
-			     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_participate, :locals => {:tabview => "On Deck"} %>
+			     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_ondeck, :locals => {:tabview => "On Deck"} %>
 		     
 			<% end %>
 
