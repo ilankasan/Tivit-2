@@ -98,6 +98,13 @@ ActiveRecord::Schema.define(:version => 20111107061249) do
     t.string   "file_name"
   end
 
+  create_table "preferences", :force => true do |t|
+    t.string   "preference"
+    t.integer  "prefe_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "profile_images", :force => true do |t|
     t.integer  "user_id"
     t.string   "avatar"
@@ -125,6 +132,13 @@ ActiveRecord::Schema.define(:version => 20111107061249) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "action"
+  end
+
+  create_table "user_preferences", :id => false, :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "preference_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

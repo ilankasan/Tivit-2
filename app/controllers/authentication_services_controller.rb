@@ -58,6 +58,7 @@ def create
       # we have an unrecognized service, just output the hash that has been returned
       render :text => omniauth.to_yaml
       #render :text => uid.to_s + " - " + name + " - " + email + " - " + provider
+      puts "un identified service !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
       return
     end
   

@@ -32,7 +32,7 @@
 						<ul class="submenu" id="sm_1">
 							<li><%= link_to "My Account", current_account.user %></li>
 							<!--li><%= link_to "Settings", edit_user_path(current_account.user) %></li-->
-							<li><%= link_to "Sign out", destroy_account_session_path, :method => :delete %></li>
+							<li><%= link_to "Sign out", destroy_account_session_path %></li>
 						</ul>
 					</ul>
 				<% else %>

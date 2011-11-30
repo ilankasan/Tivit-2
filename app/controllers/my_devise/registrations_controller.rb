@@ -30,7 +30,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  	puts " Params "+params.inspect
 	super	
 	email = params[:account][:email]
-    @account = Account.find_by_email(email)
+  @account = Account.find_by_email(email)
 	
 	puts @account.inspect if @account != nil
 	puts "email = "+email
@@ -54,6 +54,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 			puts " account.user != nil"
 		end
 	end
+	   puts " saving account!!!!!!!!!!!!!!!!"
     @account.save
  end
  

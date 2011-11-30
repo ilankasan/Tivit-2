@@ -3,8 +3,8 @@ class Account < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   
   #, :confirmable         :token_authenticatable,, :lockable, :timeoutable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,:confirmable
+  devise :database_authenticatable, :registerable,:token_authenticatable,
+         :recoverable, :rememberable, :trackable, :validatable #,:confirmable
 
 # each account can be authnticated using FB, gmail and others services
   has_many :authentication_services, :dependent => :destroy

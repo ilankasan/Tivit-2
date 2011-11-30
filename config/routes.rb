@@ -11,13 +11,13 @@ FirstApp::Application.routes.draw do
 
   devise_for :accounts, :controllers => {
                           :registrations  => "my_devise/registrations",
-  										    :sessions       => "my_devise/sessions",
+  										 #   :sessions       => "my_devise/sessions",
   										    :mailer  		    => "my_devise/mailer"}
   
  
   match "profile_images/:id" 	  => "profile_images#update"
  
-  devise_for :accounts, :controllers => { :sessions => "sessions" }
+  #devise_for :accounts, :controllers => { :sessions => "sessions" }
   
   devise_for :accounts
 
