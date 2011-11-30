@@ -11,7 +11,7 @@ FirstApp::Application.routes.draw do
 
   devise_for :accounts, :controllers => {
                           :registrations  => "my_devise/registrations",
-  										    :sessions       => "my_devise/sessions",
+  										    #:sessions       => "my_devise/sessions",
   										    :mailer  		    => "my_devise/mailer"}
   
  
