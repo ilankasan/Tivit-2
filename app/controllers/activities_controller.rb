@@ -242,7 +242,6 @@ class ActivitiesController < ApplicationController
 
    
   def on_it
-   
     puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   On It   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
     @activity = Activity.find(params[:id])
     puts "Activity is " + @activity.name  
@@ -251,9 +250,8 @@ class ActivitiesController < ApplicationController
     log_action_as_comment(@activity,params["comment"],"OnIt",current_account.user)
 
     UserMailer.user_tivit_status_change_email(current_account.user, "On it",params["comment"],@activity).deliver
-  
-	redirect_to  root_path
-  	
+    redirect_to  @activity.get_parent
+    #redirect_to  root_path
   end
   
   def new_tivit
@@ -297,8 +295,6 @@ class ActivitiesController < ApplicationController
       UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
     end
       
-      
-    
     
    #respond with Ajax when needed...
    respond_to do |format|
@@ -318,15 +314,16 @@ class ActivitiesController < ApplicationController
     log_action_as_comment(@activity,params["comment"],"Done",current_account.user)
 
     if(@activity.isActivity?)
-    UserMailer.user_activity_status_change_done_email(current_account.user,params["comment"],@activity).deliver
-    puts " is this possible?"
-    else  
-      UserMailer.user_tivit_status_change_done_email(current_account.user,params["comment"],@activity).deliver
+      UserMailer.user_activity_status_change_done_email(current_account.user,params["comment"],@activity).deliver
+      puts " is this possible?"
+    else
+      if(!@activity.isOwner?(current_account.user))
+        UserMailer.user_tivit_status_change_done_email(current_account.user,current_account.user.get_owner,params["comment"],@activity).deliver
+      end
     end
-    redirect_to  root_path
-  	#render 'shared/activitydetails'
-  				
-  
+    #redirect_to  root_path
+    redirect_to  @activity.get_parent
+    
   end
 
   
@@ -342,8 +339,9 @@ class ActivitiesController < ApplicationController
     	@activity.update_tivit_user_propose_date(current_account.user,params["comment"], convert_date_to_string(params,"propose_date"))
     	log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)    	
     end  
-    #UserMailer.user_tivit_status_change_done_email(current_account.user,params["comment"],@activity).deliver
-  	redirect_to  root_path
+  	#redirect_to  root_path
+  	redirect_to  @activity.get_parent
+    
   	
   end
 

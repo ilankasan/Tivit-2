@@ -80,10 +80,10 @@ class UserMailer < ActionMailer::Base
   end
   
   
-  def user_tivit_status_change_done_email(user, comment,tivit)
+  def user_tivit_status_change_done_email(user, owner, comment,tivit)
 #106 Tivit- Complete. When: Completed Assignee changes status to "I'm done", Who: Assigner
 
-    @owner    = tivit.get_owner
+    @owner    = owner
     @user     = user
     @comment  = comment
     @tivit    = tivit
