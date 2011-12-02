@@ -93,10 +93,16 @@ class Activity < ActiveRecord::Base
   end
 
   def get_open_or_recently_done_tivits
-	self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
-	AND ((NOT tivit_user_statuses.status_id = 'Done') 
-	OR  ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now.localtime-1.day) 	
+	 self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
+	 AND ((NOT tivit_user_statuses.status_id = 'Done') 
+	 OR  ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now.localtime-1.day) 	
   end
+  
+  
+  def get_all_my_tivits (user)
+    self.tivits.where(:owner_id => user.get_id)
+  end
+  
   	  
   def get_need_attention_tivits (currentuser)
   	

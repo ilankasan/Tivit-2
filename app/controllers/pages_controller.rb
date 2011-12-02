@@ -17,21 +17,28 @@ class PagesController < ApplicationController
   end
   
   def filter
+  
     puts "Filterintg"
     puts "Params = "+params.inspect
     current_user_id = current_account.user.get_id.inspect
     @title = "Home"
-    
+    @mytivits = false
+
     
     case params[:filter_id]
       when ("1") # All
         @tivits_ondeck             = get_activities_i_participate (current_user_id)
               
       when ("2")
+        puts "show my activities"
         @tivits_ondeck             = get_my_activities(current_user_id)
+      when ("3")
+        puts "show tivits only"
+        @tivits_ondeck             = get_activities_i_participate (current_user_id)
+        @mytivits = true
         
       end
-
+# Filter only product On Deck (for now)
     @tivits_completed          = get_activities_completed(current_user_id)
     @need_attention_activities = get_need_attention (current_user_id)
 
