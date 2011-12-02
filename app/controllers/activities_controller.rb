@@ -317,8 +317,8 @@ class ActivitiesController < ApplicationController
       UserMailer.user_activity_status_change_done_email(current_account.user,params["comment"],@activity).deliver
       puts " is this possible?"
     else
-      if(!@activity.isOwner?(current_account.user))
-        UserMailer.user_tivit_status_change_done_email(current_account.user,current_account.user.get_owner,params["comment"],@activity).deliver
+      if(!@activity.get_parent.isOwner?(current_account.user))
+        UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_parent.get_owner,params["comment"],@activity).deliver
       end
     end
     #redirect_to  root_path

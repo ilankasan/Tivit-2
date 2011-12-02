@@ -80,16 +80,16 @@ class UserMailer < ActionMailer::Base
   end
   
   
-  def user_tivit_status_change_done_email(user, owner, comment,tivit)
+  def user_tivit_status_change_done_email(user, activity_owner, comment,tivit)
 #106 Tivit- Complete. When: Completed Assignee changes status to "I'm done", Who: Assigner
 
-    @owner    = owner
     @user     = user
     @comment  = comment
     @tivit    = tivit
-    
-  	mail(:to => @tivit.get_parent.get_owner.get_email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => @user.name+" completed their tivit '"+tivit.name+"'" + "in Activity "+@tivit.get_parent.name )
+    #@tivit.get_parent.get_owner
+  	mail(:to => activity_owner.get_email, :cc => "tiviti.mailer.cc@gmail.com",
+         :subject => "Tiviti: "+@user.get_name+" has completed "+tivit.name+"!")
+         
   end
   
   
