@@ -39,7 +39,7 @@
 	    
               
               <td align="left" valign="top">
-              <%=if(@comment.size > 0)%>
+              <%if(!@comment.empty?)%>
               	<%= @assignee.get_name %> says: "<%= @comment %>"</td>
               <%end%>
               	
