@@ -95,17 +95,17 @@ class UserMailer < ActionMailer::Base
   end
   
   
-  def user_tivit_status_change_onit_email(user, comment,tivit)
+  def tivit_status_change_onit_email(assignee, comment,tivit)
 #105 Tivit - Started. When: Assignee changes status to "I'm on it", Who:  Assigner
  
-    @inviter    = tivit.get_invited_by
-    @invitee    = user
+    @assigner    = tivit.get_invited_by
+    @assignee   = assignee
     @tivit      = tivit
     @comment    = comment
-    
-    mail(:to => @inviter.get_email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => @invitee.name+" has started tivit '"+tivit.name+"'" )
-  
+    puts "---->>>> sending email to "+@assigner.get_email
+    mail(:to => @assigner.get_email, :cc => "tiviti.mailer.cc@gmail.com",
+         :subject => "Tiviti: "+@assignee.name+" has accepted your request for help with '"+tivit.name+"'" )
+     
   end
   
   def user_tivit_status_change_email(user, action,comment,tivit)

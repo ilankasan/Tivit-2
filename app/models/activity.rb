@@ -103,6 +103,17 @@ class Activity < ActiveRecord::Base
     self.tivits.where(:owner_id => user.get_id)
   end
   
+  def get_all_my_undone_tivits (user)
+    #self.tivits.where(:owner_id => user.get_id)
+    
+    self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
+   AND ((NOT tivit_user_statuses.status_id = 'Done') 
+   OR  ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now.localtime-1.day)  
+
+    
+    
+  end
+  
   	  
   def get_need_attention_tivits (currentuser)
   	
@@ -147,9 +158,9 @@ class Activity < ActiveRecord::Base
   
 # After the user viewed the tivit for the first time, make sure status changes from New to Review 
   def update_status_after_show(user)
- 	puts "------------------------------------------------------------"
- 	puts "AFTER show attempting to change status for activity "+self.id.to_s+ " "+self.activity_name 	
- puts "------------------------------------------------------------" 	
+ #	puts "------------------------------------------------------------"
+ #	puts "AFTER show attempting to change status for activity "+self.id.to_s+ " "+self.activity_name 	
+ #puts "------------------------------------------------------------" 	
     status = self.get_user_status(user) 	
   	if(status == "New")
   		change_status(user,"Reviewed","")
@@ -306,7 +317,7 @@ class Activity < ActiveRecord::Base
  end
  
  def wasInvitedByUser?(user)
-   puts "in wasInvitedByUser"
+   #puts "in wasInvitedByUser"
    if (user == nil)
      return false
    end

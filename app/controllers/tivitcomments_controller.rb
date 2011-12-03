@@ -36,7 +36,7 @@ class TivitcommentsController < ApplicationController
     send_to << @activity.get_owner            if @activity.get_owner.id            != current_account.user.id
     send_to << @activity.get_parent.get_owner if @activity.get_parent.get_owner.id != current_account.user.id   
     puts "sending comment notificaiton "+send_to.inspect  
-    UserMailer.notify_comment_added_to_tivit(current_account.user, @comment,@activity, send_to).deliver
+    UserMailer.notify_comment_added_to_tivit(current_account.user, @comment.comment,@activity, send_to).deliver
   else
     puts "not sending notificaiton"
   end

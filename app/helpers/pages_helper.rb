@@ -15,8 +15,6 @@ module PagesHelper
   end
   
   
-  
-  
   def get_need_attention (user_id)
       sql_need_attention_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses
                  WHERE NOT activities.status          = 'Completed'  

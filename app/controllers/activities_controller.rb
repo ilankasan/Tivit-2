@@ -249,7 +249,9 @@ class ActivitiesController < ApplicationController
     @activity.update_tivit_user_status_onit(current_account.user,params["comment"])
     log_action_as_comment(@activity,params["comment"],"OnIt",current_account.user)
 
-    UserMailer.user_tivit_status_change_email(current_account.user, "On it",params["comment"],@activity).deliver
+   # UserMailer.user_tivit_status_change_email(current_account.user, "On it",params["comment"],@activity).deliver
+    UserMailer.tivit_status_change_onit_email(current_account.user, params["comment"],@activity).deliver
+
     redirect_to  @activity.get_parent
     #redirect_to  root_path
   end
