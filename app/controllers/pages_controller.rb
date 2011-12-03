@@ -1,8 +1,12 @@
 class PagesController < ApplicationController
   before_filter :authenticate_account!
   
-  def home
+  def home_old
     @title = "Home"
+      puts "--   HOME ----------"
+  
+    account_session[:filter_id] = "1" if account_session[:filter_id] == nil 
+     
     #if  account_signed_in? && current_account.user != nil      
 # returns all activities that are not completed abd i either own or i have a a tivit (tivit can be completed or not)
   	current_user_id = current_account.user.get_id.inspect
@@ -16,33 +20,51 @@ class PagesController < ApplicationController
     @title = "Activities"
   end
   
-  def filter
-  
-    puts "Filterintg"
+  def home
+    @title = "Home"
+    
+    puts "Home"
     puts "Params = "+params.inspect
+    puts "session = "+account_session.inspect
+     
     current_user_id = current_account.user.get_id.inspect
     @title = "Home"
-    @mytivits = false
-
     
-    case params[:filter_id]
+    #ccount_session[:filter_id] = "1" if account_session[:filter_id] == nil
+     
+    if((account_session[:filter_id] == nil) && (params[:filter_id]==nil))
+      filter_id = "1"  
+    elsif (params[:filter_id] != nil)
+      filter_id = params[:filter_id]
+    else
+      filter_id = account_session[:filter_id]
+    end
+      
+    
+    case filter_id
       when ("1") # All
         @tivits_ondeck             = get_activities_i_participate (current_user_id)
+        @mytivits = false
               
-      when ("2")
+      when ("2") # my activities
         puts "show my activities"
         @tivits_ondeck             = get_my_activities(current_user_id)
-      when ("3")
+        @mytivits = false
+    
+      when ("3") # my tivits
         puts "show tivits only"
         @tivits_ondeck             = get_activities_i_participate (current_user_id)
         @mytivits = true
-        
+      else
+        @tivits_ondeck             = get_activities_i_participate (current_user_id)
+        @mytivits = false    
       end
 # Filter only product On Deck (for now)
     @tivits_completed          = get_activities_completed(current_user_id)
     @need_attention_activities = get_need_attention (current_user_id)
-
-    render 'home'
+    
+    account_session[:filter_id] = filter_id
+ #   render 'home'
     
   end
 

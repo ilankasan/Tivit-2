@@ -3,7 +3,6 @@ class TivitcommentsController < ApplicationController
   
   def create
   	puts "---------    create comment -----------------------"
-  	puts "_________________________________________________________________________________"
   	puts "param - " +params.inspect
   	puts "********************************************"
 
@@ -40,9 +39,7 @@ class TivitcommentsController < ApplicationController
   else
     puts "not sending notificaiton"
   end
-	#redirect_to @activity
-	#redirect_to root_path
-
+	
  end
 
  
