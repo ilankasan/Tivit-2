@@ -1,7 +1,3 @@
-
-
- <%= @user.get_name %> comment on tivit: '<%=@tivit.name%>'.
-      "<%=@comment.comment%>
-      Click here <%=activity_url(@tivit.get_parent)%> for more detailes.
-      
-    <p>Thanks for using tiviti and have a great day!
+<%= @commenter.get_name %></b> commented on '<%=@tivit.name%>'.
+<%= @commenter.get_name %> says: "<%= @comment.comment %>"</td>
+<%= link_to 'Go to this tivit. ', activity_url(@tivit.get_parent) %>

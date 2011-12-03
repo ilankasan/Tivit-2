@@ -135,8 +135,8 @@
 			
 <!-- Actions only the activity owner can take >
 	
-	<!-- tivit action to take-->
-<% if current_account.user.id == tivit.get_parent.owner_id %>
+	<!-- if this user created the tivit orownes the activity-->
+<% if tivit.wasInvitedByUser?(current_account.user) %>
   	    
    
      <%= link_to "Remove", 		:controller  => "activities", 

@@ -15,7 +15,7 @@
         	             	
         	
           <td width="100%"><%= @assigner.get_name %>,<b> </b>
-          <p><b><%= @assignee.get_name %></b> says '<%=@tivit.name%>' has been completed!<br>
+          <p><b><%= @assignee.get_name %></b> wants you to know that '<%=@tivit.name%>' has been completed!<br>
 &nbsp;</td>
         </tr>
       </table>
@@ -39,7 +39,10 @@
 	    
               
               <td align="left" valign="top">
-              <%= @assignee.get_name %> says: "<%= @comment %>"</td>
+              <%=if(@comment.size > 0)%>
+              	<%= @assignee.get_name %> says: "<%= @comment %>"</td>
+              <%end%>
+              	
             </tr>
           </table>
         </div>

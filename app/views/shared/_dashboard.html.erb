@@ -18,7 +18,7 @@
             <dt>Filter:</dt>
             <dd>
 	            <% form_tag(:controller => "pages", :action => "filter", :method => "put") do %>
-	            	<%= select_tag(:filter_id, options_for_select([['All', 1], ['My Activities', 2],['My Tivits', 3]],1)) %>
+	            	<%= select_tag(:filter_id, options_for_select([['All', 1], ['My Activities', 2],['My tivits', 3]],1)) %>
 					<%= submit_tag("Show") %>
 	            	
 	           	<% end %>            

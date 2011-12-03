@@ -305,6 +305,23 @@ class Activity < ActiveRecord::Base
    return (user.get_id == self.owner_id)    
  end
  
+ def wasInvitedByUser?(user)
+   puts "in wasInvitedByUser"
+   if (user == nil)
+     return false
+   end
+   
+   
+   if(self.invited_by != nil && self.invited_by == user.get_id)
+     return true
+   end
+   
+   if (user.get_id == self.get_parent.owner_id)
+     return true
+   end
+   return false
+ end
+ 
  def get_invited_by
  #adding the user to the existing users on the task
 		return User.find_by_id(self.invited_by)

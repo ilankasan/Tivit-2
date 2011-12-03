@@ -19,14 +19,17 @@ class UserMailer < ActionMailer::Base
  def notify_comment_added_to_tivit(commenter, comment,activity, send_to)
 #103 Tivit - New Comment(s). When: Comment added (non-self), Who: Assigner, Assignee, Commenters  Ilan: sent only to asigner if asigne comments
 
-    @user     = commenter
-    @comment  = comment
-    @tivit    = activity
-    toemail = create_recipient_list(send_to)
+    @commenter  = commenter
+    @comment    = comment
+    @tivit      = activity
+    toemail     = create_recipient_list(send_to)
     #DElete - toemail = send_to[0].get_email
+    #mail(:to => toemail, :cc => "tiviti.mailer.cc@gmail.com",
+     #    :subject => @user.get_name+" left a commented on '"+@tivit.name+"'" )
     mail(:to => toemail, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => @user.get_name+" left a commented on '"+@tivit.name+"'" )
-  end
+         :subject => "Tiviti: You have a new comment for '"+@tivit.name+"'" )
+    
+ end
 
  
  def reassign_tivit(old_owner, new_owner, comment,tivit)
