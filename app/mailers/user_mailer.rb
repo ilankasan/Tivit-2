@@ -3,15 +3,15 @@ class UserMailer < ActionMailer::Base
    default :from => "tiviti.mailer@gmail.com"
    #//:url =>"http://"+Socket.gethostname
   	
-   def new_tivit_email(invitee, inviter,tivit)
+   def new_tivit_email(assignee, assigner,tivit)
 #101 Tivit - New. When: Assigner creates tivit, Who: Assignee
                                                       
-    @invitee   = invitee
-    @inviter   = inviter
+    @invitee   = assignee
+    @inviter   = assigner
     @tivit     = tivit
     
-    mail(:to => invitee.get_email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => "Tiviti:"+ inviter.get_name + " needs your help with "+tivit.name)
+    mail(:from => assigner.get_name+" via tiviti",:to => assignee.get_email, :cc => "tiviti.mailer.cc@gmail.com",
+         :subject => "tiviti: I need your help with "+tivit.name)
          
   end
 
