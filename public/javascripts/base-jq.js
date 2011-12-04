@@ -159,7 +159,19 @@ jQuery(document).ready(function($){
                             '<li class="attention"><div class="ico"></div>Propose new time</li>'+
                         '</ul>'+
                      '</div>';
+                     
      statusIcon.live('click',function(){
+     	
+     	//var tivitobject = jQuery(this).parent();
+     	//console.log ("[Yaniv] tivitobject=", tivitobject);
+     	
+     	// Check if the user owns this tivit or not. If not, don't allow to change status therefor dropdown will not open
+		var mytivit = jQuery(this).parent().find("input").attr("mytivit");
+    	console.log ("[Yaniv] status mytivit=", mytivit);
+    	
+     	if (mytivit == "no")
+     		return;
+     	
     	var recState = jQuery(this).closest('li');
     		console.log(recState.attr('class'));
 	    	if(recState.hasClass('unread'))

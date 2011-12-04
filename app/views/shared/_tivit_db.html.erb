@@ -31,6 +31,12 @@
 	
 	<div class="status">
 		<div class="icon"></div>
+		<% if tivit.get_owner.id == current_account.user.id %>
+			<input type="hidden" tivitid="<%= tivit.id %>" mytivit="yes">
+		<% else %>
+			<input type="hidden" tivitid="<%= tivit.id %>" mytivit="no">
+		<%end%>
+					
 		<input type="hidden" tivitid="<%= tivit.id %>">
 	</div>
 

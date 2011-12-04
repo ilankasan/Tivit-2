@@ -7,18 +7,22 @@
 		<!-- Display a tivit within an activity on the Activity Details page -->
 		<% owner_tivit_status = tivit_adp.get_owner_status %>
 		
-		<% if (owner_tivit_status == "OnIt" || owner_tivit_status == "Accepted")%>
+		<% if owner_tivit_status == "Done" %>
+		
+		<li class="record complete">
+			
+		<% elsif tivit_adp.due != nil && tivit_adp.due < Time.now %>
+      
+     	<li class="record busy">
+		
+		<% elsif (owner_tivit_status == "OnIt" || owner_tivit_status == "Accepted")%>
 		
 		<li class="record inprog">
 			    
 		<% elsif owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed"%>
 		
 		<li class="record unread">
-			                      
-		<% elsif owner_tivit_status == "Done" %>
-		
-		<li class="record complete">
-				
+			                      		
 		<% elsif owner_tivit_status == "Proposed" %>
 		
 		<li class="record attention">
@@ -31,9 +35,14 @@
 		
 			<div class="conteiner">
 				
+				<!-- if I'm the owner use class="status" so jQuery for dropdown list will work, otherwise use other status so it'll be ignored -->
 				<div class="status">
 					<div class="icon"></div>
-					<input type="hidden" tivitid="<%= tivit_adp.id %>">
+					<% if tivit_adp.get_owner.id == current_account.user.id %>
+						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes">
+					<% else %>
+						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="no">
+					<%end%>
 				</div>
 		
 				<!-- Render User Avatar -->
@@ -76,7 +85,6 @@
 							<h3><%= tivit_adp.name %></h3>
 							
 							<!-- status line -->	
-							
 							<% if owner_tivit_status == "Proposed" %>
 					
 								<p class="request"><span><%= tivit_adp.get_owner.name %> is requestiong a new date <strong><%= tivit_adp.get_owner_proposed_date %></strong></span>

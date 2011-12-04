@@ -815,7 +815,7 @@ a img{border:none;}
 .activities h1{font-size:24px;font-weight:bold;color:#000;margin:9px 0 2px;}
 .activities h2{font-size:18px;color:#333;font-weight:normal;border-bottom:1px dotted #eaeaea;}
 .activities h2 span{color:#969696;}
-.activities h3,.tvit-list .record .text h3{margin:6px 0 0;font-size:15px;color:#000;font-weight:bold;}
+.activities h3,.tvit-list .record .text h3{margin:6px 0 0;font-size:15px;color:#000;font-weight:normal;}
 
 .activities small{color:#8d8d8d;font-size:12px;}
 .activities a{color:#7b7bd2;}
