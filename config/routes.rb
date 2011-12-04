@@ -65,7 +65,7 @@ resources :activities
 #match '/activities',    :to => 'activities#update'
 	  match "activities/:id"  	   => "activities#update"
 	  match "/onit" 				       => "activities#on_it"
-	  match "/reassign"               => "activities#reassign"
+	  match "/reassign"            => "activities#reassign"
   	match "/decline" 			       => "activities#decline"
   	match "/proposedate" 		     => "activities#propose_date"
   	match "/acceptdate" 		     => "activities#accept_date"
@@ -77,7 +77,7 @@ resources :activities
   	match "/remove_tivit" 		   => "activities#remove_tivit"
   	match "/edit_tivit" 		     => "activities#edit_tivit"
   	match "/update_tivit/:id" 	 => "activities#update_tivit"
-  	
+  	#match "/images"    => "../images"
 #resources :bireports  
  #match "bireports/show"   => "bireports#show"
   	    

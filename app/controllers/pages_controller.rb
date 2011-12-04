@@ -1,21 +1,7 @@
 class PagesController < ApplicationController
   before_filter :authenticate_account!
   
-  def home_old
-    @title = "Home"
-      puts "--   HOME ----------"
-  
-    account_session[:filter_id] = "1" if account_session[:filter_id] == nil 
-     
-    #if  account_signed_in? && current_account.user != nil      
-# returns all activities that are not completed abd i either own or i have a a tivit (tivit can be completed or not)
-  	current_user_id = current_account.user.get_id.inspect
-
-   	@tivits_completed          = get_activities_completed(current_user_id)
-    @tivits_ondeck             = get_activities_i_participate (current_user_id)
-    @need_attention_activities = get_need_attention (current_user_id)
-  end
-  
+   
   def activities
     @title = "Activities"
   end
@@ -32,7 +18,7 @@ class PagesController < ApplicationController
     
     #ccount_session[:filter_id] = "1" if account_session[:filter_id] == nil
      
-    if((account_session[:filter_id] == nil) && (params[:filter_id]==nil))
+    if((account_session[:filter_id]==nil) && (params[:filter_id]==nil))
       filter_id = "1"  
     elsif (params[:filter_id] != nil)
       filter_id = params[:filter_id]
@@ -64,17 +50,13 @@ class PagesController < ApplicationController
     @need_attention_activities = get_need_attention (current_user_id)
     
     account_session[:filter_id] = filter_id
- #   render 'home'
-    
   end
 
   def myteam
     @title = "My Team"
   end
 
-  def signout
-     @title = "Sign in"
-  end
+  
 
   def bireport
      @title = "Product Adoption Dashboard"

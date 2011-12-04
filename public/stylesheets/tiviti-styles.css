@@ -836,6 +836,12 @@ a img{border:none;}
 	background:#dadada url(../images/bg_info.png) bottom repeat-x;}
 .info ul li:hover{color:#000;}
 .info ul li:first-child{border-left:1px solid #c0c0c0;}
+
+/* Yaniv - These are for hover on activity buttons */
+.info a {color: #666666;}
+.info a:hover {color: #000; text-decoration:none;}
+/***************************************************/
+
 .description{width:680px;padding:18px 25px 15px 45px;background:#f8f8f8;color:#505050;
 	border-left:1px solid #fdfdfd;border-right:1px solid #fdfdfd;border-radius:0 0 7px 7px;}
 .description small{padding-left:10px;}
@@ -875,14 +881,21 @@ a img{border:none;}
 .tivits .record .attach{position:absolute;top:9px;left:-40px;}
 .tivits .record .comments{position:absolute;top:9px;left:0;}
 .tivits .record .calendar{position:absolute;top:0;left:45px;}
+/* Yaniv - changed position to relative and fixed top/right values to place the dropdown in the right place */
 .tivits .record .edit-menu{position:absolute;top:22px;right:8px;z-index:40;cursor:pointer;}
+/*.tivits .record .edit-menu{width:16px;height:17px;position:relative;top:-32px;right:-708px;z-index:40;cursor:pointer; display: inline-block;}*/
+/*.tivits .record .edit-menu{position:relative;top:-32px;right:-708px;z-index:40;cursor:pointer;}*/
+/********/
 	.edit-menu .icon{width:16px;height:17px;background:url(../images/icon_edit_menu.png) no-repeat;}
 .tivits li ul.list{margin:10px 0 0 85px;display:none;}
 .tivits li ul.list{margin:10px 0 0 85px;display:none;}
 .tivits li ul.list li{position:relative;padding:0;}
 .tivits li ul.list li:first-child.active{margin-top:15px;}
 .tivits li ul.list .avatar,.tivits li ul.list .avatar img{width:26px;height:26px;}
+/* Yaniv - Bigger comment area */
+/*.tivits li ul.list .text{width:500px;padding:0 0 0 10px;color:#242424;line-height:1.2;}*/
 .tivits li ul.list .text{width:425px;padding:0 0 0 10px;color:#242424;line-height:1.2;}
+
 .tivits li ul.list .text p{padding:1px 0 2px;}
 .tivits li ul.list .text .start, .fupload{padding:0 0 2px;border-bottom: 1px dotted #EAEAEA;color: #8D8D8D;}
 .start.attention{padding-left:26px !important;background:url(../images/status_attention.png) no-repeat;}
@@ -906,6 +919,7 @@ a img{border:none;}
 .respond .status-list-dialog{top:27px;left:32px;width:131px;}
 .team h2{margin-top:-30px;}
 .team, .team .tvit-list .record,.team  ul ul .record{background:#fff;}
+
 .menu-dialog{position:absolute;color:#3a3a3a;background:#f8f8f8;padding:2px;border:1px solid #cfcfcf;display:none;}
 	.edit-menu .menu-dialog ul li{padding:2px 22px 2px 28px;}
 .menu-dialog ul li:hover{background-color:#eaeaea;}
@@ -938,21 +952,32 @@ small.less{display:block;padding:0;}
 .popup{position:absolute;top:70px;left:239px;z-index:100;width:480px;padding:10px;color:#000;display:none;
 	background:#fff;border-radius:10px;border:1px solid #eaeaea;}
 .popup h3{padding:5px 0 5px 38px;margin:0;background:url(../images/icon_add_tivit.gif) no-repeat;}
+.popup h1{font-size: 16px; padding:5px 0 5px 18px;margin:0;}
 .popup label{font-size:14px;vertical-align:top;display:inline-block;width:50px;padding-right:5px;text-align:right;line-height:2.1;}
-.popup input,.popup textarea{width:400px;height:27px;border:1px solid #d0d0d0;font:normal 14px Arial,'Liberation Sans',FreeSans,sans-serif;}
-.popup textarea{height:70px;resize:none;}
+.popup input,.popup textarea{width:400px;height:27px;border:1px solid #d0d0d0;font:normal 13px Arial,'Liberation Sans',FreeSans,sans-serif;padding-left:4px;}
+.popup textarea{height:70px;resize:none; padding: 4px;width: 394px;}
+
+
 .popup form p{margin:12px 0;}
 .popup .input-date label{width:271px;}
 .popup .input-date input{width:175px;height:20px;}
-.popup .input-date .ico_calc{float:right;}
+.popup .input-date .ico_calc{float:right;left: -22px; top:-25px;}
 .popup .assign{padding-left:56px;cursor:pointer;}
 .popup .assign i{display:inline-block;width:14px;height:14px;border:1px solid #d0d0d0;
 		position:relative;top:3px;background:none;}
 .popup .assign.active i{background:url('../images/icon_assign.gif') no-repeat;}
-.popup .request .form-button:first-child{background-color:#fff;color:#929292;margin-left:298px;padding:2px 15px;}
-.popup .request .form-button{margin-top:0;background-color:#61B010;color:#fff;cursor:pointer;width:auto;padding:2px 20px;}
+.popup .request .form-button:first-child{background-color:#fff;color:#929292;margin-left:298px;padding:2px 15px;font-size:15px;font-weight: bold;}
+.popup .request .form-button{margin-top:0;background-color:#61B010;color:#fff;cursor:pointer;width:auto;padding:2px 16px;font-size:15px;font-weight: bold;}
+
 .popup .close{position:absolute;top:-15px;right:-15px;width:30px;height:30px;cursor:pointer;background:url(../images/icon_close.png) no-repeat;}
 
+
+/* Yaniv - Confirm dialog specifics, to separate from add tivit popup where it doesn't fit nicely */
+.popup .confirmPopup textarea{width:430px;height:60px;padding: 4px;margin: 5px 0 5px 18px;}
+.popup .confirmPopup .input-date .ico_calc{float:right;left: -26px; top:4px;}
+.popup .confirmPopup .request .form-button{margin-top: 14px; margin-left: 5px; margin-right: 11px;background-color:#61B010;color:#fff;cursor:pointer;width:auto;padding:2px 16px;font-size:15px;font-weight: bold;}
+.popup .confirmPopup .request .form-button:first-child{background-color:#fff;color:#929292;margin-left:298px;margin-right:10px; padding:2px 15px;font-size:15px;font-weight: bold;}
+.popup .confirmPopup {top: 0px;}
 /******************************************************************************************************
 /* SIGN IN/UP PAGEs */
 

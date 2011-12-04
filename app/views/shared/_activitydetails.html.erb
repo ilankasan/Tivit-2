@@ -59,7 +59,7 @@
 		 	
 		<div class="request">
 			<div class="form-button" id="cancel">Cancel</div>
-			  <%= submit_tag("Create", :class => "form-button") %>
+			  <%= submit_tag("Add", :class => "form-button") %>
 		</div>
 		
 	<% end %> 
@@ -96,11 +96,25 @@
 	     				(<%= activitydetails.get_number_of_completed_tivits %>/<%= activitydetails.get_number_of_tivits %> tivits completed)	
 	     			   		
 	        		<%end%>   
-	        </p>		
+	        </p>                                        
+    		</br>                                
+  		
+	  		<% if current_account.user.id == (activitydetails.owner_id) %>
 			<ul>
-				<li class="edit">edit</li><li class="add">add a file</li><li class="cmpl">mark as completed</li><li class="dele">delete</li>
+				<li class="edit"><%= link_to "edit", edit_activity_path(activitydetails) %></li>
+				<li class="add"><%= link_to "add a file", 	:controller  => "documents", 
+					   											:action      => "new",
+					   											:id          => activitydetails.id, 
+					  							    			:title       => "Manage Files" %>
+	  			</li>
+				<li class="cmpl">mark as completed</li>
+				<li class="dele"><%= link_to "delete", activitydetails, :method => :delete,
+	                                 :confirm => "You sure you want to delete" +activitydetails.name+"?",
+	                                 :title => activitydetails.name %></li>
 			</ul>
+			<% end %>
 		</div>
+		
 		<!-- Activity Due Date -->
 		<!-- 
 		<div class="calendar red">
@@ -182,9 +196,9 @@
 					</div>
 				<%end%>
 				
-			</div> <!-- team tivits -->
+			</div> <!-- team tivits --> 
 			
-		</div> <!-- "leftCol -->
+		</div> <!-- "leftCol" -->
 	
 	</div> <!-- "body" -->
 	
@@ -320,4 +334,5 @@
 	<%end%>
   </td>
 </tr>
+
   

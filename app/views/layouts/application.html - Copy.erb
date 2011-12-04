@@ -1,13 +1,13 @@
 	<!DOCTYPE html>
 <html>
 	<head>
+		
 		<title><%= @title %></title>
 		<%= csrf_meta_tag %>
 		<%= render 'layouts/stylesheets' %>
 		<%= javascript_include_tag :defaults %>
 		<%= javascript_include_tag "datetimepicker_css" %>
-		
-		<%= javascript_include_tag "base-jq.js" %>
+		<%= javascript_include_tag "application.js" %>
 		
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 		<%= javascript_include_tag "jquery.hashchange.js" %>
@@ -18,7 +18,13 @@
 		<%= javascript_include_tag "dragdrop.js" %>
 		<%= javascript_include_tag "controls.js" %>
 		<%= javascript_include_tag "rails.js" %>
-		<%= javascript_include_tag "application.js" %>
+		
+		<!-- This one was in Irina's code BUT when you un-comment it, the sign out failes. Not sure what exactly this is used for" -->
+		<!-- <%= javascript_include_tag "jquery-1.6.4.min.js" %> -->
+		
+		<%= javascript_include_tag "autoresize.jquery.min.js" %>
+		<%= javascript_include_tag "jquery.truncate.min.js" %>
+		
 		
     <script type="text/javascript">
         function callback(id, datum) {
@@ -46,7 +52,6 @@
         text-align: center;
         font-weight: bold;
     }</style>
-
 
 <script type="text/javascript">
 

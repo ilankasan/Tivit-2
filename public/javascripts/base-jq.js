@@ -33,34 +33,6 @@ jQuery(document).ready(function($){
 	});
 	/**************************************************************************/
 	
-	/**************************************************************************/
-	/* Yaniv - Post a new  with Ajax */
-	/*
-	var inputCommPostButtEl = jQuery('.post-button');
-	
-	console.log ('[Yaniv] inputCommPostButtEl=', inputCommPostButtEl);
-	
-	cancelActivBtn.live('click',function(){ 
-		console.log ('[Yaniv] Post comment button clicked');
-		$.post($(this).attr("action"), $(this).serialize(), null, "script");
-		return false;
-	*/	
-	/*
-	jQuery("#post-comment-form").submit(function() {
-		console.log ('[Yaniv] Post comment button clicked');
-		
-		var ullist = $(this).parents('.list .list');
-		var lastPost = ullist.find ('.post');
-		var newComment = '<li class="record" id="new_comment_to_add">';
-		lastPost.before(newComment);
-		 
-		console.log ('[Yaniv] new comments record should be added by now and can accept the new comment partial to be rendered');
-		
-		$.post($(this).attr("action"), $(this).serialize(), null, "script");
-		console.log ('[Yaniv] Ajax call came back...');
-		
-		return false;
-	*/	
 	//$('.post-button').live('click', function(){
 	jQuery('.new_tivitcomment').live ('submit', function() {
 		
@@ -101,39 +73,6 @@ jQuery(document).ready(function($){
 		
 		return false;
 
-		/*
-		
-			//Posting a note
-		$('.post-button').live('click', function(){
-			var text = $(this).parent().prev().prev().val();
-			var ullist = $(this).parents('.list .list');
-			var newRecords = ullist.find('.new-record');
-			var newRecord = '<li class="record">' +
-			'<div class="record-conteiner new-record">' +
-			'<a href="#" class="delete"></a>' +
-			'<div class="avatar"><img alt="Pete Campbell" src="images/avatar_2.png"></div>' +
-			'<div class="text">' +
-			'<p class="start">Pete Campbell started yesterday @ 5:25pm</p>' +
-			'<p>'+ text +'</p>' +
-			'<p><small><strong>Pete Campbell</strong>, 3 hours ago</small></p></div>' +
-			'</div>' +
-			'<div class="post" style="padding-left:42px;"><textarea cols="10" rows="1" style="width:420px;">Leave a note...</textarea></div><div class="clear"></div>' +
-			'</li>';
-			
-			if(newRecords.length > 0){	
-				newRecords.each(function(){
-					$(this).removeClass('new-record');
-				});
-			}
-			
-			ullist.append(newRecord);
-			var list = ullist.children();
-	
-			showLess(list);
-			$(this).parent().parent().remove();
-			$('.post textarea').autoResize({extraSpace : 0});
-		});
-		*/
 	});
 	/**************************************************************************/
 	
@@ -185,16 +124,16 @@ jQuery(document).ready(function($){
          console.log('click');
         jQuery('.status-list-dialog').remove();
      });*/
-
-
-
+	
+	/***********************************************************************************************/
+	// tivit status checkbox
     var statusIcon = jQuery('.status .icon');
     var statusList = '<div class="status-list-dialog">'+
                         '<ul class="status-list">'+
                             '<li class="unread"><div class="ico"></div>Not started</li>'+
-                            '<li class="inprog"><div class="ico"></div>Im on it</li>'+
-                            '<li class="complete"><div class="ico"></div>Im finished</li>'+
-                            '<li class="busy"><div class="ico"></div>Im too busy</li>'+
+                            '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
+                            '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
+                            '<li class="busy"><div class="ico"></div>I\'m too busy</li>'+
                             '<li class="attention"><div class="ico"></div>Propose new time</li>'+
                         '</ul>'+
                      '</div>';
@@ -231,10 +170,8 @@ jQuery(document).ready(function($){
 	    		jQuery('.status-list-dialog').find('.attention').remove();
 	    		jQuery('.status-list-dialog').show();
 	    	}
-
-
      });
-
+	/***********************************************************************************************/
 
      $('body').click(function(event) {
 
@@ -244,29 +181,74 @@ jQuery(document).ready(function($){
         	 jQuery('#sm_1').hide();
          }
      });
+	/***********************************************************************************************/
+	// change tivit status checkbox
+	var statusCh = jQuery('.status-list-dialog .status-list li');
+    statusCh.live('click',function(){
+	
+		var tivitobject = jQuery(this).parent().parent().parent(); 
+		var tivitID = tivitobject.find("input").attr("tivitid");
+    	console.log ("[Yaniv] status dropdown: tivitID=", tivitID);
+    	
+    	record = jQuery(this).parents('.record');
+    	newState = jQuery(this).attr('class');
+    	newClassValue = 'record ' + newState;
+    	var dueDate = "";
+    	//console.log(newState=='complete');
+    	//if(newState=='inprog' || newState=='complete'){
+    		switch(newState){
+	    		case 'inprog':
+	    			console.log('[Yaniv] tivit status change - ON IT -');
+	    			var confirmDialogTitle = 'I\'m on it!';
+	    			//var confirmDialogText = 'Want to add a comment or attach file?';
+	    			var actionPost = 'action="/onit?id=' + tivitID + '&method=post" accept-charset="UTF-8">';
+	    			break;
+	    		case 'complete':
+	    			console.log('[Yaniv] tivit status change - COMPLETE -');
+	    			var confirmDialogTitle = 'I\'m Done!';
+	    			var actionPost = 'action="/done?id=' + tivitID + '&method=put" accept-charset="UTF-8">';
+	    			break;
+	    		case 'busy':
+	    			console.log('[Yaniv] tivit status change - BUSY/CANNOT DO IT -');
+	    			var confirmDialogTitle = 'Sorry, cannot do it now';
+	    			var actionPost = 'action="/decline?id=' + tivitID + '&method=put" accept-charset="UTF-8">';
+	    			break;
+	    		case 'attention':
+	    			console.log('[Yaniv] tivit status change - ATTENTION -');
+	    			var confirmDialogTitle = 'Propose Another Date';
+	    			var actionPost = 'action="/proposedate?id=' + tivitID + '&method=post" accept-charset="UTF-8">';
+	    			dueDate = '<p class="input-date"><label for="propose_date">How about:</label>' +
+									'<input id="propose_date" name="propose_date" type="text" autocomplete="off" placeholder="choose date"/>' + 
+								    '<img src="/images/cal.gif" onclick="javascript:NewCssCal(\'propose_date\', \'mmddyyyy\', \'arrow\')" class="ico_calc"/>' +
+							  '</p>';
+								           
+	    			break;
+	    		case 'unread':
+	    			// basically this won't work now until I get a function from Ilan for the controller....
+	    			console.log('[Yaniv] tivit status change - UNREAD/WHITE COLOR -');
+	    			//var confirmDialogTitle = 'Not on it now...';
+	    			//var actionPost = 'action="/onit?id=' + tivitID + '&method=put" accept-charset="UTF-8">';
+	    			 jQuery('.status-list-dialog').remove();
+	    			 return;
+	    			break;
+	    			
+    		}
+			
+    		var confirmDialog =	'<div class="popup" id="confirmDialog">'	+
+									'<form id="confirmDialogForm" class="confirmPopup" method="post" ' + actionPost +
+											'<h1>' + confirmDialogTitle + '</h1>' +
+											'<p><textarea rows="10" cols="10" id="comment" name="comment"/></p>' +
+											dueDate + 
+											'<div class="request"><div id="popup-cancel" class="form-button">Cancel</div><input class="form-button" type="submit" name="commit" value="OK"/></div>' +
+									'</form>' +
+									'<div id="popup-close" class="close"></div>' +
+								'</div>';				
 
-     var statusCh = jQuery('.status-list-dialog .status-list li');
-     statusCh.live('click',function(){
-
-
-
-    	 record = jQuery(this).parents('.record');
-    	 newState = jQuery(this).attr('class');
-    	 newClassValue = 'record ' + newState;
-    	 //console.log(newState=='complete');
-    	 if(newState=='inprog' || newState=='complete'){
-    		 switch(newState){
-	    		 case 'inprog':
-	    			 var confirmDialogTitle = 'Right on!';
-	    			 var confirmDialogText = 'Want to add a comment or attach file?';
-	    			 break;
-	    		 case 'complete':
-	    			 var confirmDialogTitle = 'You rock!';
-	    			 var confirmDialogText = 'Want to add a comment or attach file?';
-	    			 break;
-    		 }
-
-    		 var confirmDialog = '<div class="confirmDialog">'+
+		
+			//$($('#confirmDialog').css('h3')).css('background', 'none');	
+			$('#confirmDialog').css('margin-top',($('body').height() - $('.popup').height()) / 20);
+			 /*
+			 var confirmDialog = '<div class="confirmDialog">'+
 				'<div class="wrapper">'+
 					'<h2>'+ confirmDialogTitle +'</h2>'+
 					'<div class="txt">'+ confirmDialogText +'</div>'+
@@ -276,20 +258,52 @@ jQuery(document).ready(function($){
 					'</div>'+
 				'</div>'+
 			 '</div>';
+			 */
+			 
     		 jQuery('#new-activity-background').addClass('tempHide');
     		 jQuery('#activity-overlay').show();
     		 jQuery(this).parents('.status').append(confirmDialog);
+    		 // Center the dialog relative to where dropdown was clicked. Default for popups is 70px because of the add tivit window.
+    		 $('#confirmDialog').css('top', '-70px');
+    		 // by defaults, all popups are display=none which means they don't show. Let's make sure this popup shows up! 
+    		 $('#confirmDialog').css('display', 'block');
     		 jQuery('.status-list-dialog').remove();
-    		 record.attr('class',newClassValue);
+    		 //////////////////////////////////////////////////////////
+    		 // Change status on UI to the new selected state (need to use this for Ajax callback)
+    		 //record.attr('class',newClassValue);
+    		 //////////////////////////////////////////////////////////
+    	 //}
+    	 //else
+    	// {
+    	//	 jQuery('.status-list-dialog').remove();
+    	//	 record.attr('class',newClassValue);
+    	// }
 
-    	 }
-    	 else
-    	 {
-    		 jQuery('.status-list-dialog').remove();
-    		 record.attr('class',newClassValue);
-    	 }
-
-     });
+		/************************************************************/
+		// close popup that is currently opened */
+		$('.popup .close').click(function(){
+			console.log ('[Yaniv] NEW popup close button clicked')
+			hidePopup();
+			
+		});	
+		
+		$('#popup-cancel').click(function(){
+			console.log ('[Yaniv] popup cancel clicked')
+			hidePopup();
+		});
+			
+		});
+    	/************************************************************/
+    
+     jQuery("#confirmDialogForm").submit(function() {
+		console.log ('[Yaniv] confirm dialog submit button clicked!');
+		var actionparam = $(this).attr("action") + "";
+		console.log('[Yaniv] action=', actionparam);
+		$.post($(this).attr("action"), $(this).serialize(), null, "script");
+		console.log ('[Yaniv] Ajax call came back...');
+		return false;
+	 });
+     
      jQuery('.confirmDialog .cancel-button').live('click', function(){
          jQuery('.confirmDialog').remove();
          jQuery('#activity-overlay').fadeOut();
@@ -315,6 +329,20 @@ function openNewActivity(){
     }
 
 }
+/* Not in use */
+function removePopup(){
+	console.log ('[Yaniv] Closing popup');
+	jQuery('.popup').remove();
+	jQuery('#activity-overlay').fadeOut();
+}
+function hidePopup(){
+	console.log ('[Yaniv] Hiding Popup');
+	// Confirmation dialog div HAS to be removed form the page, but popup should be hidden since I'm using it for add tivit which is on the view/server side
+	jQuery('#confirmDialog').remove();
+	jQuery('.popup').hide();
+	jQuery('#activity-overlay').fadeOut();
+}
+			
 function closeNewActivity(){
     var layer = jQuery('#new-activity-complete');
     if(jQuery('#calBorder').is(':visible')){
@@ -324,9 +352,11 @@ function closeNewActivity(){
 		jQuery('#activity-overlay').fadeOut();
     });    
     /* Yaniv - changed slideUp to close */
+	/*
 	jQuery('.popup').slideUp('slow',function(){
 		jQuery('#activity-overlay').fadeOut();
     });
+    */
     jQuery(':input','#new-activity-form')
     .not(':button, :submit, :reset, :hidden')
     .val('')
@@ -334,17 +364,18 @@ function closeNewActivity(){
     .removeAttr('selected');
     jQuery('#new-activity-form textarea').val('');
 }
-
+/***********************************************************************************************************************************************************/
 // Scripts for Activity Page
 // from Irina Sorokina (sorokina333@gmail.com)
 jQuery(document).ready(function($){
 	var description = $('.description p span').text();
 	
 	console.log('in Irina DOM Ready function');  
-	
-	//add tivit
+	/************************************************************/
+	// add a tivit popup
 	$('#add-tivit').click(function(){
-		openNewActivity();
+		console.log ('[Yaniv] add a tivit button clicked');
+		jQuery('#activity-overlay').show();
 		/* Yaniv - clear the form before creating new tivit **/
 		$("#create-new-tivit-form")[0].reset();
 		/*****************************************************/
@@ -355,13 +386,21 @@ jQuery(document).ready(function($){
 		$('#due').val('tommorrow ' + '(' + prettyDate + ')');
 		*/
 	});	
+	/************************************************************/
+	// close popup that is currently opened */
 	$('.popup .close').click(function(){
-		closeNewActivity();
+		console.log ('[Yaniv] NEW popup close button clicked')
+		hidePopup();
 	});	
 	$('#cancel').click(function(){
-		closeNewActivity();
+		console.log ('[Yaniv] popup cancel clicked')
+		hidePopup();
 	});
-	
+	//function closePopup(){
+	//	$('.popup').hide();
+	//	$('#activity-overlay').fadeOut();
+	//}
+	/************************************************************/
 	//assign myself
 	$('.popup .assign').click(function(){
 		if($(this).is('.active')){

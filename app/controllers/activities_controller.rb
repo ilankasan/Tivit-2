@@ -1,7 +1,11 @@
 class ActivitiesController < ApplicationController
   before_filter :authenticate_account!
   after_filter :update_view_status, :only => :show 
-  
+  # [Yaniv] This line disables the CSRF protection by rails when "post" is done outside of the controller (in our case my jQuery stuff). It's not recommended
+  # but to make this work I need to do something in the code which I need to continue to research
+  # See details here: http://stackoverflow.com/questions/3558816/what-does-this-mean-actioncontrollerinvalidauthenticitytoken
+  # this solution didn't work for me: http://stackoverflow.com/questions/1245618/rails-invalidauthenticitytoken-for-json-xml-requests
+  skip_before_filter :verify_authenticity_token
   
    def create_activity(params, type)
    	puts "------>>>>>>>>>>>>  create_activity"
@@ -252,8 +256,12 @@ class ActivitiesController < ApplicationController
    # UserMailer.user_tivit_status_change_email(current_account.user, "On it",params["comment"],@activity).deliver
     UserMailer.tivit_status_change_onit_email(current_account.user, params["comment"],@activity).deliver
 
-    redirect_to  @activity.get_parent
-    #redirect_to  root_path
+    #redirect_to  @activity.get_parent
+    respond_to do |format|
+       format.html { redirect_to @activity  }
+       format.js
+       puts "--------[change status to OnIt activities controller]------->> after responding to Ajax"
+     end
   end
   
   def new_tivit
@@ -299,14 +307,13 @@ class ActivitiesController < ApplicationController
       
     
    #respond with Ajax when needed...
+  
    respond_to do |format|
        format.html { redirect_to root_path }
        format.js
        puts "--------------->> after responding to Ajax"
     end
-  
     #redirect_to root_path
-
   end
 
   def done
@@ -323,9 +330,12 @@ class ActivitiesController < ApplicationController
         UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_parent.get_owner,params["comment"],@activity).deliver
       end
     end
-    #redirect_to  root_path
-    redirect_to  @activity.get_parent
-    
+    #redirect_to  @activity.get_parent
+    respond_to do |format|
+       format.html { redirect_to @activity  }
+       format.js
+       puts "--------[change status to Done activities controller]------->> after responding to Ajax"
+    end
   end
 
   
@@ -377,7 +387,12 @@ class ActivitiesController < ApplicationController
     log_action_as_comment(@activity,params["comment"],"Declined",current_account.user)
 
     UserMailer.user_tivit_status_change_email(current_account.user, "Declined",params["comment"],@activity).deliver
-    redirect_to  root_path
+    #redirect_to  root_path
+    respond_to do |format|
+       format.html { redirect_to @activity  }
+       format.js
+       puts "--------[change status to ** decline ** activities controller]------->> after responding to Ajax"
+    end
   	 
  end
 

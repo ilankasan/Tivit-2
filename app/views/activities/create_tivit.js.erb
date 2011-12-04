@@ -40,7 +40,9 @@ console.log('[Yaniv] activity owner user id=', <%= @activity.owner_id %>);
 	<% end %>
 	
 	jQuery("#mytivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");	
-
+	
+	console.log('[Yaniv] after partial rendering....(myself)...'); 
+	
 	// Need to update the tivits counter
 	
 <% else %>
@@ -59,13 +61,16 @@ console.log('[Yaniv] activity owner user id=', <%= @activity.owner_id %>);
 	console.log('[Yaniv] trying to run the partial...'); 
 	jQuery("#teamtivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");
 	
+	console.log('[Yaniv] after partial rendering...(others)..'); 
+	
 	// Need to update the tivits counter
 
 <% end %>
 
-closeNewActivity();
 console.log('[Yaniv] succeeded?'); 
 console.log('new tivit should be rendered by now...'); 
+hidePopup();
+
 
 
 // at this point, we are ready to add the activity to the page. 
