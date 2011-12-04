@@ -529,6 +529,13 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     background: #f8f8f8;
     border-radius:4px;
 }
+.tvit-list .record h3 a{
+    color: black;
+}
+.tvit-list .record h3 a:hover{
+    color: black;
+    text-decoration:none;
+}
 .tvit-list .record-hovered{
 	background: #ccecff;
 }
@@ -809,6 +816,7 @@ a img{border:none;}
 .activities h2{font-size:18px;color:#333;font-weight:normal;border-bottom:1px dotted #eaeaea;}
 .activities h2 span{color:#969696;}
 .activities h3,.tvit-list .record .text h3{margin:6px 0 0;font-size:15px;color:#000;font-weight:bold;}
+
 .activities small{color:#8d8d8d;font-size:12px;}
 .activities a{color:#7b7bd2;}
 .activities #new-activity{display:none;background:none;width:764px;}

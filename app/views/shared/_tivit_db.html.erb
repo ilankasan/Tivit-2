@@ -1,29 +1,34 @@
 <!-- Display a tivit within an activity on the  Dashboard -->
 <% owner_tivit_status = tivit.get_owner_status %>
 
-<% if (owner_tivit_status == "OnIt" || owner_tivit_status == "Accepted")%>
+<% if owner_tivit_status == "Done" %>
+
+	<li class="record complete">
+		
+<% elsif tivit.due != nil && tivit.due < Time.now %>
+      
+      <li class="record busy">
+   					
+<% elsif (owner_tivit_status == "OnIt" || owner_tivit_status == "Accepted")%>
 
 	<li class="record inprog">
 	    
 <% elsif owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed"%>
 
 	<li class="record unread">
-	                      
-<% elsif owner_tivit_status == "Done" %>
-
-	<li class="record complete">
-		
+	                      	
 <% elsif owner_tivit_status == "Proposed" %>
 
 	<li class="record attention">
-
-                            
+                          
 <% else %>	                            
 
 	<li class="record busy">
 	
 <%end%>
 
+	<input type="hidden" activityid="<%= tivit.get_parent.id %>">
+	
 	<div class="status">
 		<div class="icon"></div>
 		<input type="hidden" tivitid="<%= tivit.id %>">
@@ -57,14 +62,27 @@
 		</div>
 		<div class="wrapp">
 			<div class="twr">
-	              <h3><%= tivit.name%>       
+	              
+	              <% tivit_parent_activity = tivit.get_parent %>
+	              
+	              <h3>    <%= link_to tivit.name, tivit_parent_activity, :action => "show",
+	  									   :method => "get",
+	                                       :title  => tivit_parent_activity.name %>
+	               
+	               <% if tivit.due != nil && tivit.due < Time.now %>
+      					<span class="timestamp"> - <%= time_ago_in_words(tivit.due) %> ovberdue! </span>
+   				   <% end %>
+   					
+	             <!-- <h3><%= tivit.name%>
 	              	
 	              	<% if tivit.due != nil && tivit.due < Time.now %>
       					<span class="timestamp"> - <%= time_ago_in_words(tivit.due) %> ovberdue! </span>
    					<% end %>
-	              	
+	              -->	
 	              	
 	              </h3>
+	              
+	              
 	              <span class="grey">
 	              	<%= tivit.get_owner.get_name %>
 	              	

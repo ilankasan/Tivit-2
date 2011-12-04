@@ -101,14 +101,36 @@ jQuery(document).ready(function($){
     //$(".record").hover(
 	//add from Irina Sorokina
 	//an exception for .record on Activity Page
+	//$(".record").hover(
     $(".record").not('.tivits .record').not('.main-tivit').hover(
 	   function() {
+	      //$(this).css('cursor','pointer');
 	      $(this).addClass('record-hovered');
 	   },
 	   function() {
 	      $(this).removeClass('record-hovered');
+	      //$(this).css('cursor','pointer');
 	   }
 	);    
+	
+	/* Yaniv - Dashboard click on tivit takes to adp */
+	//var xdf = $(".record").not('.tivits .record').not('.main-tivit');
+	/*
+	$(".record").not('.tivits .record').not('.main-tivit').click (function(){
+		console.log('[Yaniv] clicked on tivit on dashboard');
+		var linktoactivitypage = 'form method="POST" action="/activities/83" style="display: none;">' +
+			'<input type="hidden" name="_method" value="get">' +
+			'<input type="hidden" name="authenticity_token" value="isK4QXkRIhFKt0ZYToHkY9aJttTF8lbs7d7koyyGKB0=">'+
+		'</form>'
+		
+		window.location.href = "/activities/83";
+
+		//$.get("/activities/83");
+		console.log ('[Yaniv] Ajax call came back...');
+		return false;
+		
+	});    
+	*/
 	
 	//add from Irina Sorokina
 	$('.conteiner').hover(
@@ -422,7 +444,17 @@ jQuery(document).ready(function($){
 	$('.text-conteiner').hover(function(){
 		$(this).css('cursor','pointer');
 	});
-
+	/* Clicking comments icon opens comments */
+	$('.comments').live('click', function(){
+		//alert($(this).parents('.record').children('ul').attr('class'));
+		console.log('[Yaniv] tivit clicked - show/hide comments...');
+		$(this).parents('.record').children('ul').fadeToggle('slow');
+		$(this).parents('.record').children('.show-more').fadeToggle('slow');
+	});	
+	$('.comments').hover(function(){
+		$(this).css('cursor','pointer');
+	});
+	
 	//change respond status
 	$('.respond .form-button').live('click', function(){
 	
