@@ -26,7 +26,7 @@ class UserMailer < ActionMailer::Base
     #DElete - toemail = send_to[0].get_email
     #mail(:to => toemail, :cc => "tiviti.mailer.cc@gmail.com",
      #    :subject => @user.get_name+" left a commented on '"+@tivit.name+"'" )
-    mail(:to => toemail, :cc => "tiviti.mailer.cc@gmail.com",
+    mail(:from => commenter.get_name+" via tiviti",:to => toemail, :cc => "tiviti.mailer.cc@gmail.com",
          :subject => "Tiviti: You have a new comment for '"+@tivit.name+"'" )
     
  end

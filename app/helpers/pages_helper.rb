@@ -48,6 +48,37 @@ module PagesHelper
       return Activity.find_by_sql(sql_need_attention_activities)
 
   end
+#  Other's activity:
+#Only show the activity if I have a tivit there and it's not completed yet. 
+#If I completed all my tivits in others activity, 
+#only show it if other tivits I participated in the discussion had new comments or someone commented it my tivit. 
+#Otherwise, don't show the activity at all.
+#My tivits should show up at the top
+#Only show other team tivits IF I ever participated in the discussion and there's a status change or new comment there
+#Don't show closed/completed activities
+
+#My Activities
+#Always show all my Activites that are not closed - so I could close it
+#Show the following tivits in each activity:
+#Not completed (basically everything that is not yet completed - on it, in progress, late, etc.)
+#Completed that had new comments on it
+
+def new_get_activities_i_participate (user_id)
+    
+      sql_activities_i_participate = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
+                 WHERE NOT activities.status      = 'Completed'  
+                 AND activities.activity_type     = 'activity' 
+                 AND (activities.owner_id         = "+user_id+"
+                 OR (     tivits.owner_id         = "+user_id+"    AND 
+                          tivits.parent_id        = activities.id  AND
+                          tivits.owner_id         = tivit_user_statuses.user_id AND
+                          tivits.id               = tivit_user_statuses.activity_id AND
+                          NOT tivit_user_statuses.status = 'Done'))
+                 ORDER BY activities.due"
+          
+        return Activity.find_by_sql(sql_activities_i_participate)
+        
+  end
   
   def get_activities_i_participate (user_id)
     

@@ -185,28 +185,45 @@ class Activity < ActiveRecord::Base
  
  def update_tivit_user_status_onit(user,comment)
  	change_status(user,"OnIt",comment)
+ 	self.change_status_to_in_progress if self.isDone?
+  
  end
  
  def update_tivit_user_status_reviewed(user,comment)
  	change_user_status(user,"Reviewed",comment,nil,Time.now().localtime,nil)
+ 	
  end
  
  def update_tivit_user_status_decline(user,comment)
  	change_status(user,"Declined",comment)
-
+  self.change_status_to_in_progress if self.isDone?
+  
  end
  
  def update_tivit_user_status_i_am_done(user,comment)
+  
  	change_status(user,"Done",comment)
+ 	puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
+ 	self.change_status_to_done
+ 	puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
+ 	puts self.inspect
+  puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
+  puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
+  
  end
  
- def update_tivit_user_propose_date(user,comment,date)	
+ def update_tivit_user_propose_date(user,comment,date)
+   	
  	change_user_status(user,"Proposed",comment,date,Time.now().localtime,nil)
+ 	self.change_status_to_in_progress if self.isDone?
+ 	  
  end
+ 
+ 
  
  def update_tivit_status_reassiged(user,comment,assined_user)
   change_user_status(user,"Reasigned",comment,nil,Time.now().localtime,assined_user)
-   
+     
  end
       
 #returns the status of a user with respect to this activity 
@@ -415,9 +432,6 @@ class Activity < ActiveRecord::Base
 	    	
   end
 
-
-
-
   def change_status_to_completed
   	puts "change_status_to_completed"
 	time = Time.now()
@@ -432,16 +446,25 @@ class Activity < ActiveRecord::Base
   end
 	  
   def change_status_to_in_progress
-  	puts "change_status_to_in_progress"
-	self.status       = "in-progress"
-	self.save
-  	if(self.tivits != nil || self.tivits.size > 0)
-		self.tivits.each do |tivit|
-			tivit.change_status_to_in_progress
-		end
-	end 
-  	
+    puts "change_status_to_in_progress"
+	  self.status       = "in-progress"
+	  self.save
+  	 if(self.tivits != nil || self.tivits.size > 0)
+		  self.tivits.each do |tivit|
+			   tivit.change_status_to_in_progress
+		  end
+	   end 
   end
+  
+  def change_status_to_done
+    puts "change_status_to_Done"
+    self.status       = "Done"
+    self.save
+  end 
+  
+  def isDone?
+     return self.status == "Done"
+  end 
   
 private
 
