@@ -103,14 +103,20 @@ class Activity < ActiveRecord::Base
     self.tivits.where(:owner_id => user.get_id)
   end
   
+  #def get_all_my_open_tivits (user)
+  #  self.tivits.where(:owner_id => user.get_id, )
+  #end
+  
   def get_all_my_open_tivits (user)
     #self.tivits.where(:owner_id => user.get_id)
     #not working
-    self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
-   AND ((NOT tivit_user_statuses.status_id = 'Done') 
-   OR  ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now.localtime-1.day)  
-
-    
+    self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done' 
+      AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
+     
+   
+   # self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
+   #AND ((NOT tivit_user_statuses.status_id = 'Done') 
+   #OR  ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))")  
     
   end
   
@@ -222,7 +228,7 @@ class Activity < ActiveRecord::Base
  
  
  def update_tivit_status_reassiged(user,comment,assined_user)
-  change_user_status(user,"Reasigned",comment,nil,Time.now().localtime,assined_user)
+  change_user_status(user,"Reassigned",comment,nil,Time.now().localtime,assined_user)
      
  end
       

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111107061249) do
+ActiveRecord::Schema.define(:version => 20111205015825) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -55,6 +55,8 @@ ActiveRecord::Schema.define(:version => 20111107061249) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "activities", ["due"], :name => "index_activities_on_due"
 
   create_table "activities_documents", :id => false, :force => true do |t|
     t.integer  "activity_id"

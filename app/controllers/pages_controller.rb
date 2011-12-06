@@ -19,37 +19,39 @@ class PagesController < ApplicationController
     #ccount_session[:filter_id] = "1" if account_session[:filter_id] == nil
      
     if((account_session[:filter_id]==nil) && (params[:filter_id]==nil))
-      filter_id = "1"  
+      @filter_id = "1"  
     elsif (params[:filter_id] != nil)
-      filter_id = params[:filter_id]
+      @filter_id = params[:filter_id]
     else
-      filter_id = account_session[:filter_id]
+      @filter_id = account_session[:filter_id]
     end
       
     
-    case filter_id
+    case @filter_id
       when ("1") # All
         @tivits_ondeck             = get_activities_i_participate (current_user_id)
-        @mytivits = false
               
       when ("2") # my activities
         puts "show my activities"
         @tivits_ondeck             = get_my_activities(current_user_id)
-        @mytivits = false
-    
-      when ("3") # my tivits
-        puts "show tivits only"
+        
+      when ("3") # my open tivits
+        puts "show open tivits only"
         @tivits_ondeck             = get_activities_i_participate (current_user_id)
-        @mytivits = true
+        
+      when ("4") # my tivits
+        puts "show all my tivits includind closed"
+        @tivits_ondeck             = get_activities_i_participate (current_user_id)
+          
       else
         @tivits_ondeck             = get_activities_i_participate (current_user_id)
-        @mytivits = false    
+        @filter_id = "1"    
       end
 # Filter only product On Deck (for now)
     @tivits_completed          = get_activities_completed(current_user_id)
     @need_attention_activities = get_need_attention (current_user_id)
     
-    account_session[:filter_id] = filter_id
+    account_session[:filter_id] = @filter_id
   end
 
   def myteam

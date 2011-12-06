@@ -23,11 +23,9 @@ class UserMailer < ActionMailer::Base
     @comment    = comment
     @tivit      = activity
     toemail     = create_recipient_list(send_to)
-    #DElete - toemail = send_to[0].get_email
-    #mail(:to => toemail, :cc => "tiviti.mailer.cc@gmail.com",
-     #    :subject => @user.get_name+" left a commented on '"+@tivit.name+"'" )
+    
     mail(:from => commenter.get_name+" via tiviti",:to => toemail, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => "Tiviti: You have a new comment for '"+@tivit.name+"'" )
+         :subject => "tiviti: You have a new comment for '"+@tivit.name+"'" )
     
  end
 
@@ -91,7 +89,7 @@ class UserMailer < ActionMailer::Base
     @comment  = comment
     @tivit    = tivit
     mail(:to => activity_owner.get_email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => "Tiviti: "+@assignee.get_name+" has completed "+tivit.name+"!")     
+         :subject => "tiviti: "+@assignee.get_name+" has completed "+tivit.name+"!")     
   end
   
   
@@ -104,7 +102,7 @@ class UserMailer < ActionMailer::Base
     @comment    = comment
     puts "---->>>> sending email to "+@assigner.get_email
     mail(:to => @assigner.get_email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => "Tiviti: "+@assignee.name+" has accepted your request for help with '"+tivit.name+"'" )
+         :subject => "tiviti: "+@assignee.name+" has accepted your request for help with '"+tivit.name+"'" )
      
   end
   

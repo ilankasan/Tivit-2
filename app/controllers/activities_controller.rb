@@ -8,14 +8,14 @@ class ActivitiesController < ApplicationController
   skip_before_filter :verify_authenticity_token
   
    def create_activity(params, type)
-   	puts "------>>>>>>>>>>>>  create_activity"
+   #	puts "------>>>>>>>>>>>>  create_activity"
    	
    	params["due"] = convert_date_to_string(params,"due")
    	params["owner_id"] = current_account.user.id
    	params["status"]   = "in-progress"
    	params["activity_type"]     = "activity"
 
-   	puts "Inspect Params " +params.inspect
+   	#puts "Inspect Params " +params.inspect
    	@activity = current_account.user.add_my_ativity(params)    
 #Updateting status as Reviewed. New tivits should for current user should be at REviewed status
 	#@activity.update_status_after_show(current_account.user)
@@ -423,9 +423,9 @@ puts " Reasign tivit "+@tivit.name
       @tivit.update_tivit_status_reassiged(current_account.user,params["comment"],@assined_user)
       
     
-      log_action_as_comment(@tivit,"Asigned to "+@assined_user.get_name+":" + params["comment"],"Reasign",current_account.user)
+      log_action_as_comment(@tivit,"Assigned to "+@assined_user.get_name+":" + params["comment"],"Reassign",current_account.user)
       UserMailer.reassign_tivit(current_account.user, @assined_user, params["comment"],@tivit)
-      flash[:success] = "Successfuly reasigned tivit to "
+      flash[:success] = "Successfuly reassigned tivit to "
       @tivit.save
       redirect_to  @tivit   
     end
