@@ -11,7 +11,8 @@ class UserMailer < ActionMailer::Base
     @tivit     = tivit
     
     mail(:from => assigner.get_name+" via tiviti",:to => assignee.get_email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => "tiviti: I need your help with "+tivit.name)
+         :subject => "tiviti: "+assigner.get_name+" needs your help with "+tivit.name)
+         
          
   end
 
