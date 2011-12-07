@@ -210,11 +210,11 @@ class Activity < ActiveRecord::Base
   
  	change_status(user,"Done",comment)
  	puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
- 	self.change_status_to_done
- 	puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
- 	puts self.inspect
-  puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
-  puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
+ #	self.change_status_to_done
+ #	puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
+ #	puts self.inspect
+ # puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
+ # puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
   
  end
  
@@ -440,7 +440,7 @@ class Activity < ActiveRecord::Base
 
   def change_status_to_completed
   	puts "change_status_to_completed"
-	time = Time.now()
+	  time = Time.now()
   	self.completed_at = time.localtime
   	self.status       = "Completed"
   	self.save 

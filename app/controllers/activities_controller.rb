@@ -320,6 +320,7 @@ class ActivitiesController < ApplicationController
     
     @activity = Activity.find(params[:id])
     @activity.update_tivit_user_status_i_am_done(current_account.user,params["comment"])
+    @activity.change_status_to_completed
     log_action_as_comment(@activity,params["comment"],"Done",current_account.user)
 
     if(@activity.isActivity?)

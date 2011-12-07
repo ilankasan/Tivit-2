@@ -37,10 +37,11 @@ class PagesController < ApplicationController
         
       when ("3") # my open tivits
         puts "show open tivits only"
-        @tivits_ondeck             = get_activities_i_participate (current_user_id)
+        #@tivits_ondeck             = get_activities_i_participate (current_user_id)
+        @tivits_ondeck             = get_activities_i_have_open_tivits (current_user_id)
         
       when ("4") # my tivits
-        puts "show all my tivits includind closed"
+        puts "show all my tivits"
         @tivits_ondeck             = get_activities_i_participate (current_user_id)
           
       else
