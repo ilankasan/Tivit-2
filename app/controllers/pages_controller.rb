@@ -43,6 +43,10 @@ class PagesController < ApplicationController
       when ("4") # my tivits
         puts "show all my tivits"
         @tivits_ondeck             = get_activities_i_participate (current_user_id)
+    
+      when ("5") # my tivits
+        puts "show all my tivits"
+        @tivits_ondeck             = get_activities_i_participate (current_user_id)
           
       else
         @tivits_ondeck             = get_activities_i_participate (current_user_id)
