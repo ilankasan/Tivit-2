@@ -75,7 +75,7 @@
 	  									   :method => "get",
 	                                       :title  => tivit_parent_activity.name %>
 	               
-	               <% if tivit.due != nil && tivit.due < Time.now %>
+	               <% if tivit.due != nil && tivit.due < Time.now && owner_tivit_status != "Done" %>
       					<span class="timestamp"> - <%= time_ago_in_words(tivit.due) %> ovberdue! </span>
    				   <% end %>
    					
