@@ -162,7 +162,7 @@ tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
       #  size = self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id).count
       #end
     
-      return (all_open_tivits + closed_tivits_with_comments)    
+      return (all_open_tivits + closed_tivits_with_comments).uniq    
     #else
 # activity not owned by the user
 
