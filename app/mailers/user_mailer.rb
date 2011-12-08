@@ -102,7 +102,7 @@ class UserMailer < ActionMailer::Base
     @tivit      = tivit
     @comment    = comment
     puts "---->>>> sending email to "+@assigner.get_email
-    mail(:to => @assigner.get_email, :bcc => "tiviti.mailer.cc@gmail.com",:from => assignee.get_name+" via tiviti",:reply_to => assignee.get_email
+    mail(:to => @assigner.get_email, :bcc => "tiviti.mailer.cc@gmail.com",:from => assignee.get_name+" via tiviti",:reply_to => assignee.get_email,
          :subject => "tiviti: "+@assignee.name+" has accepted your request for help with '"+tivit.name+"'" )
      
   end
