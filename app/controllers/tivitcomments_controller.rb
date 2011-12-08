@@ -33,7 +33,9 @@ class TivitcommentsController < ApplicationController
   if(@activity.get_owner.id != current_account.user.id || @activity.get_parent.get_owner != current_account.user.id )
     send_to = Array.new
     send_to << @activity.get_owner            if @activity.get_owner.id            != current_account.user.id
-    send_to << @activity.get_parent.get_owner if @activity.get_parent.get_owner.id != current_account.user.id   
+    send_to << @activity.get_parent.get_owner if @activity.get_parent.get_owner.id != current_account.user.id
+    send_to << @activity.get_invited_by       if @activity.get_invited_by          != current_account.user.id   
+       
     puts "sending comment notificaiton "+send_to.inspect  
     UserMailer.notify_comment_added_to_tivit(current_account.user, @comment.comment,@activity, send_to).deliver
   else

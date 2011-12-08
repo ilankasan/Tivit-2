@@ -25,7 +25,7 @@ class UserMailer < ActionMailer::Base
     @tivit      = activity
     toemail     = create_recipient_list(send_to)
     
-    mail(:from => commenter.get_name+" via tiviti",:reply_to => commentor.get_email,:to => toemail, :bcc => "tiviti.mailer.cc@gmail.com",
+    mail(:from => commentor.get_name+" via tiviti",:reply_to => commentor.get_email,:to => toemail, :bcc => "tiviti.mailer.cc@gmail.com",
          :subject => "tiviti: You have a new comment for '"+@tivit.name+"'" )
     
  end
@@ -65,7 +65,7 @@ class UserMailer < ActionMailer::Base
     @tivit   = tivit
     @summary = summary
     
-    mail(:to => invitees, :cc => "tiviti.mailer.cc@gmail.com,"+user.get_email,
+    mail(:to => invitees, :bcc => "tiviti.mailer.cc@gmail.com,"+user.get_email,
          :subject =>"tivit" +" '"+tivit.name+"' " + "is completed!" )  
   end 
 
