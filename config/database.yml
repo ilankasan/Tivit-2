@@ -9,7 +9,7 @@
 development:
   adapter: mysql2
   encoding: utf8
-  database: test
+  database: tiviti1
   pool: 5
   username: root
   password:

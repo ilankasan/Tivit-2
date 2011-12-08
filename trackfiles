@@ -1,5 +1,7 @@
-page_helper.rb
 Activity.rb
+user_mailer.rb
+
+
 Activity_Controller.rb
 _activity_db.html.rb
 

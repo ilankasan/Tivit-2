@@ -119,10 +119,10 @@ ActiveRecord::Schema.define(:version => 20111205015825) do
     t.integer  "activity_id"
     t.string   "status_id"
     t.string   "comment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.datetime "last_reviewed"
     t.datetime "proposed_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "last_status_change"
     t.integer  "assigned_to"
   end

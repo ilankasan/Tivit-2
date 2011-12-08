@@ -1,8 +1,8 @@
 require "socket"
 class UserMailer < ActionMailer::Base
-   default :from => "tiviti.mailer@gmail.com"
-   #//:url =>"http://"+Socket.gethostname
-  	
+   default :from => "tiviti.mailer@tiviti.net"
+        #   :return_path => 'system@example.com'
+   
    def new_tivit_email(assignee, assigner,tivit)
 #101 Tivit - New. When: Assigner creates tivit, Who: Assignee
                                                       
@@ -10,22 +10,22 @@ class UserMailer < ActionMailer::Base
     @inviter   = assigner
     @tivit     = tivit
     
-    mail(:from => assigner.get_name+" via tiviti",:to => assignee.get_email, :cc => "tiviti.mailer.cc@gmail.com",
+    mail(:from => assigner.get_name+" via tiviti",:reply_to => assigner.get_email,:to => assignee.get_email, :bcc => "tiviti.mailer.cc@gmail.com",
          :subject => "tiviti: "+assigner.get_name+" needs your help with "+tivit.name)
          
          
   end
 
 
- def notify_comment_added_to_tivit(commenter, comment,activity, send_to)
+ def notify_comment_added_to_tivit(commentor, comment,activity, send_to)
 #103 Tivit - New Comment(s). When: Comment added (non-self), Who: Assigner, Assignee, Commenters  Ilan: sent only to asigner if asigne comments
 
-    @commenter  = commenter
+    @commenter  = commentor
     @comment    = comment
     @tivit      = activity
     toemail     = create_recipient_list(send_to)
     
-    mail(:from => commenter.get_name+" via tiviti",:to => toemail, :cc => "tiviti.mailer.cc@gmail.com",
+    mail(:from => commenter.get_name+" via tiviti",:reply_to => commentor.get_email,:to => toemail, :bcc => "tiviti.mailer.cc@gmail.com",
          :subject => "tiviti: You have a new comment for '"+@tivit.name+"'" )
     
  end
@@ -39,7 +39,7 @@ class UserMailer < ActionMailer::Base
     @comment       = comment
     @tivit         = tivit
     senlist = create_recipient_list([@new_owner,tivit.get_parent.get_owner])
-    mail(:to => senlist, :cc => "tiviti.mailer.cc@gmail.com",
+    mail(:to => senlist, :bcc => "tiviti.mailer.cc@gmail.com",
          :subject => @old_owner.get_name+" needs your help with "+"'"+@tivit.get_parent.name+"'" )
   end
 
@@ -89,7 +89,7 @@ class UserMailer < ActionMailer::Base
     @assignee = user
     @comment  = comment
     @tivit    = tivit
-    mail(:to => activity_owner.get_email, :cc => "tiviti.mailer.cc@gmail.com",
+    mail(:to => activity_owner.get_email, :bcc => "tiviti.mailer.cc@gmail.com",
          :subject => "tiviti: "+@assignee.get_name+" has completed "+tivit.name+"!")     
   end
   
@@ -102,7 +102,7 @@ class UserMailer < ActionMailer::Base
     @tivit      = tivit
     @comment    = comment
     puts "---->>>> sending email to "+@assigner.get_email
-    mail(:to => @assigner.get_email, :cc => "tiviti.mailer.cc@gmail.com",
+    mail(:to => @assigner.get_email, :bcc => "tiviti.mailer.cc@gmail.com",:from => assignee.get_name+" via tiviti",:reply_to => assignee.get_email
          :subject => "tiviti: "+@assignee.name+" has accepted your request for help with '"+tivit.name+"'" )
      
   end
@@ -114,7 +114,7 @@ class UserMailer < ActionMailer::Base
     @comment       = comment
     @tivit         = tivit
      
-    mail(:to => @invited_by.get_email, :cc => "tiviti.mailer.cc@gmail.com",
+    mail(:to => @invited_by.get_email, :bcc => "tiviti.mailer.cc@gmail.com",
          :subject => @user.name+" has "+ action + " tivit '"+tivit.name+"'" )
          
   end

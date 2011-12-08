@@ -102,16 +102,14 @@ class Activity < ActiveRecord::Base
   
   def get_on_deck_tivits (user)
 puts "------------->>>>>>>>>>>>"
-puts "on deck filter"
-tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
+puts "On deck filter!"
+    tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
     if(tivit_user_status == nil )
-      puts " last reviewed is NULLLLLLLLLLLLLLLLLLLLLL"
       last_reviewed = Time.now
     else
-      
       last_reviewed = tivit_user_status.last_reviewed  
-                         
     end
+    puts "Last Reviewed = "+last_reviewed.to_s
     
 #My Activities
 #Always show all my Activites that are not closed - so I could close it
@@ -121,48 +119,86 @@ tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
 
 #Other's activity:
 #Only show the activity if I have a tivit there and it's not completed yet. 
-#If I completed all my tivits in others activity, 
-#only show it if other tivits I participated in the discussion had new comments or someone commented it my tivit. 
+#If I completed all my tivits in others activity, only show it if other tivits 
+#I participated in the discussion had new comments or someone commented it my tivit. 
 #Otherwise, don't show the activity at all.
 #My tivits should show up at the top
 #Only show other team tivits IF I ever participated in the discussion and there's a status change or new comment there
 #Don't show closed/completed activities
 
 
-    #if(self.owner_id = user.get_id)
+    if(self.owner_id == user.get_id)
 #activity owned by user
-    all_open_tivits             = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done' 
-       AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
-    puts "_______________________________________________________________________________________"
-    puts "Open tivits size "+all_open_tivits.size.to_s
- 
-     
-    puts "Last Reviewed = "+last_reviewed.to_s
-    if(last_reviewed.to_s.empty?)
-      closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id     = activities.id
-      AND NOT tivitcomments.user_id     = ?", user.get_id)
-    
-    #closed_tivits_with_comments = self.tivits.where("EXISTS SELECT * from tivitcomments 
-    #WHERE tivitcomments.activity_id  = activities.id
-    #  AND NOT tivitcomments.user_id     = "+user.get_id.to_s)
-    
-    
-    else
-      closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id     = activities.id
-      AND     tivitcomments.created_at  > ?
-      AND NOT tivitcomments.user_id     = ?",last_reviewed, user.get_id)
-    
-    end   
-          
-      puts "closed_tivits_with_comments size "+closed_tivits_with_comments.size.to_s
-       
+      puts "user is the owner of activity"
+      
+      all_open_tivits             = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done' 
+         AND tivit_user_statuses.user_id = activities.owner_id")
+         
       puts "_______________________________________________________________________________________"
- #   tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
-      #if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
-      #  size = self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id).count
-      #end
-    
+      puts "Open tivits size "+all_open_tivits.size.to_s
+      
+# finding out when the user last reviewed the activity
+      if(last_reviewed.to_s.empty?)
+        # user never reviewed this activity
+        closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id     = activities.id
+        AND NOT tivitcomments.user_id     = ?", user.get_id)     
+      else
+        closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id     = activities.id
+        AND     tivitcomments.created_at  > ?
+        AND NOT tivitcomments.user_id     = ?",last_reviewed, user.get_id)   
+      end   
+          
+      puts "closed_tivits_with_comments size "+closed_tivits_with_comments.size.to_s   
+      puts "_______________________________________________________________________________________"
       return (all_open_tivits + closed_tivits_with_comments).uniq    
+   
+    else
+# User is not the owner of the activity
+      puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    user is NOT the owner of activity"
+# Get only my open tivits
+      my_open_tivits             = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done' 
+         AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
+         
+      puts "_______________________________________________________________________________________"
+      puts "Open tivits size "+my_open_tivits.size.to_s
+    
+# get all tivits i participated in the conversation and there are new comments
+    
+    #  if(last_reviewed.to_s.empty?)
+        # user never reviewed this activity
+     #    closed_tivits_i_commented_with_new_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id     = activities.id
+     #   AND NOT tivitcomments.user_id     = ?", user.get_id)     
+     # else
+     #    closed_tivits_i_commented_with_new_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id     = activities.id
+     #   AND     tivitcomments.created_at  > ?
+     #   AND NOT tivitcomments.user_id     = ?",last_reviewed, user.get_id)   
+     # end   
+      
+      
+       #closed_tivits_with_comments = self.tivits.where("EXISTS SELECT * from tivitcomments 
+    #WHERE tivitcomments.activity_id  = activities.id
+    #  AND NOT tivitcomments.user_id     = "+user.get_id.to_s)  
+   
+   sql = "SELECT DISTINCT tivits.* FROM activities as tivits, tivit_user_statuses, tivitcomments 
+                 WHERE    tivits.activity_type       = 'tivit' 
+                 AND      tivits.parent_id           = "+self.id.to_s+"
+                 AND      tivits.owner_id            = tivit_user_statuses.user_id 
+                 AND      tivits.id                  = tivit_user_statuses.activity_id 
+                 AND NOT  tivit_user_statuses.status_id   = 'Done'
+                 AND      tivitcomments.activity_id  = tivits.id
+                 AND      tivitcomments.user_id      = "+user.get_id.to_s+"
+                 ORDER BY tivits.due"
+#AND     tivitcomments.created_at    > "+last_reviewed.to_s
+                 
+                 
+        closed_tivits_i_commented_with_new_comments = Activity.find_by_sql(sql)
+          
+        
+      #return (closed_tivits_i_commented_with_new_comments + my_open_tivits).uniq    
+      return (closed_tivits_i_commented_with_new_comments + my_open_tivits)    
+
+    end
+    
     #else
 # activity not owned by the user
 
