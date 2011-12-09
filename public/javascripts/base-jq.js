@@ -296,7 +296,7 @@ jQuery(document).ready(function($){
 			 
     		 jQuery('#new-activity-background').addClass('tempHide');
     		 jQuery('#activity-overlay').show();
-    		 jQuery(this).parents('.status').append(confirmDialog);
+    		 jQuery(this).parents('.record').append(confirmDialog);
     		 // Center the dialog relative to where dropdown was clicked. Default for popups is 70px because of the add tivit window.
     		 $('#confirmDialog').css('top', '-70px');
     		 // by defaults, all popups are display=none which means they don't show. Let's make sure this popup shows up! 
@@ -452,6 +452,7 @@ jQuery(document).ready(function($){
 		console.log('[Yaniv] tivit clicked - show/hide comments...');
 		$(this).parents('.record').children('ul').fadeToggle('slow');
 		$(this).parents('.record').children('.show-more').fadeToggle('slow');
+		$(this).parents('.record').children('.respond').fadeToggle('slow');
 	});	
 	$('.text-conteiner').hover(function(){
 		$(this).css('cursor','pointer');
@@ -462,6 +463,8 @@ jQuery(document).ready(function($){
 		console.log('[Yaniv] tivit clicked - show/hide comments...');
 		$(this).parents('.record').children('ul').fadeToggle('slow');
 		$(this).parents('.record').children('.show-more').fadeToggle('slow');
+		$(this).parents('.record').children('.respond').fadeToggle('slow');
+		
 	});	
 	$('.comments').hover(function(){
 		$(this).css('cursor','pointer');

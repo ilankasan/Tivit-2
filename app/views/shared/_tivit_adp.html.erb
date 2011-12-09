@@ -1,5 +1,6 @@
 
 <% unread_comments = tivit_adp.get_number_of_unread_comments(current_account.user)%>
+<% respondbutton = "respond" %>
 
 
 	<ul class="list">
@@ -10,6 +11,12 @@
 		<% if owner_tivit_status == "Done" %>
 		
 		<li class="record complete">
+		<% respondbutton = "I'm done!" %>
+		
+		<% elsif owner_tivit_status == "Proposed" %>
+	
+		<li class="record attention">
+		<% respondbutton = "new date?" %>
 			
 		<% elsif tivit_adp.due != nil && tivit_adp.due < Time.now %>
       
@@ -18,15 +25,12 @@
 		<% elsif (owner_tivit_status == "OnIt" || owner_tivit_status == "Accepted")%>
 		
 		<li class="record inprog">
+		<% respondbutton = "I'm on it" %>
 			    
 		<% elsif owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed"%>
 		
 		<li class="record unread">
-			                      		
-		<% elsif owner_tivit_status == "Proposed" %>
-		
-		<li class="record attention">
-				                            
+			                      		                            
 		<% else %>	                            
 		
 		<li class="record busy">
@@ -112,7 +116,8 @@
 		   						
 						</div> <!-- text-container -->
 				</div> <!-- text -->
-					
+				
+				<!-- 	
 				<div class="edit-menu">
 					<div class="icon"></div>
 					<div class="menu-dialog">
@@ -122,11 +127,31 @@
 						</ul>
 					</div>
 				</div>
-								
+				-->														
 				<div class="clear"></div>
 			</div><!-- container -->
 			
-			<div class="show-more"><a href="#">Show 2 more comment</a></div>
+			<!-- Show respond button only to owner -->
+			<% if tivit_adp.get_owner.id == current_account.user.id %>
+			<div class="respond">
+				<div class="status">
+					<div class="icon"></div>
+						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes">
+				</div>
+				<div class="form-button"><%= respondbutton %></div>
+				<!--
+				<div class="status">
+					<div class="icon"></div>
+					<% if tivit_adp.get_owner.id == current_account.user.id %>
+						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes">
+					<% else %>
+						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="no">
+					<%end%>
+				</div>
+				-->
+			</div>
+			<%end%>
+			<!-- <div class="show-more"><a href="#">Show 2 more comment</a></div> -->
 	
 <!-- Figure out if we need to open tivits that has new comments for this user. If new comments, add "display: block" otherwise, collapse the comments -->
 
