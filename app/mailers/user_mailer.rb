@@ -1,8 +1,9 @@
 require "socket"
 class UserMailer < ActionMailer::Base
-   default :from => "tiviti.mailer@tiviti.net"
-        #   :return_path => 'system@example.com'
-   
+   default :from => "tiviti.mailer@tiviti.net",
+           :bcc => "tiviti.mailer.cc@gmail.com"
+   #   :return_path => 'system@example.com'
+        
    def new_tivit_email(assignee, assigner,tivit)
 #101 Tivit - New. When: Assigner creates tivit, Who: Assignee
                                                       
@@ -10,7 +11,7 @@ class UserMailer < ActionMailer::Base
     @inviter   = assigner
     @tivit     = tivit
     
-    mail(:from => assigner.get_name+" via tiviti",:reply_to => assigner.get_email,:to => assignee.get_email, :bcc => "tiviti.mailer.cc@gmail.com",
+    mail(:from => create_from_str(assigner.get_name),:reply_to => assigner.get_email,:to => assignee.get_email,
          :subject => "tiviti: "+assigner.get_name+" needs your help with "+tivit.name)
          
          
@@ -25,7 +26,7 @@ class UserMailer < ActionMailer::Base
     @tivit      = activity
     toemail     = create_recipient_list(send_to)
     
-    mail(:from => commentor.get_name+" via tiviti",:reply_to => commentor.get_email,:to => toemail, :bcc => "tiviti.mailer.cc@gmail.com",
+    mail(:from => create_from_str(commentor.get_name),:reply_to => commentor.get_email,:to => toemail,
          :subject => "tiviti: You have a new comment for '"+@tivit.name+"'" )
     
  end
@@ -39,7 +40,7 @@ class UserMailer < ActionMailer::Base
     @comment       = comment
     @tivit         = tivit
     senlist = create_recipient_list([@new_owner,tivit.get_parent.get_owner])
-    mail(:to => senlist, :bcc => "tiviti.mailer.cc@gmail.com",
+    mail(:to => senlist, 
          :subject => @old_owner.get_name+" needs your help with "+"'"+@tivit.get_parent.name+"'" )
   end
 
@@ -53,43 +54,46 @@ class UserMailer < ActionMailer::Base
     @message 			= message
     invitees			= tivit.get_owner.get_email
     
-    mail(:to => invitees, :cc => "tiviti.mailer.cc@gmail.com",
+    mail(:to => invitees, 
          :subject =>"REMINDER: Please review my request for your help with " +tivit.name)  
   end
   
   
-  def activity_status_completed_email (user, invitees,summary,tivit)
+  def OLD_activity_status_completed_email (owner, invitees,summary,activity)
 #202 Activity - Closed. When: Owner closes activity, Who: All Assignees
 #ilan: change email name from tivit to activity
+puts "sending completed email"
     @user    = user
-    @tivit   = tivit
+    @tivit   = activity
     @summary = summary
     
-    mail(:to => invitees, :bcc => "tiviti.mailer.cc@gmail.com,"+user.get_email,
-         :subject =>"tivit" +" '"+tivit.name+"' " + "is completed!" )  
+    mail(:to => invitees, 
+         :subject =>    "tiviti: "+owner.get_name+" says "+activity.name+" is complete.  Thanks for your help!" )  
   end 
 
   def activity_completed_email(user, comment,activity)
-#ilan: not sure this is in use.
-#202 Activity - Closed. When Owner closes activity, Who: All Assignees
 
+#202 Activity - Closed. When Owner closes activity, Who: All Assignees
+puts "in activity_completed_email. sending to "+user.get_email
     @user     = user
     @comment  = comment
     @activity = activity
+    @owner    = activity.get_owner
     
-  	mail(:to => @user.get_email, :cc => "tiviti.mailer.cc@gmail.com",
-         :subject => @activity.get_owner.name+" closed activity '"+activity.name+"'" )
+  	mail(:from => create_from_str(@owner.get_name),:to => @user.get_email,:reply_to => @owner.get_email,
+         :subject =>    "tiviti: "+@owner.get_name+" says "+activity.name+" is complete.  Thanks for your help!" )
+     
   end
   
   
-  def user_tivit_status_change_done_email(user, activity_owner, comment,tivit)
+  def user_tivit_status_change_done_email(assignee, assigner, comment,tivit)
 #106 Tivit- Complete. When: Completed Assignee changes status to "I'm done", Who: Assigner
 
-    @assigner = activity_owner
-    @assignee = user
+    @assigner = assigner
+    @assignee = assignee
     @comment  = comment
     @tivit    = tivit
-    mail(:to => activity_owner.get_email, :bcc => "tiviti.mailer.cc@gmail.com",
+    mail(:from => create_from_str(assignee.get_name),:to => activity_owner.get_email,:reply_to => assignee.get_email,
          :subject => "tiviti: "+@assignee.get_name+" has completed "+tivit.name+"!")     
   end
   
@@ -102,7 +106,7 @@ class UserMailer < ActionMailer::Base
     @tivit      = tivit
     @comment    = comment
     puts "---->>>> sending email to "+@assigner.get_email
-    mail(:to => @assigner.get_email, :bcc => "tiviti.mailer.cc@gmail.com",:from => assignee.get_name+" via tiviti",:reply_to => assignee.get_email,
+    mail(:from => create_from_str(assignee.get_name),:to => @assigner.get_email,:reply_to => assignee.get_email,
          :subject => "tiviti: "+@assignee.name+" has accepted your request for help with '"+tivit.name+"'" )
      
   end
@@ -114,7 +118,7 @@ class UserMailer < ActionMailer::Base
     @comment       = comment
     @tivit         = tivit
      
-    mail(:to => @invited_by.get_email, :bcc => "tiviti.mailer.cc@gmail.com",
+    mail(:to => @invited_by.get_email, 
          :subject => @user.name+" has "+ action + " tivit '"+tivit.name+"'" )
          
   end
@@ -128,6 +132,11 @@ private
     end
     return str
     
+  end
+  
+  
+  def create_from_str(name)
+    return name+" via tiviti"
   end
   
 end
