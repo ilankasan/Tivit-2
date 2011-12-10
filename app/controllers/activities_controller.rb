@@ -45,6 +45,7 @@ class ActivitiesController < ApplicationController
 
     	end     
 
+       
         config.debug("------>>>>> creating activity" + @activity.name )
         flash[:success] = "tivit " +@activity.name + " created!"
 #        redirect_to root_path
@@ -320,15 +321,22 @@ class ActivitiesController < ApplicationController
     
     @activity = Activity.find(params[:id])
     @activity.update_tivit_user_status_i_am_done(current_account.user,params["comment"])
-    @activity.change_status_to_completed
+    @activity.change_status_to_completed (params["comment"])
     log_action_as_comment(@activity,params["comment"],"Done",current_account.user)
 
     if(@activity.isActivity?)
       UserMailer.user_activity_status_change_done_email(current_account.user,params["comment"],@activity).deliver
-      puts " is this possible?"
+      puts " is this possible?......NNNNNNNNNNNNNNNNNNNNNNNNNNNNNOOOOOOOOOOOOOOOOOOOOOOOOOOO"
     else
       if(!@activity.get_parent.isOwner?(current_account.user))
+        # sending an email to the activity owner (usually the invited buy not always)
         UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_parent.get_owner,params["comment"],@activity).deliver
+        
+        if(@activity.get_invited_by != nil  && !@activity.wasInvitedByUser?(current_account.user) )
+          # sending email to the person who invited the user
+          UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_invited_by,params["comment"],@activity).deliver
+        end
+      
       end
     end
     #redirect_to  @activity.get_parent
@@ -379,7 +387,35 @@ class ActivitiesController < ApplicationController
   
   end
 
-  
+ def mark_as_completed
+#display page to write activity summary
+   puts "-----------    mark_as_completed ---------------"  
+   @activity = Activity.find(params[:id])
+   render 'activity_compelete_summary' 
+ end
+ 
+ 
+ def completed_activity
+#closing an activity
+
+ puts "-----------    completed_activity --------------"  
+    
+    @activity = Activity.find(params[:id])   
+    
+    puts params.inspect
+    
+    if(@activity.change_status_to_completed(params["summary"]))   
+#send email to all participants that tivit was completed (not including owner):
+      notify_users_activity_is_closed(@activity,params["summary"])
+      flash[:success] = "tivit " + @activity.name + " updated"
+    else
+      flash[:failed] = "Errrorrororororor"
+      @title = "Edit activity"
+    end
+    redirect_to @activity
+  end
+
+   
  def decline
     puts "-----------    decline ---------------"  
   

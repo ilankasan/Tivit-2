@@ -9,7 +9,7 @@ class DocumentsController < ApplicationController
   end  
    def destroy
     
-    puts " ______________________________________"
+   # puts " ______________________________________"
     puts " DELTE Document "+params.inspect
     doc       = Document.find_by_id(params[:id])
     doc.destroy
@@ -83,7 +83,6 @@ class DocumentsController < ApplicationController
 		unless @document == nil
 		  puts "= document.name is:"
 		  puts "_____________________________________________________________________"
-    puts "__________dddddddddddddd___________________________________________________________"
     
 		if(@document.name == nil)
 		  puts "nnniiilllll"

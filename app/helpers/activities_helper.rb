@@ -67,7 +67,7 @@ end
 
 
 ###################################################### 
-# Add any change of user status to a commetn in the activity feed 
+# Add any change of user status to a comment in the activity feed 
 ######################################################
 
 
@@ -166,7 +166,7 @@ def  add_tivit_to_user(emails, activity)
    def get_acrivity_users(activity)
      puts "get activity users"
      
-        sql = "SELECT DISTINCT users.* FROM users, activities, activities_users 
+     sql = "SELECT DISTINCT users.* FROM users, activities, activities_users 
                  WHERE activities.parent_id    = " +activity.id.to_s + "
                  AND activities.id             = activities_users.activity_id  
                  AND users.id                  = activities_users.user_id"

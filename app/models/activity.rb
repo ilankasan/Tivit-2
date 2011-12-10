@@ -78,9 +78,6 @@ class Activity < ActiveRecord::Base
   	return self.activity_type == "activity" 
   end
   
- # def get_invited_by
- # 	return if 
- # end
   def get_parent
   	
   	if(self.parent_id ==nil)
@@ -100,9 +97,8 @@ class Activity < ActiveRecord::Base
     self.tivits.where(:owner_id => user.get_id)
   end
   
-  def get_on_deck_tivits (user)
-puts "------------->>>>>>>>>>>>"
-puts "On deck filter!"
+  def get_last_reviewed (user)
+    
     tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
     if(tivit_user_status == nil )
       last_reviewed = Time.now
@@ -110,7 +106,7 @@ puts "On deck filter!"
       last_reviewed = tivit_user_status.last_reviewed  
     end
     puts "Last Reviewed = "+last_reviewed.to_s
-     if(last_reviewed.to_s.empty?)
+    if(last_reviewed.to_s.empty?)
         
         puts "--------------- last review is not empty -------------  "+last_reviewed.to_s
         last_reviewed = Time.now()         
@@ -118,7 +114,29 @@ puts "On deck filter!"
         puts "--------------- last review is not empty -------------  "+last_reviewed.to_s
 
     end
+    return last_reviewed
+  end
+  
+  def get_on_deck_tivits (user)
+puts "------------->>>>>>>>>>>>"
+puts "On deck filter!"
+   # tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
+   # if(tivit_user_status == nil )
+   #   last_reviewed = Time.now
+   # else
+   #   last_reviewed = tivit_user_status.last_reviewed  
+   # end
+   # puts "Last Reviewed = "+last_reviewed.to_s
+   #  if(last_reviewed.to_s.empty?)
+        
+    #    puts "--------------- last review is not empty -------------  "+last_reviewed.to_s
+     #   last_reviewed = Time.now()         
+      #  last_reviewed = last_reviewed - 1000000000  
+       # puts "--------------- last review is not empty -------------  "+last_reviewed.to_s
 
+    #end
+
+    last_reviewed = get_last_reviewed (user)
     
 #My Activities
 #Always show all my Activites that are not closed - so I could close it
@@ -143,7 +161,7 @@ puts "On deck filter!"
       all_open_tivits             = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done' 
          AND tivit_user_statuses.user_id = activities.owner_id")
          
-      puts "_______________________________________________________________________________________"
+     # puts "_______________________________________________________________________________________"
       puts "Open tivits size "+all_open_tivits.size.to_s
       
 # finding out when the user last reviewed the activity
@@ -180,14 +198,11 @@ puts "On deck filter!"
                  AND      mycomments.user_id            = "+user.get_id.to_s+"
                  AND      othercomments.activity_id     = tivits.id
                  AND      othercomments.created_at      > ?
-                 AND NOT  othercomments.user_id         = "+user.get_id.to_s+"
-                 
+                 AND NOT  othercomments.user_id         = "+user.get_id.to_s+" 
                  ORDER BY tivits.due"
                  
         tivits_i_commented_with_new_comments = Activity.find_by_sql([sql,last_reviewed])
-    
-    
-    
+        
         puts "tivits_i_commented_with_new_comments "+tivits_i_commented_with_new_comments.size.to_s
         puts "my open tivites "+my_open_tivits.size.to_s
                  
@@ -198,25 +213,6 @@ puts "-------------<<<<<<<<<<<<<<"
        
   end
   
-def old_get_on_deck_tivits (user)
-puts "------------->>>>>>>>>>>>"
-
-puts "on deck filter"
-    #self.tivits.where(:owner_id => user.get_id)
-    self.tivits.joins(:tivit_user_statuses,:tivitcomments).where("
-     (NOT tivit_user_statuses.status_id = 'Done' 
-      AND tivit_user_statuses.user_id   = activities.owner_id)
-  OR (    tivitcomments.activity_id     = activities.id
-      AND tivitcomments.created_at      > tivit_user_statuses.last_reviewed
-          tivit_user_statuses.user_id   = activities.owner_id
-          tivit_user_statuses.user_id   = ?)
-      )",user.get_id)
-# self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id).count
-      
-puts "------------->>>>>>>>>>>>"
-     
-   
-  end
   
   
   def get_all_my_open_tivits (user)
@@ -251,17 +247,17 @@ puts "------------->>>>>>>>>>>>"
 	#results2 = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
 	#AND (tivit_user_statuses.status_id = 'Proposed' or tivit_user_statuses.status_id = 'Declined')")
 
-	puts "total tivits "+tivits.size.to_s
+	#puts "total tivits "+tivits.size.to_s
 										  
 	results =(results1 + results2) | results3
-	puts " restuns size "+results.size.to_s
+	#puts " restuns size "+results.size.to_s
 	return results    	 	
   end
 
 
   def update_user_tivit_status_new(user)
  	tivit_status = create_status_new(user)
- 	puts "creating a task with status new"			
+ 	#puts "creating a task with status new"			
   end
   
   
@@ -459,6 +455,10 @@ puts "------------->>>>>>>>>>>>"
 		return User.find_by_id(self.invited_by)
   end	
 
+  def get_invited_by_email
+ #adding the user to the existing users on the task
+    return self.invited_by
+ end 
 
  def get_number_of_tivits
 #returns number of tivits
@@ -519,8 +519,7 @@ puts "------------->>>>>>>>>>>>"
 
 # Checking to see if tthe task was previously closed. This will be used before the email is sent out below
 	
-  def update_activity_status (status)
-  	puts "_____________________________________________________"
+  def update_activity_status (status,summary)
   	puts "Changng status from " +self.status+" to = " +status
   	puts "_____________________________________________________"
   	
@@ -528,7 +527,7 @@ puts "------------->>>>>>>>>>>>"
     	return
    else 
    		if(status == "Completed")
-    		change_status_to_completed
+    		change_status_to_completed (summary)
     	else
     		change_status_to_in_progress
     	end
@@ -536,17 +535,23 @@ puts "------------->>>>>>>>>>>>"
 	    	
   end
 
-  def change_status_to_completed
+  def change_status_to_completed (summary)
   	puts "change_status_to_completed"
 	  time = Time.now()
   	self.completed_at = time.localtime
   	self.status       = "Completed"
-  	self.save 
+  	self.summary      = summary if(summary != nil)  
+  	if(!self.save)
+  	  return false
+  	end  
   	if(self.tivits != nil || self.tivits.size > 0)
-		self.tivits.each do |tivit|
-			tivit.change_status_to_completed
-		end
-	end
+		  self.tivits.each do |tivit|
+			 if(!tivit.change_status_to_completed (nil))
+			   return false
+			 end
+		  end
+	  end
+	  return true
   end
 	  
   def change_status_to_in_progress

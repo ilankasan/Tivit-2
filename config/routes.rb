@@ -76,6 +76,9 @@ resources :activities
   	match "/create_tivit" 		   => "activities#create_tivit"
   	match "/remove_tivit" 		   => "activities#remove_tivit"
   	match "/edit_tivit" 		     => "activities#edit_tivit"
+  	match "/mark_as_completed"   => "activities#mark_as_completed"
+    match "/completed_activity"   => "activities#completed_activity"
+    
   	match "/update_tivit/:id" 	 => "activities#update_tivit"
   	#match "/images"    => "../images"
 #resources :bireports  

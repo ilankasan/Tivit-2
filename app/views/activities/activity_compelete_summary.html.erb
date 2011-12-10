@@ -1,0 +1,18 @@
+<h1><%= @title %></h1>
+
+
+ <%= form_tag(:controller => "activities" , :action => "completed_activity", :method => "put", :id => @activity.id) do %>
+ 
+ 
+   <div class="field">
+  	<%= label_tag(:summary, "Activity Summary") %><%= text_area_tag(:summary) %> 
+  </div>
+  
+  <div class="actions">
+  <%= submit_tag(@title) %>
+  </div>
+
+<% end %> 
+
+
+

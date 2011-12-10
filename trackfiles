@@ -1,4 +1,12 @@
+Activity_Controller.rb
+_activitydetails.html.erb
+activity_compelete_summary.html.erb
+routes.rb
+activity.rb
 user_mailer.rb
+page_controller.rb
+page_helper.rb
+
 tiviticomment_controller.rb
 activities
 

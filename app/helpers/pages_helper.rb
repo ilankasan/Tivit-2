@@ -63,20 +63,60 @@ module PagesHelper
 #Not completed (basically everything that is not yet completed - on it, in progress, late, etc.)
 #Completed that had new comments on it
 
-def new_get_activities_i_participate (user_id)
+def get_activities_i_participate_ondeck (user_id)
     
-      sql_activities_i_participate = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
+      sql_activities_i_have_open_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status      = 'Completed'  
                  AND activities.activity_type     = 'activity' 
-                 AND (activities.owner_id         = "+user_id+"
-                 OR (     tivits.owner_id         = "+user_id+"    AND 
-                          tivits.parent_id        = activities.id  AND
-                          tivits.owner_id         = tivit_user_statuses.user_id AND
-                          tivits.id               = tivit_user_statuses.activity_id AND
-                          NOT tivit_user_statuses.status = 'Done'))
+                 AND (activities.owner_id         = ?
+                    OR (      tivits.owner_id               = ?
+                      AND NOT activities.owner_id           = ?     
+                      AND     tivits.parent_id              = activities.id  
+                      AND     tivits.owner_id               = tivit_user_statuses.user_id 
+                      AND     tivits.id                     = tivit_user_statuses.activity_id 
+                      AND NOT tivit_user_statuses.status_id = 'Done'))
                  ORDER BY activities.due"
-          
-        return Activity.find_by_sql(sql_activities_i_participate)
+                 
+                 
+      sql_activities_i_participate = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses, tivitcomments as othercomments 
+                 WHERE NOT activities.status           = 'Completed'  
+                 AND     activities.activity_type      = 'activity' 
+                 AND NOT activities.owner_id           = ?
+                 AND     tivits.parent_id              = activities.id  
+                 AND     tivits.owner_id               = ?     
+                 AND     tivits.owner_id               = tivit_user_statuses.user_id 
+                 AND     tivits.id                     = tivit_user_statuses.activity_id 
+                 AND     tivit_user_statuses.status_id = 'Done'
+                 AND     othercomments.activity_id     = tivits.id
+                 AND NOT othercomments.user_id         = ?
+                 AND othercomments.created_at              > ?
+                 ORDER BY activities.due"
+                 
+# temporary user last sign in
+         last_reviewed = current_account.last_sign_in_at
+   
+          #AND     othercomments.created_at      > ?
+           #AND     mycomments.activity_id        = tivits.id
+            #          AND     mycomments.user_id            = ?
+                     
+        result1  =  Activity.find_by_sql([sql_activities_i_have_open_tivits,user_id,user_id,user_id])
+        result2  =  Activity.find_by_sql([sql_activities_i_participate,user_id,user_id,user_id,last_reviewed])
+        puts "resuls 2 "+result2.size.to_s
+        
+        return (result2 +result1).uniq
+        #return result1 
+        #return Activity.find_by_sql([sql_activities_i_participate,user_id,user_id,user_id,user_id])
+        
+        sql4 = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments  
+                 WHERE    tivits.activity_type          = 'tivit' 
+                 AND      tivits.parent_id              = "+self.id.to_s+"
+                 AND      mycomments.activity_id        = tivits.id
+                 AND      mycomments.user_id            = "+user.get_id.to_s+"
+                 AND      othercomments.activity_id     = tivits.id
+                 AND      othercomments.created_at      > ?
+                 AND NOT  othercomments.user_id         = "+user.get_id.to_s+"
+                 
+                 ORDER BY tivits.due"
         
   end
   

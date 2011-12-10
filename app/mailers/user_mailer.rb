@@ -93,7 +93,7 @@ puts "in activity_completed_email. sending to "+user.get_email
     @assignee = assignee
     @comment  = comment
     @tivit    = tivit
-    mail(:from => create_from_str(assignee.get_name),:to => activity_owner.get_email,:reply_to => assignee.get_email,
+    mail(:from => create_from_str(assignee.get_name),:to => assigner.get_email,:reply_to => assignee.get_email,
          :subject => "tiviti: "+@assignee.get_name+" has completed "+tivit.name+"!")     
   end
   
