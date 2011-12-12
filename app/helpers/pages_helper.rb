@@ -120,8 +120,8 @@ def get_activities_i_participate_ondeck (user_id)
         results2 = [] 
         #puts "resuls 2 "+result2.size.to_s
         puts "<<<<<<<<<<<<-----  before return"
-        return (result2 + result1).uniq
-       # return result1 
+        #return (result2 + result1).uniq
+        return result1 
         
         sql4 = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments  
                  WHERE    tivits.activity_type          = 'tivit' 
