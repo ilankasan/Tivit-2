@@ -66,13 +66,13 @@
 			</div>
 
 			<div id="completed-items" class="completed-items tabInfo">
-				<% unless @tivits_completed == nil %>
+				<% unless @tivits_completed == nil || true%>
 					<%= render :partial => 'shared/activity_db', :collection =>  @tivits_completed,:locals => {:tabview => "Completed"} %>
 				<% end %>
 			</div>
 			
 			<div id="new-requests" class="new-requests tabInfo">
-				<% unless @tivits_new == nil %>
+				<% unless @tivits_new == nil || true%>
 				 
 				     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_new,:locals => {:tabview => "New"} %>
 			     
@@ -80,7 +80,7 @@
 			</div>
 		
 			<div id="need-attention" class="need-attention tabInfo">
-				<% unless @need_attention_activities == nil %>
+				<% unless @need_attention_activities == nil || true %>
 				 
 				     <%= render :partial => 'shared/activity_db', :collection =>  @need_attention_activities,:locals => {:tabview => "Need Attention"} %>
 			     

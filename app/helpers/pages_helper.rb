@@ -99,8 +99,9 @@ def get_activities_i_participate_ondeck (user_id)
         puts "last reviewed "+last_reviewed.to_s
         
         result1  =  Activity.find_by_sql([sql_activities_i_have_open_tivits,user_id,user_id,user_id])
-        result2  =  Activity.find_by_sql([sql_activities_i_participate,user_id,user_id,user_id,last_reviewed])
-       
+        puts "check !!!!!!!!!!!!!!!!!!!!!!!!!"
+     #   result2  =  Activity.find_by_sql([sql_activities_i_participate,user_id,user_id,user_id,last_reviewed])
+      results = [] 
         #puts "resuls 2 "+result2.size.to_s
         puts "<<<<<<<<<<<<-----  before return"
         return (result2 + result1).uniq
