@@ -1,3 +1,10 @@
+Staging
+------------
+
+heroku logs --remote staging
+heroku rake db:migrate --remote staging
+ git push staging master
+
 Omniauth
 ----------
 rails generate model authntication_service account_id:integer provider:string uid:string uname:string uemail:string
@@ -74,16 +81,18 @@ which has the effect of dropping tables and then re-creating them, without runni
 <%= link_to "Have and account? Sign in here", new_session_path(resource_name) %><br />
   
 
-
+heroku create --stack tiviti-staging --remote staging
 
 heroku create
 git push heroku master
 heroku rename tivit1
 heroku pg:reset --db SHARED_DATABASE_URL
+heroku pg:reset --remote staging --db SHARED_DATABASE_URL
+watch heroku pg:info --remote staging
 
 
 $ git add .
-git commit -am "10-01-11"
+
 git checkout master
 git merge updating-users
 git merge yaniv-new_ui_1
@@ -201,3 +210,6 @@ http://s3.amazonaws.com/tiviti/tiviti-heroku/uploads/profile_image/avatar/2/albu
 		<!--div id="tivit-avatar">
 			 <%= render :partial => 'profile_images/profile_image', :collection =>  [activity_db.get_owner], :as => :user%> 
 		</div-->
+
+gem i mysql2 -- '-with-mysql-dir="c:\mysql-connector-c-noinstall-6.0.2-win32-vs2005'"
+gem i mysql2 - -with-mysql-dir="c:\mysql-connector-c-noinstall-6.0.2-win32-vs2005"
