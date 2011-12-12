@@ -64,6 +64,7 @@ module PagesHelper
 #Completed that had new comments on it
 
 def get_activities_i_participate_ondeck (user_id)
+  puts "----->>>>>>> get_activities_i_participate_ondeck"
     
       sql_activities_i_have_open_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status      = 'Completed'  
@@ -93,13 +94,15 @@ def get_activities_i_participate_ondeck (user_id)
                  ORDER BY activities.due"
                  
 # temporary user last sign in
+        puts "gettign last reviewed "
         last_reviewed = current_account.last_sign_in_at
-   
+        puts "last reviewed "+last_reviewed.to_s
+        
         result1  =  Activity.find_by_sql([sql_activities_i_have_open_tivits,user_id,user_id,user_id])
         result2  =  Activity.find_by_sql([sql_activities_i_participate,user_id,user_id,user_id,last_reviewed])
        
         #puts "resuls 2 "+result2.size.to_s
-        
+        puts "<<<<<<<<<<<<-----  before return"
         return (result2 + result1).uniq
        # return result1 
         
