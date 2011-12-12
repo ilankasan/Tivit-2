@@ -102,12 +102,12 @@ def get_activities_i_participate_ondeck (user_id)
         result1  =  Activity.find_by_sql(sql_activities_i_have_open_tivits)
         puts "check !!!!!!!!!!!!!!!!!!!!!!!!!"
         #result2  =  Activity.find_by_sql([sql_activities_i_participate,user_id,user_id,user_id,last_reviewed])
-      #  result2  =  Activity.find_by_sql([sql_activities_i_participate,last_reviewed])
+       result2  =  Activity.find_by_sql([sql_activities_i_participate,last_reviewed])
         
         #puts "resuls 2 "+result2.size.to_s
         puts "<<<<<<<<<<<<-----  before return"
-     #   return (result2 + result1).uniq
-        return result1 
+       return (result2 + result1).uniq
+       # return result1 
         
         sql4 = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments  
                  WHERE    tivits.activity_type          = 'tivit' 

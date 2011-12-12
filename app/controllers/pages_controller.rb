@@ -29,7 +29,7 @@ class PagesController < ApplicationController
     
     case @filter_id
     when ("1") # On Deck
-        @tivits_ondeck             = get_activities_i_participate_ondeck (current_user_id)
+        @tivits_ondeck             = get_activities_i_participate(current_user_id)
               
       when ("2") # my activities
         puts "show my activities"
