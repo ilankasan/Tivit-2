@@ -66,7 +66,7 @@
 			</div>
 
 			<div id="completed-items" class="completed-items tabInfo">
-				<% unless @tivits_completed == nil || true%>
+				<% unless @tivits_completed == nil %>
 					<%= render :partial => 'shared/activity_db', :collection =>  @tivits_completed,:locals => {:tabview => "Completed"} %>
 				<% end %>
 			</div>
@@ -80,7 +80,7 @@
 			</div>
 		
 			<div id="need-attention" class="need-attention tabInfo">
-				<% unless @need_attention_activities == nil || true %>
+				<% unless @need_attention_activities == nil %>
 				 
 				     <%= render :partial => 'shared/activity_db', :collection =>  @need_attention_activities,:locals => {:tabview => "Need Attention"} %>
 			     
