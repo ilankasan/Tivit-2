@@ -56,7 +56,7 @@
 					<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_all_my_open_tivits(current_account.user)       , :as => :tivit  %>
 				
 				<%elsif @filter_id == "1"%>
-					<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_on_deck_tivits(current_account.user)       , :as => :tivit  %>
+					<%= render :partial => 'shared/tivit_db', :collection =>  @on_dek_tivits       , :as => :tivit  %>
 				
 				<%else%>
 					<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_open_or_recently_done_tivits       , :as => :tivit  %>
