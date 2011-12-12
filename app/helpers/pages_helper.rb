@@ -93,19 +93,15 @@ def get_activities_i_participate_ondeck (user_id)
                  ORDER BY activities.due"
                  
 # temporary user last sign in
-         last_reviewed = current_account.last_sign_in_at
+        last_reviewed = current_account.last_sign_in_at
    
-          #AND     othercomments.created_at      > ?
-           #AND     mycomments.activity_id        = tivits.id
-            #          AND     mycomments.user_id            = ?
-                     
         result1  =  Activity.find_by_sql([sql_activities_i_have_open_tivits,user_id,user_id,user_id])
-        #result2  =  Activity.find_by_sql([sql_activities_i_participate,user_id,user_id,user_id,last_reviewed])
-        result2 =[] 
+        result2  =  Activity.find_by_sql([sql_activities_i_participate,user_id,user_id,user_id,last_reviewed])
+       
         #puts "resuls 2 "+result2.size.to_s
         
-        #return (result2 +result1).uniq
-        return result1 
+        return (result2 + result1).uniq
+       # return result1 
         
         sql4 = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments  
                  WHERE    tivits.activity_type          = 'tivit' 
