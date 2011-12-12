@@ -1,11 +1,13 @@
 <div class="tvit-day">
 
-<!-- for today use the folloiwng divs 
-	<div class="calendar today">
-		<div class="text">today</div>
-	</div>
--->
-
+<!-- if on dec checking to see if there are any tivits to display. If not do not display activity -->
+	<%if @filter_id == "1" %>
+	    <% @on_dek_tivits = activity_db.get_on_deck_tivits(current_account.user) %>
+	    <%if @on_dek_tivits == nil || @on_dek_tivits.size == 0 %>
+			<%return%>
+		<%end%>
+	<%end%>
+	 
  	<div class="calendar date earlyDay">
 		<%if (activity_db.due != nil && activity_db.due.inspect.size > 0 )%>
 			<div class="week"><%= (activity_db.due.strftime ("%a")).upcase %></div>
