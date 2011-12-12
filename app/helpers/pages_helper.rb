@@ -77,36 +77,21 @@ def get_activities_i_participate_ondeck (user_id)
                       AND     tivits.id                     = tivit_user_statuses.activity_id 
                       AND NOT tivit_user_statuses.status_id = 'Done'))
                  ORDER BY activities.due"
-    ######################
-    ####################
+    
                  
-                 
-      temp_sql_activities_i_participate = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses, tivitcomments as othercomments 
-                 WHERE NOT activities.status           = 'Completed'  
-                 AND     activities.activity_type      = 'activity' 
-                 AND NOT activities.owner_id           = ?
-                 AND     tivits.parent_id              = activities.id  
-                 AND     tivits.owner_id               = ?     
-                 AND     tivits.owner_id               = tivit_user_statuses.user_id 
-                 AND     tivits.id                     = tivit_user_statuses.activity_id 
-                 AND     tivit_user_statuses.status_id = 'Done'
-                 AND     othercomments.activity_id     = tivits.id
-                 AND NOT othercomments.user_id         = ?
-                 AND othercomments.created_at              > ?
-                 ORDER BY activities.due"
       
       sql_activities_i_participate = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses, tivitcomments as othercomments 
                  WHERE NOT activities.status           = 'Completed'  
                  AND     activities.activity_type      = 'activity' 
-                 AND NOT activities.owner_id           = ?
+                 AND NOT activities.owner_id           = "+user_id+"
                  AND     tivits.parent_id              = activities.id  
-                 AND     tivits.owner_id               = ?     
+                 AND     tivits.owner_id               = "+user_id+"     
                  AND     tivits.owner_id               = tivit_user_statuses.user_id 
                  AND     tivits.id                     = tivit_user_statuses.activity_id 
                  AND     tivit_user_statuses.status_id = 'Done'
                  AND     othercomments.activity_id     = tivits.id
-                 AND NOT othercomments.user_id         = ?
-                 AND othercomments.created_at              > ?
+                 AND NOT othercomments.user_id         = "+user_id+"
+                 AND othercomments.created_at          > ?
                  ORDER BY activities.due"
                  
 # temporary user last sign in
@@ -116,12 +101,13 @@ def get_activities_i_participate_ondeck (user_id)
         
         result1  =  Activity.find_by_sql(sql_activities_i_have_open_tivits)
         puts "check !!!!!!!!!!!!!!!!!!!!!!!!!"
-     #   result2  =  Activity.find_by_sql([sql_activities_i_participate,user_id,user_id,user_id,last_reviewed])
-        results2 = [] 
+        #result2  =  Activity.find_by_sql([sql_activities_i_participate,user_id,user_id,user_id,last_reviewed])
+        result2  =  Activity.find_by_sql([sql_activities_i_participate,last_reviewed])
+        
         #puts "resuls 2 "+result2.size.to_s
         puts "<<<<<<<<<<<<-----  before return"
-        #return (result2 + result1).uniq
-        return result1 
+        return (result2 + result1).uniq
+     #   return result1 
         
         sql4 = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments  
                  WHERE    tivits.activity_type          = 'tivit' 

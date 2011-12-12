@@ -1,7 +1,7 @@
 Staging
 ------------
 
-heroku logs --remote staging
+heroku--remote staging
 heroku rake db:migrate --remote staging
  git push staging master
 
