@@ -1,0 +1,19 @@
+<!-- Display a single tivits in Team tivit within an acitivty-->
+	<%if user == nil%>
+		<%return%>
+	<%end%>
+ <tr> 
+ 	<td><%=user.get_name%></td>
+ 	<td ><%=time_ago_in_words(user.created_at)%> ago</td> 
+ 	<td align="center"><%=user.activities.where(:activity_type => "activity").size%> </td>
+ 	<td align="center"><%=user.activities.where(:activity_type => "tivit").size%></td>
+ 	<%if user.account != nil%>
+		
+		<td><%=time_ago_in_words(user.account.current_sign_in_at)%> ago</td>
+	<%else%>
+		<td>not created</td>
+ 	
+	<%end%>
+ 	
+ 	 	
+ </tr>				

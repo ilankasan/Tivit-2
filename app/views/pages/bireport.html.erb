@@ -8,11 +8,11 @@
 		<div class="tabs">
 
 			<ul id="tabs-nav">
-				<li class="tab open">
-	                <a href="#overview">Overview</a>
+				<li class="tab">
+	                <a href="#users-report">Overview</a>
 	            </li>
-	            <li class="tab">
-	                <a href="#completed-items">Users</a>
+	            <li class="tab open">
+	                <a href="#users-report">Users</a>
 	            </li>
 	            
             	<li class="tab">
@@ -46,21 +46,24 @@
 				  <tr> <td>Avg Tivits / Activity : </td> <td><%=@tivits_stats["avg_t_per_a"]%></td> </tr>
 				       
 				</table>
-
-
-
-			<% unless true || @tivits_ondeck == nil  %>
-			 
-			     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_ondeck, :locals => {:tabview => "On Deck"} %>
-		     
-			<% end %>
-
 			</div>
 
-			<div id="completed-items" class="completed-items tabInfo">
-				<% unless @tivits_completed == nil %>
-					<%= render :partial => 'shared/activity_db', :collection =>  @tivits_completed,:locals => {:tabview => "Completed"} %>
-				<% end %>
+			<div id="users-report" class="users-report tabInfo">
+				
+				
+				<table class="profile" summary="Profile information">
+				<h1>tiviti  users report</h1>
+				<td><b>Name</b></td>
+				<td><b>Joined at</b></td>
+				<td><b>Activities</b></td>
+ 				<td><b>Tivits</b></td>
+ 				<td><b>Signed in at</b></td>
+ 				<%= render :partial => 'reports/user_stats', :collection =>  @users       , :as => :user  %> 
+
+ 							       
+				</table>
+				
+				<%= will_paginate @users %>
 			</div>
 			
 			<div id="new-requests" class="new-requests tabInfo">

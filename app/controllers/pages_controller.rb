@@ -69,6 +69,7 @@ class PagesController < ApplicationController
      @title = "Product Adoption Dashboard"
      @user_adopt   = get_user_stats
      @tivit_stats  = get_tivits_stats
+     @users = User.paginate(:page => params[:page], :per_page => 30)
   end
 
 
