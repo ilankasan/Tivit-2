@@ -133,15 +133,33 @@ jQuery(document).ready(function($){
 	*/
 	
 	//add from Irina Sorokina
+	/*
 	$('.conteiner').hover(
 	   function() {
 	      $(this).addClass('record-hovered');
+	      $(this).children('.edit-menu').children('.icon').toggle();
 	   },
 	   function() {
 	      $(this).removeClass('record-hovered');
+	      $(this).children('.edit-menu').children('.icon').toggle();
+	      $(this).children('.menu-dialog').toggle();
 	   }
 	);
-
+	*/
+	$('.conteiner').live('mouseover mouseout', function(event) {
+	  if (event.type == 'mouseover') {
+	    // do something on mouseover
+	    $(this).addClass('record-hovered');
+	    $(this).children('.edit-menu').children('.icon').toggle();
+	  } else {
+	    // do something on mouseout
+	    $(this).removeClass('record-hovered');
+	    $(this).children('.edit-menu').children('.icon').toggle();
+	    $(this).children('.menu-dialog').toggle();
+	  }
+	});
+	
+	
     /*jQuery(document).click(function(){
          console.log('click');
         jQuery('.status-list-dialog').remove();
@@ -457,6 +475,16 @@ jQuery(document).ready(function($){
 	$('.text-conteiner').hover(function(){
 		$(this).css('cursor','pointer');
 	});
+	$('.text-conteiner').live('mouseover mouseout', function(event) {
+	  if (event.type == 'mouseover') {
+	    // do something on mouseover
+	    $(this).css('cursor','pointer');
+	  } else {
+	    // do something on mouseout
+	  }
+	});
+	
+	
 	/* Clicking comments icon opens comments */
 	$('.comments').live('click', function(){
 		//alert($(this).parents('.record').children('ul').attr('class'));
