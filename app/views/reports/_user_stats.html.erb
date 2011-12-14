@@ -7,7 +7,7 @@
  	<td ><%=time_ago_in_words(user.created_at)%> ago</td> 
  	<td align="center"><%=user.activities.where(:activity_type => "activity").size%> </td>
  	<td align="center"><%=user.activities.where(:activity_type => "tivit").size%></td>
- 	<%if user.account != nil%>
+ 	<%if user.account != nil || user.account.current_sign_in_at != nil%>
 		
 		<td><%=time_ago_in_words(user.account.current_sign_in_at)%> ago</td>
 	<%else%>
