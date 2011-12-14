@@ -34,6 +34,29 @@ a:hover {
 a:visited {
   color: #069;
 }
+.flash 
+{
+	background-color: #F9EDBE;
+    margin: -6px 0;
+    position: absolute;
+    top: 11px;
+    right: 300px;
+    border: 1px solid transparent;
+    border-radius: 2px 2px 2px 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 20;
+    /*background: none repeat scroll 0 0 #F9EDBE;*/
+    color: #222222;
+    font-family: arial,sans-serif;
+    width: 400px;
+    border-color: #F0C36D;
+    white-space:nowrap;
+    margin: -6px auto;
+}
 #page-container{
 	/*background: white;*/
 	position: relative;
@@ -44,6 +67,7 @@ a:visited {
 	margin: auto; /*this will center the div on the page*/
     padding-top:40px;
 }
+
 /* Main Navigation **************************************************/
 #main-nav-background {
 	background: #333333; /*#15628c;*/

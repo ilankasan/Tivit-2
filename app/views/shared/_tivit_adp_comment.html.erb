@@ -37,7 +37,7 @@
 		  	  		<p class="start"><%= tivit_adp_comment.user.name %> cannot help with this tivit. <%= time_ago_in_words(tivit_adp_comment.created_at) %> ago.</p>
 		  	  		
 		   	  	<%when ("Proposed")%>
-		  	  		<p class="start attention">New time proposed: Thusday, Nov. 25</p>
+		  	  		<p class="start attention">New time proposed: <%= tivit_adp_comment.activity.get_owner_proposed_date %></p>
 			<%end%>
 		
 			<!-- Display actual comment -->

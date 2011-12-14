@@ -359,7 +359,7 @@ puts "-------------<<<<<<<<<<<<<<"
 # return the proposed date of the owner
  def get_owner_proposed_date
  	tivit_user_status = self.tivit_user_statuses.find_by_user_id(self.owner_id)
-  	return  tivit_user_status.proposed_date if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
+  	return  tivit_user_status.last_reviewed if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
   	return "no proposed date"	
  end
  

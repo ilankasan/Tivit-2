@@ -47,7 +47,7 @@ class ActivitiesController < ApplicationController
 
        
         config.debug("------>>>>> creating activity" + @activity.name )
-        flash[:success] = @activity.name + " Activity created succesfully!"
+        flash[:success] = "tivit " +@activity.name + " created!"
 #        redirect_to root_path
 #redirect_to 'shared/activitydetails'
         render 'show'
@@ -305,8 +305,10 @@ class ActivitiesController < ApplicationController
     
       UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
     end
-        
+      
+    
    #respond with Ajax when needed...
+  
    respond_to do |format|
        format.html { redirect_to root_path }
        format.js
