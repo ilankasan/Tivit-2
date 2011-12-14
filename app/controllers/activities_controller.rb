@@ -289,29 +289,31 @@ class ActivitiesController < ApplicationController
 	  params["owner_id"] =  @invited_user.id
 	  params["activity_type"] = "tivit"
 	
-	  puts "Inspect Params " +params.inspect
-	  puts "--------------->>>>  creatintg  tiviti"
-
+	  #puts "Inspect Params " +params.inspect
+	  
    	current_account.user.addTwoWayContact(@invited_user)
     @activity = @invited_user.activities.create(params)	 						
 	  @activity.update_tivit_user_status_reviewed(current_account.user,"")
 	  
 	  config.debug("------>>>>> creating activity" + @activity.name )
 	  log_action_as_comment(@activity,params["description"],"TivitDetails",current_account.user)
-	  puts "inveted user id = "+@invited_user.get_id.to_s
-	  puts "invetee user id = "+current_account.user.get_id.to_s
+	#  puts "inveted user id = "+@invited_user.get_id.to_s
+	 # puts "invetee user id = "+current_account.user.get_id.to_s
     
-	  if(@invited_user.get_id != current_account.user.get_id)
-    
-      UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
-    end
-        
+	      
    #respond with Ajax when needed...
    respond_to do |format|
        format.html { redirect_to root_path }
        format.js
        puts "--------------->> after responding to Ajax"
     end
+    
+    if(@invited_user.get_id != current_account.user.get_id)
+    
+      UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
+    end
+       puts "--------------->> after sending email"
+    
     #redirect_to root_path
   end
 

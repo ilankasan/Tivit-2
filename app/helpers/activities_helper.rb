@@ -16,19 +16,15 @@ module ActivitiesHelper
 	  	return account.user if !account.nil?
 	  	
 	  	if(account  == nil)
-	#create an inactive user
-		#	config.debug("--->>> creating a skeloton user for email: "+email)
-		#	temppassword = "234F5(67890GDFasdgqoSF" 
-			
-			puts "------------------ creating new user: " + @email 
-			@user = User.find_by_clone_email(@email)
-			if(@user == nil)
+
+			 puts "------------------ creating new user: " + @email 
+			 @user = User.find_by_clone_email(@email)
+			 if(@user == nil)
 		 
 		    params = {:name => "not active",:clone_email => @email, :is_active  => false}
     
-			  @user = User.new(params)
-			  @user.save
-			end
+			  @user = User.create(params)
+			  end
 			return @user
 	  	end
 	  end
@@ -37,33 +33,7 @@ end
 
 
 
- def old_user_by_email (email_input)
-  	if(email_input != nil && !email_input.empty? )
-		email = email_input.downcase
-  	
-		#puts "------------------ adding new invitee: " + email 
-	  	user  = User.find_by_email(email)
-	  	if(user == nil)
-	#create an inactive user
-			config.debug("--->>> creating a skeloton user for email: "+email)
-			temppassword = "234F5(67890GDFasdgqoSF" 
-			params = {:name => email,:email => email, :password => temppassword ,:password_confirmation => temppassword}
-			
-	#ilan: using temporary password. Deactivated user should not have passwords	
-			puts "------------------ creating new user: " + email 
-			
-			user = User.new(params)
-			user.deactivate_user
-	
-			user.save
-	# ilan: missign error handling
-	  	end  	
-  end
-  return user
-  
- end
-
-
+ 
 
 
 ###################################################### 
