@@ -92,6 +92,7 @@ watch heroku pg:info --remote staging
 
 
 $ git add .
+git commit -am "10-01-11"
 
 git checkout master
 git merge updating-users
