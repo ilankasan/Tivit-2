@@ -164,12 +164,7 @@ puts "On deck filter!"
      # puts "_______________________________________________________________________________________"
       puts "Open tivits size "+all_open_tivits.size.to_s
       
-# finding out when the user last reviewed the activity
-     # if(last_reviewed.to_s.empty?)
-        # user never reviewed this activity
-     #   closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id     = activities.id
-     #   AND NOT tivitcomments.user_id     = ?", user.get_id)     
-     # else
+
         closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id     = activities.id
         AND     tivitcomments.created_at  > ?
         AND NOT tivitcomments.user_id     = ?",last_reviewed, user.get_id)   
@@ -181,15 +176,20 @@ puts "On deck filter!"
     else
 # User is not the owner of the activity
       puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    user is NOT the owner of activity"
-# Get only my open tivits
+      
+# Get only my open tivits and tivits i am the invitee (asignee)
       my_open_tivits             = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done' 
          AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
+       
+      open_tivits_im_asignee     = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done' 
+         AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
+    #  puts "______________________________________________" 
+      puts "Open invited by "+open_tivits_im_asignee.size.to_s
+     # puts "______________________________________________" 
          
-      puts "Open tivits size "+my_open_tivits.size.to_s
-    
+      
 # get all tivits i participated in the conversation and there are new comments
-              
-     
+# need to add the case i am the asignee
        
     sql = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments  
                  WHERE    tivits.activity_type          = 'tivit' 
@@ -206,7 +206,7 @@ puts "On deck filter!"
         puts "tivits_i_commented_with_new_comments "+tivits_i_commented_with_new_comments.size.to_s
         puts "my open tivites "+my_open_tivits.size.to_s
                  
-      return (tivits_i_commented_with_new_comments + my_open_tivits).uniq    
+      return (tivits_i_commented_with_new_comments + my_open_tivits+open_tivits_im_asignee).uniq    
     end
     
 puts "-------------<<<<<<<<<<<<<<"
@@ -511,27 +511,21 @@ puts "-------------<<<<<<<<<<<<<<"
 	
   end
 
-#def set_completed
-	#self.status = "Completed"
-	#self.save
-	#return
-#end
-
-# Checking to see if tthe task was previously closed. This will be used before the email is sent out below
+# Checking to see if the task was previously closed. This will be used before the email is sent out below
 	
-  def update_activity_status (status,summary)
+  def update_activity_status (summary)
   	puts "Changng status from " +self.status+" to = " +status
   	puts "_____________________________________________________"
   	
-  	if(self.status == status)
-    	return
-   else 
+  	#if(self.status == status)
+    	#return
+   #else 
    		if(status == "Completed")
     		change_status_to_completed (summary)
     	else
     		change_status_to_in_progress
     	end
-   end
+   #end
 	    	
   end
 
