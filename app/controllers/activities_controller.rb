@@ -323,7 +323,13 @@ class ActivitiesController < ApplicationController
     @activity.update_tivit_user_status_i_am_done(current_account.user,params["comment"])
     @activity.change_status_to_completed (params["comment"])
     log_action_as_comment(@activity,params["comment"],"Done",current_account.user)
-
+    
+    respond_to do |format|
+       format.html { redirect_to @activity  }
+       format.js
+       puts "--------[change status to Done activities controller]------->> after responding to Ajax"
+    end
+    
     if(@activity.isActivity?)
       UserMailer.user_activity_status_change_done_email(current_account.user,params["comment"],@activity).deliver
       puts " is this possible?......NNNNNNNNNNNNNNNNNNNNNNNNNNNNNOOOOOOOOOOOOOOOOOOOOOOOOOOO"
@@ -340,11 +346,7 @@ class ActivitiesController < ApplicationController
       end
     end
     #redirect_to  @activity.get_parent
-    respond_to do |format|
-       format.html { redirect_to @activity  }
-       format.js
-       puts "--------[change status to Done activities controller]------->> after responding to Ajax"
-    end
+    
   end
 
   
@@ -360,7 +362,6 @@ class ActivitiesController < ApplicationController
     	@activity.update_tivit_user_propose_date(current_account.user,params["comment"], convert_date_to_string(params,"propose_date"))
     	log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)    	
     end  
-  	#redirect_to  root_path
   	redirect_to  @activity.get_parent
     
   	
@@ -369,13 +370,13 @@ class ActivitiesController < ApplicationController
   
   def accept_date
     puts "-----------    Accept Date ---------------"
-    puts params.inspect
    	@activity = Activity.find(params[:id])
     
     log_action_as_comment(@activity,params["comment"],"Accepted",current_account.user)
     puts "Old date = "+ @activity.due.inspect + "   accepted new date  = "+ @activity.get_owner_proposed_date.inspect 
     
     @activity.due = @activity.get_owner_proposed_date
+    @activity.save
     
   	@activity.update_tivit_user_status_onit(@activity.get_owner,"")
  #ilan: do i need to change the owner status as accepted? maybe later
@@ -407,7 +408,7 @@ class ActivitiesController < ApplicationController
     if(@activity.change_status_to_completed(params["summary"]))   
 #send email to all participants that tivit was completed (not including owner):
       notify_users_activity_is_closed(@activity,params["summary"])
-      flash[:success] = "tivit " + @activity.name + " updated"
+      flash[:success] = "Actvitity " + @activity.name + " successfuly marked as completed"
     else
       flash[:failed] = "Errrorrororororor"
       @title = "Edit activity"

@@ -29,6 +29,7 @@ class TivitcommentsController < ApplicationController
       format.js
       puts "--------------->> after responding to Ajax"
   end
+  
   puts "sending notification "
   if(@activity.get_owner.id != current_account.user.id || @activity.get_parent.get_owner != current_account.user.id )
     send_to = Array.new
@@ -37,7 +38,7 @@ class TivitcommentsController < ApplicationController
     send_to << @activity.get_invited_by       if @activity.get_invited_by.id          != current_account.user.id   
        
     puts "sending comment notificaiton "+send_to.inspect  
-    UserMailer.notify_comment_added_to_tivit(current_account.user, @comment.comment,@activity, send_to).deliver
+    UserMailer.notify_comment_added_to_tivit(current_account.user, @comment.comment,@activity, send_to.uniq).deliver
   else
     puts "not sending notificaiton"
   end

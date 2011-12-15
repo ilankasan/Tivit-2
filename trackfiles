@@ -1,5 +1,11 @@
 _user_stats.hrml.rb
 activiti_controller.rb
+tivitcomments_controller.rb
+tivit_status_change_onit_email.html.erb
+user_tivit_status_change_done_email.html.erb
+bireport.html.erb
+page_controller.rb
+
 
 bidashboard.rb
 page_controller.rb

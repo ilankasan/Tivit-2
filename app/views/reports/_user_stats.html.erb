@@ -4,6 +4,8 @@
 	<%end%>
  <tr> 
  	<td><%=user.get_name%></td>
+ 	<td><%=user.get_email%></td>
+ 	
  	<td ><%=time_ago_in_words(user.created_at)%> ago</td> 
  	<td align="center"><%=user.activities.where(:activity_type => "activity").size%> </td>
  	<td align="center"><%=user.activities.where(:activity_type => "tivit").size%></td>
