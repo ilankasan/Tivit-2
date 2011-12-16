@@ -371,8 +371,10 @@ class ActivitiesController < ApplicationController
   def accept_date
     puts "-----------    Accept Date ---------------"
    	@activity = Activity.find(params[:id])
+  #  puts    params.inspect
     
     log_action_as_comment(@activity,params["comment"],"Accepted",current_account.user)
+    
     puts "Old date = "+ @activity.due.inspect + "   accepted new date  = "+ @activity.get_owner_proposed_date.inspect 
     
     @activity.due = @activity.get_owner_proposed_date
@@ -384,8 +386,6 @@ class ActivitiesController < ApplicationController
  # we need to send an email to the owner of the tivit the the activity owner accepted the proposed date
     UserMailer.user_tivit_status_change_email(current_account.user, "Accepted proposed date",params["comment"],@activity).deliver
     redirect_to @activity
-  	#redirect_back_or root_path
-  
   end
 
  def mark_as_completed

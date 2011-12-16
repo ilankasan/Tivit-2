@@ -23,8 +23,18 @@
 		<div class="avatar">
 			<%= render :partial => 'profile_images/profile_image', :collection =>  [tivit_adp_comment.user], :as => :user, :class => "avatar" %> 
 		</div>
-			
-		<!-- If comment is associated with action, show the action -->											
+		<!-- If comment is associated with action, show the action -->		
+		<!-- 
+		# Action Field is the type of comments:
+		# Note - ordinary user comments
+		# New 		- never read by the user
+		# Reviewed  - REviewed by the User
+		# OnIt      - The user agreed to do the tivit
+		# Done      - User has completed the Tivit
+		# Declined  - User declined to do the tivit for some reason
+		# Proposed  - user proposes a change in the tivit (initially a new date)
+		# Accepted  - Tiviti Owner Accepter the tivit	 
+		-->							
 		<div class="text">
 			<%case tivit_adp_comment.action%>
 		  	  	<%when ("OnIt")%>
@@ -34,10 +44,15 @@
 		  	  		<p class="start complete"><%= tivit_adp_comment.user.name %> completed his tivit <%= time_ago_in_words(tivit_adp_comment.created_at) %> ago.</p>
 		  	  		
 		   	  	<%when ("Declined")%>
-		  	  		<p class="start"><%= tivit_adp_comment.user.name %> cannot help with this tivit. <%= time_ago_in_words(tivit_adp_comment.created_at) %> ago.</p>
+		  	  		<p class="start">Unfortunatlly, <%= tivit_adp_comment.user.name %> cannot help with this tivit. <%= time_ago_in_words(tivit_adp_comment.created_at) %> ago.</p>
 		  	  		
 		   	  	<%when ("Proposed")%>
 		  	  		<p class="start attention">New time proposed: <%= tivit_adp_comment.activity.get_owner_proposed_date %></p>
+		  	  	
+		  	  	<!-- New proposed date accepted -->
+		  	  	<%when ("Accepted")%>
+		  	  		<p class="start complete">Proposed new time accepted.</p>	
+		  	  		
 			<%end%>
 		
 			<!-- Display actual comment -->
