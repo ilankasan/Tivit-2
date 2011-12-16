@@ -3,6 +3,8 @@ source :gemcutter
 gem 'rails', '3.0.3'
 gem 'faker', '0.3.1'
 gem 'excon', '0.5.6'
+
+
 gem 'carrierwave', '0.5.1'
 gem 'fog', '0.5.2'
 gem 'gravatar_image_tag', '1.0.0.pre2'
@@ -19,9 +21,12 @@ gem 'mongrel', '1.2.0.pre2'
 
 
 group :production do
-gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git' , :tag => 'v0.3.0.rc3'
-gem 'devise', '1.4.5'
-  
+  gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git' , :tag => 'v0.3.0.rc3'
+ gem 'devise', '1.4.5'
+  gem 'mysql2'
+  gem 'daemons' '1.0.10'
+
+
 end
 
 group :development do
