@@ -1,6 +1,19 @@
 
 <% unread_comments = tivit_adp.get_number_of_unread_comments(current_account.user)%>
 <% respondbutton = "respond" %>
+
+<% if tivit_adp.get_owner.id == current_account.user.id %>
+	<% loggedInUserIsTheOwner = "yes" %>
+	<% tivit_owner_name = "You" %>
+<% else %>
+	<% loggedInUserIsTheOwner = "no" %>
+	<% tivit_owner_name = tivit_adp.get_owner.name %>
+<% end %>
+
+<% if tivit_adp.get_owner.name == "not active" %>
+	<% tivit_owner_name = tivit_adp.get_owner.clone_email %>
+<% end %>
+			   						
 <div class="team tivits">
 <div class="tvit-list">
 
@@ -43,7 +56,7 @@
 				<!-- if I'm the owner use class="status" so jQuery for dropdown list will work, otherwise use other status so it'll be ignored -->
 				<div class="status">
 					<div class="icon"></div>
-					<% if tivit_adp.get_owner.id == current_account.user.id %>
+					<% if loggedInUserIsTheOwner == "yes" %>
 						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes">
 					<% else %>
 						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="no">
@@ -91,27 +104,30 @@
 							
 							<!-- status line -->	
 							<% if owner_tivit_status == "Proposed" %>
-					
-								<p class="request"><span><%= tivit_adp.get_owner.name %> is requestiong a new date <strong><%= tivit_adp.get_owner_proposed_date %></strong></span>
-									<%= link_to "accept",	:controller  => "activities",
-			    											:action      => "change_tivit_status",
-			    											:status      => "accept_date",
-			    											:id          => tivit_adp.id, 
-			  							    				:confirm     => "Are you sure you want to accepet new date " +tivit_adp.name+"?",
-			                                				:title       => tivit_adp.name %>
-			                                					
+								
+								<% if loggedInUserIsTheOwner == "yes" %>
+									<p><small>You suggested new time, waiting for owner response.</small></p>
 									
-									 | <a href="#">decline</a> | <a href="#">counter</a>
-								</p>
+								<!-- should actions only to activity owner AND tivit creator -->
+								<% elsif tivit_adp.get_parent.get_owner.id == current_account.user.id || tivit_adp.invited_by == current_account.user.id %>
+									<p class="request"><span><%= tivit_adp.get_owner.name %> proposed a new date <strong><%= tivit_adp.get_owner_proposed_date %></strong></span>
+										<%= link_to "accept",	:controller  => "activities",
+				    											:action      => "change_tivit_status",
+				    											:status      => "accept_date",
+				    											:id          => tivit_adp.id, 
+				  							    				:confirm     => "Are you sure you want to accepet new date " +tivit_adp.name+"?",
+				                                				:title       => tivit_adp.name %>
+				                                					
+										
+										 | <a href="#">decline</a> | <a href="#">counter</a>
+									</p>
+								<%end %>
+								
 							<% else %>                  
 			   					<% if tivit_adp.get_invited_by !=nil %>
-			   						<% if tivit_adp.get_owner.name == "not active" %>
-			   							<% owner_name = tivit_adp.get_owner.clone_email %>
-			   						<% else %>
-			   							<% owner_name = tivit_adp.get_owner.name %>
-			   						<% end %>
+			   						
 				   					<!-- <p><small><strong>Don Draper</strong>, Yesterday @ 8:09 AM</small></p> -->
-				   					<p><small><strong><%= owner_name %></strong> invited by <strong><%= tivit_adp.get_invited_by.name %></strong>, <%= time_ago_in_words(tivit_adp.created_at) %> ago</small></p>
+				   					<p><small><strong><%= tivit_owner_name %></strong> invited by <strong><%= tivit_adp.get_invited_by.name %></strong>, <%= time_ago_in_words(tivit_adp.created_at) %> ago</small></p>
 			   					<% end %>
 			   				<% end %>
 		   						

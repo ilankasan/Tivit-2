@@ -1,6 +1,6 @@
 Staging
 ------------
-
+heroku logs --remote staging
 heroku--remote staging
 heroku rake db:migrate --remote staging
  git push staging master
@@ -89,6 +89,7 @@ heroku rename tivit1
 heroku pg:reset --db SHARED_DATABASE_URL
 heroku pg:reset --remote staging --db SHARED_DATABASE_URL
 watch heroku pg:info --remote staging
+git push heroku -app staging
 
 
 $ git add .
