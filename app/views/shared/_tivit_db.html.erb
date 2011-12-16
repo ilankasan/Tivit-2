@@ -139,7 +139,7 @@
 				<%else%>
 					
 	              <span class="grey">
-	              	<%= tivit.get_owner.get_name %>
+	              	<%= tivit_owner_name %>
 	              	
 	              	<% if !tivit.invitedByOwner?%>
 	              		invited by <%=tivit.get_invited_by.get_name%>
@@ -173,10 +173,8 @@
 				<% end %>	
 					
 					<% if tivit.due != nil && tivit.due < Time.now && owner_tivit_status != "Done" %>
-      					<span class="timestamp"> ,[<%= time_ago_in_words(tivit.due) %> overdue.] </span>
+      					<span class="timestamp">[<%= time_ago_in_words(tivit.due) %> overdue] </span>
    				   <% end %>
-   				   
-					
 						              	
 <!-- If tivit was reviewed but no other action taken, add a comment when it was read and  -->
  

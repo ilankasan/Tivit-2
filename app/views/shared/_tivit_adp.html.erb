@@ -124,12 +124,18 @@
 								<%end %>
 								
 							<% else %>                  
+			   					<p><small>
 			   					<% if tivit_adp.get_invited_by !=nil %>
-			   						
-				   					<!-- <p><small><strong>Don Draper</strong>, Yesterday @ 8:09 AM</small></p> -->
-				   					<p><small><strong><%= tivit_owner_name %></strong> invited by <strong><%= tivit_adp.get_invited_by.name %></strong>, <%= time_ago_in_words(tivit_adp.created_at) %> ago</small></p>
+			   						<!-- <p><small><strong>Don Draper</strong>, Yesterday @ 8:09 AM</small></p> -->
+				   					<strong><%= tivit_owner_name %></strong> invited by <strong><%= tivit_adp.get_invited_by.name %></strong>, <%= time_ago_in_words(tivit_adp.created_at) %> ago
 			   					<% end %>
+			   					<% if tivit_adp.due != nil && tivit_adp.due < Time.now && owner_tivit_status != "Done" %>
+      								[<%= time_ago_in_words(tivit_adp.due) %> overdue]
+   				   				<% end %>
+   				   				</small></p>
 			   				<% end %>
+			   				
+   				   			
 		   						
 						</div> <!-- text-container -->
 				</div> <!-- text -->
