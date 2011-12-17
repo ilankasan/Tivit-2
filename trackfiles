@@ -1,3 +1,7 @@
+production.rb
+development.rb
+delete gemfile.lock
+
 _user_stats.hrml.rb
 activiti_controller.rb
 tivitcomments_controller.rb
