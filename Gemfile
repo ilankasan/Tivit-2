@@ -3,6 +3,7 @@ source :gemcutter
 gem 'rails', '3.0.3'
 gem 'faker', '0.3.1'
 gem 'excon', '0.5.6'
+gem 'daemons', '1.1.0'
 
 
 gem 'carrierwave', '0.5.1'
@@ -28,7 +29,6 @@ group :production do
  # gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git' , :tag => 'v0.3.0.rc3'
  #gem 'devise', '1.4.5'
 #  gem 'mysql2'
-  gem 'daemons', '1.1.0'
 
 
 end
