@@ -1,9 +1,11 @@
 Staging
 ------------
+bamboo-ree-1.8.7
+heroku create --stack bamboo-ree-1.8.7 --remote staging1
 heroku logs --remote staging
 heroku--remote staging
 heroku rake db:migrate --remote staging
- git push staging master
+git push staging master
 
 Omniauth
 ----------
