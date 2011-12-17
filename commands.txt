@@ -4,8 +4,16 @@ bamboo-ree-1.8.7
 heroku create --stack bamboo-ree-1.8.7 stating1 --remote staging1
 heroku logs --remote staging
 heroku--remote staging
+
+heroku stack:migrate bamboo-mri-1.9.2 --remote staging2
+
 heroku rake db:migrate --remote staging2
 git push staging master
+git push staging2 master
+
+Migrating from bamboo-ree-1.8.7 to bamboo-mri-1.9.2
+
+RAILS_ENV=production rails s
 
 Omniauth
 ----------
@@ -95,7 +103,7 @@ git push heroku -app staging
 
 
 $ git add .
-git commit -am "12-14-11"
+git commit -am "12-16-11 - new gem.lock"
 
 git checkout master
 git merge updating-users
@@ -217,3 +225,7 @@ http://s3.amazonaws.com/tiviti/tiviti-heroku/uploads/profile_image/avatar/2/albu
 
 gem i mysql2 -- '-with-mysql-dir="c:\mysql-connector-c-noinstall-6.0.2-win32-vs2005'"
 gem i mysql2 - -with-mysql-dir="c:\mysql-connector-c-noinstall-6.0.2-win32-vs2005"
+
+
+
+You have already activated daemons 1.1.0, but your Gemfile requires daemons 1.0.10. Consider using bundle exec. (Gem::LoadError)
