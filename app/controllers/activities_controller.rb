@@ -110,12 +110,10 @@ class ActivitiesController < ApplicationController
   
   
   def show
-    
+   
    puts "----------->>>>>>>>>>> show activity detailed page"  
     @activity = Activity.find(params[:id])
-    #updating tivit status New -> Reviewed and last update to current time
-   
-   # @activity.update_status_after_show(current_account.user)
+ 
     
   	@title = "Activity Details - "+@activity.name
   	

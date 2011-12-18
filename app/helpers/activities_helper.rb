@@ -5,7 +5,10 @@ module ActivitiesHelper
 #If the user does no exists, it creates a skeloton of an inactive user
 # returns nil if email is invalid 
 
- 
+  def validate_user_access_to_activity (activity, user)
+    
+    return 
+  end
   def user_by_email (email_input)
   	if(email_input != nil && !email_input.empty? )
 		@email = email_input.downcase
