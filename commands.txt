@@ -1,3 +1,8 @@
+Clear Database
+
+
+heroku config:add  DATABASE_URL=mysql://7f4240ae09a846:f8355100@us-mm-auto-dca-01.cleardb.com/heroku_cb87c69e06f92c0 --remote staging
+
 Staging
 ------------
 bamboo-ree-1.8.7
@@ -7,7 +12,8 @@ heroku--remote staging
 
 heroku stack:migrate bamboo-mri-1.9.2 --remote staging2
 
-heroku rake db:migrate --remote staging2
+heroku rake db:migrate --remote staging
+heroku restart --remote staging
 git push staging master
 git push staging2 master
 

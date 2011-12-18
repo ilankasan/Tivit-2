@@ -93,11 +93,11 @@ ActiveRecord::Schema.define(:version => 20111205015825) do
     t.string   "name"
     t.string   "note"
     t.string   "version"
+    t.string   "file_name"
     t.integer  "document_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
-    t.string   "file_name"
   end
 
   create_table "preferences", :force => true do |t|
@@ -121,19 +121,19 @@ ActiveRecord::Schema.define(:version => 20111205015825) do
     t.string   "comment"
     t.datetime "last_reviewed"
     t.datetime "proposed_date"
+    t.datetime "last_status_change"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "last_status_change"
     t.integer  "assigned_to"
   end
 
   create_table "tivitcomments", :force => true do |t|
     t.integer  "user_id"
     t.string   "comment"
+    t.string   "action"
     t.integer  "activity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "action"
   end
 
   create_table "user_preferences", :id => false, :force => true do |t|
