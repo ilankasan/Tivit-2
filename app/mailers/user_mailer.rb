@@ -30,7 +30,7 @@ class UserMailer < ActionMailer::Base
     @tivit      = tivit
     @comment    = comment
     
-    mail(:from => create_from_str(assignee.get_name),:reply_to => assignee.get_email,:to => assigner.get_email,
+    mail(:from => create_from_str(assigner.get_name),:reply_to => assigner.get_email,:to => assignee.get_email,
          :subject => "tiviti: "+ assigner.get_name+ " accepted your proposed date for "+tivit.name)
          
      
