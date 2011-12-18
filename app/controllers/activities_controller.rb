@@ -17,7 +17,7 @@ class ActivitiesController < ApplicationController
    	@activity = current_account.user.add_my_ativity(params)    
    end
    
-   def old_create
+   def create
 
 # Create Activity
 	params["due"] = convert_date_to_string(params,"due")
