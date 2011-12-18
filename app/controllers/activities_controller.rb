@@ -366,8 +366,7 @@ class ActivitiesController < ApplicationController
  #ilan: do i need to change the owner status as accepted? maybe later
  
  # Send an email to the owner of the tivit the the activity owner accepted the proposed date
-               tivit_accept_new_date_email(assignee, assigner, tivit,comment )
-    UserMailer.tivit_accept_new_date_email(@activity.get_owner,current_account.user , @activity,params["comment"]).deliver
+ UserMailer.tivit_accept_new_date_email(@activity.get_owner,current_account.user , @activity,params["comment"]).deliver
     
 
     redirect_to @activity.get_parent
