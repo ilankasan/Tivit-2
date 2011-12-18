@@ -165,7 +165,7 @@
 			<!-- My tivits -->
 			<div class="tivits main-tivit" id="alltivits">
 				<!-- <h2>my tivits <span>(1)</span></h2> -->		
-				<% mytivits = activitydetails.tivits.where("owner_id = ? " ,current_account.user.id) %>
+				<% mytivits = activitydetails.get_my_tivits(current_account.user) %>
 				<% if mytivits !=nil && mytivits.size > 0 %>
 					<h2>my tivits <span>(<%= mytivits.size %>)</span></h2>
 					<div class="tvit-list" id="mytivits">
@@ -193,7 +193,7 @@
 		
 			<div class="team tivits" id="team-tivits">
 				<!-- <h2>team tivits<span>(4)</span></h2> -->
-				<% teamtivits = activitydetails.tivits.where("NOT owner_id = ? " ,current_account.user.id) %>
+				<% teamtivits = activitydetails.get_team_tivits(current_account.user) %>
 				<% if teamtivits !=nil && teamtivits.size > 0 %>
 					<h2>team tivits <span>(<%= teamtivits.size %>)</span></h2>
 					<div class="tvit-list" id="teamtivits">
@@ -328,7 +328,9 @@
 	
 <!-- Displying list of My Tivits-->  	
  <span class="content">
- 	<% mytivits = activitydetails.tivits.where("owner_id = ? " ,current_account.user.id)%>
+ 	<!-- % mytivits = activitydetails.tivits.where("owner_id = ? " ,current_account.user.id)%-->
+ 	<% mytivits = activitydetails.get_my_tivits(current_account.user)%>
+	
 	<% if mytivits !=nil && mytivits.size > 0%>
 		<h1><%= mytivits.size %> My Tivits</span></h1>
 		<%= render :partial => 'shared/tivit', :collection =>  mytivits %> 
@@ -336,7 +338,9 @@
 
 <!-- Displying list of Team Tivits-->
 	
-<% teamtivits = activitydetails.tivits.where("NOT owner_id = ? " ,current_account.user.id)%>
+<!--% teamtivits = activitydetails.tivits.where("NOT owner_id = ? " ,current_account.user.id)%-->
+<% teamtivits = activitydetails.get_team_tivits(current_account.user)%>
+
 	<% if teamtivits !=nil && teamtivits.size > 0%>
 		<h1><%= teamtivits.size %> Team Tivits</span></h1>
 		<%= render :partial => 'shared/tivit', :collection =>  teamtivits %> 

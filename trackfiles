@@ -1,6 +1,8 @@
 production.rb
 development.rb
 delete gemfile.lock
+activity.rb
+_activitydetails.html.erb
 
 _user_stats.hrml.rb
 activiti_controller.rb

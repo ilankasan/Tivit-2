@@ -208,7 +208,7 @@ DEPENDENCIES
   fog (= 0.5.2)
   gravatar_image_tag (= 1.0.0.pre2)
   mongrel (= 1.2.0.pre2)
-  mysql2 (< 0.3)
+  mysql2
   omniauth!
   rails (= 3.0.3)
   rails3-jquery-autocomplete

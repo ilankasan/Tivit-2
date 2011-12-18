@@ -118,24 +118,8 @@ class Activity < ActiveRecord::Base
   end
   
   def get_on_deck_tivits (user)
-puts "------------->>>>>>>>>>>>"
-puts "On deck filter!"
-   # tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
-   # if(tivit_user_status == nil )
-   #   last_reviewed = Time.now
-   # else
-   #   last_reviewed = tivit_user_status.last_reviewed  
-   # end
-   # puts "Last Reviewed = "+last_reviewed.to_s
-   #  if(last_reviewed.to_s.empty?)
-        
-    #    puts "--------------- last review is not empty -------------  "+last_reviewed.to_s
-     #   last_reviewed = Time.now()         
-      #  last_reviewed = last_reviewed - 1000000000  
-       # puts "--------------- last review is not empty -------------  "+last_reviewed.to_s
-
-    #end
-
+    puts "------------->>>>>>>>>>>>"
+    puts "On deck filter!"
     last_reviewed = get_last_reviewed (user)
     
 #My Activities
@@ -168,8 +152,7 @@ puts "On deck filter!"
         closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id     = activities.id
         AND     tivitcomments.created_at  > ?
         AND NOT tivitcomments.user_id     = ?",last_reviewed, user.get_id)   
-     # end   
-          
+         
       puts "closed_tivits_with_comments size "+closed_tivits_with_comments.size.to_s   
       return (all_open_tivits + closed_tivits_with_comments).uniq    
    
@@ -183,7 +166,6 @@ puts "On deck filter!"
        
       open_tivits_im_asignee     = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done' 
          AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
-    #  puts "______________________________________________" 
       puts "Open invited by "+open_tivits_im_asignee.size.to_s
      # puts "______________________________________________" 
          
@@ -243,17 +225,37 @@ puts "-------------<<<<<<<<<<<<<<"
     results2 = []
     results3 = []
   end
- 
-	#results2 = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
-	#AND (tivit_user_statuses.status_id = 'Proposed' or tivit_user_statuses.status_id = 'Declined')")
-
-	#puts "total tivits "+tivits.size.to_s
-										  
+ 										  
 	results =(results1 + results2) | results3
 	#puts " restuns size "+results.size.to_s
 	return results    	 	
   end
 
+  def get_my_tivits (user)
+    #return self.tivits.where("owner_id = ? " ,user.id)
+    puts "----------------->>>> in get_my tivits"
+    my_done_activities = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.status_id = 'Done' 
+      AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
+    my_open_activities = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done' 
+      AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
+      
+  # puts "my_open_activities = "+my_open_activities.size.to_s
+  # puts "my_done_activities = "+my_done_activities.size.to_s  
+   return my_open_activities + my_done_activities
+  end
+  
+  def get_team_tivits (user)
+    
+    puts "----------------->>>> in team_my tivits"
+    team_done_activities = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.status_id = 'Done' 
+      AND NOT activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
+    team_open_activities = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done' 
+      AND NOT activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
+      
+  # puts "my_open_activities = "+my_open_activities.size.to_s
+  # puts "my_done_activities = "+my_done_activities.size.to_send
+    return team_open_activities + team_done_activities
+  end 
 
   def update_user_tivit_status_new(user)
  	tivit_status = create_status_new(user)
