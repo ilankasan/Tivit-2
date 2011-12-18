@@ -4,6 +4,39 @@ class UserMailer < ActionMailer::Base
            :bcc => "tiviti.mailer.cc@gmail.com"
    #   :return_path => 'system@example.com'
         
+   
+   def tivit_propose_new_date_email(assignee, assigner, tivit,comment )
+#107 Tivit - New Date Request. When: CAssignee requests alternate due date, Who: Assigner
+    puts "tivit_propose_new_date_email"
+         
+    @assignee   = assignee
+    @assigner   = assigner
+    @tivit      = tivit
+    @comment    = comment
+    
+        
+    mail(:from => create_from_str(assignee.get_name),:reply_to => assignee.get_email,:to => assigner.get_email,
+         :subject => "tiviti: "+ assignee.get_name+ " is requesting a different date for "+tivit.name)
+         
+     
+   end
+   
+   def tivit_accept_new_date_email(assignee, assigner, tivit,comment )
+#108  Tivit - New Date Accepted. When: Assigner accepts alternate due date, Who: Assignee
+    puts "tivit_access_new_date_email"
+         
+    @assignee   = assignee
+    @assigner   = assigner
+    @tivit      = tivit
+    @comment    = comment
+    
+    mail(:from => create_from_str(assignee.get_name),:reply_to => assignee.get_email,:to => assigner.get_email,
+         :subject => "tiviti: "+ assigner.get_name+ " accepted your proposed date for "+tivit.name)
+         
+     
+   end
+   
+   
    def new_tivit_email(assignee, assigner,tivit)
 #101 Tivit - New. When: Assigner creates tivit, Who: Assignee
                                                       

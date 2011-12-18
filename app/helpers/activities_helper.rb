@@ -5,10 +5,55 @@ module ActivitiesHelper
 #If the user does no exists, it creates a skeloton of an inactive user
 # returns nil if email is invalid 
 
-  def validate_user_access_to_activity (activity, user)
-    
-    return 
+
+
+
+
+  def validate_user_allowed_to_propose_date (activity, user)
+    puts "validating that user can propose a new date "+user.get_name+" for tivit "+activity.get_name
+    @error = "Only tivit owner can proposed an alternative date"
+    if(user.get_id == activity.get_owner_id )
+      return true
+    else 
+      puts "-----------------------------------------------------"
+      puts "Access Denied!!!!!!!!!!!!!!!!!!!!!!!!!"
+      puts "-----------------------------------------------------"
+      
+      return false
+    end 
   end
+
+
+  def validate_user_access_to_activity (activity, user)
+    puts "validating that user "+user.get_name+" can access activity "+activity.get_name
+    if(user.get_id == activity.get_owner_id || activity.tivits.where(:owner_id => user.get_id).count > 0)
+      return true
+    else 
+      puts "-----------------------------------------------------"
+      puts "Access Denied!!!!!!!!!!!!!!!!!!!!!!!!!"
+      puts "-----------------------------------------------------"
+      
+      return false
+    end 
+  end
+  
+  def validate_user_allowed_to_close_activity (activity, user)
+    puts "validating that user "+user.get_name+" can close activity "+activity.get_name
+    return (user.get_id == activity.get_owner_id)
+      #return true
+    #else 
+    #  puts "-----------------------------------------------------"
+    #  puts "Access Denied!!!!!!!!!!!!!!!!!!!!!!!!!"
+    #  puts "-----------------------------------------------------"
+      
+     # return false
+    #end 
+  end
+  
+  
+  
+  
+  
   def user_by_email (email_input)
   	if(email_input != nil && !email_input.empty? )
 		@email = email_input.downcase

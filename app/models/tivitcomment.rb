@@ -40,7 +40,7 @@ class Tivitcomment < ActiveRecord::Base
              
          return false 
        else
-         puts "[Yaniv] Found new comment for logged in user!"
+       #  puts "[Yaniv] Found new comment for logged in user!"
          return true
        end
          

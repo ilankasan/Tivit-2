@@ -1,0 +1,17 @@
+	 
+		<%= @assigner.get_name %>,
+<%= @assignee.get_name %>  is asking for a different delivery date for '<%= @tivit.get_name%>'
+         
+        How about <%= @tivit.get_owner_proposed_date.to_s %> instead of <%= @tivit.due %>
+              	
+              <%if(!@comment.empty?)%>
+                     	<%= @assignee.get_name %> says: 
+              	
+              	<%=@comment%> 
+              	
+              	
+              <%end%>
+        
+
+respond <%= , activity_url(@tivit.get_parent) %>
+

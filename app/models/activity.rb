@@ -1,21 +1,3 @@
-# == Schema Information
-# Schema version: 20110309070830
-#
-# Table name: activities
-#
-#  id           :integer(4)      not null, primary key
-#  name         :string(255)
-#  description  :text
-#  status       :string(255)
-#  due          :datetime
-#  owner_id     :integer(4)
-#  who          :string(255)
-#  created_at   :datetime
-#  updated_at   :datetime
-#  completed_at :datetime
-#
-
-
 class Activity < ActiveRecord::Base
   
   attr_accessible :name, :description, :status, :due,:invited_by,:owner_id, :users, :completed_at, :summary,:activity_type, :parent_id,:activity_name, :documents
@@ -49,7 +31,8 @@ class Activity < ActiveRecord::Base
 
 
   default_scope :order => 'activities.due DESC'
-  def activity_name
+  
+  def get_name
   	return self.name
   end 
 # Update status of the users invites to he activity
@@ -429,8 +412,11 @@ puts "-------------<<<<<<<<<<<<<<"
  def get_owner
  #adding the user to the existing users on the task
 		return User.find_by_id(self.owner_id)
-  end	
-
+ end
+ 
+ def get_owner_id
+  return self.owner_id  	
+ end
  def isOwner?(user)
    return (user.get_id == self.owner_id)    
  end
@@ -453,11 +439,15 @@ puts "-------------<<<<<<<<<<<<<<"
  end
  
  def get_invited_by
- #adding the user to the existing users on the task
-		return User.find_by_id(self.invited_by)
+ #returned activity owner if invited by is nill
+    if(self.invited_by == nil)
+      return self.get_parent.get_owner
+    else
+		  return User.find_by_id(self.invited_by)
+		end
   end	
 
-  def get_invited_by_email
+  def old_get_invited_by_email
  #adding the user to the existing users on the task
     return self.invited_by
  end 
@@ -580,11 +570,13 @@ private
  
  def create_status(user, status)
  	tivit_status = user.tivit_user_statuses.new()
- 	puts " ----------------  Changing status ------------------------- "
- 	if(tivit_status.status_id == nil)
- 		puts " nil -->>> " + status
- 	else
- 		puts tivit_status.status_id + "-->>> " + status
+ 	if(false)
+ 	  puts " ----------------  Changing status ------------------------- "
+ 	  if(tivit_status.status_id == nil)
+ 	  	puts " nil -->>> " + status
+ 	  else
+ 	  	puts tivit_status.status_id + "-->>> " + status
+ 	  end
  	end
  	
  	tivit_status.status_id = status

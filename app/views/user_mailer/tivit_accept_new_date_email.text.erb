@@ -1,0 +1,16 @@
+<%= @assignee.get_name %>
+        <%= @assigner.get_name %> is OK with <%= @tivit.due %> for finishing '<%= @tivit.get_name%>'
+        
+              	
+<%if(!@comment.empty?)%>
+<%= @assigner.get_name %> says: 
+              	
+<%=@comment%> >
+              	
+              	
+<%end%>
+        
+
+<%= link_to 'View this tivit', activity_url(@tivit.get_parent) %>
+
+#108 Tivit - New Date Accepted
