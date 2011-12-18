@@ -109,7 +109,7 @@ git push heroku -app staging
 
 
 $ git add .
-git commit -am "12-16-11 - new gem.lock"
+git commit -am "12-17-11 clear db"
 
 git checkout master
 git merge updating-users
