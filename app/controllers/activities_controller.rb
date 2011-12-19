@@ -451,7 +451,7 @@ puts " Reasign tivit "+@tivit.name
       UserMailer.reassign_tivit(current_account.user, @assined_user, params["comment"],@tivit)
       flash[:success] = "Successfuly reassigned tivit to "
       @tivit.save
-      redirect_to  @tivit   
+      redirect_to  @tivit.get_parent   
     end
   end
   
