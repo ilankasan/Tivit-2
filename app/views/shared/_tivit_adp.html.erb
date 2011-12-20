@@ -155,7 +155,11 @@
 			
 			<!-- Show respond button only to owner -->
 			<% if tivit_adp.get_owner.id == current_account.user.id %>
-			<div class="respond">
+			<% if unread_comments > 0 %> 	
+			<div class="respond" style="display: block">
+			<% else %>
+			<div class="respond">	
+			<% end %>
 				<div class="status">
 					<div class="icon"></div>
 						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes">
@@ -180,6 +184,7 @@
 <% if unread_comments > 0 %> 					
 			<!-- tivit comments / answer -->
 			<ul class="list" style="display: block">
+
 <% else %>	
 			<ul class="list">	
 <% end %>			

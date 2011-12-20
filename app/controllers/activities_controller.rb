@@ -275,8 +275,13 @@ class ActivitiesController < ApplicationController
 	
 	  
    	current_account.user.addTwoWayContact(@invited_user)
-    @activity = @invited_user.activities.create(params)	 						
-	  @activity.update_tivit_user_status_reviewed(current_account.user,"")
+    @activity = @invited_user.activities.create(params)
+    if(@invited_user.get_id != current_account.user.get_id)
+      @activity.update_tivit_user_status_reviewed(current_account.user,"")
+    else
+# change status to on it is tivit assigned to self
+      @activity.update_tivit_user_status_onit(current_account.user,"")
+    end
 	  
 	  config.debug("------>>>>> creating activity" + @activity.name )
 	  log_action_as_comment(@activity,params["description"],"TivitDetails",current_account.user)
@@ -291,6 +296,7 @@ class ActivitiesController < ApplicationController
     if(@invited_user.get_id != current_account.user.get_id)
     
       UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
+    
     end
        puts "--------------->> after sending email"
     

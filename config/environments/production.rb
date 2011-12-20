@@ -53,7 +53,7 @@ FirstApp::Application.configure do
   
 
   config.action_mailer.default_url_options = { :host => 'tiviti-s2.heroku.com' }
-  config.action_mailer.asset_host          = "http://localhost:3000"  
+  config.action_mailer.asset_host          = "tiviti-s2.heroku.com"  
   
 
   # Send deprecation notices to registered listeners

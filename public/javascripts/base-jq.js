@@ -469,7 +469,7 @@ jQuery(document).ready(function($){
 		//alert($(this).parents('.record').children('ul').attr('class'));
 		console.log('[Yaniv] tivit clicked - show/hide comments...');
 		$(this).parents('.record').children('ul').fadeToggle('slow');
-		$(this).parents('.record').children('.show-more').fadeToggle('slow');
+		//$(this).parents('.record').children('.show-more').fadeToggle('slow');
 		$(this).parents('.record').children('.respond').fadeToggle('slow');
 	});	
 	$('.text-conteiner').hover(function(){

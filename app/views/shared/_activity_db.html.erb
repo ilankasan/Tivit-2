@@ -8,7 +8,16 @@
 		<%end%>
 	<%end%>
 	 
- 	<div class="calendar date earlyDay">
+ 	<% if activity_db.due == nil %>
+		<div class="calendar date pastDay">
+	<% elsif activity_db.due < (Time.now + 1.day) && activity_db.due > Time.now %>
+	 	<div class="calendar date earlyDay">
+	<% elsif activity_db.due > (Time.now + 1.day) && activity_db.due < (Time.now + 2.day) %>
+		<div class="calendar date nearlyDay">
+	<% else %>
+		<div class="calendar date nearlyDay">
+	<%end%>
+	
 		<%if (activity_db.due != nil && activity_db.due.inspect.size > 0 )%>
 			<div class="week"><%= (activity_db.due.strftime ("%a")).upcase %></div>
 	    	<div class="text"><%= activity_db.due.strftime ("%d") %></div>

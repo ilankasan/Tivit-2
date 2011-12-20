@@ -1,3 +1,7 @@
+user.rb
+views / users / show.html.rb
+activity.rb
+
 activity_helper
 acrivity_controller
 tivit_status_change_onit_email.html.erb

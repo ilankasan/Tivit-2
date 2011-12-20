@@ -117,6 +117,7 @@ end
   end
   
   def addTwoWayContact(user)
+    return if(self == user)
     self.addContact(user)
     user.addContact(self)
   end
