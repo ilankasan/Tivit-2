@@ -274,7 +274,7 @@ puts "-------------<<<<<<<<<<<<<<"
  end
  
  def update_tivit_user_status_onit(user,comment)
- 	change_status(user,"OnIt",comment,nil,Time.now().localtime,nil)
+ 	change_status(user,"OnIt",comment)
  	self.change_status_to_in_progress if self.isDone?
   
  end
@@ -285,7 +285,7 @@ puts "-------------<<<<<<<<<<<<<<"
  end
  
  def update_tivit_user_status_decline(user,comment)
- 	change_status(user,"Declined",comment,nil,Time.now().localtime,nil)
+ 	change_status(user,"Declined",comment)
   self.change_status_to_in_progress if self.isDone?
   
  end

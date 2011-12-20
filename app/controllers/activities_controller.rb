@@ -276,13 +276,12 @@ class ActivitiesController < ApplicationController
 	  
    	current_account.user.addTwoWayContact(@invited_user)
     @activity = @invited_user.activities.create(params)
-    if(@invited_user.get_id != current_account.user.get_id)
       @activity.update_tivit_user_status_reviewed(current_account.user,"")
-    else
-# change status to on it is tivit assigned to self
-      @activity.update_tivit_user_status_onit(current_account.user,"")
-    end
-	  
+    #Change status to on it is tivit assigned to self. Ilan - optimize this section to one function
+      if(@invited_user.get_id == current_account.user.get_id)
+        @activity.update_tivit_user_status_onit(current_account.user,"")
+      end
+    
 	  config.debug("------>>>>> creating activity" + @activity.name )
 	  log_action_as_comment(@activity,params["description"],"TivitDetails",current_account.user)
 	      
@@ -321,10 +320,10 @@ class ActivitiesController < ApplicationController
       puts " is this possible?......NNNNNNNNNNNNNNNNNNNNNNNNNNNNNOOOOOOOOOOOOOOOOOOOOOOOOOOO"
     else
       if(!@activity.get_parent.isOwner?(current_account.user))
-        # sending an email to the activity owner (usually the invited buy not always)
+        # sending an email to the activity owner (usually the invited by not always)
         UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_parent.get_owner,params["comment"],@activity).deliver
         
-        if(@activity.get_invited_by != nil  && !@activity.wasInvitedByUser?(current_account.user) )
+        if(@activity.get_invited_by != @activity.get_parent  && !@activity.wasInvitedByUser?(current_account.user) )
           # sending email to the person who invited the user
           UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_invited_by,params["comment"],@activity).deliver
         end
