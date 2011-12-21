@@ -371,8 +371,7 @@ puts "-------------<<<<<<<<<<<<<<"
   		size = self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id).count
   		#size = 1
   		if(size > 0)
-        puts "________________________________________________________"
-  		  puts "number of unread comment "+size.to_s
+        puts "number of unread comment "+size.to_s
   		  puts "________________________________________________________"
   		end
   		return size

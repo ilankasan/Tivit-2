@@ -79,10 +79,10 @@ class DocumentsController < ApplicationController
 	    	  	
 		  	#flash[:success] = "tivit " + @activity.name + " updated"
 	  	#end
-	  puts "niiiiiiiiiiiiiiiiiiiiiiiiiiiil" if @document ==  nil
+	  #puts "niiiiiiiiiiiiiiiiiiiiiiiiiiiil" if @document ==  nil
 		unless @document == nil
 		  puts "= document.name is:"
-		  puts "_____________________________________________________________________"
+		#  puts "_____________________________________________________________________"
     
 		if(@document.name == nil)
 		  puts "nnniiilllll"
