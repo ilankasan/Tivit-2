@@ -18,8 +18,8 @@ gem 'will_paginate', '3.0.pre2'
 gem 'rails3-jquery-autocomplete'
 
 gem 'devise', '1.4.5'
-gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git' , :tag => 'v0.3.0.rc3'
- 
+#gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git' , :tag => 'v0.3.0.rc3'
+gem 'omniauth', '0.3.0'
 gem 'mysql2'
 
 group :production do
