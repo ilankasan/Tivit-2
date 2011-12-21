@@ -1,4 +1,6 @@
+<% puts "[YANIV] ================= NUMBER OF COMMENTS: " %>
 <% puts tivit.tivitcomments.size  %>
+<% puts "[YANIV] ===================================="   %>
 
 <%if tivit != nil && tivit.tivitcomments.size > 0 %>
 
@@ -10,6 +12,7 @@
   	<!-- <div class="post"><textarea cols="10" rows="1">Leave a note...</textarea> -->
   			
   		<div class="post">
+  			<div class="loading"></div>
  	
  		<%= form_for([tivit, tivit.tivitcomments.build], :html => { :id => "post-comment-form"}) do |f| %>
     

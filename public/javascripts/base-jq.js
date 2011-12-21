@@ -27,8 +27,10 @@ jQuery(document).ready(function($){
 	
 	/**************************************************************************/
 	/* Yaniv - Create new tivit with Ajax */
+	
 	jQuery("#create-new-tivit-form").submit(function() {
-		$.post($(this).attr("action"), $(this).serialize(), null, "script");
+		showLoadingAnimation();
+		$.post($(this).attr("action"), $(this).serialize(), hideLoadingAnimation, "script");
 		return false;
 	});
 	/**************************************************************************/
@@ -36,6 +38,7 @@ jQuery(document).ready(function($){
 	//$('.post-button').live('click', function(){
 	jQuery('.new_tivitcomment').live ('submit', function() {
 		
+		showInlineLoadingAnimation();
 		console.log ('[Yaniv] Post comment button clicked');
 		
 		var actionparam = $(this).attr("action") + "";
@@ -64,7 +67,7 @@ jQuery(document).ready(function($){
 		 
 		console.log ('[Yaniv] new comments record should be added by now and can accept the new comment partial to be rendered');
 		
-		$.post($(this).attr("action"), $(this).serialize(), null, "script");
+		$.post($(this).attr("action"), $(this).serialize(), hideInlineLoadingAnimation, "script");
 		
 		// Empty the input comment box from previous comment text
 		$(this)[0].reset();
@@ -381,12 +384,34 @@ function openNewActivity(){
     }
 
 }
+function hideLoadingAnimation(){
+	console.log ('[Yaniv] hideLoadingAnimation called.');
+	jQuery('#loading-animation').hide();
+	//alert ('hideLoadingAnimation called.');
+}
+function showLoadingAnimation(){
+	console.log ('[Yaniv] showLoadingAnimation called.');
+	//alert ('showLoadingAnimation called.');
+	jQuery('#loading-animation').show();
+}
+function hideInlineLoadingAnimation(){
+	console.log ('[Yaniv] hideInlineLoadingAnimation called.');
+	jQuery('.loading').hide();
+	//alert ('hideLoadingAnimation called.');
+}
+function showInlineLoadingAnimation(){
+	console.log ('[Yaniv] showInlineLoadingAnimation called.');
+	//alert ('showLoadingAnimation called.');
+	jQuery('.loading').show();
+}
 /* Not in use */
 function removePopup(){
 	console.log ('[Yaniv] Closing popup');
 	jQuery('.popup').remove();
 	jQuery('#activity-overlay').fadeOut();
 }
+/**************/
+
 function hidePopup(){
 	console.log ('[Yaniv] Hiding Popup');
 	// Confirmation dialog div HAS to be removed form the page, but popup should be hidden since I'm using it for add tivit which is on the view/server side

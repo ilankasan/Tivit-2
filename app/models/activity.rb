@@ -416,16 +416,22 @@ puts "-------------<<<<<<<<<<<<<<"
  def get_owner_id
   return self.owner_id  	
  end
+ 
  def isOwner?(user)
    return (user.get_id == self.owner_id)    
  end
  
+ 
+ 
+ def isParentOwner?(user)
+   return false if (user == nil || self.get_parent == nil)
+   return self.get_parent.isOwner?(user)  
+ end
+ 
+ 
  def wasInvitedByUser?(user)
-   #puts "in wasInvitedByUser"
-   if (user == nil)
-     return false
-   end
    
+   return false if (user == nil)
    
    if(self.invited_by != nil && self.invited_by == user.get_id)
      return true

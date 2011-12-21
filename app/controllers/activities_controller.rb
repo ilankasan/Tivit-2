@@ -14,7 +14,13 @@ class ActivitiesController < ApplicationController
    	params["owner_id"] = current_account.user.id
    	params["status"]   = "in-progress"
    	params["activity_type"]     = "activity"
+
+   	#puts "Inspect Params " +params.inspect
    	@activity = current_account.user.add_my_ativity(params)    
+#Updateting status as Reviewed. New tivits should for current user should be at REviewed status
+	#@activity.update_status_after_show(current_account.user)
+   	#current.ueractivities.create(params)
+ 	
    end
    
    def create
@@ -84,11 +90,11 @@ class ActivitiesController < ApplicationController
   end
   
   def remove_tivit
-  	puts "Remove Tivit"
-  	@tivit    = Activity.find(params[:id])
-  	@activity = @tivit.get_parent
-  	@tivit.destroy
-  	redirect_to @activity
+	puts "Remove Tivit"
+	@tivit    = Activity.find(params[:id])
+	@activity = @tivit.get_parent
+	@tivit.destroy
+	redirect_to @activity
   end
   
   
@@ -104,11 +110,12 @@ class ActivitiesController < ApplicationController
   
   
   def show
-   
+    
    puts "----------->>>>>>>>>>> show activity detailed page"  
     @activity = Activity.find(params[:id])
-    render 'shared/access_denied' if(!validate_user_access_to_activity(@activity,current_account.user))
-       
+    #updating tivit status New -> Reviewed and last update to current time
+   
+   # @activity.update_status_after_show(current_account.user)
     
   	@title = "Activity Details - "+@activity.name
   	
@@ -117,7 +124,8 @@ class ActivitiesController < ApplicationController
  def update_view_status
    puts "----------->>>>>>>>>>> update_view_status"  
    
-   @activity.update_status_after_show(current_account.user)
+    @activity.update_status_after_show(current_account.user)
+   
  end 
   
   def update_tivit
@@ -150,6 +158,11 @@ class ActivitiesController < ApplicationController
       
       update_activity_participants_by_email(invitee_emails, @activity)
       @activity.save
+      
+#send email to all parcicipants that tivit was completed (not including owner):
+   # if(was_completed != "Completed" && @activity.status == "Completed" )
+    # UserMailer.user_tivit_status_completed_email(current_account.user, invitee_emails,params["summary"],@activity).deliver
+    #end
 
     flash[:success] = "tivit " + @activity.name + " updated"
       redirect_to @activity
@@ -161,6 +174,8 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  
+  
   
   def update
    
@@ -174,12 +189,12 @@ class ActivitiesController < ApplicationController
     
 # update activity status to completed if check box was checked 
   
-    if(params["activity_status"] == "true")
-      params["activity_status"] = "Completed"
-  #   params["completed_at"] = time.localtime
-    else
-      params["activity_status"] = "in-progress"
-    end
+  if(params["activity_status"] == "true")
+    params["activity_status"] = "Completed"
+#   params["completed_at"] = time.localtime
+  else
+    params["activity_status"] = "in-progress"
+  end
 
     
 # vhecking to see if tthe task was previously closed. This will be used before the email is sent out below
@@ -239,6 +254,7 @@ class ActivitiesController < ApplicationController
     @activity.update_tivit_user_status_onit(current_account.user,params["comment"])
     log_action_as_comment(@activity,params["comment"],"OnIt",current_account.user)
 
+   # UserMailer.user_tivit_status_change_email(current_account.user, "On it",params["comment"],@activity).deliver
     UserMailer.tivit_status_change_onit_email(current_account.user, params["comment"],@activity).deliver
 
     #redirect_to  @activity.get_parent
@@ -268,22 +284,32 @@ class ActivitiesController < ApplicationController
 	  params["status"]    = "in-progress"
 	 
     invitees = params["invitees"]	
-	
-	  @invited_user = user_by_email(invitees.strip)
+   
+    #-----------------------------------------------------
+    # if no invitee provided, assign tivit to current user
+    if invitees.empty? 
+      puts "[Yaniv] invitees is empty!"
+      puts "[Yaniv] current_account user email=" + current_account.user.get_email
+      @invited_user = current_account.user
+    else
+      @invited_user = user_by_email(invitees.strip)
+    end
+    #-----------------------------------------------------
+    
 	  params["owner_id"] =  @invited_user.id
 	  params["activity_type"] = "tivit"
 	
+	  #puts "Inspect Params " +params.inspect
 	  
    	current_account.user.addTwoWayContact(@invited_user)
-    @activity = @invited_user.activities.create(params)
-      @activity.update_tivit_user_status_reviewed(current_account.user,"")
-    #Change status to on it is tivit assigned to self. Ilan - optimize this section to one function
-      if(@invited_user.get_id == current_account.user.get_id)
-        @activity.update_tivit_user_status_onit(current_account.user,"")
-      end
-    
+    @activity = @invited_user.activities.create(params)	 						
+	  @activity.update_tivit_user_status_reviewed(current_account.user,"")
+	  
 	  config.debug("------>>>>> creating activity" + @activity.name )
 	  log_action_as_comment(@activity,params["description"],"TivitDetails",current_account.user)
+	#  puts "inveted user id = "+@invited_user.get_id.to_s
+	 # puts "invetee user id = "+current_account.user.get_id.to_s
+    
 	      
    #respond with Ajax when needed...
    respond_to do |format|
@@ -295,7 +321,6 @@ class ActivitiesController < ApplicationController
     if(@invited_user.get_id != current_account.user.get_id)
     
       UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
-    
     end
        puts "--------------->> after sending email"
     
@@ -320,13 +345,11 @@ class ActivitiesController < ApplicationController
       puts " is this possible?......NNNNNNNNNNNNNNNNNNNNNNNNNNNNNOOOOOOOOOOOOOOOOOOOOOOOOOOO"
     else
       if(!@activity.get_parent.isOwner?(current_account.user))
-        # sending an email to the activity owner (usually the invited by not always)
+        # sending an email to the activity owner (usually the invited buy not always)
         UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_parent.get_owner,params["comment"],@activity).deliver
-        puts "Sendgin once"
-        if(@activity.get_invited_by != @activity.get_parent.get_owner  && !@activity.wasInvitedByUser?(current_account.user) )
-          # sending email to the person who invited the user
-          puts "Sendgin twice"
         
+        if(@activity.get_invited_by != nil  && !@activity.wasInvitedByUser?(current_account.user) )
+          # sending email to the person who invited the user
           UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_invited_by,params["comment"],@activity).deliver
         end
       
@@ -346,16 +369,14 @@ class ActivitiesController < ApplicationController
     	puts "old date = "+@activity.due.inspect
     	puts "new date = "+ params["propose_date"]
     	
-    #	render 'shared/access_denied' if(!validate_user_allowed_to_propose_date(@activity,current_account.user))
     	@activity.update_tivit_user_propose_date(current_account.user,params["comment"], convert_date_to_string(params,"propose_date"))
-    	log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)
-    	
-  	  UserMailer.tivit_propose_new_date_email(current_account.user, @activity.get_invited_by, @activity,params["comment"]).deliver
-  	  #tivit_propose_new_date_email(assignee, assigner, tivit,comment )
-  	    	 	
+    	log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)    	
     end  
   	redirect_to  @activity.get_parent
+    
+  	
   end
+
   
   def accept_date
     puts "-----------    Accept Date ---------------"
@@ -372,19 +393,15 @@ class ActivitiesController < ApplicationController
   	@activity.update_tivit_user_status_onit(@activity.get_owner,"")
  #ilan: do i need to change the owner status as accepted? maybe later
  
- # Send an email to the owner of the tivit the the activity owner accepted the proposed date
- UserMailer.tivit_accept_new_date_email(@activity.get_owner,current_account.user , @activity,params["comment"]).deliver
-    
-
-    redirect_to @activity.get_parent
+ # we need to send an email to the owner of the tivit the the activity owner accepted the proposed date
+    UserMailer.user_tivit_status_change_email(current_account.user, "Accepted proposed date",params["comment"],@activity).deliver
+    redirect_to @activity
   end
 
  def mark_as_completed
 #display page to write activity summary
    puts "-----------    mark_as_completed ---------------"  
    @activity = Activity.find(params[:id])
-   render 'shared/access_denied' if(!validate_user_allowed_to_close_activity(@activity,current_account.user))
-    
    render 'activity_compelete_summary' 
  end
  
@@ -458,7 +475,7 @@ puts " Reasign tivit "+@tivit.name
       UserMailer.reassign_tivit(current_account.user, @assined_user, params["comment"],@tivit)
       flash[:success] = "Successfuly reassigned tivit to "
       @tivit.save
-      redirect_to  @tivit.get_parent   
+      redirect_to  @tivit   
     end
   end
   

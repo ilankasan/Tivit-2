@@ -100,22 +100,30 @@
 		<div id="page-container" class="bk2">
 <%end%>    		
 			<% flash.each do |key, value| %>
-				<div class="flash <%= key %>"><%= value %></div>
+				<div class="flash <%= key %>" id="confirmMsg"><%= value %></div>
 			<% end %>
 
+		    <div id="loading-animation"></div>
 		     
-		     	<%= yield %>	     	 
+		    <%= yield %>	     	 
 		     
 	       
+	     
+		
 	       <div style="clear: both;"></div>
 	       
     	</div>    
-    
+    	
+    	
+	 
+		
+		    	
+		
 	    <!-- Lighbox effect! -->
 		<div style="clear: both;"></div>
 	 		<div id="activity-overlay"></div>
 		</div>
-    
+    	
     	<!-- Footer -->
 	    <div id="footer">
 	    	<%= render 'layouts/footer' %>

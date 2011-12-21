@@ -209,6 +209,29 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	top:0;
 	left:0;
 }
+.popup{position:absolute;top:70px;left:239px;z-index:100;width:480px;padding:10px;color:#000;display:none;
+	background:#fff;border-radius:6px;border:1px solid #eaeaea;}
+	
+#loading-animation {
+	position:absolute;
+    display:none;
+    z-index:110;
+    top:170px;
+    left:479px;   
+    background:url("../images/ajax-loader.gif");
+	width: 32px;
+    height: 32px; 
+}
+.loading {
+	position:absolute;
+    display:none;
+    z-index:110;
+    top:44px;
+    left:100px;   
+    background:url("../images/loading.gif");
+	width: 22px;
+    height: 22px; 
+}
 #activity-overlay{
     position:fixed;
     height:100%;
@@ -526,7 +549,9 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     .tvit-day .pastDay .text{
         color:#808080;
     }
-
+	.tvit-day .pastDay .week{
+        color:#808080;
+    }
 
 .tvit-list{
     margin-top:5px;
@@ -1013,7 +1038,7 @@ small.less{display:block;padding:0;}
 
 /* Styles for popup windows */
 .popup{position:absolute;top:70px;left:239px;z-index:100;width:480px;padding:10px;color:#000;display:none;
-	background:#fff;border-radius:10px;border:1px solid #eaeaea;}
+	background:#fff;border-radius:6px;border:1px solid #eaeaea;}
 .popup h3{padding:5px 0 5px 38px;margin:0;background:url(../images/icon_add_tivit.gif) no-repeat;}
 .popup h1{font-size: 16px; padding:5px 0 5px 18px;margin:0;}
 .popup label{font-size:14px;vertical-align:top;display:inline-block;width:50px;padding-right:5px;text-align:right;line-height:2.1;}
