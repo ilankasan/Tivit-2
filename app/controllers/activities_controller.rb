@@ -254,15 +254,15 @@ class ActivitiesController < ApplicationController
     @activity.update_tivit_user_status_onit(current_account.user,params["comment"])
     log_action_as_comment(@activity,params["comment"],"OnIt",current_account.user)
 
-   # UserMailer.user_tivit_status_change_email(current_account.user, "On it",params["comment"],@activity).deliver
-    UserMailer.tivit_status_change_onit_email(current_account.user, params["comment"],@activity).deliver
-
+  
     #redirect_to  @activity.get_parent
     respond_to do |format|
        format.html { redirect_to @activity  }
        format.js {}
        puts "--------[change status to OnIt activities controller]------->> after responding to Ajax"
      end
+    UserMailer.tivit_status_change_onit_email(current_account.user, params["comment"],@activity).deliver
+
   end
   
   def new_tivit
@@ -301,16 +301,18 @@ class ActivitiesController < ApplicationController
 	
 	  #puts "Inspect Params " +params.inspect
 	  
-   	current_account.user.addTwoWayContact(@invited_user)
-    @activity = @invited_user.activities.create(params)	 						
-	  @activity.update_tivit_user_status_reviewed(current_account.user,"")
-	  
-	  config.debug("------>>>>> creating activity" + @activity.name )
-	  log_action_as_comment(@activity,params["description"],"TivitDetails",current_account.user)
-	#  puts "inveted user id = "+@invited_user.get_id.to_s
-	 # puts "invetee user id = "+current_account.user.get_id.to_s
+   	
+	  current_account.user.addTwoWayContact(@invited_user)
+    @activity = @invited_user.activities.create(params)
+      @activity.update_tivit_user_status_reviewed(current_account.user,"")
+    #Change status to on it is tivit assigned to self. Ilan - optimize this section to one function
+    if(@invited_user.get_id == current_account.user.get_id)
+      @activity.update_tivit_user_status_onit(current_account.user,"")
+    end
     
-	      
+	  
+	  log_action_as_comment(@activity,params["description"],"TivitDetails",current_account.user)
+	#     
    #respond with Ajax when needed...
    respond_to do |format|
        format.html { redirect_to root_path }
@@ -322,7 +324,7 @@ class ActivitiesController < ApplicationController
     
       UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
     end
-       puts "--------------->> after sending email"
+    #puts "--------------->> after sending email"
     
     #redirect_to root_path
   end
@@ -388,10 +390,10 @@ class ActivitiesController < ApplicationController
      end
   end
 
-  
+ 
   def accept_date
     puts "-----------    Accept Date ---------------"
-   	@activity = Activity.find(params[:id])
+    @activity = Activity.find(params[:id])
   #  puts    params.inspect
     
     log_action_as_comment(@activity,params["comment"],"Accepted",current_account.user)
@@ -401,13 +403,16 @@ class ActivitiesController < ApplicationController
     @activity.due = @activity.get_owner_proposed_date
     @activity.save
     
-  	@activity.update_tivit_user_status_onit(@activity.get_owner,"")
+    @activity.update_tivit_user_status_onit(@activity.get_owner,"")
  #ilan: do i need to change the owner status as accepted? maybe later
  
- # we need to send an email to the owner of the tivit the the activity owner accepted the proposed date
-    UserMailer.user_tivit_status_change_email(current_account.user, "Accepted proposed date",params["comment"],@activity).deliver
-    redirect_to @activity
+ # Send an email to the owner of the tivit the the activity owner accepted the proposed date
+ UserMailer.tivit_accept_new_date_email(@activity.get_owner,current_account.user , @activity,params["comment"]).deliver
+    
+
+    redirect_to @activity.get_parent
   end
+
 
  def mark_as_completed
 #display page to write activity summary
@@ -445,13 +450,15 @@ class ActivitiesController < ApplicationController
     @activity.update_tivit_user_status_decline(current_account.user,params["comment"])
     log_action_as_comment(@activity,params["comment"],"Declined",current_account.user)
 
-    UserMailer.user_tivit_status_change_email(current_account.user, "Declined",params["comment"],@activity).deliver
     #redirect_to  root_path
     respond_to do |format|
        format.html { redirect_to @activity  }
        format.js
        puts "--------[change status to ** decline ** activities controller]------->> after responding to Ajax"
     end
+    
+    UserMailer.user_tivit_status_change_email(current_account.user, "Declined",params["comment"],@activity).deliver
+  
   	 
  end
 

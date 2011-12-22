@@ -131,6 +131,8 @@ puts "in activity_completed_email. sending to "+user.get_email
   end
   
   
+  
+  
   def tivit_status_change_onit_email(assignee, comment,tivit)
 #105 Tivit - Started. When: Assignee changes status to "I'm on it", Who:  Assigner
  
@@ -143,6 +145,22 @@ puts "in activity_completed_email. sending to "+user.get_email
          :subject => "tiviti: "+@assignee.name+" has accepted your request for help with '"+tivit.name+"'" )
      
   end
+ 
+ def tivit_decline_email(assignee, comment,tivit)
+#110 Tivit - Decline. When: Assignee changes status to "I'm too busy", Who:  Assigner
+ 
+    @assigner    = tivit.get_invited_by
+    @assignee   = assignee
+    @tivit      = tivit
+    @comment    = comment
+    puts "---->>>> sending email to "+@assigner.get_email
+    mail(:from => create_from_str(assignee.get_name),:to => @assigner.get_email,:reply_to => assignee.get_email,
+         :subject => "tiviti: "+@assignee.name+" isn't able to work on '"+tivit.name+"'" )
+  end
+  
+ 
+  
+  
   
   def user_tivit_status_change_email(user, action,comment,tivit)
     @invited_by    = tivit.get_invited_by

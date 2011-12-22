@@ -239,14 +239,14 @@ class ActivitiesController < ApplicationController
     @activity.update_tivit_user_status_onit(current_account.user,params["comment"])
     log_action_as_comment(@activity,params["comment"],"OnIt",current_account.user)
 
-    UserMailer.tivit_status_change_onit_email(current_account.user, params["comment"],@activity).deliver
-
+ 
     #redirect_to  @activity.get_parent
     respond_to do |format|
        format.html { redirect_to @activity  }
        format.js
        puts "--------[change status to OnIt activities controller]------->> after responding to Ajax"
      end
+
   end
   
   def new_tivit
