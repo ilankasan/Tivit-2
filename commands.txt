@@ -98,7 +98,9 @@ which has the effect of dropping tables and then re-creating them, without runni
 <%= link_to "Have and account? Sign in here", new_session_path(resource_name) %><br />
   
 
-heroku create --stack tiviti-staging --remote staging
+heroku create --stack tiviti-s1 --remote staging1
+heroku create --app tiviti-s1 --stack bamboo-mri-1.9.2 --remote staging
+ 
 
 heroku create
 git push heroku master
