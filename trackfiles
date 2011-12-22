@@ -4,6 +4,7 @@ activity.rb
 activity_controller
 user_email
 tivit_decline_email
+tivit_decline_email.text.erb
 
 activity_helper
 acrivity_controller
