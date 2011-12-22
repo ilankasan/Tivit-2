@@ -457,9 +457,9 @@ class ActivitiesController < ApplicationController
        puts "--------[change status to ** decline ** activities controller]------->> after responding to Ajax"
     end
     
-    UserMailer.user_tivit_status_change_email(current_account.user, "Declined",params["comment"],@activity).deliver
-  
-  	 
+    #UserMailer.user_tivit_status_change_email(current_account.user, "Declined",params["comment"],@activity).deliver
+    UserMailer.tivit_decline_email(current_account.user, params["comment"],@activity).deliver
+    	 
  end
 
  def reassign

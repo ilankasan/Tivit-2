@@ -1,6 +1,9 @@
 user.rb
 views / users / show.html.rb
 activity.rb
+activity_controller
+user_email
+tivit_decline_email
 
 activity_helper
 acrivity_controller
