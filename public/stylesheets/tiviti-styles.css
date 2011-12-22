@@ -222,6 +222,16 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	width: 32px;
     height: 32px; 
 }
+.loading-popup {
+	position:absolute;
+    display:none;
+    z-index:110;
+    top:50%;
+    left:50%;   
+    background:url("../images/ajax-loader.gif");
+	width: 32px;
+    height: 32px; 
+}
 .loading {
 	position:absolute;
     display:none;

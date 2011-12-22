@@ -260,7 +260,7 @@ class ActivitiesController < ApplicationController
     #redirect_to  @activity.get_parent
     respond_to do |format|
        format.html { redirect_to @activity  }
-       format.js
+       format.js {}
        puts "--------[change status to OnIt activities controller]------->> after responding to Ajax"
      end
   end
@@ -356,7 +356,12 @@ class ActivitiesController < ApplicationController
       end
     end
     #redirect_to  @activity.get_parent
-    
+    respond_to do |format|
+       format.html { redirect_to @activity  }
+       format.js {}
+       puts "--------[change status to done! activities controller]------->> after responding to Ajax"
+   end
+     
   end
 
   
@@ -372,9 +377,13 @@ class ActivitiesController < ApplicationController
     	@activity.update_tivit_user_propose_date(current_account.user,params["comment"], convert_date_to_string(params,"propose_date"))
     	log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)    	
     end  
-  	redirect_to  @activity.get_parent
     
-  	
+    #redirect_to  @activity.get_parent
+    respond_to do |format|
+       format.html { redirect_to @activity  }
+       format.js {}
+       puts "--------[change status to propose_date activities controller]------->> after responding to Ajax"
+     end
   end
 
   
