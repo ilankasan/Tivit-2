@@ -29,7 +29,7 @@
 	<div class="loading-popup"></div>
 
 	<!-- Popup title -->
-	<h3>Add a tivit for youself or for others</h3>
+	<h3>Assign yourself a tivit or invite others to help</h3>
 
 	<!-- in the form tag below, the second id is the actual HTML ID of the form which I use in jQuery -->
 	<%= form_tag({:controller => "activities", :action => "create_tivit", :method => "post", :id => @activity.id}, :id => "create-new-tivit-form") do %>
@@ -43,7 +43,7 @@
 		<!-- tivit invitee -->
 		<!-- <p><label for="who">Who:</label><input type="text" id="who" /></p> -->
 		<p><label for="who">Who:</label>
-			<%= text_field_tag(:invitees, nil, :placeholder => "-- myself -- OR invite by email address") %> 
+			<%= text_field_tag(:invitees, nil, :placeholder => "myself -OR- invite by email address") %> 
 			</p>
 		
 		<!-- <p class="assign"><i></i> assign myself</p> -->
