@@ -1,8 +1,9 @@
 class ProfileImagesController < ApplicationController
 	
 	before_filter :authenticate_account!
+	before_filter :validate_user_access_to_user_profile
+ 
   
-	
 	def edit
 		@user = User.find(params[:id])
 	    render 'edit_profile_image'
@@ -58,5 +59,15 @@ class ProfileImagesController < ApplicationController
 		#render "users/show.html.erb"
 		end
 	end
+	private
+	def validate_user_access_to_user_profile
+      @user = User.find(params[:id])
+      puts "current_account.user = "+current_account.user.get_id.to_s
+      puts "@user = "+@user.get_id.to_s
+      
+      if(current_account.user != @user)
+        render 'shared/access_denied' 
+      end
+  end
 	
 end

@@ -1,4 +1,8 @@
-user.rb
+users_controller.rb
+image_profile.rb
+
+
+
 views / users / show.html.rb
 activity.rb
 activity_controller
@@ -11,8 +15,6 @@ acrivity_controller
 tivit_status_change_onit_email.html.erb
 user_mailer.rb
 user.rb
-
-
 activity.rb
 _activitydetails.html.erb
 _activity_db.html.erb

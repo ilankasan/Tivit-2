@@ -1,7 +1,7 @@
 Clear Database
 
 
-heroku config:add  DATABASE_URL=mysql://7f4240ae09a846:f8355100@us-mm-auto-dca-01.cleardb.com/heroku_cb87c69e06f92c0 --remote staging
+heroku config:add  DATABASE_URL=mysql2://7f4240ae09a846:f8355100@us-mm-auto-dca-01.cleardb.com/heroku_cb87c69e06f92c0 --remote staging
 
 Staging
 ------------

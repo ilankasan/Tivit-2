@@ -1,8 +1,10 @@
-  require "rails3-jquery-autocomplete"
+ require "rails3-jquery-autocomplete"
 
 class UsersController < ApplicationController
-  
  before_filter :authenticate_account!
+ before_filter :validate_user_access_to_user_profile
+ # :only => :show, :update,:edit,:create 
+ 
   
  autocomplete :user, :email, :extra_data => [:slogan], :display_value => :funky_method
   
@@ -86,8 +88,7 @@ class UsersController < ApplicationController
  
  def update
  	puts "----------    update usrs -------------------"
- 	puts "----------    update usrs -------------------"
-    puts params.inspect
+ 	  puts params.inspect
     puts "----------    update usrs -------------------"
    
     @user = User.find(params[:id])
@@ -122,15 +123,24 @@ class UsersController < ApplicationController
  
   
   private
-
- 
- def correct_user
+  def validate_user_access_to_user_profile
+      @user = User.find(params[:id])
+      puts "current_account.user = "+current_account.user.get_id.to_s
+      puts "@user = "+@user.get_id.to_s
+      
+      if(current_account.user != @user)
+        render 'shared/access_denied' 
+      end
+  end
+  
+  
+  def delete_correct_user
       @user = User.find(params[:id])
       redirect_to(root_path) unless current_account.user?(@user)
  end
   
   
-  def admin_user
+  def old_admin_user
       redirect_to(root_path) unless current_account.user.admin?
   end
   
