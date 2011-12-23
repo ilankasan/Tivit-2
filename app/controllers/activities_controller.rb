@@ -261,7 +261,10 @@ class ActivitiesController < ApplicationController
        format.js {}
        puts "--------[change status to OnIt activities controller]------->> after responding to Ajax"
      end
-    UserMailer.tivit_status_change_onit_email(current_account.user, params["comment"],@activity).deliver
+    if(current_account.user != @activity.get_invited_by)
+# do not send email if the inviter (assigner)is the the assignee  
+      UserMailer.tivit_status_change_onit_email(current_account.user, params["comment"],@activity).deliver
+    end
 
   end
   
@@ -457,8 +460,10 @@ class ActivitiesController < ApplicationController
        puts "--------[change status to ** decline ** activities controller]------->> after responding to Ajax"
     end
     
-    #UserMailer.user_tivit_status_change_email(current_account.user, "Declined",params["comment"],@activity).deliver
-    UserMailer.tivit_decline_email(current_account.user, params["comment"],@activity).deliver
+    if(current_account.user != @activity.get_invited_by)
+# do not send email if the inviter (assigner)is the the assignee  
+        UserMailer.tivit_decline_email(current_account.user, params["comment"],@activity).deliver
+    end
     	 
  end
 

@@ -1,5 +1,6 @@
 users_controller.rb
 image_profile.rb
+activity_controller.rb
 
 
 

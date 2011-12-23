@@ -2,7 +2,7 @@ Clear Database
 
 
 heroku config:add  DATABASE_URL=mysql2://7f4240ae09a846:f8355100@us-mm-auto-dca-01.cleardb.com/heroku_cb87c69e06f92c0 --remote staging
-
+SHARED_DATABASE_URL
 Staging
 ------------
 bamboo-ree-1.8.7
