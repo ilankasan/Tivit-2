@@ -35,7 +35,7 @@ group :development do
   gem 'rspec-rails', '2.3.0'
   gem 'rspec', '2.3.0'
   #gem 'mysql2'
-  gem 'mysql2', '< 0.3'
+ # gem 'mysql2', '< 0.3'
 
   gem 'sqlite3-ruby', '1.3.2', :group => :development
  # gem 'rdoc'  
