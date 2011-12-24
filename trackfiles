@@ -1,6 +1,9 @@
+activity_controller
+bireport.html.rb
 users_controller.rb
 image_profile.rb
 activity_controller.rb
+_user_stats.html.erb
 
 
 

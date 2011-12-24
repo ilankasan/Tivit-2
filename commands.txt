@@ -1,8 +1,26 @@
+Backup DB
+---------
+heroku addons:add pgbackups --remote staging2
+heroku pgbackups:capture    --remote staging2
+
+View backups: heroku pgbackups --app tiviti
+
+transfer between apps:
+
+heroku pgbackups:restore DATABASE heroku pgbackups:url --app tiviti-s2 --app tiviti-staging
+heroku pgbackups:restore mysql2://7f4240ae09a846:f8355100@us-mm-auto-dca-01.cleardb.com/heroku_cb87c69e06f92c0 `heroku pgbackups:url --app tiviti` --app tiviti-staging
+
+heroku pgbackups:restore postgres://gjkvoyyszp:72z2AtoSZixCLsDZCVBd@ec2-50-17-213-47.compute-1.amazonaws.com/gjkvoyyszp `heroku pgbackups:url --app tiviti` --app tiviti-staging
+
+heroku pgbackups:restore DATABASE  "https://s3.amazonaws.com/hkpgbackups/app2049658@heroku.com/b002.dump?AWSAccessKeyId=AKIAJYEDAEBRU6KYW6QA&Expires=1324632495&Signature=OvWxBMVjjwve%2BoXdMA0MKt%2FB46k%3D" --app tiviti-staging
+
+
 Clear Database
 
 
 heroku config:add  DATABASE_URL=mysql2://7f4240ae09a846:f8355100@us-mm-auto-dca-01.cleardb.com/heroku_cb87c69e06f92c0 --remote staging
 SHARED_DATABASE_URL
+
 Staging
 ------------
 bamboo-ree-1.8.7
