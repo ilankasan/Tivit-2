@@ -52,16 +52,16 @@ FirstApp::Application.configure do
   #config.port	   = nil 
   
 
-  config.action_mailer.default_url_options = { :host => 'tiviti-s2.heroku.com' }
-  config.action_mailer.asset_host          = "tiviti-s2.heroku.com"
+  config.action_mailer.default_url_options = { :host => 'tiviti.heroku.com' }
+  config.action_mailer.asset_host          = "tiviti.heroku.com"
     
   
 
   # Send deprecation notices to registered listeners
-  config.active_support.deprecation = :notify
+  config.active_support.deprecation          = :notify
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
+  config.action_mailer.delivery_method       = :smtp
+  config.action_mailer.smtp_settings         = {
 	  :address        => 'smtp.gmail.com',
 	  :port           => 25,
 	  :domain         => 'gmail.com',
