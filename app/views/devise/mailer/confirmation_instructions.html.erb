@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>tiviti mail</title>
+</head>
+<body>
+<div align="center">
+  <center>
+<table width=600 cellpadding=10 cellspacing=0 border=3 style="border-collapse: collapse" bordercolor="#808080" bgcolor="#CCCCCC">
+<tr>
+<td align="center">
+<font size=-1>
+<table cellpadding="0" cellspacing="0">
+<tr>
+<td>
+<table width="600" bordercolor="#FFFF00" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bgcolor="#000000" border="0">
+<tr>
+<td align="left">
+<img border="0" src="http://www.tiviti.net/email/logo3.jpg" width="100" height="40">
+
+</td>
+</tr>
+</table>
+<div align="center">
+  <center>
+<table border="0" cellpadding="16" cellspacing="0" bordercolor="#111111" width="100%" bgcolor="#FFFFFF">
+  <tr>
+    <td width="100%">
+<font size=-1>
+    <table border="0" cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse" bordercolor="#111111">
+      <tr>
+        <td width="100%">
+<font face="Arial">
+	
+		Welcome to <b>tiviti</b>!</font><p><font face="Arial" size="2">Getting 
+        things done has never been easier.<br>
+        Before you dive in, please confirm your account:<br>
+&nbsp;</font>
+       <%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+		 <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</td>
+      </tr>
+    </table>
+
+</font>
+    </td>
+  </tr>
+</table>
+  </center>
+</div>
+<table width="100%" cellspacing="0" cellpadding="5" border="0" style="border-collapse: collapse" bordercolor="#111111" bgcolor="#DDEDC9">
+<tr>
+<td>
+<p align="center">
+<font size="2" face="Arial">Got feedback?
+<a href="http://www.tiviti.net/help.html" title="contact tiviti" target="_blank">
+contact us</a>.</font></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
+</font>
+</table>
+  </center>
+</div>
+</body>
+</html>
