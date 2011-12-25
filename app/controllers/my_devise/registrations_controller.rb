@@ -28,6 +28,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  def create
  	puts "In Regitration Create Controller"
  	puts " Params "+params.inspect
+ 	@params = params
 	super	
 	email = params[:account][:email]
   @account = Account.find_by_email(email)
@@ -40,10 +41,10 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 	
 	puts "user = "+@user.inspect
 	if(@user == nil)
-		puts "user == nil"
+		#puts "user == nil"
 		@account.user = User.new(params[:account][:user])
 	else
-		puts "user != nil"
+	#	puts "user != nil"
 		if(@account.user == nil)
 			puts " account.user == nil"
 			@user.activate_user
@@ -56,6 +57,8 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 	end
 	   puts " saving account!!!!!!!!!!!!!!!!"
     @account.save
+    @test = "iii"
+    
  end
  
 end  

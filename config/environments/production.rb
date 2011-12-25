@@ -52,8 +52,8 @@ FirstApp::Application.configure do
   #config.port	   = nil 
   
 
-  config.action_mailer.default_url_options = { :host => 'tiviti-s2.heroku.com' }
-  config.action_mailer.asset_host          = "tiviti-s2.heroku.com"
+  config.action_mailer.default_url_options = { :host => 'tiviti-staging.heroku.com' }
+  config.action_mailer.asset_host          = "tiviti-staging.heroku.com"
     
   
 

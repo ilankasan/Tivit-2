@@ -2,13 +2,14 @@ class  MyDevise::SessionsController < Devise::SessionsController
    
  #before_filter :authenticate_account!
  
- # def new
-  #	puts "In MyDevise Session Controller - New "
-  #	puts " Params = "+params.inspect
-  #	@title = "Sign In"
-  #  super
+  def new
+  	puts "In MyDevise Session Controller - New "
+  	puts " Params = "+params.inspect
+  	@title = "Sign In"
+  	
+    super
     #redirect_to root_path
-  #end
+  end
 
    def update
    	puts "++++ my devise sessions  update   ++++ + sessions ++++++++++++++++++++++++++++++++++++++++++"
