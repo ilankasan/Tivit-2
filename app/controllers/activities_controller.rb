@@ -7,10 +7,10 @@ class ActivitiesController < ApplicationController
   # this solution didn't work for me: http://stackoverflow.com/questions/1245618/rails-invalidauthenticitytoken-for-json-xml-requests
   skip_before_filter :verify_authenticity_token
   
-   def create_activity(params, type)
+   def old_create_activity(params, type)
    #	puts "------>>>>>>>>>>>>  create_activity"
    	
-   	params["due"] = convert_date_to_string(params,"due")
+   	params["due"] = parse_date(params,"due")
    	params["owner_id"] = current_account.user.id
    	params["status"]   = "in-progress"
    	params["activity_type"]     = "activity"
@@ -26,7 +26,7 @@ class ActivitiesController < ApplicationController
    def create
 
 # Create Activity
-	params["due"] = convert_date_to_string(params,"due")
+	params["due"] = adjust_date_to_end_of_day(parse_date(params,"due"))
    		
    @activity = current_account.user.add_my_ativity(params)    
 	
@@ -134,14 +134,13 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:id])   
     
     puts params.inspect
-    params["due"] = convert_date_to_string(params, "due")
+    params["due"] = adjust_date_to_end_of_day(parse_date(params, "due"))
    
     
 # update activity status to completed if check box was checked 
   
   if(params["activity_status"] == "true")
     params["activity_status"] = "Completed"
-#   params["completed_at"] = time.localtime
   else
     params["activity_status"] = "in-progress"
   end
@@ -184,14 +183,13 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:id])   
     
     puts params.inspect
-    params["due"] = convert_date_to_string(params, "due")
+    params["due"] = adjust_date_to_end_of_day(parse_date(params, "due"))
    
     
 # update activity status to completed if check box was checked 
   
   if(params["activity_status"] == "true")
     params["activity_status"] = "Completed"
-#   params["completed_at"] = time.localtime
   else
     params["activity_status"] = "in-progress"
   end
@@ -281,7 +279,7 @@ class ActivitiesController < ApplicationController
   	puts "--------------->> create Tvit"
   	
 #adding a strign representation of due date 
-  	params["due"] 		= convert_date_to_string(params,"due")
+  	params["due"] 		= adjust_date_to_end_of_day(parse_date(params,"due")).to_s
   	params["parent_id"] = params[:id] 						#   adding Parent ID
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
 	  params["status"]    = "in-progress"
@@ -380,8 +378,8 @@ class ActivitiesController < ApplicationController
     	@activity = Activity.find(params[:id])
     	puts "old date = "+@activity.due.inspect
     	puts "new date = "+ params["propose_date"]
-    	
-    	@activity.update_tivit_user_propose_date(current_account.user,params["comment"], convert_date_to_string(params,"propose_date"))
+    	proposed_date = adjust_date_to_end_of_day(parse_date(params,"propose_date"))
+    	@activity.update_tivit_user_propose_date(current_account.user,params["comment"], proposed_date)
     	log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)    	
     end  
     
@@ -403,7 +401,7 @@ class ActivitiesController < ApplicationController
     
     puts "Old date = "+ @activity.due.inspect + "   accepted new date  = "+ @activity.get_owner_proposed_date.inspect 
     
-    @activity.due = @activity.get_owner_proposed_date
+    @activity.due = @activity.get_owner_proposed_date+(23.hours+59.minutes)
     @activity.save
     
     @activity.update_tivit_user_status_onit(@activity.get_owner,"")

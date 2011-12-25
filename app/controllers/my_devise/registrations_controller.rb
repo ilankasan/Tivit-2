@@ -58,7 +58,9 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 	   puts " saving account!!!!!!!!!!!!!!!!"
     @account.save
     @test = "iii"
-    
+    flash[:notice] = "------------------------------------------------------GOT"
+  
+   # render 'confirm_message'
  end
  
 end  

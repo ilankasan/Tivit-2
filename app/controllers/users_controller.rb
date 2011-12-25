@@ -94,7 +94,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     
 #save email address lower case
-	time = Time.now()
+	time = Time.now().utc
   	
   	if(params[:user]["email"] != nil)	
     	params[:user]["email"]       = params[:user]["email"].downcase

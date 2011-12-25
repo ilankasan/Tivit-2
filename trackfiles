@@ -5,6 +5,9 @@ image_profile.rb
 activity_controller.rb
 _user_stats.html.erb
 _links.erb
+acritity.rc
+user.rb
+activity_helper
 
 
 

@@ -72,7 +72,7 @@ class Activity < ActiveRecord::Base
   def get_open_or_recently_done_tivits
 	 self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
 	 AND ((NOT tivit_user_statuses.status_id = 'Done') 
-	 OR  ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now.localtime-1.day) 	
+	 OR  ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now-1.day) 	
   end
   
   
@@ -280,7 +280,7 @@ puts "-------------<<<<<<<<<<<<<<"
  end
  
  def update_tivit_user_status_reviewed(user,comment)
- 	change_user_status(user,"Reviewed",comment,nil,Time.now().localtime,nil)
+ 	change_user_status(user,"Reviewed",comment,nil,Time.now().utc,nil)
  	
  end
  
@@ -301,13 +301,13 @@ puts "-------------<<<<<<<<<<<<<<"
  end
  
  def update_tivit_user_propose_date(user,comment,date)  	
- 	change_user_status(user,"Proposed",comment,date,Time.now().localtime,nil)
+ 	change_user_status(user,"Proposed",comment,date,Time.now().utc,nil)
  	self.change_status_to_in_progress if self.isDone?
  end
  
  
  def update_tivit_status_reassiged(user,comment,assined_user)
-  change_user_status(user,"Reassigned",comment,nil,Time.now().localtime,assined_user)
+  change_user_status(user,"Reassigned",comment,nil,Time.now().utc,assined_user)
      
  end
       
@@ -528,8 +528,7 @@ puts "-------------<<<<<<<<<<<<<<"
 
   def change_status_to_completed (summary)
   	puts "change_status_to_completed"
-	  time = Time.now()
-  	self.completed_at = time.localtime
+	  self.completed_at = Time.now()
   	self.status       = "Completed"
   	self.summary      = summary if(summary != nil)  
   	if(!self.save)
@@ -614,7 +613,7 @@ private
 
   	tivit_user_status.status_id = status
   	tivit_user_status.comment   = comment
-  	tivit_user_status.last_status_change = Time.now.localtime
+  	tivit_user_status.last_status_change = Time.now.utc
   	tivit_user_status.save()
     return tivit_user_status.status_id
  end

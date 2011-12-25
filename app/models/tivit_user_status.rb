@@ -35,7 +35,7 @@ attr_accessible :status_id, :activity_id,:user_id,:comment,:last_reviewed
 
 	def update_last_reviewed
 		time = Time.now()
-  		self.last_reviewed = time.localtime
+  		self.last_reviewed = time.utc
   		self.save
 	end
 end

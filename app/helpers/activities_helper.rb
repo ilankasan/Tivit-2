@@ -153,9 +153,11 @@ def  add_tivit_to_user(emails, activity)
   end
 
 
-  
+  def adjust_date_to_end_of_day(day)
+    return day +(1.day - 1.minutes)
+  end
 #convert year/month/day to one string
-   def  convert_date_to_string (params, parameter_name) 
+   def  parse_date (params, parameter_name) 
    	puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  " + parameter_name 
   	puts params.inspect	
    	if(params[parameter_name].instance_of? String)
@@ -168,7 +170,7 @@ def  add_tivit_to_user(emails, activity)
    									 "month" => date[0],
    									 "day"	 => date[1]}
    	end
-   	due = Time.local(params[parameter_name]["year"],params[parameter_name]["month"],params[parameter_name]["day"]).inspect		
+   	due = Time.utc(params[parameter_name]["year"],params[parameter_name]["month"],params[parameter_name]["day"])		
     return due
     	 
    end
