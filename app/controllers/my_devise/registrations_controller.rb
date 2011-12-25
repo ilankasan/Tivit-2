@@ -29,7 +29,8 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  	puts "In Regitration Create Controller"
  	puts " Params "+params.inspect
  	@params = params
-	super	
+	test  = super
+	puts "test  = "+test.inspect	
 	email = params[:account][:email]
   @account = Account.find_by_email(email)
 	
@@ -60,7 +61,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
     @test = "iii"
     flash[:notice] = "------------------------------------------------------GOT"
   
-   # render 'confirm_message'
+   redirect_to 'confirm_message'
  end
  
 end  

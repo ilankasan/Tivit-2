@@ -154,6 +154,7 @@ def  add_tivit_to_user(emails, activity)
 
 
   def adjust_date_to_end_of_day(day)
+    return day if(day == nil || day.to_s.empty?)
     return day +(1.day - 1.minutes)
   end
 #convert year/month/day to one string

@@ -277,9 +277,11 @@ class ActivitiesController < ApplicationController
   def create_tivit
   	
   	puts "--------------->> create Tvit"
+  	due = parse_date(params,"due")
   	
+  	puts "due date = "+due.to_s
 #adding a strign representation of due date 
-  	params["due"] 		= adjust_date_to_end_of_day(parse_date(params,"due")).to_s
+  	params["due"] 		= adjust_date_to_end_of_day(due).to_s
   	params["parent_id"] = params[:id] 						#   adding Parent ID
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
 	  params["status"]    = "in-progress"
