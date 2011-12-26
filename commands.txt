@@ -14,6 +14,8 @@ heroku pgbackups:restore postgres://gjkvoyyszp:72z2AtoSZixCLsDZCVBd@ec2-50-17-21
 
 heroku pgbackups:restore DATABASE  "https://s3.amazonaws.com/hkpgbackups/app2049658@heroku.com/b002.dump?AWSAccessKeyId=AKIAJYEDAEBRU6KYW6QA&Expires=1324632495&Signature=OvWxBMVjjwve%2BoXdMA0MKt%2FB46k%3D" --app tiviti-staging
 
+heroku config:add DATABASE_URL=mysql://796bf81076cb93:587c8ffe@us-mm-auto-dca-01.cleardb.com/heroku_b70c69b2565fefb
+
 
 Clear Database
 

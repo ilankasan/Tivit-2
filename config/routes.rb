@@ -8,26 +8,27 @@ FirstApp::Application.routes.draw do
   resources :authentication_services, :only => [:index, :create]
   
    
-
-  
-  
   
   devise_for :accounts, :controllers => {
                           :registrations  => "my_devise/registrations",
                           #:sessions       => "my_devise/sessions",
                           :mailer         => "my_devise/mailer"}
+  resources :registrations do
+    match "awaiting_confirmation"    => "registrations#awaiting_confirmation"
+  end  
   
+
  
   match "profile_images/:id"    => "profile_images#update"
  
-  #devise_for :accounts, :controllers => { :sessions => "sessions" }
+  devise_for :accounts, :controllers => { :sessions => "sessions" }
   
   devise_for :accounts
 
   resources :profile_images do
   resources :users
 end
-
+#root_path
 resources :profile_images do
   match "profile_images/:id" 	  => "profile_images#update"
   match "profile_images/:id/edit" => "profile_images#update"

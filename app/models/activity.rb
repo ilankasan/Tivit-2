@@ -1,6 +1,7 @@
 class Activity < ActiveRecord::Base
   
   attr_accessible :name, :description, :status, :due,:invited_by,:owner_id, :users, :completed_at, :summary,:activity_type, :parent_id,:activity_name, :documents
+  validates :name, :presence => true
 # each Tivit has many participants 
   has_and_belongs_to_many :users
   has_and_belongs_to_many :documents

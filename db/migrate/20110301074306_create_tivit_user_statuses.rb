@@ -3,6 +3,7 @@ class CreateTivitUserStatuses < ActiveRecord::Migration
     create_table :tivit_user_statuses do |t|
       t.integer  :user_id
       t.integer  :activity_id
+      t.integer  :assigned_to
       t.string   :status_id
       t.string   :comment
       t.datetime :last_reviewed

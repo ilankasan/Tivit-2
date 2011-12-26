@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(:version => 20111205015825) do
   create_table "tivit_user_statuses", :force => true do |t|
     t.integer  "user_id"
     t.integer  "activity_id"
+    t.integer  "assigned_to"
     t.string   "status_id"
     t.string   "comment"
     t.datetime "last_reviewed"
@@ -124,7 +125,6 @@ ActiveRecord::Schema.define(:version => 20111205015825) do
     t.datetime "last_status_change"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "assigned_to"
   end
 
   create_table "tivitcomments", :force => true do |t|
