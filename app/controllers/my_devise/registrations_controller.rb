@@ -1,7 +1,8 @@
 class  MyDevise::RegistrationsController < Devise::RegistrationsController
                  
    
- before_filter :authenticate_account!
+ before_filter :authenticate_account!, :except=>[:awaiting_confirmation,:after_inactive_sign_up_path_for]
+ skip_before_filter :authenticate_account!, :only => [:awaiting_confirmation,:after_inactive_sign_up_path_for]                                                 
  
   def new
   	puts " new ++++++++++++ registration ++++++++++++++++++++++++++++++++++++++"
@@ -59,31 +60,38 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 	end
 	   puts " saving account!!!!!!!!!!!!!!!!"
     @account.save
-    @test = "iii"
-    flash[:notice] = "------------------------------------------------------GOT"
+
+   # flash[:notice] = "------------------------------------------------------GOT"
   
   # redirect_to 'confirm_message'
  end
  
- def awaiting_confirmation(resource)
+ def awaiting_confirmation
    puts "---------->>>>>>>>>>>>> confirm message  <<<<__________________"
    
+   @email = Account.find_by_id(params[:format]).get_email
+   puts "email " + @email.inspect
+   
+   render 'awaiting_confirmation'
+   return
+   
  end
- 
+ protected
  def after_inactive_sign_up_path_for(resource)
-   # confirm_message_path
-    puts "UUUUUUUUU kkk  UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"
-    #confirm_message_url
-    puts "UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"
-    #flash[:notice] = "We sent an activation email to your email"
-    #super
-  #  'confirm_message'
-   #return "registrations/awaiting_confirmation"
-   #'awaiting_confirmation'
-   awaiting_confirmation_path
-   #return "awaiting_confirmation"
-   #return "http://www.google.com"
+   puts "UUUUUUUUU kkk  UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"
+   puts "resource " + resource.inspect
+  # @email = resource[:email]
+  # @params[:email]= resource[:email]
     
+   #account_session[:email] = resource[:email]
+    
+   awaiting_confirmation_url (resource) 
+   #awaiting_confirmation_path (resource)
+  
+  #root_path
+   #'registrations/awaiting_confirmation'
+   #render 'awaiting_confirmation'
+ #  "http://www.google.com"
  end
   
 end  

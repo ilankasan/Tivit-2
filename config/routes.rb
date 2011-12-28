@@ -13,9 +13,12 @@ FirstApp::Application.routes.draw do
                           :registrations  => "my_devise/registrations",
                           #:sessions       => "my_devise/sessions",
                           :mailer         => "my_devise/mailer"}
-  resources :registrations do
-    match "awaiting_confirmation"    => "registrations#awaiting_confirmation"
-  end  
+  #resources :account do
+  #resources :registrations do
+  devise_for :accounts do 
+    match "awaiting_confirmation"    => "my_devise/registrations#awaiting_confirmation"
+ end
+  #end  
   
 
  
@@ -97,6 +100,8 @@ resources :pages
   match '/contact',   :to => 'pages#contact'
   match '/myaccount', :to => 'pages#myaccount'
   match '/filter',     :to => 'pages#filter'
+  #match '/awaiting_confirmation',      :to => 'pages#awaiting_confirmation'
+  
   
   
 
@@ -169,7 +174,8 @@ resources :users
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-   root :to => "pages#home"
+   root :to  => "pages#home"
+   #root1 :to => "pages#home1"
 
   # See how all your routes lay out with "rake routes"
 

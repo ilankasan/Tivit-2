@@ -1,11 +1,23 @@
 class PagesController < ApplicationController
-  before_filter :authenticate_account!
-  
+  #before_filter :authenticate_account!
+  before_filter :authenticate_account!, :except=>[:home1]
+  skip_before_filter :authenticate_account!, :only => [:home1]                                                 
+ 
    
   def activities
     @title = "Activities"
   end
   
+  def awaiting_confirmation(resource)
+   puts "---------->>>>>>>>>>>>> confirm message  <<<<__________________"
+   puts "resource " + resource.inspect
+   #render "http://www.google.com"
+   render 'awaiting_confirmation'
+   return
+   
+ end
+ 
+
   def home
     @title = "Home"
     

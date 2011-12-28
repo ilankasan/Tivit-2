@@ -31,14 +31,15 @@
               </td>
    
          
-          <div class="avatar">
-		<%= render :partial => 'profile_images/profile_image', :collection =>  [@assignee], :as => :user%> 
-	</div>
-	    
+         
 
               
               <td align="left" valign="top">
               	<%if(!@comment.empty?)%>
+              	 	<div class="avatar">
+						<%= render :partial => 'profile_images/profile_image', :collection =>  [@assignee], :as => :user%> 
+				 	</div>
+	    
               		<%= @assignee.get_name %> says: "<%= @comment %>"
               	<%end%>
               </td>

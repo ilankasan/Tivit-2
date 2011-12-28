@@ -85,10 +85,10 @@ class UserMailer < ActionMailer::Base
     @user_reminding     = user_reminding
     @tivit   			= tivit
     @message 			= message
-    invitees			= tivit.get_owner.get_email
+    @assignee			= tivit.get_owner
     
-    mail(:to => invitees, 
-         :subject =>"REMINDER: Please review my request for your help with " +tivit.name)  
+    mail(:to => @assignee.get_email, 
+         :subject =>"tiviti: "+user_reminding.get_name+" still needs your help with "+tivit.name+" !")
   end
   
   

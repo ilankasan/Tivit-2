@@ -1,4 +1,5 @@
 Backup DB
+ heroku db:push --app tiviti
 ---------
 heroku addons:add pgbackups --remote staging2
 heroku pgbackups:capture    --remote staging2
@@ -14,8 +15,7 @@ heroku pgbackups:restore postgres://gjkvoyyszp:72z2AtoSZixCLsDZCVBd@ec2-50-17-21
 
 heroku pgbackups:restore DATABASE  "https://s3.amazonaws.com/hkpgbackups/app2049658@heroku.com/b002.dump?AWSAccessKeyId=AKIAJYEDAEBRU6KYW6QA&Expires=1324632495&Signature=OvWxBMVjjwve%2BoXdMA0MKt%2FB46k%3D" --app tiviti-staging
 
-heroku config:add DATABASE_URL=mysql://796bf81076cb93:587c8ffe@us-mm-auto-dca-01.cleardb.com/heroku_b70c69b2565fefb
-
+heroku config:add DATABASE_URL=mysql2://60344c92053c9d:232b3192@us-mm-auto-dca-01.cleardb.com/heroku_33cd77b01d71eba --app tiviti-s2
 
 Clear Database
 

@@ -23,6 +23,11 @@ class Account < ActiveRecord::Base
   
   has_one :user, :foreign_key => "account_id"
   
+  
+  def get_email
+    return self.email
+  end
+  
   def get_name
   	return self.user.get_name
   end

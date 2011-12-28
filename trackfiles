@@ -1,3 +1,10 @@
+Registration_controller
+awaiting_confirmation
+user_mailer
+remind_user_to_review_tivit.html.erb
+
+
+
 activity_controller
 bireport.html.rb
 users_controller.rb
