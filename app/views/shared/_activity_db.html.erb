@@ -9,13 +9,24 @@
 	<%end%>
 	 
  	<% if activity_db.due == nil %>
+<!-- no date specified -->
 		<div class="calendar date pastDay">
-	<% elsif activity_db.due < (Time.now + 1.day) && activity_db.due > Time.now %>
+	<% elsif activity_db.due < Time.now %>
+<!-- activity is overdue -->
+		<div class="calendar date earlyDay">
+			
+	<% elsif activity_db.due > (Time.now) && activity_db.due < (Time.now + 1.day) %>
+<!-- activity due today -->
 	 	<div class="calendar date earlyDay">
-	<% elsif activity_db.due > (Time.now + 1.day) && activity_db.due < (Time.now + 2.day) %>
+	 		
+	<% elsif activity_db.due > (Time.now) && activity_db.due < (Time.now + 7.day) %>
+<!-- activity due within a week -->
 		<div class="calendar date nearlyDay">
+			
 	<% else %>
+<!-- activity due within more than a week -->
 		<div class="calendar date nearlyDay">
+			
 	<%end%>
 	
 		<%if (activity_db.due != nil && activity_db.due.inspect.size > 0 )%>

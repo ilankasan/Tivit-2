@@ -61,9 +61,6 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 	   puts " saving account!!!!!!!!!!!!!!!!"
     @account.save
 
-   # flash[:notice] = "------------------------------------------------------GOT"
-  
-  # redirect_to 'confirm_message'
  end
  
  def awaiting_confirmation

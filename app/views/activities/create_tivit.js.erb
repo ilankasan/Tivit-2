@@ -10,7 +10,7 @@ $("team-tivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_
 
 jQuery('#alltivits').append ('<h2>my tivits <span>(1)</span></h2>');
 
-	
+
 1. If new activity that means no tivits were created, we need to insert the my tivits or team tivits headers. 
 2. If empty and new tivit created for the owner, add the my tivits header. else, insert the team tivits header
 */
@@ -29,40 +29,40 @@ console.log('[Yaniv] activity owner user id=', <%= @activity.owner_id %>);
 	console.log('[Yaniv] creating tivit for myself'); 
 	// check if we need to add the my tivits title	
 	<% mytivits = activityparent.tivits.where("owner_id = ? " ,current_account.user.id) %>
-	
+
 	console.log('[Yaniv] mytivits.size=', <%= mytivits.size %>);  
-	
+
 	<% if mytivits == nil || mytivits.size == 1 %>
 		// need to add the my tivits header
 		console.log('[Yaniv] first tivit for myself');  
 		jQuery('#alltivits').append('<h2>my tivits <span>(1)</span></h2>');	
 		jQuery('#alltivits').append('<div class="tvit-list" id="mytivits"></div>');			
 	<% end %>
-	
+
 	jQuery("#mytivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");	
-	
+
 	console.log('[Yaniv] after partial rendering....(myself)...'); 
-	
+
 	// Need to update the tivits counter
-	
+
 <% else %>
 	//creating tivit for someone else
 	console.log('[Yaniv] creating for someone else'); 
 	<% teamtivits = activityparent.tivits.where("NOT owner_id = ? ", current_account.user.id) %>
-	
+
 	console.log('[Yaniv] teamtivits.size=', <%= teamtivits.size %>);  
-		
+
 	<% if teamtivits == nil || teamtivits.size == 1 %>
 		console.log('[Yaniv] first tivit for someone else!');  
 		jQuery('#team-tivits').append('<h2>team tivits <span>(1)</span></h2>');
 		jQuery('#team-tivits').append('<div class="tvit-list" id="teamtivits"></div>');	
 	<%end%>
-	
+
 	console.log('[Yaniv] trying to run the partial...'); 
 	jQuery("#teamtivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");
-	
+
 	console.log('[Yaniv] after partial rendering...(others)..'); 
-	
+
 	// Need to update the tivits counter
 
 <% end %>
@@ -129,3 +129,4 @@ content_to_add = '<div class="tvit-list">'+
 				'</div>';
 
 */	
+

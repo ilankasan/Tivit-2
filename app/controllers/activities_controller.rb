@@ -26,6 +26,16 @@ class ActivitiesController < ApplicationController
    def create
 
 # Create Activity
+  if(params[:name] == nil || params[:name].empty?)
+    flash[:failed] = "Activity name cannot be empty"
+    account_session[:flash_error] = "Activity name cannot be empty"
+    #render  '_activity_form'
+    redirect_to root_path
+    #render 'pages/home'
+    ##render root_path
+    
+    return
+  end
 	params["due"] = adjust_date_to_end_of_day(parse_date(params,"due"))
    		
    @activity = current_account.user.add_my_ativity(params)    
@@ -275,8 +285,26 @@ class ActivitiesController < ApplicationController
   
   
   def create_tivit
-  	
   	puts "--------------->> create Tvit"
+    #@activity = Activity.find_by_id(params[:id])
+  	#puts "activity = "+@activity.inspect
+  	#if(params[:name] == nil || params[:name].empty?)
+  	#   flash[:failed] = "fuck you"
+  	#   puts " name is empty"
+  	#   redirect_to root_path
+  	#   puts "after redirect"
+  	#   return
+  	#   puts "after return"
+         
+  	  # respond_to do |format|
+         #format.html { redirect_to @activity }
+       #  format.js
+        # puts "--------------->> after responding to Ajax"
+     # end
+     #return 
+  	#end
+  	
+  	  
   	due = parse_date(params,"due")
   	
   	puts "due date = "+due.to_s

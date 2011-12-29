@@ -159,8 +159,6 @@ def  add_tivit_to_user(emails, activity)
   end
 #convert year/month/day to one string
    def  parse_date (params, parameter_name) 
-   	puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  " + parameter_name 
-  	puts params.inspect	
    	if(params[parameter_name].instance_of? String)
    			if(params[parameter_name] == nil || params[parameter_name].empty?)
    				return ""

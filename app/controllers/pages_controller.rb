@@ -23,9 +23,14 @@ class PagesController < ApplicationController
     
     puts "Home"
     puts "Params = "+params.inspect
-    puts "session = "+account_session.inspect
-     
+    #if(account_session[:flash_error] != nil && !account_session[:flash_error].empty?)
+      
+      #flash[:failed] = account_session[:flash_error]
+     # puts "flash = "+ flash.inspect 
+     # account_session[:flash_error] = nil
+    #end
     current_user_id = current_account.user.get_id.inspect
+    puts "current_user_id = "+current_user_id
     @title = "Home"
     
     #ccount_session[:filter_id] = "1" if account_session[:filter_id] == nil
