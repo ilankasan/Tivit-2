@@ -1,0 +1,182 @@
+<html>
+<head>
+<title>tiviti mail</title>
+</head>
+<body>
+<div align="center">
+  <center>
+<table width=600 cellpadding=10 cellspacing=0 border=3 style="border-collapse: collapse" bordercolor="#808080" bgcolor="#CCCCCC">
+<tr>
+<td align="center">
+<font size=-1>
+<table cellpadding="0" cellspacing="0">
+<tr>
+<td>
+<table width="600" bordercolor="#FFFF00" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bgcolor="#000000" border="0">
+<tr>
+<td align="left">
+<img border="0" src="http://www.tiviti.net/email/logo3.jpg" width="100" height="40">
+
+</td>
+</tr>
+</table>
+<div align="center">
+  <center>
+<table border="0" cellpadding="16" cellspacing="0" bordercolor="#111111" width="100%" bgcolor="#FFFFFF">
+  <tr>
+    <td width="100%">
+<font size=-1>
+    <table border="0" cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse" bordercolor="#111111">
+      <tr>
+        <td width="100%">
+<table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+  <tr>
+    <td width="100%"><font size="2" face="Arial">Hi <%=@assignee.get_name%>,</font></td>
+  </tr>
+  <tr>
+    <td width="100%">
+    <table border="0" cellpadding="2" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+      <tr>
+        <td width="50"><img border="0" src="emailavatar.jpg" width="47" height="46"></td>
+        <td>
+<font size=-1>
+        <font size="2" face="Arial"><b><%= @user_reminding.name %>:</b> wants to remind you about '<u><font color="#0000FF"><%=@tivit.name%></font></u>'. 
+        Are you able to help? </font></font></td>
+      </tr>
+      <tr>
+        <td width="50" valign="top">&nbsp;</td>
+      <td align="left" valign="top">
+              	<%if(!@message.empty?)%>
+              	 	<div class="avatar">
+						<%= render :partial => 'profile_images/profile_image', :collection =>  [@assignee], :as => :user%> 
+				 	</div>
+	    
+              		<%= @assignee.get_name %> says:
+              		  <tr>
+        				<td valign="top"><font color="#808080" face="Arial" size="2"><i>
+        						"<%= @message %>"		
+        				</i></font></td>
+      </tr>
+      
+              		
+              	<%end%>
+              </td>      
+      <tr>
+        <td width="50" valign="top">&nbsp;</td>
+        <td valign="top">
+<font size=-1 face="Arial">
+        <br>
+        <img border="0" src="http://www.tiviti.net/email/respond.png" width="92" height="26"></font></td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+        <p>&nbsp;</p>
+        <p>&nbsp;</td>
+      </tr>
+    </table>
+
+</font>
+    </td>
+  </tr>
+</table>
+  </center>
+</div>
+<table width="100%" cellspacing="0" cellpadding="5" border="0" style="border-collapse: collapse" bordercolor="#111111" bgcolor="#DDEDC9">
+<tr>
+<td>
+<p align="center">
+<font face="Arial" style="font-size: 9pt">Got feedback?&nbsp;
+<a href="http://www.tiviti.net/help.html" title="contact tiviti" target="_blank">
+contact us</a>.</font></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
+</font>
+</table>
+  </center>
+</div>
+</body>
+</html>
+
+--------------------------------------------------------------------------------------------------------------
+<avatar> <Assigner> says: 
+<"tivitinotes">  
+[respond now]
+---------------------------------------------------------------------
+
+<%= render :partial => 'email_header' %>
+
+<div align="center">
+
+  <center>
+
+<table border="0" cellpadding="16" cellspacing="0" style="border-collapse:collapse" width="100%" bgcolor="#FFFFFF">
+
+  <tr>
+
+    <td width="100%">
+
+    <div align="center">
+
+      <center>
+
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="100%">
+
+        <tr style="font-family:arial,sans-serif;font-size:150%">
+
+          
+ </td>
+
+        </tr>
+
+      </table>
+
+      </center>
+
+    </div>
+
+<font size="-1">
+
+    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="100%">
+
+      <tr style="font-family:arial,sans-serif;font-size:100%">
+<p>
+    <%= @tivit.get_owner.get_name %>,<br/>
+      Just a kind reminder to reviews my request for help with ' <%=@tivit.name%>'.<br/>
+    <p/>
+    <p>Message from <%= @user_reminding.name %>: <%= @message %><br/></p>
+       
+      
+        Click <b><%= link_to 'here', activity_url(@tivit.get_parent) %></b> for more detailes.<br/>
+    
+    </p>
+    <p>Thanks</p>
+    
+    <%= @user_reminding.name %>,<br/>
+    
+  
+            <p> </p></td>
+
+      </tr>
+
+    </table>
+
+</font>
+
+    </td>
+
+  </tr>
+
+</table>
+  </center>
+</div>
+
+
+
+<%= render :partial => 'email_footer' %>
+	<small>#112  Tivit - Remind</small>
