@@ -1,3 +1,7 @@
+time.strftime("%b %d, %Y")
+
+heroku config:add ERROR_PAGE_URL=http://tiviti.net/404.html MAINTENANCE_PAGE_URL=http://tiviti.net/404.html 
+
 Backup DB
  heroku db:push --app tiviti
 ---------
