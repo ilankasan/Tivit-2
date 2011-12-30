@@ -149,43 +149,25 @@ class ActivitiesController < ApplicationController
     puts params.inspect
     @activity = Activity.find(params[:id])   
     
-    puts params.inspect
     params["due"] = adjust_date_to_end_of_day(parse_date(params, "due"))
    
     
-# update activity status to completed if check box was checked 
-  
-  if(params["activity_status"] == "true")
-    params["activity_status"] = "Completed"
-  else
-    params["activity_status"] = "in-progress"
-  end
-
-    
 # checking to see if the tivit was previously closed. This will be used before the email is sent out below
-  was_completed = @activity.status
   if (@activity != nil && @activity.update_attributes(params))
-      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"]
-      
-    @activity.update_activity_status(params["activity_status"]) 
- 
-      invitee_emails = params["invitees"] 
-      
-      update_activity_participants_by_email(invitee_emails, @activity)
-      @activity.save
-      
-#send email to all parcicipants that tivit was completed (not including owner):
-   # if(was_completed != "Completed" && @activity.status == "Completed" )
-    # UserMailer.user_tivit_status_completed_email(current_account.user, invitee_emails,params["summary"],@activity).deliver
-    #end
-
-    flash[:success] = "tivit " + @activity.name + " updated"
+   
+      flash[:success] = "tivit " + @activity.name + " was successfully updated"
       redirect_to @activity
       
     else
-      flash[:failed] = "Errrorrororororor"
-      @title = "Edit activity"
-      render 'edit'
+      if(params[:name] == nil || params[:name].empty?)   
+        flash[:failed] = "Failed to update tivit. Name cannot be empty"
+      else
+        flash[:failed] = "Failed to update tivit"
+      end
+    
+      redirect_to @activity
+      
+      
     end
   end
 
