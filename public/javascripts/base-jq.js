@@ -154,12 +154,12 @@ jQuery(document).ready(function($){
 	  if (event.type == 'mouseover') {
 	    // do something on mouseover
 	    $(this).addClass('record-hovered');
-	    $(this).children('.edit-menu').children('.icon').toggle();
+	    //$(this).children('.edit-menu').children('.icon').toggle();
 	    //   console.log ("[Yaniv] mouse ON container");
 	  } else {
 	    // do something on mouseout
 	    $(this).removeClass('record-hovered');
-	    $(this).children('.edit-menu').children('.icon').toggle();
+	   // $(this).children('.edit-menu').children('.icon').toggle();
 	    //console.log ("[Yaniv] mouse OUT container");
 	    //$(this).children('.menu-dialog').toggle();
 	  }
@@ -687,7 +687,55 @@ jQuery(document).ready(function($){
 		
 		return false;
 	});
+	/* delete tivit */
+	$('.del').live('click', function(){
+		var record = $(this).parent();
+		console.log ("[Yaniv] edit tivit clicked.");
 	
+		$(this).parents('.menu-dialog').toggle();
+		
+		jQuery('#activity-overlay').show();
+		/* Yaniv - clear the form before creating new tivit **/
+		//$("#create-new-tivit-form")[0].reset();
+		/*****************************************************/
+		//$('#add-tivit-window').show();
+		
+		var record = jQuery(this).parents('.record')
+		var tivitID = record.find("input").attr("tivitid");
+    	console.log ("[Yaniv] delete tivit: tivitID=", tivitID);
+			
+		var actionPost = 'action="/remove_tivit?id=' + tivitID + '&method=post"' + ' accept-charset="UTF-8">';
+		
+		console.log ("[Yaniv] action=", actionPost);
+		var confirmDialogTitle = "Sure you want to delete this tivit?";
+		
+		var confirmDialog =	'<div class="popup" id="confirmDialog">'	+
+    								'<div class="loading-popup"></div>' + 
+									'<form id="confirmDialogForm" method="post" class="confirmPopup" ' + actionPost +
+											'<h1>' + confirmDialogTitle + '</h1>' +
+											'<p> We assume you do but just wanted to ask you one more time since we won\'t be able to recover this for you... </p>'+
+											'<div class="request"><div id="popup-cancel" class="form-button">Cancel</div><input class="form-button" type="submit" name="commit" value="OK"/></div>' +
+									'</form>' +
+									'<div id="popup-close" class="close"></div>' +
+								'</div>';
+			 
+    		 jQuery('#new-activity-background').addClass('tempHide');
+    		 jQuery('#activity-overlay').show();
+    		 jQuery(this).parents('.record').append(confirmDialog);
+    		 // Center the dialog relative to where dropdown was clicked. Default for popups is 70px because of the add tivit window.
+    		 $('#confirmDialog').css('top', '-70px');
+    		 // by defaults, all popups are display=none which means they don't show. Let's make sure this popup shows up! 
+    		 $('#confirmDialog').css('display', 'block');
+		
+		return false;
+	});
+	
+		
+		$('#popup-cancel').live('click', function(){
+			console.log ('[Yaniv] popup cancel clicked')
+			hidePopup();
+		});
+		
 	 //jQuery('.confirmDialog .cancel-button').live('click', function(){
 	 	
 	/************************************************************/

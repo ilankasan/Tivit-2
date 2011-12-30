@@ -48,7 +48,7 @@ a:visited {
     font-size: 13px;
     font-weight: bold;
     text-align: center;
-    z-index: 101;
+    z-index: 20;
     /*background: none repeat scroll 0 0 #F9EDBE;*/
     color: #222222;
     font-family: arial,sans-serif;
@@ -974,7 +974,7 @@ a img{border:none;}
 /*.tivits .record .edit-menu{width:16px;height:17px;position:relative;top:-32px;right:-708px;z-index:40;cursor:pointer; display: inline-block;}*/
 /*.tivits .record .edit-menu{position:relative;top:-32px;right:-708px;z-index:40;cursor:pointer;}*/
 /********/
-	.edit-menu .icon{width:16px;height:17px;background:url(../images/icon_edit_menu.png) no-repeat;display:none;}
+	.edit-menu .icon{width:16px;height:17px;background:url(../images/icon_edit_menu.png) no-repeat;/*display:none;*/}
 	
 .tivits li ul.list{margin:10px 0 0 85px;display:none;}
 .tivits li ul.list{margin:10px 0 0 85px;display:none;}
@@ -1076,6 +1076,11 @@ small.less{display:block;padding:0;}
 .popup .confirmPopup .request .form-button{margin-top: 14px; margin-left: 5px; margin-right: 11px;background-color:#61B010;color:#fff;cursor:pointer;width:auto;padding:2px 16px;font-size:15px;font-weight: bold;}
 .popup .confirmPopup .request .form-button:first-child{background-color:#fff;color:#929292;margin-left:298px;margin-right:10px; padding:2px 15px;font-size:15px;font-weight: bold;}
 .popup .confirmPopup {top: 0px;}
+.popup .confirmPopup p {padding: 0 20px;}
+
+
+.popup .edittivitPopup .input-date .ico_calc{float:right;left: -26px; top:4px;}
+
 /******************************************************************************************************
 /* SIGN IN/UP PAGEs */
 

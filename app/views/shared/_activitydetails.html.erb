@@ -104,18 +104,18 @@
   		
 	  		<% if current_account.user.id == (activitydetails.owner_id) %>
 			<ul>
-				<li class="edit"><%= link_to "edit", edit_activity_path(activitydetails) %></li>
-				<li class="add"><%= link_to "add a file", 	:controller  => "documents", 
+				<li class="edit-yaniv"><%= link_to "edit", edit_activity_path(activitydetails) %></li>
+				<li class="add-yaniv"><%= link_to "add a file", 	:controller  => "documents", 
 					   											:action      => "new",
 					   											:id          => activitydetails.id, 
 					  							    			:title       => "Manage Files" %>
 	  			</li>
-				<li class="cmpl"><%= link_to "mark as completed", 		:controller  => "activities", 
+				<li class="cmpl-yaniv"><%= link_to "mark as completed", 		:controller  => "activities", 
    											:action      => "mark_as_completed",
    											:id          => activitydetails.id, 
   							    			:title       => activitydetails.name %></li>
   							    			
-				<li class="dele"><%= link_to "delete", activitydetails, :method => :delete,
+				<li class="dele-yaniv"><%= link_to "delete", activitydetails, :method => :delete,
 	                                 :confirm => "You sure you want to delete" +activitydetails.name+"?",
 	                                 :title => activitydetails.name %></li>
 			</ul>
@@ -223,11 +223,8 @@
 <div id="tivit-container">
 
 	<div id="tivit-container-background">
-		
-		<div class="avatar">
-			 <%= render :partial => 'profile_images/profile_image', :collection =>  [activitydetails.get_owner], :as => :user%> 
-		</div>
-
+	
+	<br><br><br<br><br><br><br<br><br><br><br<br><br><br><br<br><br><br><br<br><br><br><br<br>
 
 	<div id="tivit-title" class="text">
 			
