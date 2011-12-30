@@ -1,0 +1,49 @@
+//alert ('edit tivit JS!');
+
+console.log('in edit_tivit.js.erb function');  
+
+<% who = nil %> 
+
+<% if @activity.isOwner? (current_account.user) %>
+	console.log('Editing my own tivit');  
+<% else %>
+	console.log('Editing my someone else tivit');  
+	<% who = @activity.get_owner.get_email %>
+<% end %>
+
+var edittivitDialog = '<div class="popup" id="edit-tivit-popup" style="display: block">' + 	
+							'<div class="loading-popup"></div>' +
+							'<h3>Edit tivit</h3>' + 
+							'<%= form_tag({:controller => "activities", :action => "update_tivit", :method => "put", :id => @activity.id}, :id => "edit-tivit-form") do %>' +
+							'<p><label for="tivit">tivit:</label>' +
+								'<%= text_field_tag(:name, @activity.name) %>' +
+							'</p>' +
+							'<p style="display: none"><label for="who">Who:</label>' +
+								'<%= text_field_tag(:invitees, who, :placeholder => "myself -OR- invite by email address") %>' +
+							'</p>' +
+							'<p><label for="what">What:</label>' + 
+								'<%= text_area_tag(:description, @activity.description) %>' +
+							'</p>' +
+							
+							//'<p class="input-date"><label for="due">How about:</label>' +
+							//		'<input id="new-due" name="due" type="text" autocomplete="off" placeholder="choose date"/>' + 
+							//	    '<img src="/images/cal.gif" onclick="javascript:NewCssCal(\'new-due\', \'mmddyyyy\', \'arrow\')" class="ico_calc"/>' +
+							//  '</p>' + 							  
+							
+							'<p class="input-date"><label for="due">Needed by:</label>' +
+						       '<%= text_field_tag(:due, @activity.get_local_due_date_str, :placeholder => "choose date", :name => "due",  :id => "duedate", :autocomplete => "off", :class => "input-date") %>' +
+						    	'<img class="ico_calc" src="/images/cal.gif" onclick="javascript:NewCssCal(\'duedate\', \'mmddyyyy\', \'arrow\')" class="ico_calc" style="cursor:pointer"/>' + 	
+							'</p>' + 
+							'<div class="request">' + 
+								'<div class="form-button" id="cancel">Cancel</div>' +
+								  '<%= submit_tag("OK", :class => "form-button") %>' +
+								  
+								'<% end %>' +
+								'<div class="close" id="popup-close"></div>' +			
+							'</div>' +
+						'</div>';
+						
+jQuery('#page-container').append(edittivitDialog);
+
+
+
