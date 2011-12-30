@@ -1,6 +1,7 @@
 time.strftime("%b %d, %Y")
 
-heroku config:add ERROR_PAGE_URL=http://tiviti.net/404.html MAINTENANCE_PAGE_URL=http://tiviti.net/404.html 
+heroku config:add ERROR_PAGE_URL=http://tiviti.net/404.html MAINTENANCE_PAGE_URL=http://tiviti.net/maintenance.html --app tiviti-staging
+heroku config:add ERROR_PAGE_URL=http://s3.amazonaws.com/your_bucket/your_error_page.html MAINTENANCE_PAGE_URL=http://s3.amazonaws.com/your_bucket/your_maintenance_page.html 
 
 Backup DB
  heroku db:push --app tiviti
