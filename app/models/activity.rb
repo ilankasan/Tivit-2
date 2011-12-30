@@ -409,16 +409,14 @@ puts "-------------<<<<<<<<<<<<<<"
 		end
   end	
   
-  def get_due_date_str
+  def get_local_due_date_str
  #return due date. If nill return empty string
     if(self.due == nil)
       return ""
     else
-      return self.due .strftime("%Y-%m-%d")
-
+      return self.due.localtime.strftime("%m-%d-%Y");
     end
-  end 
-  
+  end  
    
  def get_owner
  #adding the user to the existing users on the task
@@ -430,7 +428,7 @@ puts "-------------<<<<<<<<<<<<<<"
  end
  
  def isOwner?(user)
-   return (user.get_id == self.owner_id)    
+   return (user == self.get_owner)    
  end
  
  

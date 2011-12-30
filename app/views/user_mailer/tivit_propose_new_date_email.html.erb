@@ -21,7 +21,7 @@
 		<%= @assigner_name.get_name %>, <br>
         <font size="2" face="Arial"><b><%= @assignee.get_name %></b> is asking for a different delivery date for '<u><font color="#0000FF"><%= @tivit.get_name%></font></u>'<br>
          
-        How about <b><%= @tivit.get_owner_proposed_date.to_s %></b> instead of <%= @tivit.due.strftime("%b %d, %Y") %></font></font></td>
+        How about <b><%= @tivit.get_owner_proposed_date.to_s %></b> instead of <%= @tivit.due.localtime.strftime("%b %d, %Y") %></font></font></td>
     
         </tr>
       </table>

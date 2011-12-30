@@ -110,7 +110,7 @@
 									
 								<!-- should actions only to activity owner AND tivit creator -->
 								<% elsif tivit_adp.get_parent.get_owner.id == current_account.user.id || tivit_adp.invited_by == current_account.user.id %>
-									<p class="request"><span><%= tivit_adp.get_owner.name %> proposed a new date <strong><%= tivit_adp.get_owner_proposed_date %></strong></span>
+									<p class="request"><span><%= tivit_adp.get_owner.name %> proposed a new date: <strong><%= tivit_adp.get_owner_proposed_date.localtime.strftime("%b %d, %Y") %></strong></span>
 										<%= link_to "accept",	:controller  => "activities",
 				    											:action      => "change_tivit_status",
 				    											:status      => "accept_date",

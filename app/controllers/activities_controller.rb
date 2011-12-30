@@ -109,12 +109,18 @@ class ActivitiesController < ApplicationController
   
   
   def edit_tivit
-  	puts "edit tivit"
-  	puts params.inspect  
+      puts "edit tivit"
+      puts params.inspect  
     
     @activity = Activity.find(params[:id])
     @title = "Edit tivit: " +@activity.name
-      	
+    
+    respond_to do |format|
+       format.html {}
+       format.js {}
+       puts "[Yaniv] (activities controller)------->> after edit_tivit."
+   end
+        
   end
 
   

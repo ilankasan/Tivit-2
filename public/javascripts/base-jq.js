@@ -31,7 +31,7 @@ jQuery(document).ready(function($){
 	jQuery("#create-new-tivit-form").submit(function() {
 		console.log ('[Yaniv] #create-new-tivit-form clicked');
 		showLoadingAnimation('.loading-popup');
-		$.post($(this).attr("action"), $(this).serialize(), hideLoadingAnimation, "script");
+		$.post($(this).attr("action"), $(this).serialize(), hideLoadingAnimation ('.loading-popup'), "script");
 		return false;
 	});
 	/**************************************************************************/
@@ -155,11 +155,13 @@ jQuery(document).ready(function($){
 	    // do something on mouseover
 	    $(this).addClass('record-hovered');
 	    $(this).children('.edit-menu').children('.icon').toggle();
+	    //   console.log ("[Yaniv] mouse ON container");
 	  } else {
 	    // do something on mouseout
 	    $(this).removeClass('record-hovered');
 	    $(this).children('.edit-menu').children('.icon').toggle();
-	    $(this).children('.menu-dialog').toggle();
+	    //console.log ("[Yaniv] mouse OUT container");
+	    //$(this).children('.menu-dialog').toggle();
 	  }
 	});
 	
@@ -340,7 +342,7 @@ jQuery(document).ready(function($){
 		/************************************************************/
 		// close popup that is currently opened */
 		$('.popup .close').click(function(){
-			console.log ('[Yaniv] NEW popup close button clicked')
+			console.log ('[Yaniv] NEW--- popup close button clicked')
 			hidePopup();
 			
 		});	
@@ -371,10 +373,8 @@ jQuery(document).ready(function($){
 	 	
 	});
     /************************************************************/
-    
-    
-     
      jQuery('.confirmDialog .cancel-button').live('click', function(){
+     	console.log ('[Yaniv] confirm dialog CANCEL button clicked!');
          jQuery('.confirmDialog').remove();
          jQuery('#activity-overlay').fadeOut();
          jQuery('#new-activity-background').removeClass('tempHide');
@@ -384,9 +384,8 @@ jQuery(document).ready(function($){
          jQuery('#new-activity-background').removeClass('tempHide');
          jQuery('#new-activity-background .input-name').focus();
      });
-
+     
  });
-
 
 function openNewActivity(){
     var layer = jQuery('#new-activity-complete');
@@ -429,7 +428,7 @@ function showLoadingAnimation(classorid){
 function hideLoadingAnimation(classorid){
 	console.log ('[Yaniv] hideLoadingAnimation with:', classorid);
 	//alert ('showLoadingAnimation called.');
-	jQuery(classorid).show();
+	jQuery(classorid).hide();
 }
 
 /* Not in use */
@@ -444,6 +443,7 @@ function hidePopup(){
 	console.log ('[Yaniv] Hiding Popup');
 	// Confirmation dialog div HAS to be removed form the page, but popup should be hidden since I'm using it for add tivit which is on the view/server side
 	jQuery('#confirmDialog').remove();
+	jQuery('#edit-tivit-popup').remove();
 	jQuery('.popup').hide();
 	jQuery('#activity-overlay').fadeOut();
 }
@@ -492,13 +492,13 @@ jQuery(document).ready(function($){
 		*/
 	});	
 	/************************************************************/
-	// close popup that is currently opened */
+	// close create new activity layer that is currently opened */
 	$('.popup .close').click(function(){
-		console.log ('[Yaniv] NEW popup close button clicked')
+		console.log ('[Yaniv] Create new actvity popup CLOSE button clicked')
 		hidePopup();
 	});	
 	$('#cancel').click(function(){
-		console.log ('[Yaniv] popup cancel clicked')
+		console.log ('[Yaniv] Create new actvity CANCEL clicked')
 		hidePopup();
 	});
 	//function closePopup(){
@@ -663,8 +663,46 @@ jQuery(document).ready(function($){
 		$('.post textarea').autoResize({extraSpace : 0});
 	});
 	*/
+	/***********************************************************************************************/
+	/* edit tivit on ADP */
+	$('.edit').live('click', function(){
+		var record = $(this).parent();
+		console.log ("[Yaniv] edit tivit clicked.");
 	
+		$(this).parents('.menu-dialog').toggle();
+		
+		jQuery('#activity-overlay').show();
+		/* Yaniv - clear the form before creating new tivit **/
+		//$("#create-new-tivit-form")[0].reset();
+		/*****************************************************/
+		//$('#add-tivit-window').show();
+		
+		var record = jQuery(this).parents('.record')
+		var tivitID = record.find("input").attr("tivitid");
+    	console.log ("[Yaniv] edit tivit: tivitID=", tivitID);
+		var action = '/edit_tivit?id=' + tivitID;
+		console.log ("[Yaniv] action=", action);
+		
+		$.post(action, $(this).serialize(), null, "script");		
+		
+		return false;
+	});
 	
+	 //jQuery('.confirmDialog .cancel-button').live('click', function(){
+	 	
+	/************************************************************/
+		// close popup that is currently opened */
+		$('.popup .close').live('click', function(){
+			console.log ('[Yaniv] EDIT TIVIT--- popup close button clicked')
+			hidePopup();
+			
+		});	
+		
+		$('#cancel').live('click', function(){
+			console.log ('[Yaniv] popup cancel clicked')
+			hidePopup();
+		});
+		
 	//delete comment
 	$('.delete').live('click', function(){
 		var record = $(this).parent();
