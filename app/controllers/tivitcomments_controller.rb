@@ -2,9 +2,10 @@ class TivitcommentsController < ApplicationController
   before_filter :authenticate_account!
   
   def create
-  #	puts "---------    create comment -----------------------"
-  #	puts "param - " +params.inspect
-  #	puts "********************************************"
+  	puts "---------    create comment -----------------------"
+  	puts "param - " +params.inspect
+  	puts "commetn length is = "  +params["tivitcomment"][:comment].length.to_s
+  	puts "********************************************"
 
   	@activity= Activity.find(params[:activity_id])
     
@@ -13,14 +14,21 @@ class TivitcommentsController < ApplicationController
     end
 
     params["tivitcomment"]["user_id"] = current_account.user.id
-    # add action type Note
+# add action type Note
     params["tivitcomment"]["action"] = "Note"
+# make sure comment is 255 characters   
+    if (params["tivitcomment"][:comment].size > 255)
+      params["tivitcomment"][:comment] = params["tivitcomment"][:comment][0,255]
+       
+      
+    end
 	
     #		puts "params ----------   " + params["tiviticomment"].inspect 
     @comment = @activity.tivitcomments.create(params["tivitcomment"])
     
     if (@comment != nil)
       puts "@comment =======  " +@comment.inspect
+      puts "commetn length is = "  +params["tivitcomment"][:comment].length.to_s
     end
 	
 	#respond with Ajax when needed...
