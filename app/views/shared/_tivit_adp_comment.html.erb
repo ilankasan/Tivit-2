@@ -3,6 +3,7 @@
 <!-- Answer (second) tivit -->
 <%if   tivit_adp_comment.comment != nil && tivit_adp_comment.user != nil && tivit_adp_comment.created_at != nil %>
 
+<% puts "[YANIV] ================= RENDERING COMMENT: "  + tivit_adp_comment.comment %>
 
 <!-- if new comment for this user, paint background yellow -->
 <% if tivit_adp_comment.wasReviewed? (current_account.user) %>
@@ -46,12 +47,14 @@
 		  	  		<p class="start">Unfortunatlly, <%= tivit_adp_comment.user.name %> cannot help with this tivit. <%= time_ago_in_words(tivit_adp_comment.created_at) %> ago.</p>
 		  	  		
 		   	  	<%when ("Proposed")%>
-		  	  		<p class="start attention">New time proposed: <%= tivit_adp_comment.activity.get_owner_proposed_date.localtime.strftime("%b %d, %Y") %></p>
+		  	  		<p class="start attention">New time proposed: <%= tivit_adp_comment.activity.get_owner_proposed_date %></p>
 		  	  	
 		  	  	<!-- New proposed date accepted -->
 		  	  	<%when ("Accepted")%>
-		  	  		<p class="start complete">Proposed new time accepted.</p>	
-		  	  		
+		  	  		<p class="start accepted">Proposed new time accepted.</p>	
+		  	  	<!-- Completed -->	
+		  	  	<%when ("Done")%>
+		  	  		<p class="start complete">Proposed new time accepted.</p>		
 			<%end%>
 		
 			<!-- Display actual comment -->
