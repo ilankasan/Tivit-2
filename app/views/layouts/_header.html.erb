@@ -12,11 +12,11 @@
  
         <ul class="nav-item">
         	
-        	<li><%= link_to "Home", root_path, :class => "current" %></li>
-	    	<li><%= link_to "Activities", about_path %></li>
-	    	<li><%= link_to "Team", contact_path %></li>
+        	<li><%= link_to "Dashboard", root_path, :class => "current" %></li>
+	    	<!-- <li><%= link_to "Activities", about_path %></li> -->
+	    	<!-- <li><%= link_to "Team", contact_path %></li> -->
 	    	<%if current_account.user.isAdmin?%>
-				<li><%= link_to "BI Dashboard", bireport_path%></li>
+				<li><%= link_to "Analytics", bireport_path%></li>
 			<%end%>
       
 

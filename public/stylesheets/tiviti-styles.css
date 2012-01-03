@@ -654,8 +654,8 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     		width:16px;
             height:16px;
             position:absolute;
-            left:30px;
-            bottom:-54px;
+            left:26px;
+            bottom:-51px;
 			cursor:pointer; 
 			z-index: 9;   	
     }
@@ -1179,7 +1179,7 @@ a img{border:none;}
 
 .respond{position:absolute;top:0;right:0;z-index:1;width:163px;display:none;}
 
-.respond .form-button{position:relative;top:76px;left:24px;font-size:13px;margin:0;padding:5px 0 5px 15px;text-align:left;width:90px;
+.respond .form-button{position:relative;top:73px;left:20px;font-size:13px;margin:0;padding:5px 0 5px 15px;text-align:left;width:90px;
 	background:#61B010 /*url(../images/status_unread.png) 4px center no-repeat*/;}
 
 
@@ -1207,7 +1207,7 @@ a img{border:none;}
 	.post-style textarea{color:#242424;font-style:normal;}
 	
 	
-.post .post-button{display:block;width:auto;height:22px;margin:10px 0 0;padding:0 12px 2px;background:#61B010;color:#fff;
+.post .post-button{display:block;width:auto;height:22px;margin:10px 0 0;padding:0 12px 0px;background:#61B010;color:#fff;
 	font:normal bold 13px/13px Arial, 'Liberation Sans', FreeSans,sans-serif;border: 1px solid #C0C0C0;}
 .new-record{border:1px solid #ffcc00;}
 .attach-file{display:block;width:70px;padding:0 0 0 27px;line-height:1.6;

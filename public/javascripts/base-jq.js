@@ -103,7 +103,7 @@ jQuery(document).ready(function($){
      jQuery('#activity-overlay').live('click',function(){
          closeNewActivity();
      });
-
+          
     //$(".record").hover(
 	//add from Irina Sorokina
 	//an exception for .record on Activity Page
@@ -233,13 +233,20 @@ jQuery(document).ready(function($){
 	    	}
      });
 	/***********************************************************************************************/
-
+	// Hide open menu dialogs (such as status change, edit/delete, etc.)
      $('body').click(function(event) {
 
+         // status dropdown list
          if (!jQuery(event.target).closest('.status-list-dialog').length && jQuery('.status-list-dialog').is(':visible')) {
              jQuery('.status-list-dialog').remove();
-         }else if(!jQuery(event.target).closest('#user-nav').length && jQuery('#sm_1').is(':visible')){
+         }
+         // user dropdown menu
+         else if(!jQuery(event.target).closest('#user-nav').length && jQuery('#sm_1').is(':visible')){
         	 jQuery('#sm_1').hide();
+         }
+         // edit / delete menu
+         else if(!jQuery(event.target).closest('.menu-dialog').length && jQuery('.menu-dialog').is(':visible')){
+        	 jQuery('.menu-dialog').hide();
          }
      });
 	/***********************************************************************************************/
@@ -612,7 +619,7 @@ jQuery(document).ready(function($){
 		return false;
 	});
 	
-	//Leave a note
+	// add a comment - show post button 
 	$('.post textarea').live('click', function(){
 		if($(this).parent().is('.post-style')){
 			return false

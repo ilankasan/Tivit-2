@@ -32,7 +32,7 @@
 		<li class="record attention">
 		<% respondbutton = "new date?" %>
 			
-		<% elsif tivit_adp.due != nil && tivit_adp.due < Time.now %>
+		<% elsif tivit_adp.due != nil && tivit_adp.due.localtime.end_of_day < Time.now.end_of_day %>
       
      	<li class="record busy">
 		
@@ -92,7 +92,7 @@
 								<% elsif tivit_adp.due.localtime.end_of_day < Time.now.end_of_day %>
 							<!-- activity is overdue -->
 									<div class="calendar new">
-										<div class="week"><%= ((Time.now.localtime - tivit_adp.due.localtime)/(3600*24)).to_i %></div>
+										<div class="week"><%= ((Time.now.end_of_day - tivit_adp.due.localtime.end_of_day)/(3600*24)).to_i %></div>
 										<div class="text">days ago</div>
 									
 								<% elsif tivit_adp.due.localtime.end_of_day == (Time.now.end_of_day) %>

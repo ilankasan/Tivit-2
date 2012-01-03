@@ -20,7 +20,7 @@
 
 	<li class="record attention">
 		
-<% elsif tivit.due != nil && tivit.due < Time.now %>
+<% elsif tivit.due != nil && tivit.due.localtime.end_of_day < Time.now.end_of_day %>
       
       <li class="record busy">
    					
