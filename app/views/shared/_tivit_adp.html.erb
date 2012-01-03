@@ -86,6 +86,40 @@
 							
 							<!-- calendar icon -->
 							<!-- Yaniv to-do: change calendar rendering to be partial, adjust label from day/number to Month/number and different bacgkround icon as needed depending on when the tivit is due -->
+							<% if tivit_adp.due == nil %>
+						<!-- no date specified -->
+								<div class="calendar">
+								<% elsif tivit_adp.due.localtime.end_of_day < Time.now.end_of_day %>
+							<!-- activity is overdue -->
+									<div class="calendar new">
+										<div class="week"><%= ((Time.now.localtime - tivit_adp.due.localtime)/(3600*24)).to_i %></div>
+										<div class="text">days ago</div>
+									
+								<% elsif tivit_adp.due.localtime.end_of_day == (Time.now.end_of_day) %>
+							<!-- activity due today -->
+								 	<div class="calendar today">
+								 		<div class="text">Today</div>
+								 		
+								<% elsif tivit_adp.due.localtime.end_of_day > (Time.now.end_of_day) && tivit_adp.due.localtime.end_of_day == (Time.now + 1.day).end_of_day %>
+							<!-- activity due tomorrow -->
+								 	<div class="calendar tomorrow">
+								 		<div class="text">Tom.</div>
+								 		 		
+								<% elsif tivit_adp.due.localtime > (Time.now.localtime) && tivit_adp.due.localtime < (Time.now.localtime + 7.day) %>
+							<!-- activity due within a week -->
+									<div class="calendar past">
+										<div class="week"><%= (tivit_adp.due.localtime.strftime ("%a")).upcase %></div>
+									    <div class="text"><%= tivit_adp.due.localtime.strftime ("%d") %></div>
+										
+								<% else %>
+							<!-- activity due within more than a week -->
+									<div class="calendar date beyondaweek">
+									<div class="text"><%= tivit_adp.due.localtime.strftime ("%m-%d") %></div>
+									
+							<%end%>
+							</div>
+							
+							<!-- 
 							<div class="calendar">
 								<%if (tivit_adp.due != nil && tivit_adp.due.inspect.size > 0 )%>
 									<div class="week"><%= (tivit_adp.due.strftime ("%a")).upcase %></div>
@@ -95,6 +129,8 @@
 				    				<div class="text">?</div>
 				    			<%end%>
 							</div>
+							-->							
+							
 						</div>
 							
 						<div class="text-conteiner">

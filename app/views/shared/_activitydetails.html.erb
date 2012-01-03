@@ -129,11 +129,47 @@
 	    	<div class="text">26</div>
 		</div>
 		-->
-		<div class="calendar new">
+		
+		
+		<% if activitydetails.due == nil %>
+<!-- no date specified -->
+		<div class="calendar">
+		<% elsif activitydetails.due.localtime.end_of_day < Time.now.end_of_day %>
+	<!-- activity is overdue -->
+			<div class="calendar new">
+				<div class="week"><%= ((Time.now.localtime - activitydetails.due.localtime)/(3600*24)).to_i %></div>
+				<div class="text">days ago</div>
+				
+		<% elsif activitydetails.due.localtime.end_of_day == (Time.now.end_of_day) %>
+	<!-- activity due today -->
+		 	<div class="calendar today">
+		 		<div class="text">Today</div>
+		 		
+		<% elsif activitydetails.due.localtime.end_of_day > (Time.now.end_of_day) && activitydetails.due.localtime.end_of_day == (Time.now + 1.day).end_of_day %>
+	<!-- activity due tomorrow -->
+		 	<div class="calendar tomorrow">
+		 		<div class="text">Tom.</div>
+		 		 		
+		<% elsif activitydetails.due.localtime > (Time.now.localtime) && activitydetails.due.localtime < (Time.now.localtime + 7.day) %>
+	<!-- activity due within a week -->
+			<div class="calendar past">
+				<div class="week"><%= (activitydetails.due.localtime.strftime ("%a")).upcase %></div>
+			    <div class="text"><%= activitydetails.due.localtime.strftime ("%d") %></div>
+				
+		<% else %>
+	<!-- activity due within more than a week -->
+			<div class="calendar date beyondaweek">
+				<div class="text"><%= activitydetails.due.localtime.strftime ("%m-%d") %></div>
+			
+		<%end%>
+		
+		 
+		<!-- <div class="calendar new">
 			<%if (activitydetails.due != nil && activitydetails.due.inspect.size > 0 )%>
 				<div class="week"><%= (activitydetails.due.strftime ("%a")).upcase %></div>
 	    		<div class="text"><%= activitydetails.due.strftime ("%d") %></div>
 	    	<%end%>
+	    -->
 		</div>
 		
 		<!-- Activity Description -->
@@ -167,47 +203,48 @@
 		<!-- Left col: tivities -->		
 		<div class="leftCol">
 			<!-- My tivits -->
-			<div class="tivits main-tivit" id="alltivits">
-				<!-- <h2>my tivits <span>(1)</span></h2> -->		
-				<% mytivits = activitydetails.get_my_tivits(current_account.user) %>
-				<% if mytivits !=nil && mytivits.size > 0 %>
+			<% mytivits = activitydetails.get_my_tivits(current_account.user) %>
+			<% if mytivits != nil && mytivits.size > 0 %>
+				<div class="tivits main-tivit" id="alltivits">
+				
 					<h2>my tivits <span>(<%= mytivits.size %>)</span></h2>
 					<div class="tvit-list" id="mytivits">
 						<%= render :partial => 'shared/tivit_adp', :collection =>  mytivits %>
 					</div>
-				<%end%>
+					
+			<%else%>
+				<div class="tivits main-tivit" id="alltivits" style="background:none" >
+				
+			<%end%>
 				
 				<!-- add tivit button -->
-				
 				<p><input type="submit" value="add a tivit" id="add-tivit" class="form-button"></p>
-				<!-- 
-				<p><%= link_to "add a tivit", 	:controller  => "activities", 
-   											:action      => "new_tivit",
-   											:id          => activitydetails.id, 
-  							    			:title       => activitydetails.name,
-  							    			:class		 => "form-button" %>
-  							    			
-				</p>
-				-->
-    					
+				   			
 			<!-- End of Main Tivits -->
 			</div> <!-- My tivits -->
 			
 			<!-- Team tivits -->
 		
-			<div class="team tivits" id="team-tivits">
+			
 				<!-- <h2>team tivits<span>(4)</span></h2> -->
 				<% teamtivits = activitydetails.get_team_tivits(current_account.user) %>
 				<% if teamtivits !=nil && teamtivits.size > 0 %>
+				
+				<div class="team tivits" id="team-tivits">
 					<h2>team tivits <span>(<%= teamtivits.size %>)</span></h2>
 					<div class="tvit-list" id="teamtivits">
 					
 						<%= render :partial => 'shared/tivit_adp', :collection =>  teamtivits %>
 					</div>
+				
+				<% else %>
+					<div class="team tivits" id="team-tivits" style="background:none">
 				<%end%>
 				
 			</div> <!-- team tivits --> 
-			
+			<% if (teamtivits == nil || teamtivits.size == 0) &&  (mytivits == nil || mytivits.size == 0) %>
+				<div id="adpfte"></div>
+			<% end %>	
 		</div> <!-- "leftCol" -->
 	
 	</div> <!-- "body" -->

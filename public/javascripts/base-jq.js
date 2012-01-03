@@ -31,9 +31,11 @@ jQuery(document).ready(function($){
 	jQuery("#create-new-tivit-form").submit(function() {
 		console.log ('[Yaniv] #create-new-tivit-form clicked');
 		showLoadingAnimation('.loading-popup');
-		$.post($(this).attr("action"), $(this).serialize(), hideLoadingAnimation ('.loading-popup'), "script");
+		console.log ('[Yaniv] after loading animation...');
+		$.post($(this).attr("action"), $(this).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
 		return false;
 	});
+	
 	/**************************************************************************/
 	
 	//$('.post-button').live('click', function(){
@@ -180,7 +182,8 @@ jQuery(document).ready(function($){
                             '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
                             '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
                             '<li class="busy"><div class="ico"></div>I\'m too busy</li>'+
-                            '<li class="attention"><div class="ico"></div>Propose new time</li>'+
+                            '<li class="attention"><div class="ico"></div>Propose new date</li>'+
+                            '<li class="re-assign"><div class="ico"></div>re-assign</li>'+
                         '</ul>'+
                      '</div>';
                      
@@ -251,7 +254,9 @@ jQuery(document).ready(function($){
     	record = jQuery(this).parents('.record');
     	newState = jQuery(this).attr('class');
     	newClassValue = 'record ' + newState;
+    	console.log ("[Yaniv] newState=", newState);
     	var dueDate = "";
+    	var who = "";
     	//console.log(newState=='complete');
     	//if(newState=='inprog' || newState=='complete'){
     		switch(newState){
@@ -278,9 +283,15 @@ jQuery(document).ready(function($){
 	    			dueDate = '<p class="input-date"><label for="propose_date">How about:</label>' +
 									'<input id="propose_date" name="propose_date" type="text" autocomplete="off" placeholder="choose date"/>' + 
 								    '<img src="/images/cal.gif" onclick="javascript:NewCssCal(\'propose_date\', \'mmddyyyy\', \'arrow\')" class="ico_calc"/>' +
-							  '</p>';
-								           
+							  '</p>';			           
 	    			break;
+	    		case 're-assign':
+	    			console.log('[Yaniv] re-assign tivit selected.');
+	    			var confirmDialogTitle = 'Re-assign tivit to someone else';
+	    			var actionPost = 'action="/reassign?id=' + tivitID + '&method=put" accept-charset="UTF-8">';
+					who = '<p><label for="who">Who:</label><input type="text" name="assign_to" id="assign_to" placeholder="- enter one email address -" /></p>';    
+	    			break;
+	    			
 	    		case 'unread':
 	    			// basically this won't work now until I get a function from Ilan for the controller....
 	    			console.log('[Yaniv] tivit status change - UNREAD/WHITE COLOR -');
@@ -297,7 +308,8 @@ jQuery(document).ready(function($){
     								'<div class="loading-popup"></div>' + 
 									'<form id="confirmDialogForm" method="post" class="confirmPopup" ' + actionPost +
 											'<h1>' + confirmDialogTitle + '</h1>' +
-											'<p><textarea rows="10" cols="10" id="comment" name="comment"/></p>' +
+											who + 
+											'<p><textarea rows="10" cols="10" id="comment" name="comment" placeholder="- enter a message here if you\'d like... -"/></p>' +
 											dueDate + 
 											'<div class="request"><div id="popup-cancel" class="form-button">Cancel</div><input class="form-button" type="submit" name="commit" value="OK"/></div>' +
 									'</form>' +
@@ -358,7 +370,7 @@ jQuery(document).ready(function($){
 		var actionparam = $(this).attr("action") + "";
 		console.log('[Yaniv] action=', actionparam);
 		
-		$.post($(this).attr("action"), $(this).serialize(), hideLoadingAnimation('.loading-popup'), "script");
+		$.post($(this).attr("action"), $(this).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
 		
 		// Find the new status we need to chagen the checkbox to, it's hidden in the HTML of the confirmation popup.
 		var statusobject = jQuery(this).parents('.popup'); 
@@ -373,6 +385,7 @@ jQuery(document).ready(function($){
 	 	
 	});
     /************************************************************/
+     /*
      jQuery('.confirmDialog .cancel-button').live('click', function(){
      	console.log ('[Yaniv] confirm dialog CANCEL button clicked!');
          jQuery('.confirmDialog').remove();
@@ -384,6 +397,7 @@ jQuery(document).ready(function($){
          jQuery('#new-activity-background').removeClass('tempHide');
          jQuery('#new-activity-background .input-name').focus();
      });
+     */
      
  });
 
@@ -398,18 +412,6 @@ function openNewActivity(){
     }
 
 }
-/*
-function hideLoadingAnimation(){
-	console.log ('[Yaniv] hideLoadingAnimation called.');
-	jQuery('#loading-animation').hide();
-	//alert ('hideLoadingAnimation called.');
-}
-function showLoadingAnimation(){
-	console.log ('[Yaniv] showLoadingAnimation called.');
-	//alert ('showLoadingAnimation called.');
-	jQuery('#loading-animation').show();
-}
-*/
 function hideInlineLoadingAnimation(){
 	console.log ('[Yaniv] hideInlineLoadingAnimation called.');
 	jQuery('.loading').hide();
@@ -426,6 +428,7 @@ function showLoadingAnimation(classorid){
 	jQuery(classorid).show();
 }
 function hideLoadingAnimation(classorid){
+	//alert ("callback is back!");
 	console.log ('[Yaniv] hideLoadingAnimation with:', classorid);
 	//alert ('showLoadingAnimation called.');
 	jQuery(classorid).hide();
@@ -446,6 +449,7 @@ function hidePopup(){
 	jQuery('#edit-tivit-popup').remove();
 	jQuery('.popup').hide();
 	jQuery('#activity-overlay').fadeOut();
+	hideLoadingAnimation('.loading-popup');
 }
 			
 function closeNewActivity(){
@@ -456,12 +460,7 @@ function closeNewActivity(){
     jQuery(layer).slideUp('slow',function(){
 		jQuery('#activity-overlay').fadeOut();
     });    
-    /* Yaniv - changed slideUp to close */
-	/*
-	jQuery('.popup').slideUp('slow',function(){
-		jQuery('#activity-overlay').fadeOut();
-    });
-    */
+    
     jQuery(':input','#new-activity-form')
     .not(':button, :submit, :reset, :hidden')
     .val('')
@@ -501,10 +500,6 @@ jQuery(document).ready(function($){
 		console.log ('[Yaniv] Create new actvity CANCEL clicked')
 		hidePopup();
 	});
-	//function closePopup(){
-	//	$('.popup').hide();
-	//	$('#activity-overlay').fadeOut();
-	//}
 	/************************************************************/
 	//assign myself
 	$('.popup .assign').click(function(){
@@ -550,7 +545,7 @@ jQuery(document).ready(function($){
 	$('.comments').hover(function(){
 		$(this).css('cursor','pointer');
 	});
-	
+	/*
 	//change respond status
 	$('.respond .form-button').live('click', function(){
 	
@@ -559,13 +554,14 @@ jQuery(document).ready(function($){
 								'<li class="inprog"><div class="ico"></div>I\'m on it</li>' +
 								'<li class="complete"><div class="ico"></div>I\'m finished</li>' +
 								'<li class="busy"><div class="ico"></div>I\'m too busy</li>' +
-								'<li class="attention"><div class="ico"></div>Propose new time</li>' +
+								'<li class="attention"><div class="ico"></div>Propose new date</li>' +
 							'</ul>' +
 						'</div>';
 
 		$(this).parent().append(respondList);
 		$(this).next().addClass('visible');
 	});
+	*/
 	$('.respond li').live('click', function(){
 		//alert($(this).parent().parent().parent().first().attr('class'));
 		//$(this).parent().parent().prev().text($(this).text());
@@ -631,38 +627,6 @@ jQuery(document).ready(function($){
 		//$(this).removeClass('post-style').html('<textarea cols="10" rows="1">Leave a note...</textarea>');
 	});
 	
-	/*
-	//Posting a note
-	$('.post-button').live('click', function(){
-		var text = $(this).parent().prev().prev().val();
-		var ullist = $(this).parents('.list .list');
-		var newRecords = ullist.find('.new-record');
-		var newRecord = '<li class="record">' +
-		'<div class="record-conteiner new-record">' +
-		'<a href="#" class="delete"></a>' +
-		'<div class="avatar"><img alt="Pete Campbell" src="images/avatar_2.png"></div>' +
-		'<div class="text">' +
-		'<p class="start">Pete Campbell started yesterday @ 5:25pm</p>' +
-		'<p>'+ text +'</p>' +
-		'<p><small><strong>Pete Campbell</strong>, 3 hours ago</small></p></div>' +
-		'</div>' +
-		'<div class="post" style="padding-left:42px;"><textarea cols="10" rows="1" style="width:420px;">Leave a note...</textarea></div><div class="clear"></div>' +
-		'</li>';
-		
-		if(newRecords.length > 0){	
-			newRecords.each(function(){
-				$(this).removeClass('new-record');
-			});
-		}
-		
-		ullist.append(newRecord);
-		var list = ullist.children();
-
-		showLess(list);
-		$(this).parent().parent().remove();
-		$('.post textarea').autoResize({extraSpace : 0});
-	});
-	*/
 	/***********************************************************************************************/
 	/* edit tivit on ADP */
 	$('.edit').live('click', function(){
@@ -687,6 +651,15 @@ jQuery(document).ready(function($){
 		
 		return false;
 	});
+	/*
+	jQuery("#edit-tivit-form").live('submit', function() {
+		console.log ('[Yaniv] #edit-tivit-form submit clicked');
+		showLoadingAnimation('.loading-popup');
+		$.post($(this).attr("action"), $(this).serialize(), hideLoadingAnimation ('.loading-popup'), "script");
+		return false;
+	});
+	*/
+	
 	/* delete tivit */
 	$('.del').live('click', function(){
 		var record = $(this).parent();
@@ -694,11 +667,8 @@ jQuery(document).ready(function($){
 	
 		$(this).parents('.menu-dialog').toggle();
 		
+		// Show overlay screen
 		jQuery('#activity-overlay').show();
-		/* Yaniv - clear the form before creating new tivit **/
-		//$("#create-new-tivit-form")[0].reset();
-		/*****************************************************/
-		//$('#add-tivit-window').show();
 		
 		var record = jQuery(this).parents('.record')
 		var tivitID = record.find("input").attr("tivitid");
@@ -776,4 +746,36 @@ jQuery(document).ready(function($){
 	}	
 });
 
+/*
+	//Posting a note
+	$('.post-button').live('click', function(){
+		var text = $(this).parent().prev().prev().val();
+		var ullist = $(this).parents('.list .list');
+		var newRecords = ullist.find('.new-record');
+		var newRecord = '<li class="record">' +
+		'<div class="record-conteiner new-record">' +
+		'<a href="#" class="delete"></a>' +
+		'<div class="avatar"><img alt="Pete Campbell" src="images/avatar_2.png"></div>' +
+		'<div class="text">' +
+		'<p class="start">Pete Campbell started yesterday @ 5:25pm</p>' +
+		'<p>'+ text +'</p>' +
+		'<p><small><strong>Pete Campbell</strong>, 3 hours ago</small></p></div>' +
+		'</div>' +
+		'<div class="post" style="padding-left:42px;"><textarea cols="10" rows="1" style="width:420px;">Leave a note...</textarea></div><div class="clear"></div>' +
+		'</li>';
+		
+		if(newRecords.length > 0){	
+			newRecords.each(function(){
+				$(this).removeClass('new-record');
+			});
+		}
+		
+		ullist.append(newRecord);
+		var list = ullist.children();
+
+		showLess(list);
+		$(this).parent().parent().remove();
+		$('.post textarea').autoResize({extraSpace : 0});
+	});
+	*/
 

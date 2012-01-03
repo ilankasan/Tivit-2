@@ -495,9 +495,9 @@ puts "---->>> Assining tivit to = "+assigned_to
     
     if(@assined_user == nil || @tivit == nil)
       flash[:failed] = "Failed to Reasign tivit"
-      redirect_to root_path if @tivit == nil
+      #redirect_to root_path if @tivit == nil
 puts "not a user email"
-      redirect_to @tivit if @assined_user == nil   
+      #redirect_to @tivit if @assined_user == nil   
     else
 puts " Reasign tivit "+@tivit.name
       if (params["comment"] == nil)
@@ -510,12 +510,27 @@ puts " Reasign tivit "+@tivit.name
       @tivit.update_tivit_status_reassiged(current_account.user,params["comment"],@assined_user)
       
     
-      log_action_as_comment(@tivit,"Assigned to "+@assined_user.get_name+":" + params["comment"],"Reassign",current_account.user)
+      log_action_as_comment(@tivit,"Re-assigned to "+@assined_user.get_name+": " + params["comment"],"Reassign",current_account.user)
       UserMailer.reassign_tivit(current_account.user, @assined_user, params["comment"],@tivit)
-      flash[:success] = "Successfuly reassigned tivit to "
+      flash[:success] = "You successfuly re-assigned tivit to "
       @tivit.save
-      redirect_to  @tivit   
+      #redirect_to  root_path
+      #redirect_to @tivit.get_parent  
     end
+    
+    puts "[Yaniv] BEFORE REDIRECT TO PARENT"
+    
+    # if I just want to show a message use this instead of format.js
+    #render :js => "alert('Blah')"
+
+    respond_to do |format|
+       format.html { redirect_to @tivit }
+       format.js
+       puts "--------[*** reassign *** ----->> after responding to Ajax"
+    end
+    
+    
+    
   end
   
 

@@ -1,4 +1,6 @@
 <div class="tvit-day">
+	
+
 
 <!-- if on dec checking to see if there are any tivits to display. If not do not display activity -->
 	<%if @filter_id == "1" %>
@@ -8,31 +10,42 @@
 		<%end%>
 	<%end%>
 	 
+
  	<% if activity_db.due == nil %>
 <!-- no date specified -->
 		<div class="calendar date pastDay">
-	<% elsif activity_db.due < Time.now %>
+	
+	<% elsif activity_db.due.localtime.end_of_day < Time.now.end_of_day %>
 <!-- activity is overdue -->
 		<div class="calendar date earlyDay">
+			<div class="week"><%= ((Time.now - activity_db.due)/(3600*24)).to_i %></div>
+			<div class="text">days ago</div>
 			
-	<% elsif activity_db.due > (Time.now) && activity_db.due < (Time.now + 1.day) %>
+	<% elsif activity_db.due.localtime.end_of_day == (Time.now.end_of_day) %>
 <!-- activity due today -->
-	 	<div class="calendar date earlyDay">
+	 	<div class="calendar today">
+	 		<div class="text">Today</div>
 	 		
+	<% elsif activity_db.due.localtime.end_of_day > (Time.now.end_of_day) && activity_db.due.localtime.end_of_day == (Time.now + 1.day).end_of_day %>
+<!-- activity due tomorrow -->
+	 	<div class="calendar tomorrow">
+	 		<div class="text">Tom.</div>
+	 		 		
 	<% elsif activity_db.due > (Time.now) && activity_db.due < (Time.now + 7.day) %>
 <!-- activity due within a week -->
 		<div class="calendar date nearlyDay">
+			<div class="week"><%= (activity_db.due.strftime ("%a")).upcase %></div>
+		    <div class="text"><%= activity_db.due.strftime ("%d") %></div>
 			
 	<% else %>
 <!-- activity due within more than a week -->
-		<div class="calendar date nearlyDay">
-			
+		<div class="calendar date beyondaweek">
+		<div class="text"><%= activity_db.due.strftime ("%m-%d") %></div>
+		
 	<%end%>
 	
-		<%if (activity_db.due != nil && activity_db.due.inspect.size > 0 )%>
-			<div class="week"><%= (activity_db.due.strftime ("%a")).upcase %></div>
-	    	<div class="text"><%= activity_db.due.strftime ("%d") %></div>
-	    <%end%>
+	
+		
 	</div>	                
 	                       
 	<div class="tvit-list">
@@ -44,7 +57,14 @@
 	        		
 	        	<%end%>   
 	        </div>
-	        
+	        <% if activity_db.due != nil %>	
+		<!-- 
+		due local = <%= activity_db.due.localtime %>
+		due = <%= activity_db.due %>
+		time.now = <%= Time.now %>	
+		--> 
+	<% end %>
+	
 	        <%= link_to activity_db.name, activity_db, :action => "show",
 	  									   :method => "get",
 	                                       :title  => activity_db.name,
