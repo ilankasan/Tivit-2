@@ -2,11 +2,18 @@ class TivitcommentsController < ApplicationController
   before_filter :authenticate_account!
   
   def create
-  	puts "---------    create comment -----------------------"
+  	puts ">>>>>>>>>---------    create comment ------------------<<<<<<<<"
   	puts "param - " +params.inspect
-  	puts "commetn length is = "  +params["tivitcomment"][:comment].length.to_s
+  	comment = params["tivitcomment"][:comment]
+  	puts "commetn length is = "  +comment.length.to_s
+  	
   	puts "********************************************"
 
+    comment_without_carriage = comment.gsub(/\r/,"")
+    comment_without_carriage = comment_without_carriage.gsub(/\n/," ")
+    
+    puts "commetn without carriage = "  +comment_without_carriage
+    
   	@activity= Activity.find(params[:activity_id])
     
     if (@activity == nil)
@@ -17,20 +24,18 @@ class TivitcommentsController < ApplicationController
 # add action type Note
     params["tivitcomment"]["action"] = "Note"
 # make sure comment is 255 characters   
-    if (params["tivitcomment"][:comment].size > 255)
-      params["tivitcomment"][:comment] = params["tivitcomment"][:comment][0,255]
+    if (comment_without_carriage.size > 255)
+      comment_without_carriage = comment_without_carriage[0,255]
        
-      
+     
     end
-	
+	 params["tivitcomment"][:comment] = comment_without_carriage
+	  puts "final commetn  is = "  +params["tivitcomment"][:comment].to_s
+ 
     #		puts "params ----------   " + params["tiviticomment"].inspect 
     @comment = @activity.tivitcomments.create(params["tivitcomment"])
     
-    if (@comment != nil)
-      puts "@comment =======  " +@comment.inspect
-      puts "commetn length is = "  +params["tivitcomment"][:comment].length.to_s
-    end
-	
+    
 	#respond with Ajax when needed...
   respond_to do |format|
       format.html { redirect_to @activity }
@@ -45,7 +50,7 @@ class TivitcommentsController < ApplicationController
     send_to << @activity.get_parent.get_owner if @activity.get_parent.get_owner.id    != current_account.user.id
     send_to << @activity.get_invited_by       if @activity.get_invited_by.id          != current_account.user.id   
        
-    puts "sending comment notificaiton "+send_to.inspect  
+    puts "sending comment notificaiton "
     UserMailer.notify_comment_added_to_tivit(current_account.user, @comment.comment,@activity, send_to.uniq).deliver
   else
     puts "not sending notificaiton"
