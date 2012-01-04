@@ -48,7 +48,7 @@ class TivitcommentsController < ApplicationController
     send_to << @activity.get_invited_by       if @activity.get_invited_by.id          != current_account.user.id   
      
     puts "sending comment notificaiton "
-    send_to << @activity.get_all_tivit_commenters
+    send_to = send_to + @activity.get_all_tivit_commenters
     UserMailer.notify_comment_added_to_tivit(current_account.user, @comment.comment,@activity, send_to.uniq).deliver
   else
     puts "not sending notificaiton"
