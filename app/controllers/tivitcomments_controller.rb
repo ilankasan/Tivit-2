@@ -31,9 +31,7 @@ class TivitcommentsController < ApplicationController
 	 params["tivitcomment"][:comment] = comment_without_carriage
 	  #puts "final commetn  is = "  +params["tivitcomment"][:comment].to_s
  
-    #		puts "params ----------   " + params["tiviticomment"].inspect 
     @comment = @activity.tivitcomments.create(params["tivitcomment"])
-    
     
 	#respond with Ajax when needed...
   respond_to do |format|
@@ -48,8 +46,9 @@ class TivitcommentsController < ApplicationController
     send_to << @activity.get_owner            if @activity.get_owner.id               != current_account.user.id
     send_to << @activity.get_parent.get_owner if @activity.get_parent.get_owner.id    != current_account.user.id
     send_to << @activity.get_invited_by       if @activity.get_invited_by.id          != current_account.user.id   
-       
+     
     puts "sending comment notificaiton "
+    send_to << @activity.get_all_tivit_commenters
     UserMailer.notify_comment_added_to_tivit(current_account.user, @comment.comment,@activity, send_to.uniq).deliver
   else
     puts "not sending notificaiton"

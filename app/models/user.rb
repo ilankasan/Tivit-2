@@ -37,6 +37,8 @@ class User < ActiveRecord::Base
   
 # each user has many user status (show the specific status for each task)
   has_many :tivit_user_statuses
+  has_many :tivitcomments
+
   has_one :profile_image
 
   belongs_to :account 

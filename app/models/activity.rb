@@ -44,11 +44,10 @@ class Activity < ActiveRecord::Base
   
   def add_user_invitee(user)
  #adding the user to the existing users on the task
-self.users << user
+    self.users << user
 # sending invitee an email invite
 # owner = self.get_owner
-
-self.update_user_tivit_status(user)
+    self.update_user_tivit_status(user)
 
 #ilan: not 100% we ned the save option
 
@@ -69,6 +68,19 @@ self.update_user_tivit_status(user)
    end
    return Activity.find(self.parent_id)
   end
+
+#return a unique array of all users who commented on this tivit
+   def get_all_tivit_commenters
+     users = User.joins(:tivitcomments).where("tivitcomments.activity_id = ? AND users.id = tivitcomments.user_id",self.id)
+     puts "users = "+users.inspect
+     puts "users size is = "+users.size.to_s
+     users = users.uniq
+     puts "users size is = "+users.size.to_s
+     
+     return users
+     
+   end
+   
 
   def get_open_or_recently_done_tivits
 self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id
