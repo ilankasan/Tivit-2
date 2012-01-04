@@ -3,16 +3,15 @@ class TivitcommentsController < ApplicationController
   
   def create
   	puts ">>>>>>>>>---------    create comment ------------------<<<<<<<<"
-  	puts "param - " +params.inspect
+  #	puts "param - " +params.inspect
   	comment = params["tivitcomment"][:comment]
-  	puts "commetn length is = "  +comment.length.to_s
+  	#puts "commetn length is = "  +comment.length.to_s
   	
-  	puts "********************************************"
-
+  
     comment_without_carriage = comment.gsub(/\r/,"")
     comment_without_carriage = comment_without_carriage.gsub(/\n/," ")
     
-    puts "commetn without carriage = "  +comment_without_carriage
+    #puts "commetn without carriage = "  +comment_without_carriage
     
   	@activity= Activity.find(params[:activity_id])
     
@@ -30,7 +29,7 @@ class TivitcommentsController < ApplicationController
      
     end
 	 params["tivitcomment"][:comment] = comment_without_carriage
-	  puts "final commetn  is = "  +params["tivitcomment"][:comment].to_s
+	  #puts "final commetn  is = "  +params["tivitcomment"][:comment].to_s
  
     #		puts "params ----------   " + params["tiviticomment"].inspect 
     @comment = @activity.tivitcomments.create(params["tivitcomment"])
