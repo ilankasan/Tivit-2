@@ -130,27 +130,29 @@
 		</div>
 		-->
 		
+		<% due_time_window = activitydetails.get_due_window_from_now %>
 		
 		<% if activitydetails.due == nil %>
-<!-- no date specified -->
-		<div class="calendar">
-		<% elsif activitydetails.due.localtime.end_of_day < Time.now.end_of_day %>
+	<!-- no date specified -->
+			<div class="calendar">
+			
+		<% elsif due_time_window == "overdue" %>
 	<!-- activity is overdue -->
 			<div class="calendar new">
 				<div class="week"><%= ((Time.now.end_of_day - activitydetails.due.localtime.end_of_day)/(3600*24)).to_i %></div>
 				<div class="text">days ago</div>
 				
-		<% elsif activitydetails.due.localtime.end_of_day == (Time.now.end_of_day) %>
+		<% elsif due_time_window == "today" %>
 	<!-- activity due today -->
 		 	<div class="calendar today">
 		 		<div class="text">Today</div>
 		 		
-		<% elsif activitydetails.due.localtime.end_of_day > (Time.now.end_of_day) && activitydetails.due.localtime.end_of_day == (Time.now + 1.day).end_of_day %>
+		<% elsif due_time_window == "tomorrow"  %>
 	<!-- activity due tomorrow -->
 		 	<div class="calendar tomorrow">
 		 		<div class="text">Tom.</div>
 		 		 		
-		<% elsif activitydetails.due.localtime > (Time.now.localtime) && activitydetails.due.localtime < (Time.now.localtime + 7.day) %>
+		<% elsif due_time_window == "withinaweek" %>
 	<!-- activity due within a week -->
 			<div class="calendar past">
 				<div class="week"><%= (activitydetails.due.localtime.strftime ("%a")).upcase %></div>

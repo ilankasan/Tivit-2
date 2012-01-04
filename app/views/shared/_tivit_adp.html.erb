@@ -86,26 +86,29 @@
 							
 							<!-- calendar icon -->
 							<!-- Yaniv to-do: change calendar rendering to be partial, adjust label from day/number to Month/number and different bacgkround icon as needed depending on when the tivit is due -->
+							
+							<% due_time_window = tivit_adp.get_due_window_from_now %>
+							
 							<% if tivit_adp.due == nil %>
 						<!-- no date specified -->
 								<div class="calendar">
-								<% elsif tivit_adp.due.localtime.end_of_day < Time.now.end_of_day %>
+								<% elsif due_time_window == "overdue" %>
 							<!-- activity is overdue -->
 									<div class="calendar new">
 										<div class="week"><%= ((Time.now.end_of_day - tivit_adp.due.localtime.end_of_day)/(3600*24)).to_i %></div>
 										<div class="text">days ago</div>
 									
-								<% elsif tivit_adp.due.localtime.end_of_day == (Time.now.end_of_day) %>
+								<% elsif due_time_window == "today" %>
 							<!-- activity due today -->
 								 	<div class="calendar today">
 								 		<div class="text">Today</div>
 								 		
-								<% elsif tivit_adp.due.localtime.end_of_day > (Time.now.end_of_day) && tivit_adp.due.localtime.end_of_day == (Time.now + 1.day).end_of_day %>
+								<% elsif due_time_window == "tomorrow" %>
 							<!-- activity due tomorrow -->
 								 	<div class="calendar tomorrow">
 								 		<div class="text">Tom.</div>
 								 		 		
-								<% elsif tivit_adp.due.localtime > (Time.now.localtime) && tivit_adp.due.localtime < (Time.now.localtime + 7.day) %>
+								<% elsif due_time_window == "withinaweek" %>
 							<!-- activity due within a week -->
 									<div class="calendar past">
 										<div class="week"><%= (tivit_adp.due.localtime.strftime ("%a")).upcase %></div>

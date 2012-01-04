@@ -10,28 +10,29 @@
 		<%end%>
 	<%end%>
 	 
+	<% due_time_window = activity_db.get_due_window_from_now %>
 
  	<% if activity_db.due == nil %>
 <!-- no date specified -->
 		<div class="calendar date pastDay">
 	
-	<% elsif activity_db.due.localtime.end_of_day < Time.now.end_of_day %>
+	<% elsif due_time_window == "overdue" %>
 <!-- activity is overdue -->
 		<div class="calendar date earlyDay">
 			<div class="week"><%= ((Time.now.end_of_day - activity_db.due.localtime.end_of_day)/(3600*24)).to_i %></div>
 			<div class="text">days ago</div>
 			
-	<% elsif activity_db.due.localtime.end_of_day == (Time.now.end_of_day) %>
+	<% elsif due_time_window == "today" %>
 <!-- activity due today -->
 	 	<div class="calendar today">
 	 		<div class="text">Today</div>
 	 		
-	<% elsif activity_db.due.localtime.end_of_day > (Time.now.end_of_day) && activity_db.due.localtime.end_of_day == (Time.now + 1.day).end_of_day %>
+	<% elsif due_time_window == "tomorrow"  %>
 <!-- activity due tomorrow -->
 	 	<div class="calendar tomorrow">
 	 		<div class="text">Tom.</div>
 	 		 		
-	<% elsif activity_db.due > (Time.now) && activity_db.due < (Time.now + 7.day) %>
+	<% elsif due_time_window == "withinaweek" %>
 <!-- activity due within a week -->
 		<div class="calendar date nearlyDay">
 			<div class="week"><%= (activity_db.due.strftime ("%a")).upcase %></div>
