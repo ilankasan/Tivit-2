@@ -1,5 +1,7 @@
 <!-- Display a tivit within an activity on the  Dashboard -->
 <% owner_tivit_status = tivit.get_owner_status %>
+
+<!-- *** 1 *** figure out the status line user name -->		
 <% if tivit.get_owner.id == current_account.user.id %>
 	<% loggedInUserIsTheOwner = "yes" %>
 	<% tivit_owner_name = "You" %>
@@ -12,29 +14,80 @@
 	<% tivit_owner_name = tivit.get_owner.clone_email %>
 <% end %>
 
+<!-- *** 2 *** Figure out the appropriate window to determine the statusline relevant text -->
+<% due_time_window = tivit.get_due_window_from_now %>
+<% if tivit.due == nil %>
+	<% status_line_window = "" %>
+
+<% elsif due_time_window == "overdue" %>
+<!-- activity is overdue -->
+	<% if (((Time.now.end_of_day - tivit.due.localtime.end_of_day)/(3600*24)).to_i) == 1 %>
+		<% status_line_window = " yesterday" %>
+	<% else %>	
+		<% status_line_window = " " + (((Time.now.end_of_day - tivit.due.localtime.end_of_day)/(3600*24)).to_i).to_s + " days ago" %>
+	<% end %>
+	
+<% elsif due_time_window == "today" %>
+<!-- activity due today -->
+ 	<% status_line_window = " today." %>
+	 		
+<% elsif due_time_window == "tomorrow"  %>
+<!-- activity due tomorrow -->
+ 	<% status_line_window = " tomorrow." %>
+ 		 		
+<% elsif due_time_window == "withinaweek" %>
+<!-- activity due within a week -->
+	<% status_line_window = " " + (tivit.due.strftime ("%a")) + ", " + (tivit.due.strftime ("%b")) + " " + (tivit.due.strftime ("%d")) + "." %> 
+
+<% else %>
+<!-- activity due within more than a week -->
+	<% status_line_window = " " + (tivit.due.strftime ("%a")) + ", " + (tivit.due.strftime ("%b")) + " " + (tivit.due.strftime ("%d")) + "." %> 
+		
+<%end%>
+
+<!-- *** 3 *** the middle text in status line varies dpending on the status of each tivit, let's set it up based on the status -->
+<% status_line_middle = "" %>
 <% if owner_tivit_status == "Done" %>
 
 	<li class="record complete">
-
+	<% status_line_middle = " finished this " +  (time_ago_in_words (tivit.completed_at)) + " ago." %>
+		
 <% elsif owner_tivit_status == "Proposed" %>
 
 	<li class="record attention">
+	<% status_line_middle = " requested a different date: " + (tivit.get_owner_proposed_date.localtime.strftime("%A %b %d, %Y")) + " - " %>	
 		
 <% elsif tivit.due != nil && tivit.due.localtime.end_of_day < Time.now.end_of_day %>
       
-      <li class="record busy">
-   					
+	<li class="record busy">
+	<% status_line_middle = " agreed to help by" %>
+   				
 <% elsif (owner_tivit_status == "OnIt" || owner_tivit_status == "Accepted")%>
 
 	<li class="record inprog">
-	    
-<% elsif owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed"%>
+	<% if tivit.due != nil%>
+		<% status_line_middle = " agreed to help by" %>
+	<% else %>
+		<% status_line_middle = " agreed to help." %>
+	<% end %>
+<% elsif owner_tivit_status == "New" || owner_tivit_status == "Reminded" %>
 
 	<li class="record unread">
-	                      	
+	<% status_line_middle = " have not read this." %>
+	<!-- status line not relevant with tivit is unread or not responded. -->
+	<% status_line_window = "" %>
+	
+<% elsif owner_tivit_status == "Reviewed"%>
+	<li class="record unread">
+	<% status_line_middle = " have not responded." %>
+	<!-- status line not relevant with tivit is unread or not responded. -->
+	<% status_line_window = "" %>
+	      	                	
 <% else %>	                            
 
 	<li class="record busy">
+	<% status_line_middle = " declined." %>
+	<% status_line_window = "" %>
 	
 <%end%>
 
@@ -84,108 +137,55 @@
 	              
 	              <h3>    <%= link_to tivit.name, tivit_parent_activity, :action => "show",
 	  									   :method => "get",
-	                                       :title  => tivit_parent_activity.name %>
-	               <!-- 
-	               <% if tivit.due != nil && tivit.due < Time.now && owner_tivit_status != "Done" %>
-      					<span class="timestamp"> (<%= time_ago_in_words(tivit.due) %> overdue.) </span>
-   				   <% end %>
-   				-->
-	             <!-- <h3><%= tivit.name%>
-	              	
-	              	<% if tivit.due != nil && tivit.due < Time.now %>
-      					<span class="timestamp"> - <%= time_ago_in_words(tivit.due) %> ovberdue! </span>
-   					<% end %>
-	              -->	
-	              	
+	                                       :title  => tivit_parent_activity.name %>       	
 	              </h3>
 	              
-	              <% if owner_tivit_status == "Proposed" %>
-					
-					<% if loggedInUserIsTheOwner == "yes" %>
-						<span class="grey"> You suggested new time, waiting for owner response.
-					<!-- should actions only to activity owner AND tivit creator -->
-					<% elsif tivit.get_parent.get_owner.id == current_account.user.id || tivit.invited_by == current_account.user.id %>
-									
-					<span class="proposed">
-						<%= tivit.get_owner.name %> proposed a new date <strong><%= tivit.get_owner_proposed_date.localtime.strftime("%b %d, %Y") %></strong>
-									<%= link_to "accept",	:controller  => "activities",
-			    											:action      => "change_tivit_status",
-			    											:status      => "accept_date",
-			    											:id          => tivit.id, 
-			  							    				:confirm     => "Are you sure you want to accepet new date " +tivit.name+"?",
-			                                				:title       => tivit.name %>
-			                                					
-									
-									 | <a href="#">decline</a> | <a href="#">counter</a>
-								
-						<% end %>		
-						<!-- 
-						New date proposed 
-						<a href=""> <%=tivit.get_owner_proposed_date%></a>
-						
-						<%if (current_account.user.id == tivit.get_parent.get_owner.id) %>
-						<a>
-						<%= link_to "Accepet",      :controller  => "activities",
-    												:action      => "change_tivit_status",
-    												:status      => "accept_date",
-    												:id          => tivit.id, 
-  							    					:confirm     => "Are you sure you want to accepet new date " +tivit.name+"?",
-                                					:title       => tivit.name %>
-						
-						
-						</a>	
-						<%end%>
-	              	-->
-				<%else%>
-					
-	              <span class="grey">
-	              	<%= tivit_owner_name %>
-	              	
-	              	<% if !tivit.invitedByOwner?%>
-	              		invited by <%=tivit.get_invited_by.get_name%>
-	              		<% if owner_tivit_status != "Reminded"%>
-	              			 <%= time_ago_in_words(tivit.created_at)%> ago
-	              		<%end%>
-							 
-	              	<%end%>
-					
-	              	<%action = "remind"%>
-					<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
-						
-						, <b>unread</b> 
-						<%if owner_tivit_status == "Reminded" %>
-							<% action = "remind again" %>
-							last reminded <%= time_ago_in_words(tivit.get_owner_last_status_change)%> ago
-						<%end%>
-
-						<%if((current_account.user.id == tivit.get_parent.get_owner.id && current_account.user.id != tivit.get_owner.id)|| (current_account.user.id == tivit.get_invited_by.id) )%>	              	
-	              			<a>
-							<%= link_to action,    :controller  => "activities",
-    												:action      => "change_tivit_status",
-    												:status      => "remind",
-    												:id          => tivit.id, 
-  							    					:confirm     => "Are you sure you want to accepet new date " +tivit.name+"?",
-                                					:title       => tivit.name %>
-							</a>
-						<%end%>
-					<% end %>
-					
-				<% end %>	
-					
-					<% if tivit.due != nil && tivit.due < Time.now && owner_tivit_status != "Done" %>
-      					<span class="timestamp">[<%= time_ago_in_words(tivit.due) %> overdue] </span>
-   				   <% end %>
-						              	
-<!-- If tivit was reviewed but no other action taken, add a comment when it was read and  -->
- 
-	              	<% if owner_tivit_status == "Reviewed"  && tivit.get_owner_last_review_date != nil%>
-	              		<%if (current_account.user.id == tivit.get_owner.id)%>
-							<b> Owner Awaiting Response </b> </br>
-						<%end%>
-						<a href=""> last reviewed <%= time_ago_in_words(tivit.get_owner_last_review_date)%> ago</a>
-						
-					<% end %>	              	
-	              	
+	              <% status_line = tivit_owner_name + status_line_middle + status_line_window %>
+	             	             
+				<!-- all gray status lines -->
+					<span class="grey">
+	              		
+	              		<% if owner_tivit_status == "Proposed" %>
+		              		<%= tivit_owner_name %> 
+							<font color="red"><%= status_line_middle %></font>
+							<% if tivit.get_parent.get_owner.id == current_account.user.id || tivit.invited_by == current_account.user.id %> 
+								<%= link_to "accept",	:controller  => "activities",
+					    											:action      => "change_tivit_status",
+					    											:status      => "accept_date",
+					    											:id          => tivit.id, 
+					  							    				:confirm     => "Are you sure you want to accepet new date " +tivit.name+"?",
+					                                				:title       => tivit.name %> 
+					    	<% end %>
+					    <!-- overdue -->
+					    <% elsif tivit.due != nil && tivit.due.localtime.end_of_day < Time.now.end_of_day %>
+					    	<%= tivit_owner_name + status_line_middle %> 
+					    	<font color="red"><%= status_line_window %></font> 
+					    <% elsif status_line_middle == " declined" %>
+					    	<%= tivit_owner_name %> 
+					    	<font color="red"><%= status_line_middle %></font>	
+					    <% elsif due_time_window == "today" %>
+					    	<%= tivit_owner_name + status_line_middle %> 
+					    	<font color="red"><%= status_line_window %></font> 
+					    <% else %>
+	              			<%= status_line %>
+	              		
+	              		<% end %>
+	              		
+	              		<!-- add remind if user didn't read or did respond yet -->
+	              		<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
+		              		<%if((current_account.user.id == tivit.get_parent.get_owner.id && current_account.user.id != tivit.get_owner.id)|| (current_account.user.id == tivit.get_invited_by.id) )%>	              	
+			              			<a>
+									<%= link_to "Remind",    :controller  => "activities",
+		    												:action      => "change_tivit_status",
+		    												:status      => "remind",
+		    												:id          => tivit.id, 
+		  							    					:confirm     => "Are you sure you want to accepet new date " +tivit.name+"?",
+		                                					:title       => tivit.name %>
+									</a>
+							<%end%>
+	              		<% end %>
+	              		
+		              	
 	              </span>
 	         
             </div>
