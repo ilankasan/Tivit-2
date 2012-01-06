@@ -19,7 +19,7 @@
 <% if tivit.due == nil %>
 	<% status_line_window = "" %>
 
-<% elsif due_time_window == "overdue" %>
+<% elsif (due_time_window == "overdue") %>
 <!-- activity is overdue -->
 	<% if (((Time.now.end_of_day - tivit.due.localtime.end_of_day)/(3600*24)).to_i) == 1 %>
 		<% status_line_window = " yesterday" %>
@@ -67,8 +67,16 @@
 <% elsif tivit.due != nil && tivit.due.localtime.end_of_day < Time.now.end_of_day %>
       
 	<li class="record busy">
-	<% status_line_middle = " agreed to help by" %>
-   				
+	<% if (owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed") %>
+		<% if tivit_owner_name == "You" %>
+			<% status_line_middle = " have not read this." %>
+		<% else %>
+			<% status_line_middle = " has not read this." %>
+		<% end %>
+		
+	<% else %>
+		<% status_line_middle = " agreed to help by" %>
+   	<% end %>			
 <% elsif (owner_tivit_status == "OnIt" || owner_tivit_status == "Accepted")%>
 
 	<li class="record inprog">
@@ -174,7 +182,9 @@
 					    <!-- overdue -->
 					    <% elsif tivit.due != nil && tivit.due.localtime.end_of_day < Time.now.end_of_day %>
 					    	<%= tivit_owner_name + status_line_middle %> 
-					    	<font color="red"><%= status_line_window %></font> 
+					    	<% if ((owner_tivit_status != "New" && owner_tivit_status != "Reminded" && owner_tivit_status != "Reviewed")) %>
+					    		<font color="red"><%= status_line_window %></font> 
+					    	<% end %>
 					    <% elsif status_line_middle == " declined" %>
 					    	<%= tivit_owner_name %> 
 					    	<font color="red"><%= status_line_middle %></font>	
