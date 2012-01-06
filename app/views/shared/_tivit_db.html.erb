@@ -200,9 +200,9 @@
 							<%end%>
 	              		<% end %>
 	              		
-		              	<% if tivit.get_invited_by.get_id != current_account.user.get_id %>
+		              	<% if (tivit.get_invited_by.get_id != current_account.user.get_id && (owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed") ) %>
 	              		[invited by <%=tivit.get_invited_by.get_name%>
-	              		<% if owner_tivit_status != "Reminded"%>
+	              		<% if owner_tivit_status != "Reminded" %>
 	              			 <%= time_ago_in_words(tivit.created_at)%> ago]
 	              		<%end%>
 
