@@ -55,7 +55,14 @@
 <% elsif owner_tivit_status == "Proposed" %>
 
 	<li class="record attention">
-	<% status_line_middle = " requested a different date: " + (tivit.get_owner_proposed_date.localtime.strftime("%A %b %d, %Y")) + " - " %>	
+	<% proposed_date = "no data was set"%>
+	<% if tivit.get_owner_proposed_date == nil || tivit.get_owner_proposed_date == "" %>
+		<% proposed_date = "[no data was set]"%>
+	<% else %>
+		<% proposed_date = (tivit.get_owner_proposed_date.localtime.strftime("%A %b %d, %Y")) %>
+	<% end %>
+	
+	<% status_line_middle = " requested a different date: " + proposed_date + " - " %>	
 		
 <% elsif tivit.due != nil && tivit.due.localtime.end_of_day < Time.now.end_of_day %>
       
@@ -73,13 +80,21 @@
 <% elsif owner_tivit_status == "New" || owner_tivit_status == "Reminded" %>
 
 	<li class="record unread">
-	<% status_line_middle = " have not read this." %>
+		<% if tivit_owner_name == "You" %>
+			<% status_line_middle = " have not read this." %>
+		<% else %>
+			<% status_line_middle = " has not read this." %>
+		<% end %>
 	<!-- status line not relevant with tivit is unread or not responded. -->
 	<% status_line_window = "" %>
 	
 <% elsif owner_tivit_status == "Reviewed"%>
 	<li class="record unread">
-	<% status_line_middle = " have not responded." %>
+	<% if tivit_owner_name == "You" %>
+		<% status_line_middle = " have not responded." %>
+	<% else %>
+		<% status_line_middle = " has not responded." %>
+	<% end %>
 	<!-- status line not relevant with tivit is unread or not responded. -->
 	<% status_line_window = "" %>
 	      	                	
