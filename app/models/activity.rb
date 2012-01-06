@@ -72,12 +72,12 @@ class Activity < ActiveRecord::Base
 #return a unique array of all users who commented on this tivit
    def get_all_tivit_commenters_excluding_user (user)
 # Ilan: This code can be improved by using a distinct SQL command
-#return array of users
+#return array of users excluding user
      users = User.joins(:tivitcomments).where("tivitcomments.activity_id = ? AND users.id = tivitcomments.user_id AND NOT tivitcomments.user_id = ? ",self.id, user.get_id)
-     puts "users = "+users.inspect
-     puts "users size is = "+users.size.to_s
+   #  puts "users = "+users.inspect
+    # puts "users size is = "+users.size.to_s
      users = users.uniq
-     puts "users size is = "+users.size.to_s
+     #puts "users size is = "+users.size.to_s
      
      
      
@@ -310,7 +310,6 @@ end
  def update_tivit_user_status_i_am_done(user,comment)
   
   change_status(user,"Done",comment)
-  puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
  # self.change_status_to_done
  # puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
  # puts self.inspect

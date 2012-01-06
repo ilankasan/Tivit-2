@@ -366,9 +366,9 @@ class ActivitiesController < ApplicationController
       puts " is this possible?......NNNNNNNNNNNNNNNNNNNNNNNNNNNNNOOOOOOOOOOOOOOOOOOOOOOOOOOO"
     else
       
-      sent_to = @activity.get_all_tivit_commenters_excluding_user(current_account.user)
-      sent_to << @activity.get_parent.get_owner
-      sent_to << @activity.get_invited_by
+      send_to =  @activity.get_all_tivit_commenters_excluding_user(current_account.user)
+      send_to << @activity.get_parent.get_owner if (@activity.get_parent.get_owner != current_account.user ) 
+      send_to << @activity.get_invited_by       if (@activity.get_invited_by       != current_account.user )
       
       notify_users_tivit_done(send_to.uniq,current_account.user,params["comment"], @activity)
       

@@ -3,6 +3,8 @@ module ActivitiesHelper
 
   def notify_users_tivit_done(send_to,assigee,comment, tivit)
      send_to.each do |to_user|
+     puts "sending done notification to "+to_user.get_email
+     
          UserMailer.user_tivit_status_change_done_email(assigee,to_user,comment,tivit).deliver
      end      
       
