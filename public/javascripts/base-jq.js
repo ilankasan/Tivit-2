@@ -178,7 +178,7 @@ jQuery(document).ready(function($){
     var statusIcon = jQuery('.status .icon');
     var statusList = '<div class="status-list-dialog">'+
                         '<ul class="status-list">'+
-                            '<li class="unread"><div class="ico"></div>Not started</li>'+
+                            //'<li class="unread"><div class="ico"></div>Not started</li>'+
                             '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
                             '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
                             '<li class="busy"><div class="ico"></div>I\'m too busy</li>'+

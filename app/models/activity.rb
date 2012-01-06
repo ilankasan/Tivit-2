@@ -451,14 +451,18 @@ return User.find_by_id(self.owner_id)
  def get_owner_id
   return self.owner_id
  end
- 
+
+
  def isOwner?(user)
+# checks if user if the owner of this activity / tivit
    return (user == self.get_owner)
  end
  
  
  
  def isParentOwner?(user)
+# checks if user is the owner of the activity this tivit belogs to, assumming it is an activity
+
    return false if (user == nil || self.get_parent == nil)
    return self.get_parent.isOwner?(user)
  end
