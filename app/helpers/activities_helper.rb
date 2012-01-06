@@ -1,14 +1,13 @@
 module ActivitiesHelper
 
 
-# returnes a user object. 
-#If the user does no exists, it creates a skeloton of an inactive user
-# returns nil if email is invalid 
-
-
-
-
-
+  def notify_users_tivit_done(send_to,assigee,comment, tivit)
+     send_to.each do |to_user|
+         UserMailer.user_tivit_status_change_done_email(assigee,to_user,comment,tivit).deliver
+     end      
+      
+  end
+    
   def validate_user_allowed_to_propose_date (activity, user)
     puts "validating that user can propose a new date "+user.get_name+" for tivit "+activity.get_name
     @error = "Only tivit owner can proposed an alternative date"

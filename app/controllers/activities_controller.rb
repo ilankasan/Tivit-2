@@ -365,15 +365,25 @@ class ActivitiesController < ApplicationController
       UserMailer.user_activity_status_change_done_email(current_account.user,params["comment"],@activity).deliver
       puts " is this possible?......NNNNNNNNNNNNNNNNNNNNNNNNNNNNNOOOOOOOOOOOOOOOOOOOOOOOOOOO"
     else
-      if(!@activity.get_parent.isOwner?(current_account.user))
-        # sending an email to the activity owner (usually the invited by not always)
-        UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_parent.get_owner,params["comment"],@activity).deliver
-        puts "Sendgin once"
-        if(@activity.get_invited_by != @activity.get_parent.get_owner  && !@activity.wasInvitedByUser?(current_account.user) )
-          # sending email to the person who invited the user
-          puts "Sendgin twice"
-        
-          UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_invited_by,params["comment"],@activity).deliver
+      
+      sent_to = @activity.get_all_tivit_commenters_excluding_user(current_account.user)
+      sent_to << @activity.get_parent.get_owner
+      sent_to << @activity.get_invited_by
+      
+      notify_users_tivit_done(send_to.uniq,current_account.user,params["comment"], @activity)
+      
+      
+      if(false)
+        if(!@activity.get_parent.isOwner?(current_account.user))
+          # sending an email to the activity owner (usually the invited by not always)
+          UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_parent.get_owner,params["comment"],@activity).deliver
+          puts "Sendgin once"
+          if(@activity.get_invited_by != @activity.get_parent.get_owner  && !@activity.wasInvitedByUser?(current_account.user) )
+            # sending email to the person who invited the user
+            puts "Sendgin twice"
+          
+            UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_invited_by,params["comment"],@activity).deliver
+          end
         end
       end
     end

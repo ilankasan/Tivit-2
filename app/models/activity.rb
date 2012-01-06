@@ -72,6 +72,7 @@ class Activity < ActiveRecord::Base
 #return a unique array of all users who commented on this tivit
    def get_all_tivit_commenters_excluding_user (user)
 # Ilan: This code can be improved by using a distinct SQL command
+#return array of users
      users = User.joins(:tivitcomments).where("tivitcomments.activity_id = ? AND users.id = tivitcomments.user_id AND NOT tivitcomments.user_id = ? ",self.id, user.get_id)
      puts "users = "+users.inspect
      puts "users size is = "+users.size.to_s
@@ -473,22 +474,18 @@ return User.find_by_id(self.owner_id)
     if(self.invited_by == nil)
       return self.get_parent.get_owner
     else
-return User.find_by_id(self.invited_by)
-end
-  end
-
-  def old_get_invited_by_email
- #adding the user to the existing users on the task
-    return self.invited_by
+      return User.find_by_id(self.invited_by)
+    end
  end
 
+ 
  def get_number_of_tivits
 #returns number of tivits
-if(self.tivits == nil || self.tivits.size == 0)
-return 0
-else
-return self.tivits.size
-end
+  if(self.tivits == nil || self.tivits.size == 0)
+    return 0
+  else
+    return self.tivits.size
+ end
  end
   
 

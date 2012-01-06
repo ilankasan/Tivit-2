@@ -92,17 +92,7 @@ class UserMailer < ActionMailer::Base
   end
   
   
-  def OLD_activity_status_completed_email (owner, invitees,summary,activity)
-#202 Activity - Closed. When: Owner closes activity, Who: All Assignees
-#ilan: change email name from tivit to activity
-puts "sending completed email"
-    @user    = user
-    @tivit   = activity
-    @summary = summary
-    
-    mail(:to => invitees, 
-         :subject =>    "tiviti: "+owner.get_name+" says "+activity.name+" is complete.  Thanks for your help!" )  
-  end 
+  
 
   def activity_completed_email(user, comment,activity)
 
