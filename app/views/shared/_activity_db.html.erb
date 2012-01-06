@@ -86,6 +86,8 @@
 			<%if (tabview != nil && tabview == "Need Attention") %>
 				<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_need_attention_tivits(current_account.user), :as => :tivit  %>
 																												
+			<%elsif (tabview == "Incoming")%>
+				<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_incoming_tivits(current_account.user)       , :as => :tivit  %>
 																												
 			<%elsif (tabview == "Completed")%>
 				<%= render :partial => 'shared/tivit_db', :collection =>  []       , :as => :tivit  %>

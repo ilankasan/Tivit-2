@@ -196,6 +196,16 @@ puts "-------------<<<<<<<<<<<<<<"
   end
   
   
+  def get_incoming_tivits (currentuser)
+  
+# Returns tivits i own and required my response or in play (awaiting the assiger to response with my proposal).
+   results = self.tivits.joins(:tivit_user_statuses).where("activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id
+             AND ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",currentuser.id)
+
+    return results
+  end
+
+
   
   def get_all_my_open_tivits (user)
     self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'

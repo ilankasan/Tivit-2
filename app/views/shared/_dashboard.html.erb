@@ -38,16 +38,20 @@
 				<li class="tab open">
 	                <a href="#tivit-desk">On Deck</a>
 	            </li>
+	    		<li class="tab">
+	                <a href="#tivit-incoming">Incoming</a>
+	            </li>
+	    
 	            <li class="tab">
-	                <a href="#completed-items">All Completed</a>
+	                <a href="#completed-items">Completed</a>
 	            </li>
 	            
-            	<li class="tab">
-	                <a href="#need-attention">Needs Attention</a>
-	                <%if @need_attention_activities.count > 0%>
+            	<!--li class="tab"-->
+	                <!--a href="#need-attention">Needs Attention</a-->
+	                <%if false && @need_attention_activities.count > 0%>
 	                	<i><%=@need_attention_activities.count%></i>
 	                <%end%>
-            	</li>
+            	<!--/li-->
             	
             </ul>
         </div>
@@ -64,6 +68,17 @@
 			<% end %>
 
 			</div>
+
+   		<div id="tivit-incoming" class="tivit-incoming tabInfo"> 
+
+			<% unless @tivits_ondeck == nil %>
+			 
+			     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_incoming, :locals => {:tabview => "Incoming"} %>
+		     
+			<% end %>
+
+			</div>
+
 
 			<div id="completed-items" class="completed-items tabInfo">
 				<% unless @tivits_completed == nil %>
