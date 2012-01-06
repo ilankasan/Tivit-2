@@ -102,7 +102,7 @@
 	        </p>                                        
     		</br>                                
   		
-	  		<% if current_account.user.id == (activitydetails.owner_id) %>
+	  		<% if current_account.user.get_id == (activitydetails.owner_id) %>
 			<ul>
 				<li class="edit-yaniv"><%= link_to "edit", edit_activity_path(activitydetails) %></li>
 				<li class="add-yaniv"><%= link_to "add a file", 	:controller  => "documents", 

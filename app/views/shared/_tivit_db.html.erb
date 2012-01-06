@@ -2,7 +2,7 @@
 <% owner_tivit_status = tivit.get_owner_status %>
 
 <!-- *** 1 *** figure out the status line user name -->		
-<% if tivit.get_owner.id == current_account.user.id %>
+<% if tivit.get_owner.id == current_account.user.get_id %>
 	<% loggedInUserIsTheOwner = "yes" %>
 	<% tivit_owner_name = "You" %>
 <% else %>
@@ -110,7 +110,7 @@
 	
 	<div class="status">
 		<div class="icon"></div>
-		<% if tivit.get_owner.id == current_account.user.id %>
+		<% if tivit.get_owner.id == current_account.user.get_id %>
 			<input type="hidden" tivitid="<%= tivit.id %>" mytivit="yes">
 		<% else %>
 			<input type="hidden" tivitid="<%= tivit.id %>" mytivit="no">
@@ -163,7 +163,7 @@
 	              		<% if owner_tivit_status == "Proposed" %>
 		              		<%= tivit_owner_name %> 
 							<font color="red"><%= status_line_middle %></font>
-							<% if tivit.get_parent.get_owner.id == current_account.user.id || tivit.invited_by == current_account.user.id %> 
+							<% if tivit.get_parent.get_owner.id == current_account.user.get_id || tivit.get_invited_by.user.id == current_account.user.get_id %> 
 								<%= link_to "accept",	:controller  => "activities",
 					    											:action      => "change_tivit_status",
 					    											:status      => "accept_date",
@@ -188,7 +188,7 @@
 	              		
 	              		<!-- add remind if user didn't read or did respond yet -->
 	              		<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
-		              		<%if((current_account.user.id == tivit.get_parent.get_owner.id && current_account.user.id != tivit.get_owner.id)|| (current_account.user.id == tivit.get_invited_by.id) )%>	              	
+		              		<%if((current_account.user.get_id == tivit.get_parent.get_owner.id && current_account.user.get_id != tivit.get_owner.id)|| (current_account.user.get_id == tivit.get_invited_by.id) )%>	              	
 			              			<a>
 									<%= link_to "Remind",    :controller  => "activities",
 		    												:action      => "change_tivit_status",

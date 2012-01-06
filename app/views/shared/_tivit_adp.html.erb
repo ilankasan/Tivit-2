@@ -148,7 +148,7 @@
 									<p><small>You suggested new time, waiting for owner response.</small></p>
 									
 								<!-- should actions only to activity owner AND tivit creator -->
-								<% elsif tivit_adp.get_parent.get_owner.id == current_account.user.id || tivit_adp.invited_by == current_account.user.id %>
+								<% elsif tivit_adp.get_parent.get_owner.id == current_account.user.get_id || tivit_adp.invited_by == current_account.user.get_id %>
 									<p class="request"><span><%= tivit_adp.get_owner.name %> proposed a new date: <strong><%= tivit_adp.get_owner_proposed_date.localtime.strftime("%b %d, %Y") %></strong></span>
 										<%= link_to "accept",	:controller  => "activities",
 				    											:action      => "change_tivit_status",
@@ -178,7 +178,10 @@
 		   						
 						</div> <!-- text-container -->
 				</div> <!-- text -->
-					
+				
+				<!-- only activity owner or tivit creator (invited by) can edit tivits -->
+				<% if ( (tivit_adp.wasInvitedByUser?(current_account.user)) || (tivit_adp.isParentOwner? (current_account.user )) ) %>
+				
 				<div class="edit-menu">
 					<div class="icon"></div>
 					<div class="menu-dialog">
@@ -188,7 +191,7 @@
 						</ul>
 					</div>
 				</div>
-																	
+				<% end %>													
 				<div class="clear"></div>
 			</div><!-- conteiner -->
 			
