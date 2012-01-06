@@ -188,7 +188,7 @@
 	              		
 	              		<!-- add remind if user didn't read or did respond yet -->
 	              		<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
-		              		<%if((current_account.user.get_id == tivit.get_parent.get_owner.id && current_account.user.get_id != tivit.get_owner.id)|| (current_account.user.get_id == tivit.get_invited_by.id) )%>	              	
+		              		<%if((current_account.user.get_id == tivit.get_parent.get_owner.get_id && current_account.user.get_id != tivit.get_owner.get_id)|| (current_account.user.get_id == tivit.get_invited_by.id) )%>	              	
 			              			<a>
 									<%= link_to "Remind",    :controller  => "activities",
 		    												:action      => "change_tivit_status",
@@ -200,7 +200,14 @@
 							<%end%>
 	              		<% end %>
 	              		
-		              	
+		              	<% if tivit.get_invited_by.get_id != current_account.user.get_id %>
+	              		[invited by <%=tivit.get_invited_by.get_name%>
+	              		<% if owner_tivit_status != "Reminded"%>
+	              			 <%= time_ago_in_words(tivit.created_at)%> ago]
+	              		<%end%>
+
+	              	<%end%>
+	              	
 	              </span>
 	         
             </div>
