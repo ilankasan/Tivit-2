@@ -9,7 +9,7 @@ class UserMailer < ActionMailer::Base
    
   def dispatcher(params)
     puts ">>>>>>>>>>>> email dispatcher 666666"
-    puts params.inspect
+   # puts params.inspect
     
     #self.new_tivit_email(params[:assignee], params[:assigner],params[:tivit]).deliver
     self.send(params[:email_type],params[:assignee], params[:assigner],params[:tivit]).deliver
