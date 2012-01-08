@@ -5,6 +5,7 @@ gem 'faker', '0.3.1'
 gem 'excon', '0.5.6'
 gem 'daemons', '1.1.0'
 
+gem 'girl_friday'
 
 gem 'carrierwave', '0.5.1'
 gem 'fog', '0.5.2'
@@ -44,7 +45,7 @@ group :development do
   #gem 'sqlite3-ruby', '1.3.2', :require => 'sqlite3'
   gem 'rails3-jquery-autocomplete'
   gem 'faker', '0.3.1'
- # gem 'mongrel', '1.2.0.pre2'
+#  gem 'mongrel', '1.2.0.pre2'
  end
 
 group :test do

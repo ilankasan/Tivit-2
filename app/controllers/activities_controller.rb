@@ -1,27 +1,14 @@
 class ActivitiesController < ApplicationController
   before_filter :authenticate_account!
-  after_filter :update_view_status, :only => :show 
+  after_filter  :update_view_status,   :only => :show
+  after_filter  :send_email_create_tivit, :only => :create_tivit 
+   
   # [Yaniv] This line disables the CSRF protection by rails when "post" is done outside of the controller (in our case my jQuery stuff). It's not recommended
   # but to make this work I need to do something in the code which I need to continue to research
   # See details here: http://stackoverflow.com/questions/3558816/what-does-this-mean-actioncontrollerinvalidauthenticitytoken
   # this solution didn't work for me: http://stackoverflow.com/questions/1245618/rails-invalidauthenticitytoken-for-json-xml-requests
   skip_before_filter :verify_authenticity_token
   
-   def old_create_activity(params, type)
-   #	puts "------>>>>>>>>>>>>  create_activity"
-   	
-   	params["due"] = parse_date(params,"due")
-   	params["owner_id"] = current_account.user.id
-   	params["status"]   = "in-progress"
-   	params["activity_type"]     = "activity"
-
-   	#puts "Inspect Params " +params.inspect
-   	@activity = current_account.user.add_my_ativity(params)    
-#Updateting status as Reviewed. New tivits should for current user should be at REviewed status
-	#@activity.update_status_after_show(current_account.user)
-   	#current.ueractivities.create(params)
- 	
-   end
    
    def create
 
@@ -31,9 +18,6 @@ class ActivitiesController < ApplicationController
     account_session[:flash_error] = "Activity name cannot be empty"
     #render  '_activity_form'
     redirect_to root_path
-    #render 'pages/home'
-    ##render root_path
-    
     return
   end
 	params["due"] = adjust_date_to_end_of_day(parse_date(params,"due"))
@@ -274,24 +258,6 @@ class ActivitiesController < ApplicationController
   
   def create_tivit
   	puts "--------------->> create Tvit"
-    #@activity = Activity.find_by_id(params[:id])
-  	#puts "activity = "+@activity.inspect
-  	#if(params[:name] == nil || params[:name].empty?)
-  	#   flash[:failed] = "fuck you"
-  	#   puts " name is empty"
-  	#   redirect_to root_path
-  	#   puts "after redirect"
-  	#   return
-  	#   puts "after return"
-         
-  	  # respond_to do |format|
-         #format.html { redirect_to @activity }
-       #  format.js
-        # puts "--------------->> after responding to Ajax"
-     # end
-     #return 
-  	#end
-  	
   	  
   	due = parse_date(params,"due")
   	
@@ -339,15 +305,38 @@ class ActivitiesController < ApplicationController
        puts "--------------->> after responding to Ajax"
     end
     
-    if(@invited_user.get_id != current_account.user.get_id)
+  #  if(@invited_user.get_id != current_account.user.get_id)
     
-      UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
-    end
-    #puts "--------------->> after sending email"
-    
-    #redirect_to root_path
+   #   UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
+    #end
+  
+    puts "--------------->> after sending email"
+    return
   end
 
+
+
+  def  send_email_create_tivit
+    puts "---->>>> sending email send_email_new_tivit <<< ----"
+  #  max = 200000
+  #  test1 = Array(1..max)
+  #  i = 0
+  #  puts "kkk"
+  #  test1.each do |t|
+  #    puts max - i
+  #    i=i+1
+  #  end
+
+     if(@invited_user.get_id != current_account.user.get_id)
+    
+      #UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
+      
+      EMAIL_QUEUE << {:email_type => "new_tivit_email", :assignee => @invited_user, :assigner => current_account.user,:tivit =>@activity}
+    end
+    puts "<<<  ---- after sending email send_email_new_tivit"
+  
+  end
+  
   def done
     
     @activity = Activity.find(params[:id])
@@ -538,13 +527,8 @@ puts " Reasign tivit "+@tivit.name
        format.js
        puts "--------[*** reassign *** ----->> after responding to Ajax"
     end
-    
-    
-    
   end
-  
-
- 
+   
  def remind
    
     puts "-----------    remind ---------------"  
