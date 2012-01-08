@@ -318,15 +318,7 @@ class ActivitiesController < ApplicationController
 
   def  send_email_create_tivit
     puts "---->>>> sending email send_email_new_tivit <<< ----"
-  #  max = 200000
-  #  test1 = Array(1..max)
-  #  i = 0
-  #  puts "kkk"
-  #  test1.each do |t|
-  #    puts max - i
-  #    i=i+1
-  #  end
-
+  
      if(@invited_user.get_id != current_account.user.get_id)
     
       #UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
