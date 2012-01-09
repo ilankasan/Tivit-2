@@ -114,7 +114,8 @@
 	
 <%end%>
 
-	<input type="hidden" activityid="<%= tivit.get_parent.id %>">
+	<input type="hidden" activityid="<%= tivit.get_parent.id %>" tivitid="<%= tivit.id %>">
+
 	
 	<div class="status">
 		<div class="icon"></div>
@@ -172,12 +173,16 @@
 		              		<%= tivit_owner_name %> 
 							<font color="red"><%= status_line_middle %></font>
 							<% if tivit.get_parent.get_owner.id == current_account.user.get_id || tivit.get_invited_by.get_id == current_account.user.get_id %> 
+								<span class="accept-proposed">accept</span>
+								<!-- 
 								<%= link_to "accept",	:controller  => "activities",
 					    											:action      => "change_tivit_status",
 					    											:status      => "accept_date",
 					    											:id          => tivit.id, 
 					  							    				:confirm     => "Are you sure you want to accepet new date " +tivit.name+"?",
 					                                				:title       => tivit.name %> 
+					          
+					          -->
 					    	<% end %>
 					    <!-- overdue -->
 					    <% elsif tivit.due != nil && tivit.due.localtime.end_of_day < Time.now.end_of_day %>

@@ -106,6 +106,7 @@ GEM
       nokogiri (>= 1.4.4)
       ruby-hmac
     formatador (0.2.1)
+    gem_plugin (0.2.3)
     girl_friday (0.9.7)
       connection_pool (~> 0.1.0)
     gravatar_image_tag (1.0.0.pre2)
@@ -120,6 +121,8 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.17.2)
+    mongrel (1.2.0.pre2-x86-mingw32)
+      gem_plugin (~> 0.2.3)
     multi_json (1.0.4)
     multi_xml (0.3.0)
     multipart-post (1.1.4)
@@ -208,6 +211,7 @@ DEPENDENCIES
   fog (= 0.5.2)
   girl_friday
   gravatar_image_tag (= 1.0.0.pre2)
+  mongrel (= 1.2.0.pre2)
   mysql2 (< 0.3)
   nokogiri
   omniauth!

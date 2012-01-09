@@ -2,7 +2,11 @@ class PagesController < ApplicationController
   #before_filter :authenticate_account!
   before_filter :authenticate_account!, :except=>[:home1]
   skip_before_filter :authenticate_account!, :only => [:home1]                                                 
- 
+  # [Yaniv] This line disables the CSRF protection by rails when "post" is done outside of the controller (in our case my jQuery stuff). It's not recommended
+  # but to make this work I need to do something in the code which I need to continue to research
+  # See details here: http://stackoverflow.com/questions/3558816/what-does-this-mean-actioncontrollerinvalidauthenticitytoken
+  # this solution didn't work for me: http://stackoverflow.com/questions/1245618/rails-invalidauthenticitytoken-for-json-xml-requests
+  skip_before_filter :verify_authenticity_token
    
   def activities
     @title = "Activities"

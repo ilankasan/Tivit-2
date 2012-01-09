@@ -548,7 +548,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
         text-align:center;
         padding-left:0px;
         line-height:14px;
-        margin: 2px 0 -2px 2px;
+        margin: 2px 0 -2px 0px;
     }
     /*
     .tvit-day .date .text,.tivits .calendar .text{
@@ -565,7 +565,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
         font-size:18px;
         text-align:center;
         font-weight:bold;
-        padding-left:4px;
+        padding-left:0px 0px 0px 0px;
         line-height:21px;
     }
     .tvit-day .earlyDay .week {
@@ -741,6 +741,13 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
         font-size:11px;
         margin:0;
     }
+    /* used for accept link on _tivit_db style */
+     .tvit-list .record .text .accept-proposed {
+        color:#8A8AD8;
+        font-size:11px;
+        margin:0;
+    }
+  
     .tvit-list .record .text .proposed {
         color:red;
         font-size:11px;
@@ -1121,7 +1128,7 @@ a img{border:none;}
 	color: #969696;
 	font-size:18px;padding-left:7px;
 	font-weight: bold;
-	padding: 0px 12px 2px 0px;
+	padding: 0px 13px 2px 0px;
 }
 .tivits .past .week{
 	color: #969696;
@@ -1163,6 +1170,8 @@ a img{border:none;}
 .tivits li ul.list .text .start, .fupload{padding:0 0 2px;border-bottom: 1px dotted #EAEAEA;color: #8D8D8D;}
 .start.attention{padding-left:26px !important;background:url(../images/status_attention.png) no-repeat;}
 .start.complete{padding-left:26px !important;background:url(../images/status_complete_small.png) no-repeat;}
+.start.accepted{padding-left:26px !important;background:url(../images/status_accepted_small.png) no-repeat;}
+
 .request{font-size:11px;}
 .request span{color:red;}
 .request a{color:#2525f8;display:inline-block;padding:0 6px;}
@@ -1207,7 +1216,7 @@ a img{border:none;}
 	.post-style textarea{color:#242424;font-style:normal;}
 	
 	
-.post .post-button{display:block;width:auto;height:22px;margin:10px 0 0;padding:0 12px 0px;background:#61B010;color:#fff;
+.post .post-button{display:block;width:auto;height:22px;margin:10px 0 0;padding:2px 14px 14px 12px;;background:#61B010;color:#fff;
 	font:normal bold 13px/13px Arial, 'Liberation Sans', FreeSans,sans-serif;border: 1px solid #C0C0C0;}
 .new-record{border:1px solid #ffcc00;}
 .attach-file{display:block;width:70px;padding:0 0 0 27px;line-height:1.6;

@@ -479,6 +479,7 @@ function closeNewActivity(){
 // Scripts for Activity Page
 // from Irina Sorokina (sorokina333@gmail.com)
 jQuery(document).ready(function($){
+	
 	var description = $('.description p span').text();
 	
 	console.log('in Irina DOM Ready function');  
@@ -736,6 +737,63 @@ jQuery(document).ready(function($){
 		return false;
 	});
 	
+	jQuery('.grey .proposed_date').live('click', function(){
+	 	console.log ("[Yaniv] status line accept clicked.");
+	 	return false;
+	 	
+	});
+	/////////////////////////////////////////////////////////////////////////
+	// accept new proposed date in tivit status line
+	jQuery('.grey .accept-proposed').hover(		
+		function() {
+	      //$(this).css('cursor','pointer');
+	      console.log ("[Yaniv] status line accept hovered.");
+	      $(this).css('text-decoration','underline');
+	      $(this).css('cursor','pointer');
+	   },
+	   function() {
+	   	console.log ("[Yaniv] status line accept un-hovered.");
+	      $(this).css('text-decoration','none');
+	      $(this).css('cursor','none');
+	   }	 	
+	);
+	// Accept clicked
+	jQuery('.grey .accept-proposed').live('click', function(){
+	 	console.log ("[Yaniv] status line accept clicked.");	
+		
+		var record = jQuery(this).parents('.record');
+		var tivitID = record.find("input").attr("tivitid");
+    	console.log ("[Yaniv] accept new date tivitID=", tivitID);
+			
+		var actionPost = 'action="/acceptdate?id=' + tivitID + '&method=put"' + ' accept-charset="UTF-8">';
+		
+		console.log ("[Yaniv] action=", actionPost);
+		var confirmDialogTitle = "Accept new proposed date";
+		
+		var confirmDialog =	'<div class="popup" id="confirmDialog">'	+
+    								'<div class="loading-popup"></div>' + 
+									'<form id="confirmDialogForm" method="post" class="confirmPopup" ' + actionPost +
+											'<h1>' + confirmDialogTitle + '</h1>' +
+											'<p><textarea rows="10" cols="10" id="comment" name="comment" placeholder="- enter a message here if you\'d like... -"/></p>' +
+											'<div class="request"><div id="popup-cancel" class="form-button">Cancel</div><input class="form-button" type="submit" name="commit" value="OK"/></div>' +
+									'</form>' +
+									'<div id="popup-close" class="close"></div>' +
+								'</div>';
+			 
+    		 jQuery('#new-activity-background').addClass('tempHide');
+    		 // Show overlay screen
+    		 jQuery('#activity-overlay').show();
+    		 jQuery(this).parents('.record').append(confirmDialog);
+    		 // Center the dialog relative to where dropdown was clicked. Default for popups is 70px because of the add tivit window.
+    		 $('#confirmDialog').css('top', '-70px');
+    		 // by defaults, all popups are display=none which means they don't show. Let's make sure this popup shows up! 
+    		 $('#confirmDialog').css('display', 'block');
+		
+		return false;
+ 	
+	});
+	/////////////////////////////////////////////////////////////////////////
+		
 	//Functions
 	function showLess(list){
 		var commentsCount = list.length - 2;
