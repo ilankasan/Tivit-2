@@ -57,8 +57,8 @@ class ActivitiesController < ApplicationController
   def destroy
     
     
- puts "in destroy"
-    puts params.inspect
+   puts "in destroy"
+    #puts params.inspect
     @activity = Activity.find(params[:id])
     
   #ilan: Need to send an email notifying all participants the activity and tivit
@@ -230,9 +230,9 @@ class ActivitiesController < ApplicationController
     puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   On It   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  
     @activity = Activity.find(params[:id])
     puts "Activity is " + @activity.name  
-   
+    @comment = params["comment"]   
     @activity.update_tivit_user_status_onit(current_account.user,params["comment"])
-    log_action_as_comment(@activity,params["comment"],"OnIt",current_account.user)
+    log_action_as_comment(@activity,@comment,"OnIt",current_account.user)
 
   
     #redirect_to  @activity.get_parent
@@ -243,7 +243,9 @@ class ActivitiesController < ApplicationController
      end
     if(current_account.user != @activity.get_invited_by)
 # do not send email if the inviter (assigner)is the the assignee  
-      UserMailer.tivit_status_change_onit_email(current_account.user, params["comment"],@activity).deliver
+   #   UserMailer.tivit_status_change_onit_email(current_account.user, params["comment"],@activity).deliver
+      EMAIL_QUEUE << {:email_type => "tivit_status_change_onit_email", :assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}
+      
     end
 
   end

@@ -25,7 +25,7 @@ class Tivitcomment < ActiveRecord::Base
 	belongs_to :activity
 	belongs_to :user
 	
-	validates :comment,  :presence => true
+	#validates :comment,  :presence => true
      
      
   # Returns true is this tivit was reviewed in the past and false if did not.

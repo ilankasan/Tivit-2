@@ -6,42 +6,7 @@ class UserMailer < ActionMailer::Base
            :bcc => "tiviti.mailer.cc@gmail.com"
    #   :return_path => 'system@example.com'
         
-   
-  def old_dispatcher(params)
-    puts ">>>>>>>>>>>> email dispatcher 6666664444444444"
-  #  puts params.inspect
-    
-    #self.new_tivit_email(params[:assignee], params[:assigner],params[:tivit]).deliver
-   # self.send(params[:email_type],params[:assignee], params[:assigner],params[:tivit]).deliver
-    
-   
-    #puts *params.inspect
-    #self.send(params[:email_type],params[:assignee], params[:assigner],params[:tivit]).deliver
-    self.new_tivit_email(params[:assignee], params[:assigner],params[:tivit]).deliver
-    
-    
-    #self.send(params[:email_type],params).deliver
-    #self.new_tivit_email(params).deliver
-   
-    
-    
-    puts "<<<<<<<<<<<< email dispatcher 6666666644444444" 
-    
-  #  case test
-  #  when ("new_tivit") # On Deck
-      #  @tivits_ondeck             = get_activities_i_participate(current_user_id)
-              
-   #   when ("2") # my activities
-    #    puts "show my activities"
-     #   @tivits_ondeck             = get_my_activities(current_user_id)
-        
-    #  else
-     # end
-# 
-  end
-
-
-   def tivit_propose_new_date_email(assignee, assigner, tivit,comment )
+    def tivit_propose_new_date_email(assignee, assigner, tivit,comment )
 #107 Tivit - New Date Request. When: CAssignee requests alternate due date, Who: Assigner
     puts "tivit_propose_new_date_email"
          
@@ -177,9 +142,22 @@ puts "in activity_completed_email. sending to "+user.get_email
   end
   
   
+  def tivit_status_change_onit_email(params)
+#105 Tivit - Started. When: Assignee changes status to "I'm on it", Who:  Assigner
+ 
+    @assigner   = params[:assigner]
+    @assignee   = params[:assignee]
+    @tivit      = params[:tivit]
+    @comment    = params[:comment]
+    puts "---->>>> sending email to "+@assigner.get_email
+    mail(:from => create_from_str(@assignee.get_name),:to => @assigner.get_email,:reply_to => @assignee.get_email,
+         :subject => "tiviti: "+@assignee.name+" has accepted your request for help with '"+@tivit.name+"'" )
+     
+  end
+ 
   
   
-  def tivit_status_change_onit_email(assignee, comment,tivit)
+  def old_tivit_status_change_onit_email(assignee, comment,tivit)
 #105 Tivit - Started. When: Assignee changes status to "I'm on it", Who:  Assigner
  
     @assigner    = tivit.get_invited_by

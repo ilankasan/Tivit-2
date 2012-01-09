@@ -83,7 +83,20 @@ end
 
 
  
-
+#Clean comment to be less than 256 chars and no cariege returns
+  def clean_comment (comment)
+       unless (comment == nil || comment.lstrip.empty?) 
+          comment_without_carriage = comment.gsub(/\r/,"")
+          comment_without_carriage = comment_without_carriage.gsub(/\n/," ")
+      
+          if (comment_without_carriage.size > 255)
+            comment_without_carriage = comment_without_carriage[0,255]
+          end
+          return comment_without_carriage
+      end
+      return comment
+   end  
+  
 
 ###################################################### 
 # Add any change of user status to a comment in the activity feed 
@@ -92,11 +105,9 @@ end
 
     def log_action_as_comment(activity,comment,action,user)
       puts "log_action_as_comment"
-    	params = {"user_id" =>user.id,"comment" => comment,"action" => action}
-    	#params["user_id"] = user.id
-    	#params["comment"] = comment
-    	#params["action"]  = action
-    	puts "log_action_as_comment => "+params.inspect
+    	params = {"user_id" =>user.id,"comment" => clean_comment(comment),"action" => action}
+    	
+    #	puts "log_action_as_comment => "+params.inspect
       
     	activity.tivitcomments.create(params)
 	  end

@@ -730,7 +730,7 @@ if(last_reviewed != nil)
   end
 
    tivit_user_status.status_id = status
-   tivit_user_status.comment = comment
+   #tivit_user_status.comment = clean_comment(comment)
    tivit_user_status.last_status_change = Time.now.utc
    tivit_user_status.save()
     return tivit_user_status.status_id
