@@ -288,6 +288,7 @@ class ActivitiesController < ApplicationController
 	  
    	
 	  current_account.user.addTwoWayContact(@invited_user)
+	  params["description"] = clean_comment(params["description"]) 
     @tivit = @invited_user.activities.create(params)
     @tivit.get_parent
       @tivit.update_tivit_user_status_reviewed(current_account.user,"")
@@ -297,7 +298,7 @@ class ActivitiesController < ApplicationController
     end
     
 	  
-	  log_action_as_comment(@tivit,params["description"],"TivitDetails",current_account.user)
+	  log_action_as_comment(@tivit,params["description"] ,"TivitDetails",current_account.user)
 #ilan: the line below is temporary since page assumes the name activity
 	 @activity = @tivit    
    #respond with Ajax when needed...
