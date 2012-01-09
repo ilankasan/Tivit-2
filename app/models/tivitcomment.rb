@@ -25,9 +25,8 @@ class Tivitcomment < ActiveRecord::Base
 	belongs_to :activity
 	belongs_to :user
 	
-	#validates :comment,  :presence => true
-     
-     
+	
+	   
   # Returns true is this tivit was reviewed in the past and false if did not.
   # The way it is determined is by looking at when the user last reviewed the activity page and the date the comment creates  
   def wasReviewed?(user)

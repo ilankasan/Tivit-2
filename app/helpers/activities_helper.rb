@@ -41,18 +41,8 @@ module ActivitiesHelper
   def validate_user_allowed_to_close_activity (activity, user)
     puts "validating that user "+user.get_name+" can close activity "+activity.get_name
     return (user.get_id == activity.get_owner_id)
-      #return true
-    #else 
-    #  puts "-----------------------------------------------------"
-    #  puts "Access Denied!!!!!!!!!!!!!!!!!!!!!!!!!"
-    #  puts "-----------------------------------------------------"
-      
-     # return false
-    #end 
+   
   end
-  
-  
-  
   
   
   def user_by_email (email_input)
@@ -101,8 +91,6 @@ end
 ###################################################### 
 # Add any change of user status to a comment in the activity feed 
 ######################################################
-
-
     def log_action_as_comment(activity,comment,action,user)
       puts "log_action_as_comment"
     	params = {"user_id" =>user.id,"comment" => clean_comment(comment),"action" => action}

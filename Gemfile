@@ -5,7 +5,7 @@ gem 'faker', '0.3.1'
 gem 'excon', '0.5.6'
 gem 'daemons', '1.1.0'
 
-gem 'girl_friday'
+#gem 'girl_friday'
 
 gem 'carrierwave', '0.5.1'
 gem 'fog', '0.5.2'
