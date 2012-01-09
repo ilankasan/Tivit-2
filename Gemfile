@@ -26,7 +26,7 @@ group :production do
  # gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git' , :tag => 'v0.3.0.rc3'
  #gem 'devise', '1.4.5'
   gem 'mysql2', '< 0.3'
-  gem 'nokogiri'
+ # gem 'nokogiri'
 #Use unicorn as the web server
  #  gem 'unicorn'
 
