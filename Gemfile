@@ -27,6 +27,9 @@ group :production do
  #gem 'devise', '1.4.5'
   gem 'mysql2', '< 0.3'
   gem 'nokogiri'
+#Use unicorn as the web server
+ #  gem 'unicorn'
+
 
 
 
@@ -45,7 +48,7 @@ group :development do
   #gem 'sqlite3-ruby', '1.3.2', :require => 'sqlite3'
   gem 'rails3-jquery-autocomplete'
   gem 'faker', '0.3.1'
-#  gem 'mongrel', '1.2.0.pre2'
+ # gem 'mongrel', '1.2.0.pre2'
  end
 
 group :test do

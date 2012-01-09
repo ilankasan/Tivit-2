@@ -50,9 +50,14 @@ class TivitcommentsController < ApplicationController
     puts "sending comment notificaiton "
     comentors = @activity.get_all_tivit_commenters_excluding_user(current_account.user)
     
-    send_to = send_to + comentors
+    send_to = (send_to + comentors).uniq
     
-    UserMailer.notify_comment_added_to_tivit(current_account.user, @comment.comment,@activity, send_to.uniq).deliver
+    
+    EMAIL_QUEUE << {:email_type => "notify_comment_added_to_tivit", :commenter => current_account.user,:comment =>@comment.comment, :tivit =>@activity,:send_to => send_to}
+  
+    #notify_comment_added_to_tivit(commenter, comment,activity, send_to)
+    
+   # UserMailer.notify_comment_added_to_tivit(current_account.user, @comment.comment,@activity, send_to.uniq).deliver
   else
     puts "not sending notificaiton"
   end

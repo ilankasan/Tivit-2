@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
   before_filter :authenticate_account!
   after_filter  :update_view_status,   :only => :show
-  after_filter  :send_email_create_tivit, :only => :create_tivit 
+  #after_filter  :send_email_create_tivit, :only => :create_tivit 
    
   # [Yaniv] This line disables the CSRF protection by rails when "post" is done outside of the controller (in our case my jQuery stuff). It's not recommended
   # but to make this work I need to do something in the code which I need to continue to research
@@ -270,16 +270,14 @@ class ActivitiesController < ApplicationController
 	 
     invitees = params["invitees"]	
    
-    #-----------------------------------------------------
     # if no invitee provided, assign tivit to current user
     if invitees.empty? 
-      puts "[Yaniv] invitees is empty!"
+    #  puts "[Yaniv] invitees is empty!"
       puts "[Yaniv] current_account user email=" + current_account.user.get_email
       @invited_user = current_account.user
     else
       @invited_user = user_by_email(invitees.strip)
     end
-    #-----------------------------------------------------
     
 	  params["owner_id"] =  @invited_user.id
 	  params["activity_type"] = "tivit"
@@ -288,45 +286,30 @@ class ActivitiesController < ApplicationController
 	  
    	
 	  current_account.user.addTwoWayContact(@invited_user)
-    @activity = @invited_user.activities.create(params)
-      @activity.update_tivit_user_status_reviewed(current_account.user,"")
+    @tivit = @invited_user.activities.create(params)
+    @tivit.get_parent
+      @tivit.update_tivit_user_status_reviewed(current_account.user,"")
     #Change status to on it is tivit assigned to self. Ilan - optimize this section to one function
     if(@invited_user.get_id == current_account.user.get_id)
-      @activity.update_tivit_user_status_onit(current_account.user,"")
+      @tivit.update_tivit_user_status_onit(current_account.user,"")
     end
     
 	  
-	  log_action_as_comment(@activity,params["description"],"TivitDetails",current_account.user)
-	#     
+	  log_action_as_comment(@tivit,params["description"],"TivitDetails",current_account.user)
+#ilan: the line below is temporary since page assumes the name activity
+	 @activity = @tivit    
    #respond with Ajax when needed...
    respond_to do |format|
        format.html { redirect_to root_path }
        format.js
        puts "--------------->> after responding to Ajax"
     end
-    
-  #  if(@invited_user.get_id != current_account.user.get_id)
-    
-   #   UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
-    #end
-  
-    puts "--------------->> after sending email"
-    return
-  end
-
-
-
-  def  send_email_create_tivit
-    puts "---->>>> sending email send_email_new_tivit <<< ----"
-  
      if(@invited_user.get_id != current_account.user.get_id)
-    
-      #UserMailer.new_tivit_email(@invited_user,current_account.user,@activity).deliver
-      
-      EMAIL_QUEUE << {:email_type => "new_tivit_email", :assignee => @invited_user, :assigner => current_account.user,:tivit =>@activity}
-    end
-    puts "<<<  ---- after sending email send_email_new_tivit"
-  
+      EMAIL_QUEUE << {:email_type => "new_tivit_email", :assignee => @invited_user, :assigner => current_account.user,:tivit =>@tivit}
+      #UserMailer.new_tivit_email(@invited_user,current_account.user,@tivit).deliver
+     end
+    puts "--------------->> after sending email"
+       
   end
   
   def done
@@ -374,7 +357,7 @@ class ActivitiesController < ApplicationController
        format.html { redirect_to @activity  }
        format.js {}
        puts "--------[change status to done! activities controller]------->> after responding to Ajax"
-   end
+    end
      
   end
 

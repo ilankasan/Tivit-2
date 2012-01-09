@@ -1,11 +1,14 @@
 class Activity < ActiveRecord::Base
   
-  attr_accessible :name, :description, :status, :due,:invited_by,:owner_id, :users, :completed_at, :summary,:activity_type, :parent_id,:activity_name, :documents
+  attr_accessible :name, :description, :status, :due,:invited_by,:owner_id, :users, :completed_at, :summary,:activity_type, :parent_id,:activity_name, :documents, :parent
   validates :name, :presence => true
 # each Tivit has many participants
   has_and_belongs_to_many :users
   has_and_belongs_to_many :documents
-
+  
+  has_one :parent, :class_name => "Activity", :primary_key => "parent_id", :foreign_key => "id"
+  
+  
 
 # each tivit has many comments
   has_many :tivitcomments
@@ -62,11 +65,8 @@ class Activity < ActiveRecord::Base
   end
   
   def get_parent
-  
-   if(self.parent_id ==nil)
-   return nil
-   end
-   return Activity.find(self.parent_id)
+  #  puts "^^^^^^ in get parent ^^^^^^^"
+   return parent
   end
 
 #return a unique array of all users who commented on this tivit
@@ -75,14 +75,8 @@ class Activity < ActiveRecord::Base
 #return array of users excluding user
      users = User.joins(:tivitcomments).where("tivitcomments.activity_id = ? AND users.id = tivitcomments.user_id AND NOT tivitcomments.user_id = ? ",self.id, user.get_id)
    #  puts "users = "+users.inspect
-    # puts "users size is = "+users.size.to_s
      users = users.uniq
-     #puts "users size is = "+users.size.to_s
-     
-     
-     
      return users
-     
    end
    
 

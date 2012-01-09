@@ -7,13 +7,25 @@ class UserMailer < ActionMailer::Base
    #   :return_path => 'system@example.com'
         
    
-  def dispatcher(params)
-    puts ">>>>>>>>>>>> email dispatcher 666666"
-   # puts params.inspect
+  def old_dispatcher(params)
+    puts ">>>>>>>>>>>> email dispatcher 6666664444444444"
+  #  puts params.inspect
     
     #self.new_tivit_email(params[:assignee], params[:assigner],params[:tivit]).deliver
-    self.send(params[:email_type],params[:assignee], params[:assigner],params[:tivit]).deliver
-    puts "<<<<<<<<<<<< email dispatcher 66666666" 
+   # self.send(params[:email_type],params[:assignee], params[:assigner],params[:tivit]).deliver
+    
+   
+    #puts *params.inspect
+    #self.send(params[:email_type],params[:assignee], params[:assigner],params[:tivit]).deliver
+    self.new_tivit_email(params[:assignee], params[:assigner],params[:tivit]).deliver
+    
+    
+    #self.send(params[:email_type],params).deliver
+    #self.new_tivit_email(params).deliver
+   
+    
+    
+    puts "<<<<<<<<<<<< email dispatcher 6666666644444444" 
     
   #  case test
   #  when ("new_tivit") # On Deck
@@ -61,32 +73,52 @@ class UserMailer < ActionMailer::Base
    end
    
    
-   def new_tivit_email(assignee, assigner,tivit)
+   def new_tivit_email(params)
 #101 Tivit - New. When: Assigner creates tivit, Who: Assignee
+    puts "----------------------------------------"                                                   
+    puts "really new "
+    puts "----------------------------------------"                                                   
                                                       
-    @invitee   = assignee
-    @inviter   = assigner
-    @tivit     = tivit
+    @invitee   = params[:assignee]
+    @inviter   = params[:assigner]
+    @tivit     = params[:tivit]
     
-    mail(:from => create_from_str(assigner.get_name),:reply_to => assigner.get_email,:to => assignee.get_email,
-         :subject => "tiviti: "+assigner.get_name+" needs your help with "+tivit.name)
+    mail(:from => create_from_str(@inviter.get_name),:reply_to => @inviter.get_email,:to => @invitee.get_email,
+         :subject => "tiviti: "+@inviter.get_name+" needs your help with "+@tivit.name)
          
-         
+ #def old_new_tivit_email(assignee, assigner,tivit)
+        
   end
+    
+
+ def notify_comment_added_to_tivit(params)
+#103 Tivit - New Comment(s). When: Comment added (non-self), Who: Assigner, Assignee, Commenters  Ilan: sent only to asigner if asigne comments
+puts ">>>>>>>>>>    notify_comment_added_to_tivit "
+    @commenter  = params[:commenter]
+    @comment    = params[:comment]
+    @tivit      = params[:tivit]
+    toemail     = create_recipient_list(params[:send_to])
+    
+    mail(:from => create_from_str(@commenter.get_name),:reply_to => @commenter.get_email,:to => toemail,
+         :subject => "tiviti: You have a new comment for '"+@tivit.get_name+"'" )
+puts "<<<<<<<<<<<<    notify_comment_added_to_tivit "
+    
+ end
 
 
- def notify_comment_added_to_tivit(commentor, comment,activity, send_to)
+def old_notify_comment_added_to_tivit(commenter, comment,tivit, send_to)
 #103 Tivit - New Comment(s). When: Comment added (non-self), Who: Assigner, Assignee, Commenters  Ilan: sent only to asigner if asigne comments
 
     @commenter  = commentor
     @comment    = comment
-    @tivit      = activity
+    @tivit      = tivit
     toemail     = create_recipient_list(send_to)
     
     mail(:from => create_from_str(commentor.get_name),:reply_to => commentor.get_email,:to => toemail,
          :subject => "tiviti: You have a new comment for '"+@tivit.name+"'" )
     
  end
+
 
  
  def reassign_tivit(old_owner, new_owner, comment,tivit)
