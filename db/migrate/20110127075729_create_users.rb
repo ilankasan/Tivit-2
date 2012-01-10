@@ -4,7 +4,6 @@ class CreateUsers < ActiveRecord::Migration
       t.string  :name
       t.string  :clone_email
       t.integer :account_id
-      #t.string  :salt
       t.boolean :admin    , :default => false
       t.boolean :is_active, :default => true
       t.timestamps

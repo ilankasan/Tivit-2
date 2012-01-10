@@ -105,25 +105,27 @@ def create
               account.authentication_services.build(:provider => provider, :uid => uid, :uname => name, :uemail => email)
               
               # finding if a user already exists for this account. Ilan: need to create one method for this
-              @users = User.where("is_active = false AND clone_email = ?",email)
-			  @user = @users[0] if @users.size > 0
-	
-			  puts "user = "+@user.inspect
-			  if(@user == nil)
-					puts "user == nil"
-					account.user = User.new({"name"=>name})
-				else
-					puts "user != nil"
-				if(account.user == nil)
-					puts " account.user == nil"
-					@user.activate_user
-					@user.name    = name
-					@user.save
-					account.user = @user
-				else
-					puts " account.user != nil"
-				end
-			end
+              #@users = User.where("is_active = false AND clone_email = ?",email)
+              @users = User.where(:is_active => false,  :clone_email => email)
+              
+      			  @user = @users[0] if @users.size > 0
+      	
+			        puts "user = "+@user.inspect
+      			  if(@user == nil)
+      					puts "user == nil"
+      					account.user = User.new({"name"=>name})
+      				else
+      					puts "user != nil"
+      				if(account.user == nil)
+      					puts " account.user == nil"
+      					@user.activate_user
+      					@user.name    = name
+      					@user.save
+      					account.user = @user
+      				else
+      					puts " account.user != nil"
+      				end
+      			end
     		            # do not send confirmation email, we directly save and confirm the new record
     		  account.user.activate_user
 					

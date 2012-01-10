@@ -136,6 +136,13 @@ ActiveRecord::Schema.define(:version => 20111107061249) do
     t.datetime "updated_at"
   end
 
+  create_table "user_activities", :force => true do |t|
+    t.integer  "activity_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "user_preferences", :id => false, :force => true do |t|
     t.integer  "user_id"
     t.integer  "preference_id"

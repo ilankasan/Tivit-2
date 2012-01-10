@@ -43,10 +43,7 @@ class User < ActiveRecord::Base
 
   belongs_to :account 
   
-  
-  
- 
-  
+   
   validates :name,  :presence => true,
                     :length   => { :maximum => 50 }
    
@@ -78,7 +75,10 @@ end
     items = items.where(:user_id => current_account.user.id)
   end
   
-  
+            #@users = User.where("is_active = false AND clone_email = ?",email)
+        #@users = User.where(:is_active => false,  :clone_email => email)
+    
+    #get_user
 
   
   def deactivate_user

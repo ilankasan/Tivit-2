@@ -45,6 +45,8 @@ class Activity < ActiveRecord::Base
     return self.description
   end
   
+  
+  
   def add_user_invitee(user)
  #adding the user to the existing users on the task
     self.users << user
@@ -68,6 +70,20 @@ class Activity < ActiveRecord::Base
   #  puts "^^^^^^ in get parent ^^^^^^^"
    return parent
   end
+
+
+  def self.get_num_of_incoming_tivits(currentuser)
+# Returns tivits i own and required my response or in play (awaiting the assiger to response with my proposal).
+   results = self.joins(:tivit_user_statuses).where("activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id
+             AND ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",currentuser.id).count
+
+    return results
+
+    #return 2 
+  end
+
+
+
 
 #return a unique array of all users who commented on this tivit
    def get_all_tivit_commenters_excluding_user (user)
