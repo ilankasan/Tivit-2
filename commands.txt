@@ -138,7 +138,7 @@ git push heroku -app staging
 You will receive an email with instructions about how to reset your password in a few minutes.
 
 $ git add .
-git commit -am "1-09-12 - Async email new tivit 1.0"
+git commit -am "1-01-12 - Incoming counter + yanis changes"
 
 git checkout master
 git merge updating-users
