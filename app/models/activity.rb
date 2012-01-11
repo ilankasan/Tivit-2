@@ -75,10 +75,18 @@ class Activity < ActiveRecord::Base
   def self.get_num_of_incoming_tivits(currentuser)
 # Returns tivits i own and required my response or in play (awaiting the assiger to response with my proposal).
    results = self.joins(:tivit_user_statuses).where("activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id
-             AND ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",currentuser.id).count
+             AND activities.id = tivit_user_statuses.activity_id AND ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",currentuser.id).count
 
-    return results
-
+   return results
+   "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
+                 WHERE NOT activities.status        = 'Completed'  
+                 AND  activities.activity_type      = 'activity' 
+                 AND  tivits.owner_id               = id   
+                 AND  tivits.parent_id              = activities.id  
+                 AND  tivits.owner_id               = tivit_user_statuses.user_id 
+                 AND  tivits.id                     = tivit_user_statuses.activity_id 
+                 AND  NOT (tivit_user_statuses.status_id = 'Done' OR tivit_user_statuses.status_id = 'OnIt')
+                 ORDER BY activities.due"
     #return 2 
   end
 
