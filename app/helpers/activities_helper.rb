@@ -2,12 +2,16 @@ module ActivitiesHelper
 
 
   def notify_users_tivit_done(send_to,assigee,comment, tivit)
+    
      send_to.each do |to_user|
      puts "sending done notification to "+to_user.get_email
      
-         UserMailer.user_tivit_status_change_done_email(assigee,to_user,comment,tivit).deliver
+     
+         #UserMailer.user_tivit_status_change_done_email(assigee,to_user,comment,tivit).deliver
+         EMAIL_QUEUE << {:email_type => "user_tivit_status_change_done_email", :assigner => to_user , :assignee => assigee,:comment =>comment, :tivit =>tivit}
      end      
       
+ 
   end
     
   def validate_user_allowed_to_propose_date (activity, user)

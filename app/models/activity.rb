@@ -721,20 +721,20 @@ private
  def create_status(user, status)
   tivit_status = user.tivit_user_statuses.new()
   if(false)
-  puts " ---------------- Changing status ------------------------- "
-  if(tivit_status.status_id == nil)
-  puts " nil -->>> " + status
-  else
-  puts tivit_status.status_id + "-->>> " + status
-  end
+    puts " ---------------- Changing status ------------------------- "
+    if(tivit_status.status_id == nil)
+      puts " nil -->>> " + status
+    else
+      puts tivit_status.status_id + "-->>> " + status
+    end
   end
  
-  tivit_status.status_id = status
-  tivit_status.activity_id = self.id
-  tivit_status.save()
-  return tivit_status
-  
-  end
+    tivit_status.status_id = status
+    tivit_status.activity_id = self.id
+    tivit_status.save()
+    return tivit_status
+    
+ end
  
  
  def change_user_status(user, status,comment, proposed_date, last_reviewed, assigned_to)
