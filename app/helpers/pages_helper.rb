@@ -64,7 +64,7 @@ module PagesHelper
 #Completed that had new comments on it
 
 
-def get_incoming_tivits(current_user_id)
+def get_activities_with_incoming_tivits(current_user_id)
   
   sql_activities_i_with_incomming_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status        = 'Completed'  
