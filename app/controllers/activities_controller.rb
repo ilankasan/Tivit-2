@@ -339,20 +339,6 @@ class ActivitiesController < ApplicationController
       
       notify_users_tivit_done(send_to.uniq,current_account.user,params["comment"], @activity)
       
-      
-      if(false)
-        if(!@activity.get_parent.isOwner?(current_account.user))
-          # sending an email to the activity owner (usually the invited by not always)
-          UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_parent.get_owner,params["comment"],@activity).deliver
-          puts "Sendgin once"
-          if(@activity.get_invited_by != @activity.get_parent.get_owner  && !@activity.wasInvitedByUser?(current_account.user) )
-            # sending email to the person who invited the user
-            puts "Sendgin twice"
-          
-            UserMailer.user_tivit_status_change_done_email(current_account.user,@activity.get_invited_by,params["comment"],@activity).deliver
-          end
-        end
-      end
     end
     
     #redirect_to  @activity.get_parent

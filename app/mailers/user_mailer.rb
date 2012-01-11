@@ -132,6 +132,18 @@ puts "in activity_completed_email. sending to "+user.get_email
   end
   
   
+  def new_user_tivit_status_change_done_email(params)
+#106 Tivit- Complete. When: Completed Assignee changes status to "I'm done", Who: Assigner
+
+    @assigner = params[:assigner]
+    @assignee = params[:assignee]
+    @comment  = params[:comment]
+    @tivit    = params[:tivit]
+    mail(:from => create_from_str(assignee.get_name),:to => assigner.get_email,:reply_to => assignee.get_email,
+         :subject => "tiviti: "+@assignee.get_name+" has completed "+tivit.name+"!")     
+  end
+  
+  
   def user_tivit_status_change_done_email(assignee, assigner, comment,tivit)
 #106 Tivit- Complete. When: Completed Assignee changes status to "I'm done", Who: Assigner
 
