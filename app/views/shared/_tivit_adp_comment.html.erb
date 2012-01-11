@@ -1,9 +1,7 @@
-
-
 <!-- Answer (second) tivit -->
 <%if   tivit_adp_comment.comment != nil && tivit_adp_comment.user != nil && tivit_adp_comment.created_at != nil %>
 
-<!-- <% puts "[YANIV] ================= RENDERING COMMENT: "  + tivit_adp_comment.comment %> -->
+<% #puts "[YANIV] ================= RENDERING COMMENT: "  + tivit_adp_comment.comment %>
 
 <!-- if new comment for this user, paint background yellow -->
 <% if tivit_adp_comment.wasReviewed? (current_account.user) %>

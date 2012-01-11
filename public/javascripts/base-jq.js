@@ -196,41 +196,42 @@ jQuery(document).ready(function($){
 		var mytivit = jQuery(this).parent().find("input").attr("mytivit");
     	console.log ("[Yaniv] status mytivit=", mytivit);
     	
-     	if (mytivit == "no")
-     		return;
+     	if (mytivit == "yes")
+     	{
      	
-    	var recState = jQuery(this).closest('li');
-    		console.log(recState.attr('class'));
-	    	if(recState.hasClass('unread'))
-	    	{
-	    		jQuery(this).parent().append(statusList);
-	    		jQuery('.status-list-dialog').find('.unread').remove();
-	    		jQuery('.status-list-dialog').show();
-	    	}
-	    	else if(recState.hasClass('inprog'))
-	    	{
-	    		jQuery(this).parent().append(statusList);
-	    		jQuery('.status-list-dialog').find('.inprog').remove();
-	    		jQuery('.status-list-dialog').show();
-	    	}
-	    	else if(recState.hasClass('complete'))
-	    	{
-	    		jQuery(this).parent().append(statusList);
-	    		jQuery('.status-list-dialog').find('.complete').remove();
-	    		jQuery('.status-list-dialog').show();
-	    	}
-	    	else if(recState.hasClass('busy'))
-	    	{
-	    		jQuery(this).parent().append(statusList);
-	    		jQuery('.status-list-dialog').find('.busy').remove();
-	    		jQuery('.status-list-dialog').show();
-	    	}
-	    	else if(recState.hasClass('attention'))
-	    	{
-	    		jQuery(this).parent().append(statusList);
-	    		jQuery('.status-list-dialog').find('.attention').remove();
-	    		jQuery('.status-list-dialog').show();
-	    	}
+	    	var recState = jQuery(this).closest('li');
+	    		console.log(recState.attr('class'));
+		    	if(recState.hasClass('unread'))
+		    	{
+		    		jQuery(this).parent().append(statusList);
+		    		jQuery('.status-list-dialog').find('.unread').remove();
+		    		jQuery('.status-list-dialog').show();
+		    	}
+		    	else if(recState.hasClass('inprog'))
+		    	{
+		    		jQuery(this).parent().append(statusList);
+		    		jQuery('.status-list-dialog').find('.inprog').remove();
+		    		jQuery('.status-list-dialog').show();
+		    	}
+		    	else if(recState.hasClass('complete'))
+		    	{
+		    		jQuery(this).parent().append(statusList);
+		    		jQuery('.status-list-dialog').find('.complete').remove();
+		    		jQuery('.status-list-dialog').show();
+		    	}
+		    	else if(recState.hasClass('busy'))
+		    	{
+		    		jQuery(this).parent().append(statusList);
+		    		jQuery('.status-list-dialog').find('.busy').remove();
+		    		jQuery('.status-list-dialog').show();
+		    	}
+		    	else if(recState.hasClass('attention'))
+		    	{
+		    		jQuery(this).parent().append(statusList);
+		    		jQuery('.status-list-dialog').find('.attention').remove();
+		    		jQuery('.status-list-dialog').show();
+		    	}
+		}
      });
 	/***********************************************************************************************/
 	// Hide open menu dialogs (such as status change, edit/delete, etc.)
@@ -389,6 +390,9 @@ jQuery(document).ready(function($){
 		
 		return false;
 	 });
+	 
+	 
+	
 	 	
 	});
     /************************************************************/
@@ -479,7 +483,7 @@ function closeNewActivity(){
 // Scripts for Activity Page
 // from Irina Sorokina (sorokina333@gmail.com)
 jQuery(document).ready(function($){
-	
+ 
 	var description = $('.description p span').text();
 	
 	console.log('in Irina DOM Ready function');  
@@ -627,7 +631,9 @@ jQuery(document).ready(function($){
 		}else{
 			$(this).val('');
 			$(this).parent().addClass('post-style')
-			.append('<p><input type="submit" value="Post" class="post-button"><a href="#" class="attach-file">attach a file</a></p>');
+			// The line below include attach a file link, commented for now.
+			//.append('<p><input type="submit" value="Post" class="post-button"><a href="#" class="attach-file">attach a file</a></p>');
+			.append('<p><input type="submit" value="Post" class="post-button"></p>');
 		}
 	});
 	//Or don't do anything BUG
@@ -793,7 +799,21 @@ jQuery(document).ready(function($){
  	
 	});
 	/////////////////////////////////////////////////////////////////////////
-		
+	
+	// status icon mouse status. Only show pointer when dropdown will actually open
+	$('.icon').live('hover', function(){
+		var mytivit = jQuery(this).parent().find("input").attr("mytivit");
+		if (mytivit == "yes")
+		{
+			$(this).css('cursor','pointer');
+		}
+		else
+		{
+			$(this).css('cursor','default');
+		}
+			
+	});
+	
 	//Functions
 	function showLess(list){
 		var commentsCount = list.length - 2;

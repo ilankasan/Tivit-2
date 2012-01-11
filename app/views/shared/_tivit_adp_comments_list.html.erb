@@ -1,10 +1,11 @@
-<!-- <% puts "[YANIV] ================= NUMBER OF COMMENTS: " %> -->
-<!--<% puts tivit.tivitcomments.size  %>-->
-<!--<% puts "[YANIV] ===================================="   %> -->
+<% #puts "[YANIV] ================= NUMBER OF COMMENTS: " %>
+<% #puts tivit.tivitcomments.size  %>
+<% #puts "[YANIV] ===================================="   %>
 
 <%if tivit != nil && tivit.tivitcomments.size > 0 %>
 
 	<%= render :partial => 'shared/tivit_adp_comment', :collection =>  tivit.tivitcomments %> 
+
 <% end %>
 
 <!-- add comment input field -->  
@@ -20,6 +21,8 @@
 <!-- 
 			<p>
     			<%= f.submit "post", :class => "post-button" %>
+    			
+    			// attach a file is handeled in jQuery file
     			<a href="#" class="attach-file">attach a file</a>
     		</p>
 --> 

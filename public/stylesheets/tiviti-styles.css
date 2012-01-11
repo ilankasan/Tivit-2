@@ -656,7 +656,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
             position:absolute;
             left:26px;
             bottom:-51px;
-			cursor:pointer; 
+			cursor:pointer;
 			z-index: 9;   	
     }
     .record .status .icon{

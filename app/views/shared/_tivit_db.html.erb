@@ -62,12 +62,12 @@
 		<% proposed_date = (tivit.get_owner_proposed_date.localtime.strftime("%A %b %d, %Y")) %>
 	<% end %>
 	
-	<% status_line_middle = " requested a different date: " + proposed_date + " - " %>	
+	<% status_line_middle = " requested a different date: " + proposed_date %>	
 		
 <% elsif tivit.due != nil && tivit.due.localtime.end_of_day < Time.now.end_of_day %>
       
 	<li class="record busy">
-	<% if (owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed") %>
+	<% if (owner_tivit_status == "New" || owner_tivit_status == "Reminded") %>
 		<% if tivit_owner_name == "You" %>
 			<% status_line_middle = " have not read this." %>
 		<% else %>
@@ -119,8 +119,18 @@
 	
 	<div class="status">
 		<div class="icon"></div>
-		<% if tivit.get_owner.id == current_account.user.get_id %>
+		<!-- if I'm the activity owner / tivit creator or assignee, use class="status"
+			so jQuery for dropdown list will work, otherwise use other status so it'll be ignored -->
+			
+		<!-- tivit owner=assignee -->
+		<% if loggedInUserIsTheOwner == "yes" %>
 			<input type="hidden" tivitid="<%= tivit.id %>" mytivit="yes">
+		<!-- activity owner, strongest role should be assigned first -->
+		<% elsif tivit.isParentOwner? (current_account.user) %>
+			<input type="hidden" tivitid="<%= tivit.id %>" mytivit="activityOwner">
+		<!-- tivit creator -->
+		<% elsif tivit.wasInvitedByUser? (current_account.user) %>
+			<input type="hidden" tivitid="<%= tivit.id %>" mytivit="invitedBy">	
 		<% else %>
 			<input type="hidden" tivitid="<%= tivit.id %>" mytivit="no">
 		<%end%>
@@ -173,6 +183,7 @@
 		              		<%= tivit_owner_name %> 
 							<font color="red"><%= status_line_middle %></font>
 							<% if tivit.get_parent.get_owner.id == current_account.user.get_id || tivit.get_invited_by.get_id == current_account.user.get_id %> 
+								-
 								<span class="accept-proposed">accept</span>
 								<!-- 
 								<%= link_to "accept",	:controller  => "activities",

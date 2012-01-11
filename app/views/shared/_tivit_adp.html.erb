@@ -52,12 +52,23 @@
 		<%end%>
 		
 			<div class="conteiner">
+			
 				
-				<!-- if I'm the owner use class="status" so jQuery for dropdown list will work, otherwise use other status so it'll be ignored -->
 				<div class="status">
 					<div class="icon"></div>
+					<!-- if I'm the activity owner / tivit creator or assignee, use class="status"
+						so jQuery for dropdown list will work, otherwise use other status so it'll be ignored -->
+			
+					<!-- tivit owner=assignee -->
+			
 					<% if loggedInUserIsTheOwner == "yes" %>
 						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes">
+					<!-- activity owner, strongest role should be assigned first -->
+					<% elsif tivit_adp.isParentOwner? (current_account.user) %>
+						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="activityOwner">
+					<!-- tivit creator -->
+					<% elsif tivit_adp.wasInvitedByUser? (current_account.user) %>
+						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="invitedBy">	
 					<% else %>
 						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="no">
 					<%end%>
@@ -89,50 +100,40 @@
 							
 							<% due_time_window = tivit_adp.get_due_window_from_now %>
 							
-							<% if tivit_adp.due == nil %>
-						<!-- no date specified -->
-								<div class="calendar">
-								<% elsif due_time_window == "overdue" %>
-							<!-- activity is overdue -->
-									<div class="calendar new">
-										<div class="week"><%= ((Time.now.end_of_day - tivit_adp.due.localtime.end_of_day)/(3600*24)).to_i %></div>
-										<div class="text">days ago</div>
-									
-								<% elsif due_time_window == "today" %>
-							<!-- activity due today -->
-								 	<div class="calendar today">
-								 		<div class="text">Today</div>
-								 		
-								<% elsif due_time_window == "tomorrow" %>
-							<!-- activity due tomorrow -->
-								 	<div class="calendar tomorrow">
-								 		<div class="text">Tom.</div>
-								 		 		
-								<% elsif due_time_window == "withinaweek" %>
-							<!-- activity due within a week -->
-									<div class="calendar past">
-										<div class="week"><%= (tivit_adp.due.localtime.strftime ("%a")).upcase %></div>
-									    <div class="text"><%= tivit_adp.due.localtime.strftime ("%d") %></div>
-										
-								<% else %>
-							<!-- activity due within more than a week -->
-									<div class="calendar date beyondaweek">
-									<div class="text"><%= tivit_adp.due.localtime.strftime ("%m-%d") %></div>
-									
-							<%end%>
-							</div>
-							
-							<!-- 
-							<div class="calendar">
-								<%if (tivit_adp.due != nil && tivit_adp.due.inspect.size > 0 )%>
-									<div class="week"><%= (tivit_adp.due.strftime ("%a")).upcase %></div>
-				    				<div class="text"><%= tivit_adp.due.strftime ("%d") %></div>
-				    			<%else%>
-				    				<div class="week"></div>
-				    				<div class="text">?</div>
-				    			<%end%>
-							</div>
-							-->							
+							<% if owner_tivit_status != "Done" %>
+									<% if tivit_adp.due == nil %>
+									<!-- no date specified -->
+										<div class="calendar">
+									<% elsif due_time_window == "overdue" %>
+									<!-- activity is overdue -->
+											<div class="calendar new">
+												<div class="week"><%= ((Time.now.end_of_day - tivit_adp.due.localtime.end_of_day)/(3600*24)).to_i %></div>
+												<div class="text">days ago</div>
+											
+									<% elsif due_time_window == "today" %>
+									<!-- activity due today -->
+										 	<div class="calendar today">
+										 		<div class="text">Today</div>
+										 		
+									<% elsif due_time_window == "tomorrow" %>
+									<!-- activity due tomorrow -->
+										 	<div class="calendar tomorrow">
+										 		<div class="text">Tom.</div>
+										 		 		
+									<% elsif due_time_window == "withinaweek" %>
+									<!-- activity due within a week -->
+											<div class="calendar past">
+												<div class="week"><%= (tivit_adp.due.localtime.strftime ("%a")).upcase %></div>
+											    <div class="text"><%= tivit_adp.due.localtime.strftime ("%d") %></div>
+												
+									<% else %>
+									<!-- activity due within more than a week -->
+											<div class="calendar date beyondaweek">
+											<div class="text"><%= tivit_adp.due.localtime.strftime ("%m-%d") %></div>
+											
+									<%end%>
+									</div>
+							<% end %>					
 							
 						</div>
 							
