@@ -74,7 +74,9 @@
 
 <div class="activities">
 	<!-- Top Activities Panel -->
-	<div class="act-main">
+	<div class="act-main" id="activity-header">
+		<input type="hidden" activityid="<%= activitydetails.id %>">
+		
 		<div class="avatar">
 			<!-- <img class="avatar" src="images/act_avatar.gif" alt="Don-profile"> -->
 			<%= render :partial => 'profile_images/profile_image', :collection =>  [activitydetails.get_owner], :as => :user, :class => "avatar" %> 
@@ -110,12 +112,8 @@
 					   											:id          => activitydetails.id, 
 					  							    			:title       => "Manage Files" %>
 	  			</li>
-				<li class="cmpl-yaniv"><%= link_to "mark as completed", 		:controller  => "activities", 
-   											:action      => "mark_as_completed",
-   											:id          => activitydetails.id, 
-  							    			:title       => activitydetails.name %></li>
-  							    			
-				<li class="dele-yaniv"><%= link_to "delete", activitydetails, :method => :delete,
+				<li class="cmpl-yaniv">mark as completed</li>
+  				<li class="dele-yaniv"><%= link_to "delete", activitydetails, :method => :delete,
 	                                 :confirm => "You sure you want to delete" +activitydetails.name+"?",
 	                                 :title => activitydetails.name %></li>
 			</ul>

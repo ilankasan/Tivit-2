@@ -3,73 +3,73 @@
 
 
 <div align="center">
-  <center>
-<table border="0" cellpadding="16" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" bgcolor="#FFFFFF">
-  <tr>
+ <center>
+  <table border="0" cellpadding="16" cellspacing="0" bordercolor="#111111" width="100%" bgcolor="#FFFFFF">
+   <tr>
     <td width="100%">
-    <div align="center">
-      <center>
-      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
-        <tr style="font-family: arial,sans-serif; font-size: 90%">
-        	
-          <td width="100%"><%= @assigner.get_name %>,<b> </b>
-          <p><b><%= @assignee.get_name %></b> has agreed to help you with '<%=@tivit.name%>'<br>
-&nbsp;</td>
-        </tr>
-      </table>
-      </center>
-    </div>
-<font size=-1>
-    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
-      <tr style="font-family: arial,sans-serif; font-size: 90%">
-        <td width="100%">
-        <div align="left">
-          <table border="0" cellpadding="6" cellspacing="0" style="border-collapse: collapse" "font-family: arial,sans-serif; font-size: 90%">
-            <tr>
-              <td align="left" valign="top">
-              <p align="left">
-              </td>
-   
-         
-         
+     <table border="0" cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse" bordercolor="#111111">
+      <tr>
+       <td width="100%">
+	<table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
 
-              
-              <td align="left" valign="top">
-              	<%if(!@comment.empty?)%>
-              	 	<div class="avatar">
-						<%= render :partial => 'profile_images/profile_image', :collection =>  [@assignee], :as => :user%> 
-				 	</div>
-	    
-              		<%= @assignee.get_name %> says: "<%= @comment %>"
-              	<%end%>
-              </td>
-              
-              	
-            </tr>
-          </table>
-        </div>
-         <b><%= link_to 'Go to your activity', activity_url(@tivit.get_parent) %></b> to track progress.<br/>
-		       	
-        	
-        	
-        <p>&nbsp;</p>
-        
-        <p>&nbsp;</p>
-        <p>&nbsp;</td>
+  		<tr>
+    			<td width="100%"><font size="2" face="Arial">Hi <%= @assigner.get_name %>,</font>
+			</td>
+  		</tr>
+
+  		<tr>
+    			<td width="100%">
+			
+				<table border="0" cellpadding="2" cellspacing="0" style="border-collapse:collapse" bordercolor="#111111" width="100%">	
+					<tr>
+        					<td width="50">
+							<div class="avatar"><%= render :partial => 'profile_images/profile_image', :collection =>  [@assignee], :as => :user%> 
+							</div>
+						</td>
+
+        					<td><font size="2" face="Arial"><b><%= @assignee.get_name %></b> has agreed to help you with '<%=@tivit.name%>'</font>
+						</td>
+      					</tr>
+      					<tr>
+        					<td width="50" valign="top">&nbsp;
+						</td>
+						
+        					<td valign="top"><font size="2" face="Arial">
+        						<%if(!@comment.empty?)%>
+             						<%= @assignee.get_name %> says: "<%= @comment %>"</td>
+              				<%end%>
+        				</td>
+      					</tr>
+      					<tr>
+        					<td width="50" valign="top">&nbsp;
+						</td>
+        				</tr>
+      					<tr>
+        					<td width="50" valign="top">&nbsp;
+						</td>
+        					<td valign="top">
+        					<br>
+						<font size="2" face="Arial"><%= link_to 'Go to your activity', activity_url(@tivit.get_parent) %></b> to track its progress. Go team!</font>						
+						</td>
+      					</tr>
+    				</table>
+    			</td>
+  	 	</tr>
+	</table>
+        	<p>&nbsp;
+		</p>
+        	<p>&nbsp;
+		</p>
+       </td>
       </tr>
-    </table>
-
-</font>
+     </table>
     </td>
-  </tr>
-</table>
-  </center>
+   </tr>
+  </table>
+ </center>
 </div>
 
 
 
 <%= render :partial => 'email_footer' %>
-
-<small>#105 Tivit - Started (on it)</small>
-
-    
+<small>105 Tivit - Started</small>

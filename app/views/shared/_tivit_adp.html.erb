@@ -279,11 +279,7 @@
 	              	<%end%>
 	              	
 	              </span>
-	              	
-							
-							
-			   				
-   				   			
+	                				   			
 		   						
 						</div> <!-- text-container -->
 				</div> <!-- text -->
@@ -332,7 +328,7 @@
 	
 <!-- Figure out if we need to open tivits that has new comments for this user. If new comments, add "display: block" otherwise, collapse the comments -->
 
-<% if unread_comments > 0 %> 					
+<% if unread_comments > 0 && loggedInUserIsTheOwner == "yes" %> 					
 			<!-- tivit comments / answer -->
 			<ul class="list" style="display: block">
 
