@@ -10,34 +10,29 @@
      <table border="0" cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse" bordercolor="#111111">
       <tr>
        <td width="100%">
-	<table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+		<table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+  			<tr>
+    			<td width="100%"><font size="2" face="Arial">Hi <%= @assigner.get_name %>,</font></td>
+  			</tr>
 
-  		<tr>
-    			<td width="100%"><font size="2" face="Arial">Hi <%= @assigner.get_name %>,</font>
-			</td>
-  		</tr>
-
-  		<tr>
+  			<tr>
     			<td width="100%">
 			
 				<table border="0" cellpadding="2" cellspacing="0" style="border-collapse:collapse" bordercolor="#111111" width="100%">	
 					<tr>
-        					<td width="50">
-							<div class="avatar"><%= render :partial => 'profile_images/profile_image', :collection =>  [@assignee], :as => :user%> 
-							</div>
+    					<td width="50">
+							<div class="avatar"><%= render :partial => 'profile_images/profile_image', :collection =>  [@assignee], :as => :user%> </div>
 						</td>
-
-        					<td><font size="2" face="Arial"><b><%= @assignee.get_name %></b> has agreed to help you with '<%=@tivit.name%>'</font>
-						</td>
-      					</tr>
-      					<tr>
-        					<td width="50" valign="top">&nbsp;
-						</td>
+        					<td><font size="2" face="Arial"><b><%= @assignee.get_name %></b> has agreed to help you with '<%=@tivit.name%>'</font></td>
+					</tr>
+      				<tr>
+        					<td width="50" valign="top">&nbsp;</td>
 						
-        					<td valign="top"><font size="2" face="Arial">
+        				<td valign="top"><font size="2" face="Arial">
         						<%if(!@comment.empty?)%>
-             						<%= @assignee.get_name %> says: "<%= @comment %>"</td>
+             						"<%= @comment %>"
               				<%end%>
+              			</td>
         				</td>
       					</tr>
       					<tr>
@@ -45,8 +40,7 @@
 						</td>
         				</tr>
       					<tr>
-        					<td width="50" valign="top">&nbsp;
-						</td>
+        					<!--td width="50" valign="top">&nbsp;</td-->
         					<td valign="top">
         					<br>
 						<font size="2" face="Arial"><%= link_to 'Go to your activity', activity_url(@tivit.get_parent) %></b> to track its progress. Go team!</font>						

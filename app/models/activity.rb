@@ -167,7 +167,6 @@ OR ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_
       all_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
 AND tivit_user_statuses.user_id = activities.owner_id")
          
-     # puts "_______________________________________________________________________________________"
       puts "Open tivits size "+all_open_tivits.size.to_s
       
 
@@ -189,8 +188,6 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
       open_tivits_im_asignee = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
 AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
       puts "Open invited by "+open_tivits_im_asignee.size.to_s
-     # puts "______________________________________________"
-         
       
 # get all tivits i participated in the conversation and there are new comments
 # need to add the case i am the asignee
@@ -255,7 +252,6 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
       open_tivits_im_asignee = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
 AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
       puts "Open invited by "+open_tivits_im_asignee.size.to_s
-     # puts "______________________________________________"
          
       
 # get all tivits i participated in the conversation and there are new comments
@@ -490,7 +486,6 @@ end
    #size = 1
    if(size > 0)
         puts "number of unread comment "+size.to_s
-   puts "________________________________________________________"
    end
    return size
    else
@@ -639,8 +634,7 @@ return count.inspect + "/" + self.tivits.size.inspect+" tivits have been complet
 
   def update_activity_status (summary)
    puts "Changng status from " +self.status+" to = " +status
-   puts "_____________________________________________________"
-  
+   
    #if(self.status == status)
      #return
    #else

@@ -33,9 +33,12 @@
       					<tr>
         					<td width="50" valign="top">&nbsp;
 						</td>
-        					<td valign="top"><font size="2" face="Arial"><%if(!@comment.empty?)%>
-             				<%= "<%= @comment %>"</td>
-              				<%end%>
+        					<td valign="top"><font size="2" face="Arial">
+	        					<%if(!@comment.empty?)%>
+	             					"<%= @comment %>"
+	             				<%end%>
+	             			</td>
+	              				
         				</td>
       					</tr>
       					<tr>
@@ -43,8 +46,7 @@
 						</td>
         				</tr>
       					<tr>
-        					<td width="50" valign="top">&nbsp;
-						</td>
+        					<!--td width="50" valign="top">&nbsp;</td-->
         					<td valign="top">
         					<br>
 						<font size="2" face="Arial"><%= link_to 'Go to your activity', activity_url(@tivit.get_parent) %></b> to track its progress. Go team!</font>						

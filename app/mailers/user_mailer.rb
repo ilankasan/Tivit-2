@@ -8,19 +8,34 @@ class UserMailer < ActionMailer::Base
         
     def tivit_propose_new_date_email(assignee, assigner, tivit,comment )
 #107 Tivit - New Date Request. When: CAssignee requests alternate due date, Who: Assigner
-    puts "tivit_propose_new_date_email"
-         
-    @assignee   = assignee
-    @assigner   = assigner
-    @tivit      = tivit
-    @comment    = comment
-    
-        
-    mail(:from => create_from_str(assignee.get_name),:reply_to => assignee.get_email,:to => assigner.get_email,
-         :subject => "tiviti: "+ assignee.get_name+ " is requesting a different date for "+tivit.name)
-         
-     
-   end
+      puts "tivit_propose_new_date_email"
+           
+      @assignee   = assignee
+      @assigner   = assigner
+      @tivit      = tivit
+      @comment    = comment
+      
+          
+      mail(:from => create_from_str(assignee.get_name),:reply_to => assignee.get_email,:to => assigner.get_email,
+           :subject => "tiviti: "+ assignee.get_name+ " is requesting a different date for "+tivit.name)
+    end
+   
+   
+   def new_tivit_propose_new_date_email(params )
+#107 Tivit - New Date Request. When: CAssignee requests alternate due date, Who: Assigner
+      puts "tivit_propose_new_date_email"
+           
+      @assignee   = params[:assignee]
+      @assigner   = params[:assigner]
+      @tivit      = params[:tivit]
+      @comment    = params[:comment]
+      
+          
+      mail(:from => create_from_str(@assignee.get_name),:reply_to => @assignee.get_email,:to => @assigner.get_email,
+           :subject => "tiviti: "+ @assignee.get_name+ " is requesting a different date for "+@tivit.get_name)
+    end
+   
+   
    
    def tivit_accept_new_date_email(assignee, assigner, tivit,comment )
 #108  Tivit - New Date Accepted. When: Assigner accepts alternate due date, Who: Assignee
@@ -141,7 +156,7 @@ puts "in activity_completed_email. sending to "+user.get_email
     @tivit    = params[:tivit]
     
     mail(:from => create_from_str(@assignee.get_name),:to => @assigner.get_email,:reply_to => @assignee.get_email,
-         :subject => "tiviti: "+@assignee.get_name+" has completed "+@tivit.name+"!")     
+         :subject => "tiviti: "+@assignee.get_name+" has completed "+@tivit.get_name+"!")     
   end
   
   
@@ -154,25 +169,11 @@ puts "in activity_completed_email. sending to "+user.get_email
     @comment    = params[:comment]
     puts "---->>>> sending email to "+@assigner.get_email
     mail(:from => create_from_str(@assignee.get_name),:to => @assigner.get_email,:reply_to => @assignee.get_email,
-         :subject => "tiviti: "+@assignee.name+" has accepted your request for help with '"+@tivit.name+"'" )
+         :subject => "tiviti: "+@assignee.get_name+" has accepted your request for help with '"+@tivit.get_name+"'" )
      
   end
  
   
-  
-  def old_tivit_status_change_onit_email(assignee, comment,tivit)
-#105 Tivit - Started. When: Assignee changes status to "I'm on it", Who:  Assigner
- 
-    @assigner    = tivit.get_invited_by
-    @assignee   = assignee
-    @tivit      = tivit
-    @comment    = comment
-    puts "---->>>> sending email to "+@assigner.get_email
-    mail(:from => create_from_str(assignee.get_name),:to => @assigner.get_email,:reply_to => assignee.get_email,
-         :subject => "tiviti: "+@assignee.name+" has accepted your request for help with '"+tivit.name+"'" )
-     
-  end
- 
  def tivit_decline_email(assignee, comment,tivit)
 #110 Tivit - Decline. When: Assignee changes status to "I'm too busy", Who:  Assigner
  
@@ -181,15 +182,12 @@ puts "in activity_completed_email. sending to "+user.get_email
     @tivit      = tivit
     @comment    = comment
     puts "---->>>> sending email to "+@assigner.get_email
-    mail(:from => create_from_str(assignee.get_name),:to => @assigner.get_email,:reply_to => assignee.get_email,
-         :subject => "tiviti: "+@assignee.name+" isn't able to work on '"+tivit.name+"'" )
+    mail(:from => create_from_str(@assignee.get_name),:to => @assigner.get_email,:reply_to => @assignee.get_email,
+         :subject => "tiviti: "+@assignee.get_name+" isn't able to work on '"+@tivit.get_name+"'" )
   end
   
- 
   
-  
-  
-  def user_tivit_status_change_email(user, action,comment,tivit)
+  def delete_user_tivit_status_change_email(user, action,comment,tivit)
     @invited_by    = tivit.get_invited_by
     @user     	   = user
     @action        = action

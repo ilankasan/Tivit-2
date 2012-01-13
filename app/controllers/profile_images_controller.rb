@@ -47,7 +47,6 @@ class ProfileImagesController < ApplicationController
 		@user.profile_image.save!
 		
 		
-		puts "_____________________________________________________________________"
 		puts "URL          = " + @user.profile_image.avatar.url # => '/url/to/file.png'
 		puts "Current path = " + @user.profile_image.avatar.current_path # => 'path/to/file.png'else
 		puts "_____________________________________________________________________"

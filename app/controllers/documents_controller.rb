@@ -9,7 +9,6 @@ class DocumentsController < ApplicationController
   end  
    def destroy
     
-   # puts " ______________________________________"
     puts " DELTE Document "+params.inspect
     doc       = Document.find_by_id(params[:id])
     doc.destroy
@@ -82,12 +81,11 @@ class DocumentsController < ApplicationController
 	  #puts "niiiiiiiiiiiiiiiiiiiiiiiiiiiil" if @document ==  nil
 		unless @document == nil
 		  puts "= document.name is:"
-		#  puts "_____________________________________________________________________"
-    
+		
 		if(@document.name == nil)
 		  puts "nnniiilllll"
 		end
-		puts "_____________________________________________________________________"
+#		puts "_____________________________________________________________________"
 		puts "URL          = " + @document.name.url # => '/url/to/file.png'
 		puts "Current path = " + @document.name.current_path # => 'path/to/file.png'else
 		puts "Current path = " + @document.name.filename# => 'path/to/file.png'else

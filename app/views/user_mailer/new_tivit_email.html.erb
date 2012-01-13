@@ -27,19 +27,19 @@
 							</div>
 						</td>
 
-        					<td><font size="2" face="Arial"><b><%= @inviter.get_name %></b> is working on '<%= link_to @tivit.get_parent.get_name,activity_url(@tivit.get_parent) %> ' and needs your help!</font>
+        					<td><font size="2" face="Arial"><b><%= @inviter.get_name %></b> is working on '<%= link_to @tivit.get_parent.get_name,activity_url(@tivit.get_parent) %>' and needs your help!</font>
 						</td>
       					</tr>
       					<tr>
         					<td width="50" valign="top">&nbsp;
 						</td>
-        					<td valign="top"><font size="2" face="Arial">"Please help me with <%= link_to @tivit.get_name,activity_url(@tivit.get_parent) %>."</font>
+        					<td valign="top"><font size="2" face="Arial">Please help me with <%= link_to @tivit.get_name,activity_url(@tivit.get_parent) %>.</font>
 						</td>
       					</tr>
       					<tr>
         					<td width="50" valign="top">&nbsp;
 						</td>
-        					<td valign="top"><font color="#808080" face="Arial"size="2"><i><%=@tivit.get_description%></i></font>
+        					<td valign="top"><font color="#808080" face="Arial"size="2"><i>"<%=@tivit.get_description%>"</i></font>
 						</td>
       					</tr>
       					<tr>

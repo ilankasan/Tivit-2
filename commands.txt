@@ -138,7 +138,7 @@ git push heroku -app staging
 You will receive an email with instructions about how to reset your password in a few minutes.
 
 $ git add .
-git commit -am "1-12-12 yanivs changes + email clean up"
+git commit -am "1-12-12 prod"
 
 git checkout master
 git merge updating-users
