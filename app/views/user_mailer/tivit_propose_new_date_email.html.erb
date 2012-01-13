@@ -3,82 +3,82 @@
 
 
 <div align="center">
-  <center>
-<table border="0" cellpadding="16" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" bgcolor="#FFFFFF">
-  <tr>
+ <center>
+  <table border="0" cellpadding="16" cellspacing="0" bordercolor="#111111" width="100%" bgcolor="#FFFFFF">
+   <tr>
     <td width="100%">
-    <div align="center">
-      <center>
-      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
-        <tr style="font-family: arial,sans-serif; font-size: 90%">
-        	
-        	             	
-        	
-          <td width="100%">
-<font size=-1>
-	
+     <table border="0" cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse" bordercolor="#111111">
+      <tr>
+       <td width="100%">
+	<table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+
+  		<tr>
+    			<td width="100%"><font size="2" face="Arial">Hi <%= @assigner.get_name %>,</font>
+			</td>
+  		</tr>
+
+  		<tr>
+    			<td width="100%">
+			
+				<table border="0" cellpadding="2" cellspacing="0" style="border-collapse:collapse" bordercolor="#111111" width="100%">	
+					<tr>
+        					<td width="50">
+							<div class="avatar"><%= render :partial => 'profile_images/profile_image', :collection =>  [@assignee], :as => :user%> 
+							</div>
+						</td>
+<% puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   11111"%>
+        					<td><font size="2" face="Arial"><b><%= @assignee.get_name %></b> is asking for a different delivery date for '<u><font color="#0000FF"><%= @tivit.get_name%></font></u>'<br>
+        <%if @tivit.get_due_date != nil%>
+        	How about <b><%= @tivit.get_owner_proposed_date.localtime.strftime("%m-%d-%Y")%></b> instead of <%= @tivit.get_due_date.localtime.strftime("%b %d, %Y") %>?</font></font></td>
+        <%else%>
+	        I can get it done by <b><%= @tivit.get_owner_proposed_date.localtime.strftime("%m-%d-%Y")%></b>?</font></font></td>
 	 
-		<%= @assigner_name.get_name %>, <br>
-        <font size="2" face="Arial"><b><%= @assignee.get_name %></b> is asking for a different delivery date for '<u><font color="#0000FF"><%= @tivit.get_name%></font></u>'<br>
-         
-        How about <b><%= @tivit.get_owner_proposed_date..localtime.strftime("%m-%d-%Y")`` %></b> instead of <%= @tivit.due.localtime.strftime("%b %d, %Y") %></font></font></td>
+        <%end%>
+     
     
-        </tr>
-      </table>
-      </center>
-    </div>
-<font size=-1>
-    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
-      <tr style="font-family: arial,sans-serif; font-size: 90%">
-        <td width="100%">
-        <div align="left">
-          <table border="0" cellpadding="6" cellspacing="0" style="border-collapse: collapse" "font-family: arial,sans-serif; font-size: 90%">
-            <tr>
-              <td align="left" valign="top">
-              <p align="left">
-              </td>
-              
-        
-              
-              <td align="left" valign="top">
-              	
-              <%if(!@comment.empty?)%>
-              <div class="avatar">
-				<%= render :partial => 'profile_images/profile_image', :collection =>  [@assignee], :as => :user%> 
-			</div>
-	      
-	             <td align="left" valign="top">
-       
-       
-	      
-	      
-              	<%= @assignee.get_name %> says: 
-              	
-              	<i><font color="#333333"><%=@comment%> <br></font></i>
-              	
-              	
-              <%end%></td>
-              
-            </tr>
-          </table>
-        </div>
-        
-
-       <p><%= link_to image_tag("/images/respond.png"), activity_url(@tivit.get_parent) %></p>
-        	
-        
-        <p>&nbsp;</td>
+						</td>
+      					</tr>
+      					<tr>
+        					<td width="50" valign="top">&nbsp;
+						</td>
+        					<td valign="top"><font size="2" face="Arial">
+        						<%if(!@comment.empty?)%>
+             						<%= @comment %>"
+              					<%end%>
+              				</td>
+        				</td>
+      					</tr>
+      					<tr>
+        					<td width="50" valign="top">&nbsp;
+						</td>
+        				</tr>
+      					<tr>
+        					<!--td width="50" valign="top">&nbsp;</td-->
+        					<td valign="top">
+        					<br>
+						<font size="2" face="Arial"><%= link_to image_tag("/images/respond.png"), activity_url(@tivit.get_parent) %></font>
+								
+						</td>
+      					</tr>
+    				</table>
+    			</td>
+  	 	</tr>
+	</table>
+        	<p>&nbsp;
+		</p>
+        	<p>&nbsp;
+		</p>
+       </td>
       </tr>
-    </table>
-
-</font>
+     </table>
     </td>
-  </tr>
-</table>
-  </center>
+   </tr>
+  </table>
+ </center>
 </div>
 
 
 
 <%= render :partial => 'email_footer' %>
-<small>#107 Tivit - New Date Request</small>
+<small>105 Tivit - New Date Requested</small>
+

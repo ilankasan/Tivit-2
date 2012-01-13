@@ -47,8 +47,6 @@ group :development do
   gem 'faker', '0.3.1'
   
   #gem 'mongrel', '1.2.0.pre2'
-  
- 
  end
 
 group :test do
@@ -56,7 +54,6 @@ group :test do
   gem 'webrat', '0.7.1'
   gem 'factory_girl_rails', '1.0'
   gem 'rails3-jquery-autocomplete'
-
 
 end
 

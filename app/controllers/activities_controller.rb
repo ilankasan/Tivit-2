@@ -361,7 +361,13 @@ class ActivitiesController < ApplicationController
     	puts "new date = "+ params["propose_date"]
     	proposed_date = adjust_date_to_end_of_day(parse_date(params,"propose_date"))
     	@activity.update_tivit_user_propose_date(current_account.user,params["comment"], proposed_date)
-    	log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)    	
+    	log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)
+    	
+    	 if(current_account.user != @activity.get_invited_by)
+    	   puts "--------------------------- sending email -----------------------------------"
+      #  UserMailer.tivit_propose_new_date_email(current_account.user, @activity.get_invited_by , @activity,params["comment"])
+        EMAIL_QUEUE << {:email_type => "tivit_propose_new_date_email", :assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}
+       end
     end  
     
     #redirect_to  @activity.get_parent

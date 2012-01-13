@@ -39,6 +39,10 @@ class Activity < ActiveRecord::Base
   def get_name
    return self.name
   end
+  
+  def get_due_date
+    return self.due
+  end
 # Update status of the users invites to he activity
   
   def get_description

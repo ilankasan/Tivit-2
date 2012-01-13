@@ -6,7 +6,7 @@ class UserMailer < ActionMailer::Base
            :bcc => "tiviti.mailer.cc@gmail.com"
    #   :return_path => 'system@example.com'
         
-    def tivit_propose_new_date_email(assignee, assigner, tivit,comment )
+    def old_tivit_propose_new_date_email(assignee, assigner, tivit,comment )
 #107 Tivit - New Date Request. When: CAssignee requests alternate due date, Who: Assigner
       puts "tivit_propose_new_date_email"
            
@@ -21,9 +21,11 @@ class UserMailer < ActionMailer::Base
     end
    
    
-   def new_tivit_propose_new_date_email(params )
+   def tivit_propose_new_date_email(params)
 #107 Tivit - New Date Request. When: CAssignee requests alternate due date, Who: Assigner
-      puts "tivit_propose_new_date_email"
+      puts "--->>>>  tivit_propose_new_date_email"
+      puts params.inspect
+      puts "______________________________________"
            
       @assignee   = params[:assignee]
       @assigner   = params[:assigner]
