@@ -84,15 +84,15 @@ def get_activities_with_incoming_tivits(current_user_id)
     return results
     
     
-    OLD_sql_activities_i_with_incomming_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
-                 WHERE NOT activities.status        = 'Completed'  
-                 AND  activities.activity_type      = 'activity' 
-                 AND  tivits.owner_id               = "+current_user_id+"  
-                 AND  tivits.parent_id              = activities.id  
-                 AND  tivits.owner_id               = tivit_user_statuses.user_id 
-                 AND  tivits.id                     = tivit_user_statuses.activity_id 
-                 AND  NOT (tivit_user_statuses.status_id = 'Done' OR tivit_user_statuses.status_id = 'OnIt')
-                 ORDER BY activities.due"
+  #  OLD_sql_activities_i_with_incomming_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
+   #              WHERE NOT activities.status        = 'Completed'  
+    #             AND  activities.activity_type      = 'activity' 
+     #            AND  tivits.owner_id               = "+current_user_id+"  
+      #           AND  tivits.parent_id              = activities.id  
+       #          AND  tivits.owner_id               = tivit_user_statuses.user_id 
+        #         AND  tivits.id                     = tivit_user_statuses.activity_id 
+        #         AND  NOT (tivit_user_statuses.status_id = 'Done' OR tivit_user_statuses.status_id = 'OnIt')
+         #        ORDER BY activities.due"
       
 end
 
