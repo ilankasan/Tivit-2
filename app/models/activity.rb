@@ -83,18 +83,15 @@ class Activity < ActiveRecord::Base
                   AND     tivit_user_statuses.user_id = activities.owner_id
                   AND NOT activities.activity_type    = 'activity' 
                   AND     activities.id               = tivit_user_statuses.activity_id 
-                  AND     ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",currentuser.id).count
-
+                  AND     (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id).count
+ 
    return results
-   "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
-                 WHERE NOT activities.status        = 'Completed'  
-                 AND  activities.activity_type      = 'activity' 
-                 AND  tivits.owner_id               = id   
-                 AND  tivits.parent_id              = activities.id  
-                 AND  tivits.owner_id               = tivit_user_statuses.user_id 
-                 AND  tivits.id                     = tivit_user_statuses.activity_id 
-                 AND  NOT (tivit_user_statuses.status_id = 'Done' OR tivit_user_statuses.status_id = 'OnIt')
-                 ORDER BY activities.due"
+#   results = self.joins(:tivit_user_statuses).where(
+ #                 "       activities.owner_id         = ? 
+  #                AND     tivit_user_statuses.user_id = activities.owner_id
+   #               AND NOT activities.activity_type    = 'activity' 
+    #              AND     activities.id               = tivit_user_statuses.activity_id 
+     #             AND     ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",currentuser.id).count
     #return 2 
   end
 
