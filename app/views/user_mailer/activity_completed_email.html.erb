@@ -1,67 +1,75 @@
 <%= render :partial => 'email_header' %>
 
+
+
 <div align="center">
-
-  <center>
-
-<table border="0" cellpadding="16" cellspacing="0" style="border-collapse:collapse" width="100%" bgcolor="#FFFFFF">
-
-  <tr>
-
+ <center>
+  <table border="0" cellpadding="16" cellspacing="0" bordercolor="#111111" width="100%" bgcolor="#FFFFFF">
+   <tr>
     <td width="100%">
+     <table border="0" cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse" bordercolor="#111111">
+      <tr>
+       <td width="100%">
+	<table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
 
-    <div align="center">
+  		<tr>
+    			<td width="100%"><font size="2" face="Arial">Hi <%= @stakeholder.get_name %>,</font>
+			</td>
+  		</tr>
 
-      <center>
+  		<tr>
+    			<td width="100%">
+			
+				<table border="0" cellpadding="2" cellspacing="0" style="border-collapse:collapse" bordercolor="#111111" width="100%">	
+					<tr>
+        					<td width="50">
+							<div class="avatar"><%= render :partial => 'profile_images/profile_image', :collection =>  [@activity_owner], :as => :user%> 
+							</div>
+						</td>
 
-      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="100%">
-
-        <tr style="font-family:arial,sans-serif;font-size:150%">
-
-          
- </td>
-
-        </tr>
-
-      </table>
-
-      </center>
-
-    </div>
-
-<font size="-1">
-
-    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="100%">
-
-      <tr style="font-family:arial,sans-serif;font-size:100%">
-
-
-<%= @activity.get_owner.name %> has marked activity '<%= @activity.name %>' as completed and your respected tivits are now Closed<br>
-
-Activity Summery: <%= @comment %><br>
-
-  Click <b><%= link_to 'here', activity_url(@activity) %></b> for more detailes.<br/>
-</p>
-    <p>Thanks for using tiviti and have a great day!</p>
-    
-<p> </p></td>
-
+        					<td><font size="2" face="Arial">We wanted to let you know that <b><%= @activity_owner.get_name %></b> closed '<%= @activity.get_name %>'  and thanks you for your help!</font>
+						</td>
+      					</tr>
+      					<tr>
+        					<td width="50" valign="top">&nbsp;
+						</td>
+        					<td valign="top"><font size="2" face="Arial">
+        						<%if(!@comment.empty?)%>
+             						"<%= @comment %>"
+              					<%end%>
+              				</td>
+        				</td>
+      					</tr>
+      					<tr>
+        					<td width="50" valign="top">&nbsp;
+						</td>
+        				</tr>
+      					<tr>
+        				
+        					<td valign="top">
+        					<br>
+						<font size="2" face="Arial">Thanks for using tiviti and have a great day!<br/>
+    					</font>						
+						</td>
+      					</tr>
+    				</table>
+    			</td>
+  	 	</tr>
+	</table>
+        	<p>&nbsp;
+		</p>
+        	<p>&nbsp;
+		</p>
+       </td>
       </tr>
-
-    </table>
-
-</font>
-
+     </table>
     </td>
+   </tr>
+  </table>
+ </center>
+</div>
 
-  </tr>
 
-</table>
-  </center>
-</div>    
-    
 
- <%= render :partial => 'email_footer' %>
- 
- <small>#202 Activity - Closed</small>
-    
+<%= render :partial => 'email_footer' %>
+<small>202 Activity - Closed</small>

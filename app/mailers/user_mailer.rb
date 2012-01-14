@@ -134,22 +134,39 @@ def old_notify_comment_added_to_tivit(commenter, comment,tivit, send_to)
   
   
 
-  def activity_completed_email(user, comment,activity)
+  def activity_completed_email(params)
 
 #202 Activity - Closed. When Owner closes activity, Who: All Assignees
-puts "in activity_completed_email. sending to "+user.get_email
-    @user     = user
-    @comment  = comment
-    @activity = activity
-    @owner    = activity.get_owner
+    @stakeholder     = params[:stakeholder]
+    @comment         = params[:comment]
+    @activity        = params[:activity]
+    @activity_owner  = params[:activity_owner]
+    puts "in activity_completed_email. sending to "+@stakeholder.get_email
     
-  	mail(:from => create_from_str(@owner.get_name),:to => @user.get_email,:reply_to => @owner.get_email,
-         :subject =>    "tiviti: "+@owner.get_name+" says "+activity.name+" is complete.  Thanks for your help!" )
-     
+    
+  	mail(:from => create_from_str(@activity_owner.get_name),:to => @stakeholder.get_email,:reply_to => @activity_owner.get_email,
+         :subject =>    "tiviti: "+@activity_owner.get_name+" says "+@activity.name+" is complete.  Thanks for your help!" )
   end
   
+  
+    def old_activity_completed_email(stakeholder, comment,activity)
+
+#202 Activity - Closed. When Owner closes activity, Who: All Assignees
+    puts "in activity_completed_email. sending to "+stakeholder.get_email
+    @stakeholder     = stakeholder
+    @comment         = comment
+    @activity        = activity
+    @activity_owner  = activity.get_owner
+    
+    mail(:from => create_from_str(@activity_owner.get_name),:to => @stakeholder.get_email,:reply_to => @activity_owner.get_email,
+         :subject =>    "tiviti: "+@activity_owner.get_name+" says "+@activity.name+" is complete.  Thanks for your help!" )
+         
+     
+  end
+
+  
       
-  def user_tivit_status_change_done_email(params)
+  def tivit_done_email(params)
 #106 Tivit- Complete. When: Completed Assignee changes status to "I'm done", Who: Assigner
 
     @assigner = params[:assigner]

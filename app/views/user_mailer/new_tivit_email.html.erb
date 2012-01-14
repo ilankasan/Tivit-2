@@ -39,7 +39,10 @@
       					<tr>
         					<td width="50" valign="top">&nbsp;
 						</td>
-        					<td valign="top"><font color="#808080" face="Arial"size="2"><i>"<%=@tivit.get_description%>"</i></font>
+								<%if(!@tivit.get_description.empty?)%>
+	             					<td valign="top"><font color="#808080" face="Arial"size="2"><i>"<%=@tivit.get_description%>"</i></font>
+	             				<%end%>						
+	        					
 						</td>
       					</tr>
       					<tr>

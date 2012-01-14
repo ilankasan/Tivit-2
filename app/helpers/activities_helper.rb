@@ -7,8 +7,8 @@ module ActivitiesHelper
      puts "sending done notification to "+to_user.get_email
      
      
-         #UserMailer.user_tivit_status_change_done_email(assigee,to_user,comment,tivit).deliver
-         EMAIL_QUEUE << {:email_type => "user_tivit_status_change_done_email", :assigner => to_user , :assignee => assigee,:comment =>comment, :tivit =>tivit}
+         #UserMailer.tivit_status_done_email(assigee,to_user,comment,tivit).deliver
+         EMAIL_QUEUE << {:email_type => "tivit_done_email", :assigner => to_user , :assignee => assigee,:comment =>comment, :tivit =>tivit}
      end      
       
  
@@ -206,7 +206,16 @@ def  add_tivit_to_user(emails, activity)
      puts "in notify users"
      users = get_acrivity_users(activity)
      users.each do |user|
-      UserMailer.activity_completed_email(user,summery,activity).deliver
+       
+#202 Activity - Closed. When Owner closes activity, Who: All Assignees
+   # @stakeholder     = params[:stakeholder]
+   # @comment         = params[:comment]
+   # @activity        = params[:activity]
+   # @activity_owner  = params[:activity_owner]
+
+#      UserMailer.activity_completed_email(user,summery,activity).deliver
+      EMAIL_QUEUE << {:email_type => "activity_completed_email", :stakeholder => user , :activity_owner => activity.get_owner,:comment => summery, :activity =>@activity}
+      
      
      end
    
