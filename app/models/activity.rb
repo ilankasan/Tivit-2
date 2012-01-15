@@ -78,42 +78,6 @@ class Activity < ActiveRecord::Base
 
 
 
-  def self.get_num_of_requests_tivits(currentuser)
-    current_user_id = currentuser.get_id.to_s
-    sql_activities_with_my_tivits = "SELECT DISTINCT tivits.* FROM activities, activities as tivits, tivit_user_statuses 
-                   WHERE NOT activities.status        = 'Completed'  
-                   AND  activities.activity_type      = 'activity' 
-                   AND  tivits.owner_id               = "+current_user_id+"
-                   AND  NOT tivits.invited_by             = "+current_user_id+"   
-                   AND  tivits.parent_id              = activities.id  
-                   AND  tivits.owner_id               = tivit_user_statuses.user_id 
-                   AND  tivits.id                     = tivit_user_statuses.activity_id 
-                   AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
-                   ORDER BY activities.due"
-    
-     results1  =  Activity.find_by_sql(sql_activities_with_my_tivits).count
-      
-      
-     sql_activities_i_assigned_with_tivit_requests = "SELECT DISTINCT tivits.* FROM activities, activities as tivits, tivit_user_statuses 
-                   WHERE NOT activities.status           = 'Completed'  
-                   AND     activities.activity_type      = 'activity'
-                   AND     activities.owner_id           = "+current_user_id+"  
-                   AND NOT tivits.owner_id               = "+current_user_id+"
-                   AND     tivits.invited_by             = "+current_user_id+"   
-                   AND     tivits.parent_id              = activities.id  
-                   AND     tivits.owner_id               = tivit_user_statuses.user_id 
-                   AND     tivits.id                     = tivit_user_statuses.activity_id 
-                   AND  ( tivit_user_statuses.status_id  = 'Declined' OR tivit_user_statuses.status_id  = 'Proposed')
-                   ORDER BY activities.due"
-    
-                 
-      results2  =  Activity.find_by_sql(sql_activities_i_assigned_with_tivit_requests).count
-      return results1+results2
-    
-  end
-
-
-
   def self.get_num_of_incoming_tivits(currentuser)
 # Returns tivits i own and required my response or in play (awaiting the assiger to response with my proposal).
    results = self.joins(:tivit_user_statuses).where(
@@ -329,8 +293,43 @@ ORDER BY tivits.due"
     return my_tivits + other_tivits
   end
   
+  
+  
+  def self.get_num_of_requests_tivits(currentuser)
+    current_user_id = currentuser.get_id.to_s
+    sql_activities_with_my_tivits = "SELECT DISTINCT tivits.* FROM activities, activities as tivits, tivit_user_statuses 
+                   WHERE NOT activities.status        = 'Completed'  
+                   AND  activities.activity_type      = 'activity' 
+                   AND  tivits.owner_id               = "+current_user_id+"
+                   AND  NOT tivits.invited_by         = "+current_user_id+"   
+                   AND  tivits.parent_id              = activities.id  
+                   AND  tivits.owner_id               = tivit_user_statuses.user_id 
+                   AND  tivits.id                     = tivit_user_statuses.activity_id 
+                   AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
+                   ORDER BY activities.due"
+    
+     results1  =  Activity.find_by_sql(sql_activities_with_my_tivits).count
+      
+      
+     sql_activities_i_assigned_with_tivit_requests = "SELECT DISTINCT tivits.* FROM activities, activities as tivits, tivit_user_statuses 
+                   WHERE NOT activities.status           = 'Completed'  
+                   AND     activities.activity_type      = 'activity'
+                   AND NOT tivits.owner_id               = "+current_user_id+"
+                   AND     tivits.invited_by             = "+current_user_id+"   
+                   AND     tivits.parent_id              = activities.id  
+                   AND     tivits.owner_id               = tivit_user_statuses.user_id 
+                   AND     tivits.id                     = tivit_user_statuses.activity_id 
+                   AND  ( tivit_user_statuses.status_id  = 'Declined' OR tivit_user_statuses.status_id  = 'Proposed')
+                   ORDER BY activities.due"
+    #AND     activities.owner_id           = "+current_user_id+"  
+                   
+                 
+      results2  =  Activity.find_by_sql(sql_activities_i_assigned_with_tivit_requests).count
+      return results1+results2
 
   
+
+  end
   
   
   
