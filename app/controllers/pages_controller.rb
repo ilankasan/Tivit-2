@@ -75,7 +75,7 @@ class PagesController < ApplicationController
       end
 # Filter only product On Deck (for now)
     @tivits_completed          = get_activities_completed(current_user_id)
-    @incoming_activities       = get_activities_with_incoming_tivits(current_user_id)
+    @incoming_activities       = get_activities_with_new_tivit_requests(current_user_id)
   #  @need_attention_activities = get_need_attention (current_user_id)
     
     account_session[:filter_id] = @filter_id

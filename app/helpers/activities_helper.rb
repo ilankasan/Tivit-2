@@ -208,12 +208,7 @@ def  add_tivit_to_user(emails, activity)
      users.each do |user|
        
 #202 Activity - Closed. When Owner closes activity, Who: All Assignees
-   # @stakeholder     = params[:stakeholder]
-   # @comment         = params[:comment]
-   # @activity        = params[:activity]
-   # @activity_owner  = params[:activity_owner]
-
-#      UserMailer.activity_completed_email(user,summery,activity).deliver
+   
       EMAIL_QUEUE << {:email_type => "activity_completed_email", :stakeholder => user , :activity_owner => activity.get_owner,:comment => summery, :activity =>@activity}
       
      

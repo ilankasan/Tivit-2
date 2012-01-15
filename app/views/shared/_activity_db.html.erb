@@ -87,7 +87,8 @@
 				<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_need_attention_tivits(current_account.user), :as => :tivit  %>
 																												
 			<%elsif (tabview == "Requests")%>
-				<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_incoming_tivits(current_account.user)       , :as => :tivit  %>
+				<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_requests_tivits(current_account.user)       , :as => :tivit  %>
+																					  
 																												
 			<%elsif (tabview == "Completed")%>
 				<%= render :partial => 'shared/tivit_db', :collection =>  []       , :as => :tivit  %>

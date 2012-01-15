@@ -40,7 +40,7 @@
 	            </li>
 	    		<li class="tab">
 	                <a href="#tivit-incoming">Requests</a>
-	                <% count = Activity.get_num_of_incoming_tivits(current_account.user)%>
+	                <% count = Activity.get_num_of_requests_tivits(current_account.user)%>
 	                	
 	      			<%if count > 0%>
 	                	<i><%=count%></i>

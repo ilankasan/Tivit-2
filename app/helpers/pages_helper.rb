@@ -38,9 +38,7 @@ module PagesHelper
                     AND tivits.parent_id                = activities.id
                     AND tivit_user_statuses.activity_id = tivits.id 
                     AND 
-                  (   tivit_user_statuses.status_id  = 'Declined'
-                 OR tivit_user_statuses.status_id  = 'Proposed'
-                 )
+                  ( tivit_user_statuses.status_id  = 'Declined' OR tivit_user_statuses.status_id  = 'Proposed')
                  
                )))
                  ORDER BY activities.due"
@@ -64,25 +62,40 @@ module PagesHelper
 #Completed that had new comments on it
 
 
-def get_activities_with_incoming_tivits(current_user_id)
-                 
-  sql_activities_i_with_incomming_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
-                 WHERE NOT activities.status        = 'Completed'  
-                 AND  activities.activity_type      = 'activity' 
-                 AND  tivits.owner_id               = "+current_user_id+"  
-                 AND  tivits.parent_id              = activities.id  
-                 AND  tivits.owner_id               = tivit_user_statuses.user_id 
-                 AND  tivits.id                     = tivit_user_statuses.activity_id 
-                 AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
-                 
-                 ORDER BY activities.due"
-  
-    results  =  Activity.find_by_sql(sql_activities_i_with_incomming_tivits)
-#    AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
-                 
-    #puts "number of activities with incoming tivits = "+results.size.to_s
-    return results
+  def get_activities_with_new_tivit_requests(current_user_id)
+  # get activities with New and unread tivits       
+     sql_activities_with_my_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
+                   WHERE NOT activities.status        = 'Completed'  
+                   AND  activities.activity_type      = 'activity' 
+                   AND  tivits.owner_id               = "+current_user_id+"  
+                   AND  tivits.parent_id              = activities.id  
+                   AND  tivits.owner_id               = tivit_user_statuses.user_id 
+                   AND  tivits.id                     = tivit_user_statuses.activity_id 
+                   AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
+                   ORDER BY activities.due"
     
+      results1  =  Activity.find_by_sql(sql_activities_with_my_tivits)
+      
+      
+      sql_activities_i_assigned_with_tivit_requests = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
+                   WHERE NOT activities.status           = 'Completed'  
+                   AND     activities.activity_type      = 'activity'
+                   AND     tivits.invited_by             = "+current_user_id+" 
+                   AND NOT tivits.owner_id               = "+current_user_id+"  
+                   AND     tivits.parent_id              = activities.id  
+                   AND     tivits.owner_id               = tivit_user_statuses.user_id 
+                   AND     tivits.id                     = tivit_user_statuses.activity_id 
+                   AND  ( tivit_user_statuses.status_id  = 'Declined' OR tivit_user_statuses.status_id  = 'Proposed')
+                   ORDER BY activities.due"
+    
+                 
+      results2  =  Activity.find_by_sql(sql_activities_i_assigned_with_tivit_requests)
+      
+      return (results2 + results1).uniq 
+  #    AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
+                   
+      #puts "number of activities with incoming tivits = "+results.size.to_s
+      
     
   #  OLD_sql_activities_i_with_incomming_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
    #              WHERE NOT activities.status        = 'Completed'  
@@ -94,7 +107,7 @@ def get_activities_with_incoming_tivits(current_user_id)
         #         AND  NOT (tivit_user_statuses.status_id = 'Done' OR tivit_user_statuses.status_id = 'OnIt')
          #        ORDER BY activities.due"
       
-end
+  end
 
 def get_activities_i_participate_ondeck (user_id)
   puts "----->>>>>>> get_activities_i_participate_ondeck"
