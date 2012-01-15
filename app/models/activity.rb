@@ -309,7 +309,9 @@ ORDER BY tivits.due"
                    ORDER BY activities.due"
     
      results1  =  Activity.find_by_sql(sql_activities_with_my_tivits).count
-      
+     puts " number of my new requests "+results1.to_s
+             
+   
       
      sql_activities_i_assigned_with_tivit_requests = "SELECT DISTINCT tivits.* FROM activities, activities as tivits, tivit_user_statuses 
                    WHERE NOT activities.status           = 'Completed'  
@@ -325,6 +327,8 @@ ORDER BY tivits.due"
                    
                  
       results2  =  Activity.find_by_sql(sql_activities_i_assigned_with_tivit_requests).count
+      puts " number of my other requests "+results2.to_s
+     
       return results1+results2
 
   
