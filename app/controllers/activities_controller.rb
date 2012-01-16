@@ -447,7 +447,9 @@ class ActivitiesController < ApplicationController
     
     if(current_account.user != @activity.get_invited_by)
 # do not send email if the inviter (assigner)is the the assignee  
-        UserMailer.tivit_decline_email(current_account.user, params["comment"],@activity).deliver
+     #   UserMailer.tivit_decline_email(current_account.user, params["comment"],@activity).deliver
+        EMAIL_QUEUE << {:email_type => "tivit_decline_email", :assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}
+    
     end
     	 
  end

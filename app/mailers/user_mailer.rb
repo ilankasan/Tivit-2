@@ -193,18 +193,20 @@ def old_notify_comment_added_to_tivit(commenter, comment,tivit, send_to)
   end
  
   
- def tivit_decline_email(assignee, comment,tivit)
+ 
+  
+ def tivit_decline_email(params)
 #110 Tivit - Decline. When: Assignee changes status to "I'm too busy", Who:  Assigner
  
-    @assigner    = tivit.get_invited_by
-    @assignee   = assignee
-    @tivit      = tivit
-    @comment    = comment
+    @assignee    = params[:assignee]
+    @tivit       = params[:tivit]
+    @comment     = params[:comment]
+    @assigner    = params[:assigner]
+    
     puts "---->>>> sending email to "+@assigner.get_email
     mail(:from => create_from_str(@assignee.get_name),:to => @assigner.get_email,:reply_to => @assignee.get_email,
          :subject => "tiviti: "+@assignee.get_name+" isn't able to work on '"+@tivit.get_name+"'" )
   end
-  
   
   def delete_user_tivit_status_change_email(user, action,comment,tivit)
     @invited_by    = tivit.get_invited_by
