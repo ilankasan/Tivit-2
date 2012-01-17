@@ -119,19 +119,29 @@ def old_notify_comment_added_to_tivit(commenter, comment,tivit, send_to)
 
  
  
-  def remind_user_to_review_tivit (user_reminding, message,tivit)
+  def old_remind_user_to_review_tivit (user_reminding, message,tivit)
 #112  Tivit - Remind. When: Assigner sends reminder, Who: Assignee
-
     @user_reminding     = user_reminding
     @tivit   			= tivit
     @message 			= message
     @assignee			= tivit.get_owner
-    
     mail(:to => @assignee.get_email, 
          :subject =>"tiviti: "+user_reminding.get_name+" still needs your help with "+tivit.name+" !")
   end
   
   
+def remind_user_to_review_tivit (params)
+#112  Tivit - Remind. When: Assigner sends reminder, Who: Assignee
+puts ": in reminder email" 
+    @user_reminding = params[:user_reminding]
+    @tivit          = params[:tivit]
+    @message        = params[:message]
+    @assignee       = params[:assignee]
+    
+    mail(:to => @assignee.get_email, :from => create_from_str(@user_reminding.get_name),
+         :subject =>"tiviti: "+@user_reminding.get_name+" still needs your help with "+@tivit.get_name+" !")
+         
+  end
   
 
   def activity_completed_email(params)

@@ -40,7 +40,7 @@
         <td width="50"></td>
         <td>
 <font size=-1>
-        <font size="2" face="Arial"><b><%= @user_reminding.name %>:</b> wants to remind you about '<u><font color="#0000FF"><%=@tivit.name%></font></u>'. 
+        <font size="2" face="Arial"><b><%= @user_reminding.name %>:</b> wants to remind you about '<u><font color="#0000FF"><%=@tivit.get_name%></font></u>'. 
         Are you able to help? </font></font></td>
       </tr>
       <tr>
@@ -48,10 +48,9 @@
       <td align="left" valign="top">
               	<%if(!@message.empty?)%>
               	 	<div class="avatar">
-						<%= render :partial => 'profile_images/profile_image', :collection =>  [@assignee], :as => :user%> 
+						<%= render :partial => 'profile_images/profile_image', :collection =>  [@user_reminding], :as => :user%> 
 				 	</div>
 	    
-              		<%= @assignee.get_name %> says:
               		  <tr>
         				<td valign="top"><font color="#808080" face="Arial" size="2"><i>
         						"<%= @message %>"		
@@ -67,7 +66,9 @@
         <td valign="top">
 <font size=-1 face="Arial">
         <br>
-        <img border="0" src="http://www.tiviti.net/email/respond.png" width="92" height="26"></font></td>
+        <%= link_to image_tag("/images/respond.png"), activity_url(@tivit.get_parent) %>
+        </font></td>
+        
       </tr>
     </table>
     </td>

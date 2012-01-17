@@ -482,19 +482,17 @@ class ActivitiesController < ApplicationController
       @tivit.update_tivit_status_reassiged(current_account.user,params["comment"],@assined_user)
       
     
-      log_action_as_comment(@tivit,"Re-assigned to "+@assined_user.get_name+": " + params["comment"],"Reassign",current_account.user)
+      #log_action_as_comment(@tivit,"Re-assigned to "+@assined_user.get_name+": " + params["comment"],"Reassign",current_account.user)
+      log_action_as_comment(@tivit,params["comment"],"Reassign",current_account.user)
       
       UserMailer.reassign_tivit(current_account.user, @assined_user, params["comment"],@tivit)
       
-      flash[:success] = "You successfuly re-assigned tivit to "
+      flash[:success] = "You successfuly re-assigned tivit to "+@assined_user.get_name
       @tivit.save
     end
     
-    puts "[Yaniv] BEFORE REDIRECT TO PARENT"
-    
-    # if I just want to show a message use this instead of format.js
-    #render :js => "alert('Blah')"
-
+  #  puts "[Yaniv] BEFORE REDIRECT TO PARENT"
+  
     respond_to do |format|
        format.html { redirect_to @tivit }
        format.js
@@ -503,17 +501,15 @@ class ActivitiesController < ApplicationController
   end
    
  def remind
-   
-    puts "-----------    remind ---------------"  
+     puts ">>>>>>> -----------    remind ---------------<<<<<<<"  
   
-    @activity = Activity.find(params[:id])
+     @activity = Activity.find(params[:id])
 # ilan: need to change status to reminded. next version
-    @activity.update_tivit_user_status_reminded(@activity.get_owner,params["comment"])
+     @activity.update_tivit_user_status_reminded(@activity.get_owner,params["comment"])
   
-    UserMailer.remind_user_to_review_tivit(current_account.user, params["comment"],@activity).deliver
-    		   
+    #UserMailer.remind_user_to_review_tivit(current_account.user, params["comment"],@activity).deliver
+     EMAIL_QUEUE << {:email_type => "remind_user_to_review_tivit", :assignee => @activity.get_owner ,:user_reminding => current_account.user , :message => params["comment"], :tivit =>@activity}
   	redirect_to  root_path
-  	
   end
  
   private
