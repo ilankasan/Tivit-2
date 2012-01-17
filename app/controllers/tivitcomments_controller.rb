@@ -21,9 +21,9 @@ class TivitcommentsController < ApplicationController
       params["tivitcomment"]["user_id"] = current_account.user.id
   # add action type Note
       params["tivitcomment"]["action"] = "Note"
-  # make sure comment is 255 characters   
-      if (comment_without_carriage.size > 255)
-        comment_without_carriage = comment_without_carriage[0,255]
+  # make sure comment is 1024 characters   
+      if (comment_without_carriage.size > 1024)
+        comment_without_carriage = comment_without_carriage[0,1023]
          
        
       end

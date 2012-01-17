@@ -83,8 +83,8 @@ end
           comment_without_carriage = comment.gsub(/\r/,"")
           comment_without_carriage = comment_without_carriage.gsub(/\n/," ")
       
-          if (comment_without_carriage.size > 255)
-            comment_without_carriage = comment_without_carriage[0,255]
+          if (comment_without_carriage.size > 1024)
+            comment_without_carriage = comment_without_carriage[0,1023]
           end
           return comment_without_carriage
       end
