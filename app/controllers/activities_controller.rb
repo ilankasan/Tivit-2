@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
   before_filter :authenticate_account!
-  before_filter :validate_access
+  before_filter :validate_access, :except => [:remove_tivit, :reassign]
   after_filter  :update_view_status,   :only => :show
   #after_filter  :send_email_create_tivit, :only => :create_tivit 
    
@@ -321,7 +321,6 @@ class ActivitiesController < ApplicationController
     end
      if(@invited_user.get_id != current_account.user.get_id)
       EMAIL_QUEUE << {:email_type => "new_tivit_email", :assignee => @invited_user, :assigner => current_account.user,:tivit =>@tivit}
-      #UserMailer.new_tivit_email(@invited_user,current_account.user,@tivit).deliver
      end
     puts "--------------->> after sending email"
        
@@ -374,11 +373,13 @@ class ActivitiesController < ApplicationController
     	proposed_date = adjust_date_to_end_of_day(parse_date(params,"propose_date"))
     	@activity.update_tivit_user_propose_date(current_account.user,params["comment"], proposed_date)
     	log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)
-    	
+      
+      
     	 if(current_account.user != @activity.get_invited_by)
     	   puts "--------------------------- sending email -----------------------------------"
-      #  UserMailer.tivit_propose_new_date_email(current_account.user, @activity.get_invited_by , @activity,params["comment"])
         EMAIL_QUEUE << {:email_type => "tivit_propose_new_date_email", :assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}
+        #UserMailer.tivit_propose_new_date_email({:assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}).deliver
+      
        end
     end  
     
@@ -407,7 +408,7 @@ class ActivitiesController < ApplicationController
  #ilan: do i need to change the owner status as accepted? maybe later
  
  # Send an email to the owner of the tivit the the activity owner accepted the proposed date
- UserMailer.tivit_accept_new_date_email(@activity.get_owner,current_account.user , @activity,params["comment"]).deliver
+    UserMailer.tivit_accept_new_date_email(@activity.get_owner,current_account.user , @activity,params["comment"]).deliver
     
 
     redirect_to @activity.get_parent
@@ -459,7 +460,6 @@ class ActivitiesController < ApplicationController
     
     if(current_account.user != @activity.get_invited_by)
 # do not send email if the inviter (assigner)is the the assignee  
-     #   UserMailer.tivit_decline_email(current_account.user, params["comment"],@activity).deliver
         EMAIL_QUEUE << {:email_type => "tivit_decline_email", :assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}
     
     end
@@ -474,10 +474,11 @@ class ActivitiesController < ApplicationController
     puts "---->>> Assining tivit to = "+assigned_to
     # finding if user exists if not creating a clone user
      
-    @assined_user = user_by_email(assigned_to)
+    @assigned_user = user_by_email(assigned_to)
     @tivit = Activity.find(params[:id])
+    @invited_by    = @tivit.get_invited_by  
     
-    if(@assined_user == nil || @tivit == nil)
+    if(@assigned_user == nil || @tivit == nil)
       flash[:failed] = "Failed to Reasign tivit"
       #redirect_to root_path if @tivit == nil
       puts "not a user email"
@@ -488,20 +489,25 @@ class ActivitiesController < ApplicationController
         params["comment"] = ""
       end
       
-      @tivit.owner_id = @assined_user.id
-      @tivit.users << @assined_user
+      @tivit.owner_id =  @assigned_user.id
+      @tivit.users    << @assigned_user
 #ilan need to fix activity model so that invited by will be a relationship
       @tivit.invited_by = current_account.user.get_id  
-      current_account.user.addTwoWayContact(@assined_user)
-      @tivit.update_tivit_status_reassiged(current_account.user,params["comment"],@assined_user)
+      current_account.user.addTwoWayContact(@assigned_user)
+      @tivit.update_tivit_status_reassiged(current_account.user,params["comment"],@assigned_user)
       
     
       #log_action_as_comment(@tivit,"Re-assigned to "+@assined_user.get_name+": " + params["comment"],"Reassign",current_account.user)
-      log_action_as_comment(@tivit,params["comment"],"Reassign",current_account.user)
+      log_action_as_comment(@tivit,params["comment"],"Reassigned",current_account.user)
       
-      UserMailer.reassign_tivit(current_account.user, @assined_user, params["comment"],@tivit)
+      #UserMailer.reassign_tivit(current_account.user, @assined_user, params["comment"],@tivit)
+      puts "sending email"
+  #    def reassign_tivit_old_owner(old_owner, new_owner, comment,tivit,assigner)
+#
+      UserMailer.reassign_tivit_old_owner(current_account.user,@assigned_user, @invited_by, params["comment"],@tivit).deliver
+
       
-      flash[:success] = "You successfuly re-assigned tivit to "+@assined_user.get_name
+      flash[:success] = "You successfuly re-assigned tivit to "+@assigned_user.get_name
       @tivit.save
     end
     

@@ -10,9 +10,9 @@ class TivitUserStatus < ActiveRecord::Base
 # OnIt  - The user agreed to do the tivit
 # Done      - User has completed the Tivit
 # Declined  - User declined to do the tivit for some reason
-# Proposed (not inplmeneted yet) - user proposes a change int he tivit (initially a new date)
-# Accepted	- not supported yet (not sure we need to)
-# Reassigned  - not supported yet (not sure we need to)
+# Proposed 
+# Accepted	- 
+# Reassigned  - 
 
 
 attr_accessible :status_id, :activity_id,:user_id,:comment,:last_reviewed

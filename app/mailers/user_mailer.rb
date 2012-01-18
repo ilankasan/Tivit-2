@@ -105,7 +105,20 @@ def old_notify_comment_added_to_tivit(commenter, comment,tivit, send_to)
 
 
  
- def reassign_tivit(old_owner, new_owner, comment,tivit)
+ def reassign_tivit_old_owner(old_owner, new_owner,assigner, comment,tivit)
+#112 Tivit - Reassign (Original Assigner). When: Assignee reassigns the tivit to another person. Who: Old Assignee, Activity owner
+    @old_owner     = old_owner
+    @new_owner     = new_owner
+    @comment       = comment
+    @tivit         = tivit
+    @assigner      = assigner
+    
+    mail(:to => @assigner.get_email, :from => create_from_str(@old_owner.get_name),
+         :subject => "tiviti: "+@old_owner.get_name+" asked "+@new_owner.get_name+" to help with '"+@tivit.get_name+"'")
+         
+  end
+
+ def reassign_tivit_new_owner(old_owner, new_owner, comment,tivit)
 #111 Tivit - Reassign. When: Assignee reassigns the tivit to another person. Who: New Assignee, Activity owner
 
     @old_owner     = old_owner

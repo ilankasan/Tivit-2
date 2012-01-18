@@ -1,0 +1,79 @@
+<%= render :partial => 'email_header' %>
+
+
+
+<div align="center">
+ <center>
+  <table border="0" cellpadding="16" cellspacing="0" bordercolor="#111111" width="100%" bgcolor="#FFFFFF">
+   <tr>
+    <td width="100%">
+     <table border="0" cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse" bordercolor="#111111">
+      <tr>
+       <td width="100%">
+	<table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+
+  		<tr>
+    			<td width="100%"><font size="2" face="Arial">Hi <%= @assigner.get_name %>,</font>
+    				
+			</td>
+  		</tr>
+
+  		<tr>
+    			<td width="100%">
+			
+				<table border="0" cellpadding="2" cellspacing="0" style="border-collapse:collapse" bordercolor="#111111" width="100%">	
+					<tr>
+        					<td width="50">
+							<div class="avatar"><%= render :partial => 'profile_images/profile_image', :collection =>  [@old_owner], :as => :user%> 
+							</div>
+						</td>
+
+        					<td><font size="2" face="Arial"><b><%= @old_owner.get_name %></b> asked <%= @new_owner.get_name %></b> to help with '<%= link_to @tivit.get_parent.get_name,activity_url(@tivit.get_parent) %>' instead.</font>
+						</td>
+      					</tr>
+      					<tr>
+        					<td width="50" valign="top">&nbsp;
+						</td>
+        					<td valign="top"><font size="2" face="Arial">Please help me with <%= link_to @tivit.get_name,activity_url(@tivit.get_parent) %>.</font>
+						</td>
+      					</tr>
+      					<tr>
+        					<td width="50" valign="top">&nbsp;
+						</td>
+								<%if(!@comment.empty?)%>
+	             					<td valign="top"><font color="#808080" face="Arial"size="2"><i>"<%=@comment%>"</i></font>
+	             				<%end%>
+	             				
+						</td>
+      					</tr>
+      					<tr>
+        					<td width="50" valign="top">&nbsp;
+						</td>
+        					<td valign="top">
+        					<br>
+						<%= link_to image_tag("/images/respond.png"), activity_url(@tivit.get_parent) %>
+					
+						</td>
+      					</tr>
+    				</table>
+    			</td>
+  	 	</tr>
+	</table>
+        	<p>&nbsp;
+		</p>
+        	<p>&nbsp;
+		</p>
+       </td>
+      </tr>
+     </table>
+    </td>
+   </tr>
+  </table>
+ </center>
+</div>
+
+
+
+<%= render :partial => 'email_footer' %>
+<small>112 Tivit - New</small>
+

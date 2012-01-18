@@ -60,6 +60,7 @@
 
 		<% if owner_tivit_status == "Done" %>
 			<% status_line_middle = " finished this " +  (time_ago_in_words (tivit_adp.completed_at)) + " ago." %>
+			<% status_line_window = "" %>
 			
 		<li class="record complete">
 		<% respondbutton = "I'm done!" %>
@@ -85,9 +86,9 @@
 		
 			<% if (owner_tivit_status == "New" || owner_tivit_status == "Reminded") %>
 				<% if tivit_owner_name == "You" %>
-					<% status_line_middle = " have not read this." %>
+					<% status_line_middle = " haven't read this." %>
 				<% else %>
-					<% status_line_middle = " has not read this." %>
+					<% status_line_middle = " hasn't read this." %>
 				<% end %>
 			
 			<% else %>
@@ -109,9 +110,9 @@
 		
 		<li class="record unread">
 			<% if tivit_owner_name == "You" %>
-				<% status_line_middle = " have not read this." %>
+				<% status_line_middle = " haven't read this." %>
 			<% else %>
-				<% status_line_middle = " has not read this." %>
+				<% status_line_middle = " hasn't read this." %>
 			<% end %>
 			<!-- status line not relevant with tivit is unread or not responded. -->
 			<% status_line_window = "" %>
@@ -119,9 +120,9 @@
 		<% elsif owner_tivit_status == "Reviewed"%>
 			<li class="record unread">
 			<% if tivit_owner_name == "You" %>
-				<% status_line_middle = " have not responded." %>
+				<% status_line_middle = " haven't responded." %>
 			<% else %>
-				<% status_line_middle = " has not responded." %>
+				<% status_line_middle = " hasn't responded." %>
 			<% end %>
 			<!-- status line not relevant with tivit is unread or not responded. -->
 			<% status_line_window = "" %>
@@ -129,9 +130,9 @@
 		<% else %>	                            
 		
 		<li class="record busy">
-			<% status_line_middle = " declined." %>
+			<% status_line_middle = " can't help." %>
 			<% status_line_window = "" %>
-			
+					
 		<%end%>
 		
 			<div class="conteiner">
@@ -242,7 +243,7 @@
 					    <!-- overdue -->
 					    <% elsif tivit_adp.due != nil && tivit_adp.due.localtime.end_of_day < Time.now.end_of_day %>
 					    	<%= tivit_owner_name + status_line_middle %> 
-					    	<% if ((owner_tivit_status != "New" && owner_tivit_status != "Reminded" && owner_tivit_status != "Reviewed")) %>
+					    	<% if ((owner_tivit_status != "New" && owner_tivit_status != "Reminded" && owner_tivit_status != "Reviewed" && owner_tivit_status != "Done" )) %>
 					    		<font color="red"><%= status_line_window %></font> 
 					    	<% end %>
 					    <% elsif status_line_middle == " declined" %>

@@ -516,7 +516,7 @@ end
  def get_owner_proposed_date
   tivit_user_status = self.tivit_user_statuses.find_by_user_id(self.owner_id)
    return tivit_user_status.proposed_date if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
-   return "no proposed date"
+   return nil
  end
  
  
@@ -568,13 +568,8 @@ end
   end
 
  def get_due_date
- #return due date. If nill return empty string
-  if(self.due == nil)
-  return ""
-  else
-return self.due
-end
-  end
+    return self.due
+ end
   
   def get_local_due_date_str
  #return due date. If nill return empty string

@@ -181,9 +181,9 @@ jQuery(document).ready(function($){
                             //'<li class="unread"><div class="ico"></div>Not started</li>'+
                             '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
                             '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
-                            '<li class="busy"><div class="ico"></div>I\'m too busy</li>'+
+                            '<li class="busy"><div class="ico"></div>Sorry, I can\'t help</li>'+
                             '<li class="attention"><div class="ico"></div>Propose new date</li>'+
-                            '<li class="re-assign"><div class="ico"></div>re-assign</li>'+
+                            '<li class="re-assign"><div class="ico"></div>Reassign</li>'+
                         '</ul>'+
                      '</div>';
                      
@@ -281,7 +281,7 @@ jQuery(document).ready(function($){
 	    			break;
 	    		case 'busy':
 	    			console.log('[Yaniv] tivit status change - BUSY/CANNOT DO IT -');
-	    			var confirmDialogTitle = 'Sorry, cannot do it now';
+	    			var confirmDialogTitle = 'Sorry, I can\'t help';
 	    			var actionPost = 'action="/decline?id=' + tivitID + '&method=put" accept-charset="UTF-8">';
 	    			break;
 	    		case 'attention':
@@ -295,7 +295,7 @@ jQuery(document).ready(function($){
 	    			break;
 	    		case 're-assign':
 	    			console.log('[Yaniv] re-assign tivit selected.');
-	    			var confirmDialogTitle = 'Re-assign tivit to someone else';
+	    			var confirmDialogTitle = 'Reassign tivit to someone else';
 	    			var actionPost = 'action="/reassign?id=' + tivitID + '&method=put" accept-charset="UTF-8">';
 					who = '<p><label for="who">Who:</label><input type="text" name="assign_to" id="assign_to" placeholder="- enter one email address -" /></p>';    
 	    			break;
