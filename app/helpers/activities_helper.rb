@@ -34,10 +34,11 @@ module ActivitiesHelper
     #if(user.get_if== activity.get_owner_id || activity.tivits.where(:owner_id => user.get_id).count > 0)
     return true if(user == activity.get_owner)
     parent = activity.get_parent  
-    return true if(user == parent.get_owner) 
+    return true if(parent != nil && user == parent.get_owner) 
      
     return true if (activity.tivits.where(:owner_id => user.get_id).count > 0)
-        if( parent != nil && parent.tivits.where(:owner_id => user.get_id).count > 0)
+    
+    if( parent != nil && parent.tivits.where(:owner_id => user.get_id).count > 0)
       return true
     else 
       puts "-----------------------------------------------------"
