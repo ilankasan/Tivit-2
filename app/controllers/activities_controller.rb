@@ -17,7 +17,6 @@ class ActivitiesController < ApplicationController
   if(params[:name] == nil || params[:name].empty?)
     flash[:failed] = "Activity name cannot be empty"
     account_session[:flash_error] = "Activity name cannot be empty"
-    #render  '_activity_form'
     redirect_to root_path
     return
   end
