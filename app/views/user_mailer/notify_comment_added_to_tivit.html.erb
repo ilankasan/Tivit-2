@@ -39,8 +39,12 @@
       					<tr>
         					<td width="50" valign="top">&nbsp;
 						</td>
-        					<td valign="top"><font size="2" face="Arial"><%= @commenter.get_name %> says: "<%=@comment%>"
-        											</td>
+        					<td valign="top"><font size="2" face="Arial">
+        						
+        						<%if(!@comment.empty?)%>		
+        							"<%=@comment%>"
+        						<%end%>
+        					</td>
       					</tr>
       					<tr>
         					<td width="50" valign="top">&nbsp;

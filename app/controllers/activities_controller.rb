@@ -1,5 +1,6 @@
 class ActivitiesController < ApplicationController
   before_filter :authenticate_account!
+  before_filter :validate_access
   after_filter  :update_view_status,   :only => :show
   #after_filter  :send_email_create_tivit, :only => :create_tivit 
    
@@ -124,9 +125,20 @@ class ActivitiesController < ApplicationController
  def update_view_status
    puts "----------->>>>>>>>>>> update_view_status"  
    
-    @activity.update_status_after_show(current_account.user)
+   @activity.update_status_after_show(current_account.user)
+ end
+ 
+ 
+ def validate_access
+    return if(params == nil || params[:id] == nil)
+       
+    @activity = Activity.find(params[:id])   
+   if(!validate_user_access_to_activity(@activity,current_account.user))
+      render 'shared/access_denied' 
+   end
+     
+ end
    
- end 
   
   def update_tivit
     puts "-----------    UPDATE tivit"  
@@ -460,6 +472,8 @@ class ActivitiesController < ApplicationController
 
     assigned_to = params["assign_to"] 
     puts "---->>> Assining tivit to = "+assigned_to
+    # finding if user exists if not creating a clone user
+     
     @assined_user = user_by_email(assigned_to)
     @tivit = Activity.find(params[:id])
     

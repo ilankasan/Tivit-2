@@ -9,7 +9,7 @@ developmentiiii:
 development:
   adapter: mysql2
   encoding: utf8
-  database: testsql
+  database: test
   pool: 5
   username: root
   password:

@@ -115,6 +115,9 @@ def old_notify_comment_added_to_tivit(commenter, comment,tivit, send_to)
     senlist = create_recipient_list([@new_owner,tivit.get_parent.get_owner])
     mail(:to => senlist, 
          :subject => @old_owner.get_name+" needs your help with "+"'"+@tivit.get_parent.name+"'" )
+         
+ #        :subject => "tiviti: "+@old_owner.get_name+" asked "<NewAssignee> to help with <tivit>
+         
   end
 
  
