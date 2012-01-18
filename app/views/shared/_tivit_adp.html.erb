@@ -127,6 +127,22 @@
 			<!-- status line not relevant with tivit is unread or not responded. -->
 			<% status_line_window = "" %>
 	
+		<% elsif owner_tivit_status == "Reassigned"%>
+			<li class="record re-assign">
+			
+			<% if tivit_adp.get_invited_by.id == current_account.user.id %>
+				<% tivit_owner_name = "You" %>
+			<% else %>
+				<% tivit_owner_name = tivit_adp.get_invited_by.get_name %>
+			<% end %>
+			
+			<% if tivit_adp.get_owner.id == current_account.user.id %>
+				<% status_line_middle = " reassigned to you." %>
+			<% else %>
+				<% status_line_middle = " reassigned to " +  tivit_adp.get_owner.get_name %> 
+			<% end %>
+			<% status_line_window = "" %>
+				
 		<% else %>	                            
 		
 		<li class="record busy">

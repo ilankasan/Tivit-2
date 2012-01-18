@@ -231,6 +231,11 @@ jQuery(document).ready(function($){
 		    		jQuery('.status-list-dialog').find('.attention').remove();
 		    		jQuery('.status-list-dialog').show();
 		    	}
+		    	else if(recState.hasClass('re-assign'))
+		    	{
+		    		jQuery(this).parent().append(statusList);
+		    		jQuery('.status-list-dialog').show();
+		    	}
 		}
      });
 	/***********************************************************************************************/
