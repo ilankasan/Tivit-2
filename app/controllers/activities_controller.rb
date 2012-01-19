@@ -14,13 +14,13 @@ class ActivitiesController < ApplicationController
    def create
 
 # Create Activity
-  if(params[:name] == nil || params[:name].empty?)
-    flash[:failed] = "Activity name cannot be empty"
-    account_session[:flash_error] = "Activity name cannot be empty"
-    redirect_to root_path
-    return
-  end
-	params["due"] = adjust_date_to_end_of_day(parse_date(params,"due"))
+    if(params[:name] == nil || params[:name].empty?)
+      flash[:failed] = "Activity name cannot be empty"
+      account_session[:flash_error] = "Activity name cannot be empty"
+      redirect_to root_path
+      return
+    end
+  	params["due"] = adjust_date_to_end_of_day(parse_date(params,"due"))
    		
    @activity = current_account.user.add_my_ativity(params)    
 	
@@ -111,21 +111,36 @@ class ActivitiesController < ApplicationController
   
   def show
     
-   puts "----------->>>>>>>>>>> show activity detailed page"  
-    @activity = Activity.find(params[:id])
-    #updating tivit status New -> Reviewed and last update to current time
+    puts "----------->>>>>>>>>>> show activity detailed page"
+    @activity_temp = Activity.find(params[:id])
+    if(!@activity_temp.isActivity?)
+#this is a tivit
+      puts ">>>>>>>>>>>>>>>>>>    this is a tivit <<<<<<<<<<<<<<<<<<<<<<"
+      @tivit_id = @activity_temp.id
+      @activity = @activity_temp.get_parent
+    else
+      @activity = @activity_temp
+    end
    
    # @activity.update_status_after_show(current_account.user)
     
   	@title = "Activity Details - "+@activity.name
-  	
+  	puts "<<<<<<<<<<<<<<-----------show activity detailed page"  
+   
   end
   
- def update_view_status
-   puts "----------->>>>>>>>>>> update_view_status"  
+  def updated_tivit_last_reviewed
+    @tivit = Activity.find(params[:id])
+    if(@tivit != nil)
+        @tivit.update_status_after_show(current_account.user) 
+    end   
    
+  end
+   
+  def update_view_status
+   puts "----------->>>>>>>>>>> update_view_status"  
    @activity.update_status_after_show(current_account.user)
- end
+  end
  
  
  def validate_access
@@ -467,7 +482,7 @@ class ActivitiesController < ApplicationController
 
  def reassign
 # reasign tivit to a different user
-    puts " Reasign tivit " + params.inspect
+  #  puts " Reasign tivit " + params.inspect
 
     assigned_to = params["assign_to"] 
     puts "---->>> Assining tivit to = "+assigned_to
@@ -502,8 +517,11 @@ class ActivitiesController < ApplicationController
       #UserMailer.reassign_tivit(current_account.user, @assined_user, params["comment"],@tivit)
       puts "sending email"
   #    def reassign_tivit_old_owner(old_owner, new_owner, comment,tivit,assigner)
-#
-      UserMailer.reassign_tivit_old_owner(current_account.user,@assigned_user, @invited_by, params["comment"],@tivit).deliver
+       if(current_account.user != @invited_by)
+          UserMailer.reassign_tivit_old_owner(current_account.user, @assigned_user, @invited_by, params["comment"], @tivit).deliver
+          UserMailer.reassign_tivit_new_owner(current_account.user, @assigned_user, @invited_by, params["comment"], @tivit).deliver
+
+       end
 
       
       flash[:success] = "You successfuly re-assigned tivit to "+@assigned_user.get_name

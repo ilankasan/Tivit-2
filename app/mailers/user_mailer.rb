@@ -89,21 +89,6 @@ puts "<<<<<<<<<<<<    notify_comment_added_to_tivit "
     
  end
 
-
-def old_notify_comment_added_to_tivit(commenter, comment,tivit, send_to)
-#103 Tivit - New Comment(s). When: Comment added (non-self), Who: Assigner, Assignee, Commenters  Ilan: sent only to asigner if asigne comments
-
-    @commenter  = commentor
-    @comment    = comment
-    @tivit      = tivit
-    toemail     = create_recipient_list(send_to)
-    
-    mail(:from => create_from_str(commentor.get_name),:reply_to => commentor.get_email,:to => toemail,
-         :subject => "tiviti: You have a new comment for '"+@tivit.name+"'" )
-    
- end
-
-
  
  def reassign_tivit_old_owner(old_owner, new_owner,assigner, comment,tivit)
 #112 Tivit - Reassign (Original Assigner). When: Assignee reassigns the tivit to another person. Who: Old Assignee, Activity owner
@@ -118,19 +103,18 @@ def old_notify_comment_added_to_tivit(commenter, comment,tivit, send_to)
          
   end
 
- def reassign_tivit_new_owner(old_owner, new_owner, comment,tivit)
+ def reassign_tivit_new_owner(old_owner, new_owner, assigner, comment,  tivit)
 #111 Tivit - Reassign. When: Assignee reassigns the tivit to another person. Who: New Assignee, Activity owner
 
     @old_owner     = old_owner
     @new_owner     = new_owner
     @comment       = comment
     @tivit         = tivit
-    senlist = create_recipient_list([@new_owner,tivit.get_parent.get_owner])
-    mail(:to => senlist, 
-         :subject => @old_owner.get_name+" needs your help with "+"'"+@tivit.get_parent.name+"'" )
-         
- #        :subject => "tiviti: "+@old_owner.get_name+" asked "<NewAssignee> to help with <tivit>
-         
+    @assigner      = assigner
+    
+    mail(:to => @new_owner.get_email, :from => create_from_str(@old_owner.get_name),
+         :subject => "tiviti: "+@old_owner.get_name+" needs your help with with '"+@tivit.get_name+"'")
+          
   end
 
  

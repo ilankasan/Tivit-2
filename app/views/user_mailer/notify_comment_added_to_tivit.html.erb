@@ -33,7 +33,7 @@
 							
 						</td>
 
-        					<td><font size="2" face="Arial"><b><%= @commenter.get_name %></b> commented on '<%=@tivit.name%>'.</font>
+        					<td><font size="2" face="Arial"><b><%= @commenter.get_name %></b> commented on '<%= link_to @tivit.name, activity_url(@tivit) %>.</font>
 						</td>
       					</tr>
       					<tr>
@@ -55,7 +55,7 @@
 						</td>
         					<td valign="top">
         					<br>
-						<%= link_to 'Go to this tivit. ', activity_url(@tivit.get_parent) %>						
+						<%= link_to 'Go to this tivit. ', activity_url(@tivit) %>						
 						</td>
       					</tr>
     				</table>

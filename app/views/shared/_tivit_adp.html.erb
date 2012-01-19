@@ -342,10 +342,12 @@
 			</div>
 			<%end%>
 			<!-- <div class="show-more"><a href="#">Show 2 more comment</a></div> -->
-	
-<!-- Figure out if we need to open tivits that has new comments for this user. If new comments, add "display: block" otherwise, collapse the comments -->
 
-<% if unread_comments > 0 && loggedInUserIsTheOwner == "yes" %> 					
+<!-- Figure out if we need to open tivits that has new comments for this user. If new comments, add "display: block" otherwise, collapse the comments -->
+<%# if unread_comments > 0 && loggedInUserIsTheOwner == "yes" %> 	
+	
+<!-- expand tivit the user clicked on when coming to the page from dashboard or email -->				
+<% if tivit_adp.id == @tivit_id %>
 			<!-- tivit comments / answer -->
 			<ul class="list" style="display: block">
 

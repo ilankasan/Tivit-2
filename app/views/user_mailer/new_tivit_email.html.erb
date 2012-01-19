@@ -33,7 +33,7 @@
       					<tr>
         					<td width="50" valign="top">&nbsp;
 						</td>
-        					<td valign="top"><font size="2" face="Arial">Please help me with <%= link_to @tivit.get_name,activity_url(@tivit.get_parent) %>.</font>
+        					<td valign="top"><font size="2" face="Arial">Please help me with <%= link_to @tivit.get_name,activity_url(@tivit) %>.</font>
 						</td>
       					</tr>
       					<tr>
@@ -50,7 +50,7 @@
 						</td>
         					<td valign="top">
         					<br>
-						<%= link_to image_tag("/images/respond.png"), activity_url(@tivit.get_parent) %>
+						<%= link_to image_tag("/images/respond.png"), activity_url(@tivit) %>
 						</td>
       					</tr>
     				</table>

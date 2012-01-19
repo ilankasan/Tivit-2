@@ -76,6 +76,15 @@ class Activity < ActiveRecord::Base
   end
 
 
+  def get_parent_owner
+  #  puts "^^^^^^ in get parent ^^^^^^^"
+   if(parent != nil)
+    return parent.get_owner
+   else
+     return nil
+   end
+      
+  end
 
 
   def self.get_num_of_incoming_tivits(currentuser)
@@ -424,20 +433,20 @@ return results
  # puts "AFTER show attempting to change status for activity "+self.id.to_s+ " "+self.activity_name
  #puts "------------------------------------------------------------"
     status = self.get_user_status(user)
-   if(status == "New")
-   change_status(user,"Reviewed","")
-   puts "chaging status from new to Review"
-   end
+    if(status == "New")
+       change_status(user,"Reviewed","")
+       puts "chaging status from new to Review"
+    end
 # puts "Changing the date of last review og the comments"
 #updating the date/time a user reviewed this activity/tivit
-tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
-   tivit_user_status.update_last_reviewed
+    tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
+    tivit_user_status.update_last_reviewed
   
-if(self.tivits !=nil )
-self.tivits.each do |tivit|
-tivit.update_status_after_show(user)
-  end
-end
+    if(self.tivits !=nil )
+        self.tivits.each do |tivit|
+          tivit.update_status_after_show(user)
+        end
+    end
   end
  
  
@@ -532,7 +541,6 @@ end
  
  def get_number_of_unread_comments(user)
 #get date of last unread
-#puts "get_number_of_unread_comments"
 #puts "tivit: "+self.activity_name+ " id = "+self.id.to_s
 #puts "checking status for user "+user.get_name
 
