@@ -77,7 +77,7 @@ class UserMailer < ActionMailer::Base
 #103 Tivit - New Comment(s). When: Comment added (non-self), Who: Assigner, Assignee, Commenters  Ilan: sent only to asigner if asigne comments
 puts ">>>>>>>>>>    notify_comment_added_to_tivit "
     @commenter  = params[:commenter]
-    puts @commenter.inspect
+    #puts @commenter.inspect
     @comment    = params[:comment]
     @tivit      = params[:tivit]
     toemail     = create_recipient_list(params[:send_to])
