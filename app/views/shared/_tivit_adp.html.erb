@@ -319,7 +319,8 @@
 			
 			<!-- Show respond button only to owner -->
 			<% if tivit_adp.get_owner.id == current_account.user.id %>
-			<% if unread_comments > 0 %> 	
+			<%# if unread_comments > 0 %> 	
+			<% if tivit_adp.id == @tivit_id %>
 			<div class="respond" style="display: block">
 			<% else %>
 			<div class="respond">	

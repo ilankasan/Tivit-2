@@ -514,12 +514,26 @@ class ActivitiesController < ApplicationController
       #log_action_as_comment(@tivit,"Re-assigned to "+@assined_user.get_name+": " + params["comment"],"Reassign",current_account.user)
       log_action_as_comment(@tivit,params["comment"],"Reassigned",current_account.user)
       
-      #UserMailer.reassign_tivit(current_account.user, @assined_user, params["comment"],@tivit)
       puts "sending email"
-  #    def reassign_tivit_old_owner(old_owner, new_owner, comment,tivit,assigner)
-       if(current_account.user != @invited_by)
-          UserMailer.reassign_tivit_old_owner(current_account.user, @assigned_user, @invited_by, params["comment"], @tivit).deliver
-          UserMailer.reassign_tivit_new_owner(current_account.user, @assigned_user, @invited_by, params["comment"], @tivit).deliver
+  #reassign_tivit_old_owner(old_owner, new_owner,assigner, comment,tivit)     if(current_account.user != @invited_by)
+         
+          #UserMailer.reassign_tivit_old_owner(current_account.user, @assigned_user, @invited_by, params["comment"], @tivit).deliver
+          EMAIL_QUEUE << {:email_type => "reassign_tivit_old_owner", :old_owner => current_account.user, 
+                                                                     :new_owner => @assigned_user,
+                                                                     :assigner  => @invited_by, 
+                                                                     :comment   => params["comment"], 
+                                                                     :tivit    =>  @tivit}
+          
+      
+      
+          EMAIL_QUEUE << {:email_type => "reassign_tivit_new_owner", :old_owner => current_account.user, 
+                                                                     :new_owner => @assigned_user,
+                                                                     :assigner  => @invited_by, 
+                                                                     :comment   => params["comment"], 
+                                                                     :tivit    =>  @tivit}
+                                                                     
+        #  UserMailer.reassign_tivit_new_owner(current_account.user, @assigned_user, @invited_by, params["comment"], @tivit).deliver
+        #  def reassign_tivit_new_owner(old_owner, new_owner, assigner, comment,  tivit)
 
        end
 

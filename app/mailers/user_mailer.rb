@@ -77,7 +77,6 @@ class UserMailer < ActionMailer::Base
 #103 Tivit - New Comment(s). When: Comment added (non-self), Who: Assigner, Assignee, Commenters  Ilan: sent only to asigner if asigne comments
 puts ">>>>>>>>>>    notify_comment_added_to_tivit "
     @commenter  = params[:commenter]
-    #puts @commenter.inspect
     @comment    = params[:comment]
     @tivit      = params[:tivit]
     toemail     = create_recipient_list(params[:send_to])
@@ -92,11 +91,11 @@ puts "<<<<<<<<<<<<    notify_comment_added_to_tivit "
  
  def reassign_tivit_old_owner(old_owner, new_owner,assigner, comment,tivit)
 #112 Tivit - Reassign (Original Assigner). When: Assignee reassigns the tivit to another person. Who: Old Assignee, Activity owner
-    @old_owner     = old_owner
-    @new_owner     = new_owner
-    @comment       = comment
-    @tivit         = tivit
-    @assigner      = assigner
+    @old_owner     = params[:old_owner]
+    @new_owner     = params[:new_owner]
+    @comment       = params[:comment]
+    @tivit         = params[:tivit]
+    @assigner      = params[:assigner]
     
     mail(:to => @assigner.get_email, :from => create_from_str(@old_owner.get_name),
          :subject => "tiviti: "+@old_owner.get_name+" asked "+@new_owner.get_name+" to help with '"+@tivit.get_name+"'")
