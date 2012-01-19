@@ -417,13 +417,15 @@ return results
     team_done_tivits = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.status_id = 'Done'
       AND NOT activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id ",user.get_id)
 
-    team_open_activities = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-      AND NOT activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id).order(:due).reverse_order
+    team_open_tivits_no_due = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
+      AND NOT activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NULL",user.get_id)
       
+    team_open_tivits_due = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
+      AND NOT activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NOT NULL",user.get_id).order(:due).reverse_order
       
   # puts "my_open_activities = "+my_open_activities.size.to_s
   # puts "my_done_activities = "+my_done_activities.size.to_send
-    return team_open_activities + team_done_tivits
+    return team_open_tivits_due + team_open_tivits_no_due + team_done_tivits
   end
 
   def update_user_tivit_status_new(user)
