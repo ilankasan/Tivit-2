@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
   before_filter :authenticate_account!
   before_filter :validate_access, :except => [:remove_tivit, :reassign]
- # after_filter  :update_view_status,   :only => :show
+  after_filter  :update_view_status,   :only => :show
   #after_filter  :send_email_create_tivit, :only => :create_tivit 
    
   # [Yaniv] This line disables the CSRF protection by rails when "post" is done outside of the controller (in our case my jQuery stuff). It's not recommended
