@@ -106,7 +106,9 @@
   		
 	  		<% if current_account.user.get_id == (activitydetails.owner_id) %>
 			<ul>
-				<li class="edit-yaniv"><%= link_to "Mark Read "+@tivit_id, edit_activity_path(activitydetails) %></li>
+				<% if @tivit_id != nil && false%>
+					<li class="edit-yaniv"><%= link_to "Mark Read "+@tivit_id, edit_activity_path(activitydetails) %></li>
+				<% end %>
 				
 				<li class="edit-yaniv"><%= link_to "edit", edit_activity_path(activitydetails) %></li>
 				<li class="add-yaniv"><%= link_to "add a file", 	:controller  => "documents", 
