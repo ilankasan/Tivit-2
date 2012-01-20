@@ -56,7 +56,7 @@ class ActivitiesController < ApplicationController
     
   #ilan: Need to send an email notifying all participants the activity and tivit
     related_tivits = @activity.tivits
-   related_tivits.each do |tivit|
+    related_tivits.each do |tivit|
     tivit.destroy
     end
     docs  = @activity.documents
@@ -119,17 +119,28 @@ class ActivitiesController < ApplicationController
    
   end
   
-  def updated_tivit_last_reviewed
+  def update_reviewed
+    puts ">>>>>>>>>>>>>>>>>   updating reviewed!!!!!"  
+   
     @tivit = Activity.find(params[:id])
     if(@tivit != nil)
-        @tivit.update_status_after_show(current_account.user) 
-    end   
-   
+        @tivit.update_status_after_show(current_account.user)
+        puts "updating reviewed" 
+    end  
+    redirect_to @tivit
   end
    
   def update_view_status
-   puts "----------->>>>>>>>>>> update_view_status"  
-   @activity.update_status_after_show(current_account.user)
+   puts "----------->>>>>>>>>>> update_view_status"
+   if(@tivit_id != nil)
+    @tivit = Activity.find(params[:id])
+    if(@tivit != nil)
+        @tivit.update_status_after_show(current_account.user)
+        puts "updating reviewed" 
+    end  
+   end
+       
+   #@activity.update_status_after_show(current_account.user)
   end
  
  
@@ -140,7 +151,7 @@ class ActivitiesController < ApplicationController
    if(!validate_user_access_to_activity(@activity,current_account.user))
       render 'shared/access_denied' 
    end
-     
+   
  end
    
   
@@ -155,7 +166,7 @@ class ActivitiesController < ApplicationController
 # checking to see if the tivit was previously closed. This will be used before the email is sent out below
   if (@activity != nil && @activity.update_attributes(params))
    
-      flash[:success] = "tivit " + @activity.name + " was successfully updated"
+      flash[:success] = "tivit " + @activity.name + " has been updated"
       redirect_to @activity
       
     else
@@ -460,15 +471,10 @@ class ActivitiesController < ApplicationController
     if(current_account.user != @activity.get_invited_by)
 # do not send email if the inviter (assigner)is the the assignee  
         EMAIL_QUEUE << {:email_type => "tivit_decline_email", :assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}
-    
-    end
-    	 
+    end    	 
  end
 
  def reassign
-# reasign tivit to a different user
-  #  puts " Reasign tivit " + params.inspect
-
     assigned_to = params["assign_to"] 
     puts "---->>> Assining tivit to = "+assigned_to
     # finding if user exists if not creating a clone user
