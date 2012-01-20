@@ -23,23 +23,18 @@ class ActivitiesController < ApplicationController
   	params["due"] = adjust_date_to_end_of_day(parse_date(params,"due"))
    		
    @activity = current_account.user.add_my_ativity(params)    
-	
- 	
-# Adding activity to current user	
+	# Adding activity to current user	
         
     if (@activity != nil)
 		invitees = params["invitees"]	
-		
 	
 #Adding invitees to activity
-		if (invitees != nil && invitees.empty? == false)
+		  if (invitees != nil && invitees.empty? == false)
     		add_activity_participants(invitees, @activity)
 # email invitee an email
 			#UserMailer.new_tivit_email(user,owner,self).deliver
 
-    	end     
-
-       
+      end     
         config.debug("------>>>>> creating activity" + @activity.name )
         flash[:success] = @activity.name + " Activity created succesfully!"
 #        redirect_to root_path
@@ -55,25 +50,23 @@ class ActivitiesController < ApplicationController
   end
   
   def destroy
-    
-    
    puts "in destroy"
     #puts params.inspect
     @activity = Activity.find(params[:id])
     
   #ilan: Need to send an email notifying all participants the activity and tivit
-  related_tivits = @activity.tivits
-  related_tivits.each do |tivit|
+    related_tivits = @activity.tivits
+   related_tivits.each do |tivit|
     tivit.destroy
-  end
-  docs  = @activity.documents
-  docs.each do |doc|
-    doc.destroy
-  end
-  
-  @activity.destroy 
+    end
+    docs  = @activity.documents
+    docs.each do |doc|
+      doc.destroy
+    end
     
-  redirect_to root_path
+    @activity.destroy 
+    
+   redirect_to root_path
   end
   
   
@@ -84,11 +77,11 @@ class ActivitiesController < ApplicationController
   end
   
   def remove_tivit
-	puts "Remove Tivit"
-	@tivit    = Activity.find(params[:id])
-	@activity = @tivit.get_parent
-	@tivit.destroy
-	redirect_to @activity
+  	puts "Remove Tivit"
+  	@tivit    = Activity.find(params[:id])
+  	@activity = @tivit.get_parent
+  	@tivit.destroy
+  	redirect_to @activity
   end
   
   
@@ -103,11 +96,8 @@ class ActivitiesController < ApplicationController
        format.html {}
        format.js {}
        puts "[Yaniv] (activities controller)------->> after edit_tivit."
-   end
-        
+    end    
   end
-
-  
   
   def show
     
@@ -174,15 +164,10 @@ class ActivitiesController < ApplicationController
       else
         flash[:failed] = "Failed to update tivit"
       end
-    
       redirect_to @activity
-      
-      
     end
   end
 
-  
-  
   
   def update
    
@@ -317,7 +302,7 @@ class ActivitiesController < ApplicationController
 	  params["description"] = clean_comment(params["description"]) 
     @tivit = @invited_user.activities.create(params)
     @tivit.get_parent
-      @tivit.update_tivit_user_status_reviewed(current_account.user,"")
+    @tivit.update_tivit_user_status_reviewed(current_account.user,"")
     #Change status to on it is tivit assigned to self. Ilan - optimize this section to one function
     if(@invited_user.get_id == current_account.user.get_id)
       @tivit.update_tivit_user_status_onit(current_account.user,"")
@@ -515,8 +500,8 @@ class ActivitiesController < ApplicationController
       log_action_as_comment(@tivit,params["comment"],"Reassigned",current_account.user)
       
       puts "sending email"
-  #reassign_tivit_old_owner(old_owner, new_owner,assigner, comment,tivit)     if(current_account.user != @invited_by)
-         
+  #reassign_tivit_old_owner(old_owner, new_owner,assigner, comment,tivit)     
+      if(current_account.user != @invited_by)      
           #UserMailer.reassign_tivit_old_owner(current_account.user, @assigned_user, @invited_by, params["comment"], @tivit).deliver
           EMAIL_QUEUE << {:email_type => "reassign_tivit_old_owner", :old_owner => current_account.user, 
                                                                      :new_owner => @assigned_user,
@@ -524,7 +509,6 @@ class ActivitiesController < ApplicationController
                                                                      :comment   => params["comment"], 
                                                                      :tivit    =>  @tivit}
           
-      
       
           EMAIL_QUEUE << {:email_type => "reassign_tivit_new_owner", :old_owner => current_account.user, 
                                                                      :new_owner => @assigned_user,
@@ -534,8 +518,7 @@ class ActivitiesController < ApplicationController
                                                                      
         #  UserMailer.reassign_tivit_new_owner(current_account.user, @assigned_user, @invited_by, params["comment"], @tivit).deliver
         #  def reassign_tivit_new_owner(old_owner, new_owner, assigner, comment,  tivit)
-
-       end
+      end
 
       
       flash[:success] = "You successfuly re-assigned tivit to "+@assigned_user.get_name
