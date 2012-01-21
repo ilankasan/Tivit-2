@@ -19,7 +19,7 @@
             <dt>Filter:</dt>
             <dd>
 	            <% form_tag(:controller => "pages", :action => "home", :method => "put") do %>
-	            	<%= select_tag(:filter_id, options_for_select([['On Deck', 1],['My Tivits', 2], ['No Responded', 3],['Everything', 4]],account_session[:filter_id])) %>
+	            	<%= select_tag(:filter_id, options_for_select([['On Deck', 1],['My Tivits', 2], ['No Responce', 3],['Everything', 4]],account_session[:filter_id])) %>
 	            	<!-- %= select_tag(:filter_id, options_for_select([['My Priorities', 1],['Just My Tivits', 3], ['My Activities', 2],['All My tivits', 4],['All tivits', 5]],account_session[:filter_id])) %-->
 					
 					<%= submit_tag("Show") %>

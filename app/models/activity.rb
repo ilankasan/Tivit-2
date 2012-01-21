@@ -225,7 +225,7 @@ class Activity < ActiveRecord::Base
   #         puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
      
         tivits_i_commented_with_new_comments = Activity.find_by_sql([sql])
-        puts "Last review ==== "+last_reviewed.to_s
+       # puts "Last review ==== "+last_reviewed.to_s
         puts "tivits_i_commented_with_new_comments "+tivits_i_commented_with_new_comments.size.to_s
      #   puts "my open tivites "+my_open_tivits.size.to_s
                  
@@ -444,10 +444,27 @@ ORDER BY tivits.due"
   end
 
  def get_unresponded_tivits (user)
+#1. show MY tivits that I have not read or not responded to
+#2. show OTHERS tivits that have not been read or not responded to in activities I own
+#3. show OTHERS tivits that have not been read or not responded that i invited someone
+
     puts "---->>>>>>>>>>>>>> get_unresponded_tivits"
-    unresponded_tivits = self.tivits.joins(:tivit_user_statuses).where("(tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed' )
-        AND (activities.owner_id = ? OR activities.invited_by = ? ) AND tivit_user_statuses.user_id = activities.owner_id",user.get_id, user.get_id)
     
+    if(self.get_owner == user)
+#User is the owner of the activity
+        puts "---->>>>>>>>>>>>>> get_unresponded_tivits"
+        unresponded_tivits = self.tivits.joins(:tivit_user_statuses).where("(tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
+            AND tivit_user_statuses.user_id = activities.owner_id")
+    else
+#User is NOT the owner of the activity
+
+        unresponded_tivits = self.tivits.joins(:tivit_user_statuses).where("(tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
+            AND (activities.owner_id = ? OR activities.invited_by = ? ) AND tivit_user_statuses.user_id = activities.owner_id",user.get_id, user.get_id)
+      
+    end
+       
+   
+   
     puts "unresponded_tivits = "+ unresponded_tivits.size.to_s
     return unresponded_tivits 
  end
