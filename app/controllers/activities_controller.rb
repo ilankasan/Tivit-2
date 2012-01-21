@@ -202,7 +202,7 @@ class ActivitiesController < ApplicationController
 # vhecking to see if tthe task was previously closed. This will be used before the email is sent out below
   was_completed = @activity.status
   if (@activity != nil && @activity.update_attributes(params))
-      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"]
+      #puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" +params["activity_status"]
       
     @activity.update_activity_status(params["activity_status"]) 
  

@@ -91,7 +91,9 @@
 																					  
 																												
 			<%elsif (tabview == "Completed")%>
-				<%= render :partial => 'shared/tivit_db', :collection =>  []       , :as => :tivit  %>
+<%puts " COMPLTED   %%%%%%%%%%%%%^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  %%%%%"%>
+
+				<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_closed_tivits       , :as => :tivit  %>
 			<%else%>
 				<%if(@filter_id == "3")%>
 				<!-- get un responded -->

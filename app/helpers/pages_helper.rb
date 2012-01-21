@@ -243,8 +243,8 @@ def get_activities_i_participate_ondeck (user_id)
     
 ################################# Completed ACTITVITIES #######################################################################################
 # Returns activities completed the last 15 days
-  def get_activities_completed(user_id)
-    
+  def get_activities_completed_or_with_completed_tivits(user_id)
+    puts "------>>>>  get_activities_completed_or_with_completed_tivits"
     sql_completed_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE activities.status      = 'Completed'  
                  AND activities.activity_type   = 'activity' 

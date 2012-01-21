@@ -70,11 +70,14 @@ def home
     
           
       else
-        @tivits_ondeck             = get_activities_i_participate (current_user_id)
+        @activities_summary             = get_activities_i_participate (current_user_id)
+        #not sure we get here.
         @filter_id = "1"    
       end
 # Filter only product On Deck (for now)
-    @tivits_completed          = get_activities_completed(current_user_id)
+    @completed_activities          = get_activities_completed_or_with_completed_tivits(current_user_id)
+    #@tivits_completed          = get_activities_completed_or_with_completed_tivits(current_user_id)
+    
     @incoming_activities       = get_activities_with_new_tivit_requests(current_user_id)
   #  @need_attention_activities = get_need_attention (current_user_id)
     

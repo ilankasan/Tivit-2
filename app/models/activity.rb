@@ -119,11 +119,17 @@ class Activity < ActiveRecord::Base
      return users
    end
    
-
+ def get_closed_tivits
+     #self.tivits.joins(:tivit_user_statuses).where(:status_id => 'Done')
+     self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id
+            AND tivit_user_statuses.status_id = 'Done'")
+ 
+ end
+  
   def get_open_or_recently_done_tivits
-self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id
-AND ((NOT tivit_user_statuses.status_id = 'Done')
-OR ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now-1.day)
+      self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id
+            AND ((NOT tivit_user_statuses.status_id = 'Done')
+            OR ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now-1.day)
   end
   
   
@@ -216,10 +222,7 @@ OR ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_
               AND NOT othercomments.user_id       = "+user.get_id.to_s+"
               ORDER BY tivits.due"
          
-           puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
-    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
-    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
-    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
+  #         puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
      
         tivits_i_commented_with_new_comments = Activity.find_by_sql([sql])
         puts "Last review ==== "+last_reviewed.to_s
@@ -228,11 +231,8 @@ OR ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_
                  
       return (my_open_tivits+open_tivits_im_asignee+tivits_i_commented_with_new_comments).uniq
     end
-    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
-    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
-    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
     
-    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
+   # puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
        
   end
   
