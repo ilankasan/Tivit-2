@@ -268,8 +268,17 @@ def get_activities_i_participate_ondeck (user_id)
                  tivits.owner_id      = "+user_id+" 
                  AND tivits.parent_id   = activities.id))
                  ORDER BY activities.due"
-                         
-        return Activity.find_by_sql(sql_completed_activities)
+     completed_activities = Activity.find_by_sql(sql_completed_activities)
+     
+    swl_activities_with_closed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
+                 WHERE NOT activities.status      = 'Completed'  
+                 AND activities.activity_type   = 'activity' 
+                 AND ((activities.owner_id       = "+user_id+")
+                 OR (tivits.owner_id      = "+user_id+" AND tivits.parent_id   = activities.id))
+                 ORDER BY activities.due"
+     activities_with_closed_tivits  = Activity.find_by_sql(sql_completed_activities)
+                          
+     return (completed_activities + activities_with_closed_tivits).uniq
 #AND activities.completed_at    > ? 15.days.ago  
   end               
          
