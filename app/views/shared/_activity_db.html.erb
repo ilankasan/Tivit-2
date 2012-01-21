@@ -8,8 +8,14 @@
 	    <%if (@on_dek_tivits == nil || @on_dek_tivits.size == 0) && activity_db.get_owner.get_id != current_account.user.get_id  %>
 			<%return%>
 		<%end%>
+	<%elsif @filter_id == "3" %>
+		<% @no_responce_tivits = activity_db.get_unresponded_tivits(current_account.user) %>
+	    <%if (@no_responce_tivits == nil || @no_responce_tivits.size == 0) %>
+			<%return%>
+		<%end%>
 	<%end%>
-	 
+	
+	
 	<% due_time_window = activity_db.get_due_window_from_now %>
 
  	<% if activity_db.due == nil %>
@@ -97,7 +103,7 @@
 				<%if(@filter_id == "3")%>
 				<!-- get un responded -->
 					<%puts " un responded"%>
-					<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_unresponded_tivits(current_account.user)       , :as => :tivit  %>
+					<%= render :partial => 'shared/tivit_db', :collection =>  @no_responce_tivits, :as => :tivit  %>
 				<%elsif @filter_id == "2"%>
 					<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_all_my_open_tivits(current_account.user)       , :as => :tivit  %>
 				
