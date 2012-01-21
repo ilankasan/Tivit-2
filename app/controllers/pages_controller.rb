@@ -61,8 +61,9 @@ def home
         
     when ("3") # All unresponded
         puts "All unresponded"
-        #@tivits_ondeck             = get_activities_i_participate (current_user_id)
-        @activities_summary             = get_activities_i_have_open_tivits (current_user_id)
+      #  @activities_summary             = get_activities_i_have_open_tivits (current_user_id)
+         @activities_summary             = get_activities_i_participate (current_user_id)
+      
         
     when ("4") # All open
         puts "All open"

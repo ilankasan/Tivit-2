@@ -91,7 +91,6 @@
 																					  
 																												
 			<%elsif (tabview == "Completed")%>
-<%puts " COMPLTED   %%%%%%%%%%%%%^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  %%%%%"%>
 
 				<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_closed_tivits       , :as => :tivit  %>
 			<%else%>

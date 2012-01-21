@@ -193,6 +193,21 @@ def get_activities_i_participate_ondeck (user_id)
         
   end
   
+  def get_activities_i_have_unresponed_tivits(user_id)
+    
+      sql_activities_i_participate = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
+                 WHERE NOT activities.status           = 'Completed'  
+                 AND activities.activity_type          = 'activity' 
+                 AND tivits.owner_id                   = "+user_id+"
+                 AND tivits.parent_id                  = activities.id
+                 AND tivit_user_statuses.activity_id   = tivits.id 
+                 AND NOT tivit_user_statuses.status_id = 'Done' 
+                 AND tivit_user_statuses.user_id       = "+user_id+"
+                 ORDER BY activities.due"
+                         
+        return Activity.find_by_sql(sql_activities_i_participate)
+        
+  end
   
   def get_new_activities      
         sql_new_tivits_old = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
