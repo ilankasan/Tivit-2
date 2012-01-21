@@ -93,17 +93,19 @@
 			<%elsif (tabview == "Completed")%>
 				<%= render :partial => 'shared/tivit_db', :collection =>  []       , :as => :tivit  %>
 			<%else%>
-				<%if(@filter_id == "4")%>
-					<%puts " my tivits = true"%>
-					<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_all_my_tivits(current_account.user)       , :as => :tivit  %>
-				<%elsif @filter_id == "3"%>
+				<%if(@filter_id == "3")%>
+				<!-- get un responded -->
+					<%puts " un responded"%>
+					<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_unresponded_tivits(current_account.user)       , :as => :tivit  %>
+				<%elsif @filter_id == "2"%>
 					<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_all_my_open_tivits(current_account.user)       , :as => :tivit  %>
 				
 				<%elsif @filter_id == "1"%>
 					<%= render :partial => 'shared/tivit_db', :collection =>  @on_dek_tivits       , :as => :tivit  %>
 				
 				<%else%>
-					<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_open_or_recently_done_tivits       , :as => :tivit  %>
+				<!-- @filter_id == "1" -->
+					<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_open_tivits       , :as => :tivit  %>
 				<%end%>
 					
 			<%end%>

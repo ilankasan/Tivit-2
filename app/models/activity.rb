@@ -132,26 +132,111 @@ OR ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_
   end
   
   def get_last_reviewed (user)
-    
+    #tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
     tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
     if(tivit_user_status == nil )
       last_reviewed = Time.now
+      puts "last review is nill?"
     else
       last_reviewed = tivit_user_status.last_reviewed
     end
     puts "Last Reviewed = "+last_reviewed.to_s
     if(last_reviewed.to_s.empty?)
         
-        puts "--------------- last review is not empty ------------- "+last_reviewed.to_s
+        puts "--------------- last review is  empty ------------- "+last_reviewed.to_s
         last_reviewed = Time.now()
         last_reviewed = last_reviewed - 1000000000
-        puts "--------------- last review is not empty ------------- "+last_reviewed.to_s
-
+        
     end
     return last_reviewed
   end
   
   def get_on_deck_tivits (user)
+    puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name
+    last_reviewed = get_last_reviewed (user)
+    
+    
+    if(self.owner_id == user.get_id)
+#My activity - show: 
+#All open tivits and thoses with comments
+#Only when they are in my activity and have a new status or comment since last view
+
+      puts "user is the owner of activity ---  "+self.name
+      
+    
+      my_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
+                                    AND tivit_user_statuses.user_id = activities.owner_id 
+                                    AND activities.owner_id         = ? ",user.get_id).order(:due).reverse_order
+                                    
+     puts "my_open_tivits "+my_open_tivits.size.to_s
+     
+      other_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
+                                    AND tivit_user_statuses.user_id = activities.owner_id 
+                                    AND NOT activities.owner_id = ? ",user.get_id).order(:due).reverse_order
+         
+     puts "other_open_tivits "+other_open_tivits.size.to_s
+      
+#   Since status change adds a comment this will include tivits with a status changed
+     closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id = activities.id
+                                    AND tivitcomments.created_at  > ?
+                                    AND NOT tivitcomments.user_id = ?",last_reviewed, user.get_id)
+      
+      #closed_tivits_with_comments =[]
+      puts "closed_tivits_with_comments size "+closed_tivits_with_comments.size.to_s
+      return (my_open_tivits + other_open_tivits + closed_tivits_with_comments).uniq
+   
+    else
+# Not my activity - show
+# my open tivits
+# tivits i commented and have a comment
+      puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is NOT the owner of activity"
+      
+# Get only my open tivits and tivits i am the invitee (asignee)
+      my_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
+                      AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id).order(:due).reverse_order
+       
+      puts "My open tivit "+my_open_tivits.size.to_s
+     
+      open_tivits_im_asignee = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
+                      AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
+                      
+      puts "Open tivits in other activity i invited "+open_tivits_im_asignee.size.to_s
+      
+# get all tivits i participated in the conversation and there are new comments
+       
+    sql = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments, tivit_user_statuses
+            WHERE tivits.activity_type            = 'tivit'
+              AND tivits.parent_id                = "+self.id.to_s+"
+              AND mycomments.activity_id          = tivits.id
+              AND mycomments.user_id              = "+user.get_id.to_s+"
+              AND tivit_user_statuses.user_id     = "+user.get_id.to_s+"
+              AND tivit_user_statuses.activity_id = tivits.id
+              AND othercomments.activity_id       = tivits.id
+              AND othercomments.created_at        > tivit_user_statuses.last_reviewed
+              AND NOT othercomments.user_id       = "+user.get_id.to_s+"
+              ORDER BY tivits.due"
+         
+           puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
+    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
+    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
+    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
+     
+        tivits_i_commented_with_new_comments = Activity.find_by_sql([sql])
+        puts "Last review ==== "+last_reviewed.to_s
+        puts "tivits_i_commented_with_new_comments "+tivits_i_commented_with_new_comments.size.to_s
+     #   puts "my open tivites "+my_open_tivits.size.to_s
+                 
+      return (my_open_tivits+open_tivits_im_asignee+tivits_i_commented_with_new_comments).uniq
+    end
+    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
+    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
+    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
+    
+    puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
+       
+  end
+  
+  def latestold_get_on_deck_tivits (user)
    # puts "On deck filter!"
     last_reviewed = get_last_reviewed (user)
     
@@ -224,10 +309,9 @@ AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner
 puts "-------------<<<<<<<<<<<<<<"
        
   end
+
   
-  
-  
-  def new_get_on_deck_tivits (user)
+  def old1_get_on_deck_tivits (user)
     puts "------------->>>>>>>>>>>>"
     puts "On deck filter!"
     last_reviewed = get_last_reviewed (user)
@@ -291,12 +375,12 @@ ORDER BY tivits.due"
 # retuen my new requests  
    my_tivits    = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
        AND   activities.owner_id     = ? AND NOT activities.invited_by = ? AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id,currentuser.id)
-   puts " number of my new requests "+my_tivits.length.to_s
+  # puts " number of my new requests "+my_tivits.length.to_s
              
    other_tivits = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
        AND   NOT activities.owner_id = ? AND activities.invited_by = ? AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Decline')",currentuser.id,currentuser.id)
              
-    puts " number of  requests nee my action "+other_tivits.length.to_s          
+ #   puts " number of  requests nee my action "+other_tivits.length.to_s          
    
     return my_tivits + other_tivits
   end
@@ -317,7 +401,7 @@ ORDER BY tivits.due"
                    ORDER BY activities.due"
     
      results1  =  Activity.find_by_sql(sql_activities_with_my_tivits).count
-     puts " number of my new requests "+results1.to_s
+     #puts " number of my new requests "+results1.to_s
              
    
       
@@ -359,7 +443,14 @@ ORDER BY tivits.due"
     return results
   end
 
-
+ def get_unresponded_tivits (user)
+    puts "---->>>>>>>>>>>>>> get_unresponded_tivits"
+    unresponded_tivits = self.tivits.joins(:tivit_user_statuses).where("(tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed' )
+        AND (activities.owner_id = ? OR activities.invited_by = ? ) AND tivit_user_statuses.user_id = activities.owner_id",user.get_id, user.get_id)
+    
+    puts "unresponded_tivits = "+ unresponded_tivits.size.to_s
+    return unresponded_tivits 
+ end
   
   def get_all_my_open_tivits (user)
     self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
@@ -367,6 +458,11 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
     
   end
   
+  def get_open_tivits 
+    self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
+                     AND tivit_user_statuses.user_id = activities.owner_id")
+    
+  end
   
   def get_need_attention_tivits (currentuser)
   

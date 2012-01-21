@@ -4,7 +4,7 @@ class  MyDevise::SessionsController < Devise::SessionsController
  
   def new
   	puts "In MyDevise Session Controller - New "
-  	puts " Params = "+params.inspect
+  	#puts " Params = "+params.inspect
   	@title = "Sign In"
   	
     super

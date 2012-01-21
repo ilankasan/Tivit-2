@@ -19,7 +19,9 @@
             <dt>Filter:</dt>
             <dd>
 	            <% form_tag(:controller => "pages", :action => "home", :method => "put") do %>
-	            	<%= select_tag(:filter_id, options_for_select([['My Priorities', 1],['My Open tivits', 3], ['My Activities', 2],['All My tivits', 4],['All tivits', 5]],account_session[:filter_id])) %>
+	            	<%= select_tag(:filter_id, options_for_select([['On Deck', 1],['Just My Tivits', 2], ['All Unresponded', 3],['All Open', 4]],account_session[:filter_id])) %>
+	            	<!-- %= select_tag(:filter_id, options_for_select([['My Priorities', 1],['Just My Tivits', 3], ['My Activities', 2],['All My tivits', 4],['All tivits', 5]],account_session[:filter_id])) %-->
+					
 					<%= submit_tag("Show") %>
 	            	
 	           	<% end %>            
@@ -67,9 +69,9 @@
 					
 	        <div id="tivit-desk" class="tivit-desk tabInfo"> 
 
-			<% unless @tivits_ondeck == nil %>
+			<% unless @activities_summary == nil %>
 			 
-			     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_ondeck, :locals => {:tabview => "On Deck"} %>
+			     <%= render :partial => 'shared/activity_db', :collection =>  @activities_summary, :locals => {:tabview => "Summary"} %>
 		     
 			<% end %>
 
