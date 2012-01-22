@@ -532,10 +532,50 @@ jQuery(document).ready(function($){
 	/* Yaniv - Show/Hide comments when clicking on a tivit */
 	$('.text-conteiner').live('click', function(){
 		//alert($(this).parents('.record').children('ul').attr('class'));
-		console.log('[Yaniv] tivit clicked - show/hide comments...');
+		//console.log('[Yaniv] tivit clicked - show/hide comments...');
+		
+		// Mark any un-read comments as read 
+		
+		// First, check if we're opening or closing comments. Only on open we need to update the server
+		if (!jQuery(this).parents('.record').children('ul').is(":visible"))
+	    {
+	        console.log ("[Yaniv] OPEN comments!");
+	        
+	        // Check if there're new comments on this activity by looking on the UI, if there's a red cricle of new comments
+	        var record = jQuery(this).parents('.record');
+	        // The red circle is in the <i> element
+	        var newComments = record.find('i');
+	        // Check if we found anything, if not, that means no new comments
+	        if (newComments.length != 0 )
+	        {
+	        	console.log ("[Yaniv] new comments =", newComments.text() ); 
+	        	var tivitID = record.find("input").attr("tivitid");
+	    		console.log ("[Yaniv] comments expanded tivit: tivitID=", tivitID);
+				
+				var action = '/update_reviewed/' + tivitID;
+				console.log ("[Yaniv] action=", action);
+				// Mark any un-read comments as read 
+				$.post(action, $(this).serialize(), null, "script");	
+				
+				// remove the red circle since comments are red
+				newComments.fadeOut();
+	        }
+	        else
+	        {
+	        	console.log ("[Yaniv] NO new comments!"); 
+	        }
+	    }
+	    else
+	    {
+	    	console.log ("[Yaniv] CLOSE comments!");
+	    }
+	    
 		$(this).parents('.record').children('ul').fadeToggle('slow');
 		//$(this).parents('.record').children('.show-more').fadeToggle('slow');
 		$(this).parents('.record').children('.respond').fadeToggle('slow');
+			
+		return false;
+		
 	});	
 	$('.text-conteiner').hover(function(){
 		$(this).css('cursor','pointer');
@@ -553,9 +593,45 @@ jQuery(document).ready(function($){
 	/* Clicking comments icon opens comments */
 	$('.comments').live('click', function(){
 		//alert($(this).parents('.record').children('ul').attr('class'));
-		console.log('[Yaniv] tivit clicked - show/hide comments...');
+		//console.log('[Yaniv] tivit clicked - show/hide comments...');
+		// Mark any un-read comments as read 
+		
+		// First, check if we're opening or closing comments. Only on open we need to update the server
+		if (!jQuery(this).parents('.record').children('ul').is(":visible"))
+	    {
+	        console.log ("[Yaniv] OPEN comments!");
+	        
+	        // Check if there're new comments on this activity by looking on the UI, if there's a red cricle of new comments
+	        var record = jQuery(this).parents('.record');
+	        // The red circle is in the <i> element
+	        var newComments = record.find('i');
+	        // Check if we found anything, if not, that means no new comments
+	        if (newComments.length != 0 )
+	        {
+	        	console.log ("[Yaniv] new comments =", newComments.text() ); 
+	        	var tivitID = record.find("input").attr("tivitid");
+	    		console.log ("[Yaniv] comments expanded tivit: tivitID=", tivitID);
+				
+				var action = '/update_reviewed/' + tivitID;
+				console.log ("[Yaniv] action=", action);
+				// Mark any un-read comments as read 
+				$.post(action, $(this).serialize(), null, "script");	
+				
+				// remove the red circle since comments are red
+				newComments.fadeOut();
+	        }
+	        else
+	        {
+	        	console.log ("[Yaniv] NO new comments!"); 
+	        }
+	    }
+	    else
+	    {
+	    	console.log ("[Yaniv] CLOSE comments!");
+	    }
+	    
 		$(this).parents('.record').children('ul').fadeToggle('slow');
-		$(this).parents('.record').children('.show-more').fadeToggle('slow');
+		//$(this).parents('.record').children('.show-more').fadeToggle('slow');
 		$(this).parents('.record').children('.respond').fadeToggle('slow');
 		
 	});	

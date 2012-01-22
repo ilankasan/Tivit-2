@@ -127,7 +127,13 @@ class ActivitiesController < ApplicationController
         @tivit.update_status_after_show(current_account.user)
         puts "updating reviewed" 
     end  
-    redirect_to @tivit
+      
+    respond_to do |format|
+       format.html { redirect_to @tivit }
+       format.js {}
+       puts "[Yaniv] (activities controller)------->> after update_reviewed."
+    end   
+    
   end
    
   def update_view_status
