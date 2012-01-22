@@ -142,7 +142,7 @@ def get_activities_i_participate_ondeck (user_id)
                  
 # temporary user last sign in
         last_reviewed = current_account.last_sign_in_at
-        puts "last reviewed "+last_reviewed.to_s
+        #puts "last reviewed "+last_reviewed.to_s
         
         result1  =  Activity.find_by_sql(sql_activities_i_have_open_tivits)
         result2  =  Activity.find_by_sql([sql_activities_i_participate,last_reviewed])

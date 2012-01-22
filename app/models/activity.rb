@@ -146,7 +146,7 @@ class Activity < ActiveRecord::Base
     else
       last_reviewed = tivit_user_status.last_reviewed
     end
-    puts "Last Reviewed = "+last_reviewed.to_s
+    #puts "Last Reviewed = "+last_reviewed.to_s
     if(last_reviewed.to_s.empty?)
         
         puts "--------------- last review is  empty ------------- "+last_reviewed.to_s
@@ -158,7 +158,7 @@ class Activity < ActiveRecord::Base
   end
   
   def get_on_deck_tivits (user)
-    puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name
+ #   puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name
     last_reviewed = get_last_reviewed (user)
     
     
@@ -174,13 +174,13 @@ class Activity < ActiveRecord::Base
                                     AND tivit_user_statuses.user_id = activities.owner_id 
                                     AND activities.owner_id         = ? ",user.get_id).order(:due).reverse_order
                                     
-     puts "my_open_tivits "+my_open_tivits.size.to_s
+   #  puts "my_open_tivits "+my_open_tivits.size.to_s
      
       other_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
                                     AND tivit_user_statuses.user_id = activities.owner_id 
                                     AND NOT activities.owner_id = ? ",user.get_id).order(:due).reverse_order
          
-     puts "other_open_tivits "+other_open_tivits.size.to_s
+    # puts "other_open_tivits "+other_open_tivits.size.to_s
       
 #   Since status change adds a comment this will include tivits with a status changed
      closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id = activities.id
@@ -188,7 +188,7 @@ class Activity < ActiveRecord::Base
                                     AND NOT tivitcomments.user_id = ?",last_reviewed, user.get_id)
       
       #closed_tivits_with_comments =[]
-      puts "closed_tivits_with_comments size "+closed_tivits_with_comments.size.to_s
+ #     puts "closed_tivits_with_comments size "+closed_tivits_with_comments.size.to_s
       return (my_open_tivits + other_open_tivits + closed_tivits_with_comments).uniq
    
     else
@@ -201,12 +201,12 @@ class Activity < ActiveRecord::Base
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
                       AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id).order(:due).reverse_order
        
-      puts "My open tivit "+my_open_tivits.size.to_s
+      #puts "My open tivit "+my_open_tivits.size.to_s
      
       open_tivits_im_asignee = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
                       AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
                       
-      puts "Open tivits in other activity i invited "+open_tivits_im_asignee.size.to_s
+   #   puts "Open tivits in other activity i invited "+open_tivits_im_asignee.size.to_s
       
 # get all tivits i participated in the conversation and there are new comments
        
