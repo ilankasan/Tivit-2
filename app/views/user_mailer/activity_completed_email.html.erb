@@ -27,7 +27,7 @@
 							</div>
 						</td>
 
-        					<td><font size="2" face="Arial">We wanted to let you know that <b><%= @activity_owner.get_name %></b> closed '<%= @activity.get_name %>'  and thanks you for your help!</font>
+        					<td><font size="2" face="Arial">We wanted to let you know that <b><%= @activity_owner.get_name %></b> closed '<%= link_to @activity.get_name, activity_url(@activity) %>'  and thanks you for your help!</font>
 						</td>
       					</tr>
       					<tr>

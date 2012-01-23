@@ -205,19 +205,19 @@ def  add_tivit_to_user(emails, activity)
                  AND users.id                  = activities_users.user_id"
    
    
-    @users          = User.find_by_sql(sql)
+    @users = User.find_by_sql(sql)
     return @users
    end
    
-   def notify_users_activity_is_closed(activity,summery)
+   def notify_users_activity_is_closed(activity,summery,activity_owner)
      puts "in notify users"
      users = get_acrivity_users(activity)
      users.each do |user|
        
 #202 Activity - Closed. When Owner closes activity, Who: All Assignees
-   
-      EMAIL_QUEUE << {:email_type => "activity_completed_email", :stakeholder => user , :activity_owner => activity.get_owner,:comment => summery, :activity =>@activity}
-      
+      if(user != activity_owner)
+        EMAIL_QUEUE << {:email_type => "activity_completed_email", :stakeholder => user , :activity_owner => activity.get_owner,:comment => summery, :activity =>@activity}
+      end
      
      end
    
