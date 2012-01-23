@@ -104,7 +104,6 @@ git push ilangithub\ilan-bug_fixes
 git push heroku master
 
 git checkout -b ilan-march_20
-git push staging 1-19-12_tabfilters:master
 
 
 Heroku
@@ -139,11 +138,11 @@ You will receive an email with instructions about how to reset your password in 
 
 $ git add .
 git commit -am "1-18-12 link to tivit staging 1"
-git commit -am "1-22-12 Yaniv's changes unread comments staging 1"
 
 git checkout master
 git merge updating-users
 git merge yaniv-new_ui_1
+git merge 1-19-12_tabfilters
 
 $ 
 heroku rake db:migrate
