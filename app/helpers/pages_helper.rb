@@ -192,7 +192,7 @@ def delete_get_activities_i_participate_ondeck (user_id)
   
   def get_activities_i_have_open_tivits(user_id)
     
-      activities_i_participate_with_due_date  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
+      sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status           = 'Completed'  
                  AND activities.activity_type          = 'activity' 
                  AND activities.due IS NOT               NULL
@@ -203,7 +203,7 @@ def delete_get_activities_i_participate_ondeck (user_id)
                  AND tivit_user_statuses.user_id       = "+user_id+"
                  ORDER BY activities.due"
                  
-      activities_i_participate_without_due_date  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
+      sql_activities_i_participate_without_due_date  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status           = 'Completed'  
                  AND activities.activity_type          = 'activity'
                  AND activities.due IS                   NULL   
@@ -213,8 +213,8 @@ def delete_get_activities_i_participate_ondeck (user_id)
                  AND NOT tivit_user_statuses.status_id = 'Done' 
                  AND tivit_user_statuses.user_id       = "+user_id
                          
-      #    activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
-      #  activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_no_due_date)
+        activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
+        activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_without_due_date)
         
         return activities_i_participate_with_due_date + activities_i_participate_without_due_date
       
