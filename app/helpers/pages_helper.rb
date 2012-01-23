@@ -186,7 +186,7 @@ def delete_get_activities_i_participate_ondeck (user_id)
         activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
         activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_no_due_date)
         
-        return sql_activities_i_participate_with_due_date + activities_i_participate_without_due_date
+        return activities_i_participate_with_due_date + activities_i_participate_without_due_date
         
   end
   
@@ -202,6 +202,12 @@ def delete_get_activities_i_participate_ondeck (user_id)
                  AND tivit_user_statuses.user_id       = "+user_id+"
                  ORDER BY activities.due"
                          
+      #    activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
+      #  activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_no_due_date)
+        
+        return activities_i_participate_with_due_date + activities_i_participate_without_due_date
+      
+        
         return Activity.find_by_sql(sql_activities_i_participate)
         
   end
