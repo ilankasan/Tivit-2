@@ -55,13 +55,11 @@ def home
               
     when ("2") # Just My tivits
         puts "Just My tivits"
-      #  @tivits_ondeck             = get_my_activities(current_user_id)
        @activities_summary             = get_activities_i_have_open_tivits (current_user_id)
        
         
     when ("3") # All unresponded
         puts "All unresponded"
-      #  @activities_summary             = get_activities_i_have_open_tivits (current_user_id)
          @activities_summary             = get_activities_i_participate (current_user_id)
       
         
@@ -87,7 +85,7 @@ def home
 
 
                 
-  def old_home
+  def old_home_old
     @title = "Home"
     
     puts "Home"

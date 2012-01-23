@@ -109,7 +109,7 @@ module PagesHelper
       
   end
 
-def get_activities_i_participate_ondeck (user_id)
+def delete_get_activities_i_participate_ondeck (user_id)
   puts "----->>>>>>> get_activities_i_participate_ondeck"
     
       sql_activities_i_have_open_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
@@ -164,16 +164,29 @@ def get_activities_i_participate_ondeck (user_id)
   
   def get_activities_i_participate (user_id)
     
-      sql_activities_i_participate = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
+      sql_activities_i_participate_no_due_date = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
+                 WHERE NOT activities.status      = 'Completed'
+                 AND activities.due IS              NULL    
+                 AND activities.activity_type     = 'activity' 
+                 AND (activities.owner_id         = "+user_id+"
+                 OR (
+                 tivits.owner_id        = "+user_id+" 
+                 AND tivits.parent_id   = activities.id))"
+                 
+      sql_activities_i_participate_with_due_date = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE NOT activities.status      = 'Completed'  
-                 AND activities.activity_type   = 'activity' 
-                 AND (activities.owner_id       = "+user_id+"
-                 OR ( 
-                 tivits.owner_id      = "+user_id+" 
+                 AND activities.activity_type     = 'activity' 
+                 AND activities.due IS NOT           NULL
+                 AND (activities.owner_id         = "+user_id+"
+                 OR (
+                 tivits.owner_id        = "+user_id+" 
                  AND tivits.parent_id   = activities.id))
                  ORDER BY activities.due"
-                         
-        return Activity.find_by_sql(sql_activities_i_participate)
+                            
+        activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
+        activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_no_due_date)
+        
+        return sql_activities_i_participate_with_due_date + activities_i_participate_without_due_date
         
   end
   
