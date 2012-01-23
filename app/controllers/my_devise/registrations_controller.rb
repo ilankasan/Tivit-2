@@ -64,7 +64,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  end
  
  def awaiting_confirmation
-   puts "---------->>>>>>>>>>>>> confirm message  <<<<__________________"
+   #puts "---------->>>>>>>>>>>>> confirm message  <<<<__________________"
    
    @email = Account.find_by_id(params[:format]).get_email
    puts "email " + @email.inspect

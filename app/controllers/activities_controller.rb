@@ -95,17 +95,17 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
        format.html {}
        format.js {}
-       puts "[Yaniv] (activities controller)------->> after edit_tivit."
+    #   puts "[Yaniv] (activities controller)------->> after edit_tivit."
     end    
   end
   
   def show
     
-    puts "----------->>>>>>>>>>> show activity detailed page"
+  #  puts "----------->>>>>>>>>>> show activity detailed page"
     @activity_temp = Activity.find(params[:id])
     if(!@activity_temp.isActivity?)
 #this is a tivit
-      puts ">>>>>>>>>>>>>>>>>>    this is a tivit <<<<<<<<<<<<<<<<<<<<<<"
+   #   puts ">>>>>>>>>>>>>>>>>>    this is a tivit <<<<<<<<<<<<<<<<<<<<<<"
       @tivit_id = @activity_temp.id
       @activity = @activity_temp.get_parent
     else
@@ -115,7 +115,7 @@ class ActivitiesController < ApplicationController
    # @activity.update_status_after_show(current_account.user)
     
   	@title = "Activity Details - "+@activity.name
-  	puts "<<<<<<<<<<<<<<-----------show activity detailed page"  
+  #	puts "<<<<<<<<<<<<<<-----------show activity detailed page"  
    
   end
   
