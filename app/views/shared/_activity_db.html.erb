@@ -4,18 +4,30 @@
 
 <!-- if on dec checking to see if there are any tivits to display. If not do not display activity -->
 	<%if @filter_id == "1" %>
+	<!-- on deck -->
 	    <% @tivits = activity_db.get_on_deck_tivits(current_account.user) %>
 	    
 	<%elsif @filter_id == "2" %>
-		<% @tivits = activity_db.get_all_my_open_tivits(current_account.user)%>   
+		<% @tivits = activity_db.get_all_my_open_tivits(current_account.user)%>
+		   
 	<%elsif @filter_id == "3" %>
+	<!-- No Response -->
 		<% @tivits = activity_db.get_unresponded_tivits(current_account.user) %>
+		
 	<%elsif @filter_id == "4" %>
 		<% @tivits = activity_db.get_open_tivits %>
 	<%end%>
 	
 	<%if (@tivits == nil || @tivits.size == 0)%>
-		<%return%>
+		<%if @filter_id == "3"%>
+		<!-- Do not show empty activities (all closed) for No Response filter -->
+			<%return%>
+		<%else%>
+		<!-- Do not show empty activities (all closed) if user is not the owner-->
+			<%if !activity_db.isOwner?(current_account.user)%>
+				<%return%>
+			<%end%>
+		<%end%>
 	<%end%>
 	
 	
