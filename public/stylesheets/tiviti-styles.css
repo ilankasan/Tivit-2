@@ -202,6 +202,9 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 #new-activity-form textarea{
     font-family:Arial,'Liberation Sans',FreeSans,sans-serif;
 }
+/* Input field error validation */ 
+#new-activity-form .error { font-size: 13px; text-align: left; width: 300px; float: none; color: red; padding-left: 10px; vertical-align: top; }
+
 #new-activity-background{
 	width: 780px;
 	margin: 0;
@@ -1236,6 +1239,10 @@ small.less{display:block;padding:0;}
 .popup h3{padding:5px 0 5px 38px;margin:0;background:url(../images/icon_add_tivit.gif) no-repeat;}
 .popup h1{font-size: 16px; padding:5px 0 5px 18px;margin:0;}
 .popup label{font-size:14px;vertical-align:top;display:inline-block;width:50px;padding-right:5px;text-align:right;line-height:2.1;}
+
+/* Used for form input validations - form error messages */
+.popup label.error { font-size: 13px; text-align: left; width: 300px; float: none; color: red; padding-left: 60px; vertical-align: top; }
+
 .popup input,.popup textarea{width:400px;height:27px;border:1px solid #d0d0d0;font:normal 13px Arial,'Liberation Sans',FreeSans,sans-serif;padding-left:4px;}
 .popup textarea{height:70px;resize:none; padding: 4px;width: 394px;}
 

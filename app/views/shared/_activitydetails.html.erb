@@ -37,13 +37,13 @@
 		<!-- tivit name -->
 		<!-- <p><label for="tivit">tivit:</label><input type="text" id="tivit" /></p> -->	
 		<p><label for="tivit">tivit:</label>
-			<%= text_field_tag(:name, nil) %> 
+			<%= text_field_tag(:name, nil, :class => "required") %> 
 		</p>
 		
 		<!-- tivit invitee -->
 		<!-- <p><label for="who">Who:</label><input type="text" id="who" /></p> -->
 		<p><label for="who">Who:</label>
-			<%= text_field_tag(:invitees, nil, :placeholder => "myself -OR- invite by email address") %> 
+			<%= text_field_tag(:invitees, nil, :placeholder => "myself -OR- invite by email address", :class => "optional email" ) %> 
 			</p>
 		
 		<!-- <p class="assign"><i></i> assign myself</p> -->

@@ -25,16 +25,23 @@ jQuery(document).ready(function($){
 
 	console.log ('[Yaniv] in Artem DOM ready function');
 	
+	$("#new-activity-form").validate({
+   		//debug: true,
+   		submitHandler: function(form) {
+	     	form.submit();
+     	}     
+	});
+	
 	/**************************************************************************/
 	/* Yaniv - Create new tivit with Ajax */
 	
-	jQuery("#create-new-tivit-form").submit(function() {
-		console.log ('[Yaniv] #create-new-tivit-form clicked');
-		showLoadingAnimation('.loading-popup');
-		console.log ('[Yaniv] after loading animation...');
-		$.post($(this).attr("action"), $(this).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
-		return false;
-	});
+	//jQuery("#create-new-tivit-form").submit(function() {
+	//	console.log ('[Yaniv] #create-new-tivit-form clicked');
+	//	showLoadingAnimation('.loading-popup');
+	//	console.log ('[Yaniv] after loading animation...');
+	//	$.post($(this).attr("action"), $(this).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
+	//	return false;
+	//});
 	
 	/**************************************************************************/
 	
@@ -302,7 +309,7 @@ jQuery(document).ready(function($){
 	    			console.log('[Yaniv] re-assign tivit selected.');
 	    			var confirmDialogTitle = 'Reassign tivit to someone else';
 	    			var actionPost = 'action="/reassign?id=' + tivitID + '&method=put" accept-charset="UTF-8">';
-					who = '<p><label for="who">Who:</label><input type="text" name="assign_to" id="assign_to" placeholder="- enter one email address -" /></p>';    
+					who = '<p><label for="who">Who:</label><input type="text" name="assign_to" id="assign_to" placeholder="- enter one email address -" class="required email" /></p>';    
 	    			break;
 	    			
 	    		case 'unread':
@@ -357,6 +364,31 @@ jQuery(document).ready(function($){
     		 // Change status on UI to the new selected state (need to use this for Ajax callback)
     		 //record.attr('class',newClassValue);
     		 //////////////////////////////////////////////////////////
+    		 
+    		 // Add validation in case of re-assign (we have email input)
+    		 //if (newState == 're-assign')
+    		 //{
+	    		 $("#confirmDialogForm").validate({
+			   		submitHandler: function(form) {
+				     	console.log ('[Yaniv] confirm dialog submit button clicked!');
+						showLoadingAnimation('.loading-popup');
+						var actionparam = $(this).attr("action") + "";
+						console.log('[Yaniv] action=', actionparam);
+						
+						$.post($(form).attr("action"), $(form).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
+						
+						// Find the new status we need to chagen the checkbox to, it's hidden in the HTML of the confirmation popup.
+						var statusobject = jQuery(form).parents('.popup'); 
+						//console.log ("[Yaniv] statusobject=", statusobject);
+						var newState = 'record ' + statusobject.find("input").attr("newstate");
+				    	//console.log ("[Yaniv] new state=", newState);
+						record = jQuery(form).parents('.record');
+						record.attr('class', newState);
+						
+						return false;
+					}     
+				});
+			//}
     	 //}
     	 //else
     	// {
@@ -377,24 +409,24 @@ jQuery(document).ready(function($){
 			hidePopup();
 		});
 	
-	 jQuery("#confirmDialogForm").submit(function() {
-		console.log ('[Yaniv] confirm dialog submit button clicked!');
-		showLoadingAnimation('.loading-popup');
-		var actionparam = $(this).attr("action") + "";
-		console.log('[Yaniv] action=', actionparam);
+	 //jQuery("#confirmDialogForm").submit(function() {
+	//	console.log ('[Yaniv] confirm dialog submit button clicked!');
+	//	showLoadingAnimation('.loading-popup');
+	//	var actionparam = $(this).attr("action") + "";
+	//	console.log('[Yaniv] action=', actionparam);
 		
-		$.post($(this).attr("action"), $(this).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
+	//	$.post($(this).attr("action"), $(this).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
 		
 		// Find the new status we need to chagen the checkbox to, it's hidden in the HTML of the confirmation popup.
-		var statusobject = jQuery(this).parents('.popup'); 
+	//	var statusobject = jQuery(this).parents('.popup'); 
 		//console.log ("[Yaniv] statusobject=", statusobject);
-		var newState = 'record ' + statusobject.find("input").attr("newstate");
+	//	var newState = 'record ' + statusobject.find("input").attr("newstate");
     	//console.log ("[Yaniv] new state=", newState);
-		record = jQuery(this).parents('.record');
-		record.attr('class', newState);
+	//	record = jQuery(this).parents('.record');
+	//	record.attr('class', newState);
 		
-		return false;
-	 });
+	//	return false;
+	// });
 	 
 	 
 	
@@ -489,6 +521,23 @@ function closeNewActivity(){
 // from Irina Sorokina (sorokina333@gmail.com)
 jQuery(document).ready(function($){
  
+ 	// Validate form input before submission to make sure we don't send crap to the server!
+ 	$("#create-new-tivit-form").validate({
+   		//debug: true,
+   		submitHandler: function(form) {
+	     	console.log ('[Yaniv] #create-new-tivit-form clicked');
+			showLoadingAnimation('.loading-popup');
+			console.log ('[Yaniv] after loading animation...');
+			$.post($(form).attr("action"), $(form).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
+			return false;
+     	}     
+	});
+ 	
+ 	
+	
+ 	
+ 	
+ 	
 	var description = $('.description p span').text();
 	
 	console.log('in Irina DOM Ready function');  
@@ -597,6 +646,8 @@ jQuery(document).ready(function($){
 		// Mark any un-read comments as read 
 		
 		// First, check if we're opening or closing comments. Only on open we need to update the server
+		// Also, second section in the if is to ignore the click on the dashboard page and make sure it only works on ADP page
+		//&& !jQuery(this).parents('.record').not('.tivits .record').not('.main-tivit')
 		if (!jQuery(this).parents('.record').children('ul').is(":visible"))
 	    {
 	        console.log ("[Yaniv] OPEN comments!");
@@ -635,8 +686,13 @@ jQuery(document).ready(function($){
 		$(this).parents('.record').children('.respond').fadeToggle('slow');
 		
 	});	
+	//$(".record").not('.tivits .record').not('.main-tivit').hover(
+		
 	$('.comments').hover(function(){
-		$(this).css('cursor','pointer');
+		//if (jQuery(this).parents(".record").not('.tivits .record').not('.main-tivit'))
+		//{
+			$(this).css('cursor','pointer');
+		//}
 	});
 	/*
 	//change respond status
