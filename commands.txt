@@ -138,6 +138,7 @@ You will receive an email with instructions about how to reset your password in 
 
 $ git add .
 git commit -am "1-18-12 link to tivit staging 1"
+git commit -am "1-25-12 staging 1"
 
 git checkout master
 git merge updating-users

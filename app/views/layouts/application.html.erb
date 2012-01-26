@@ -17,7 +17,7 @@
 		<%= javascript_include_tag "base-jq.js" %>
 		<!-- needed for form validation. Relevant docs are here: http://docs.jquery.com/Plugins/Validation -->
 		<%= javascript_include_tag "jquery.validate.js" %>
-		<%= javascript_include_tag "prototype.js" %>
+		<!--%= javascript_include_tag "prototype.js" %-->
 		<%= javascript_include_tag "effects.js" %>
 		<%= javascript_include_tag "dragdrop.js" %>
 		<%= javascript_include_tag "controls.js" %>
@@ -93,6 +93,14 @@
 <% else %>
 	<body class="bk2">		
 <% end %>  		
+   		
+   		
+<!-- ERROR Message for IE, don't render anything. The client_browser_name is a in applcation_helper.rb and returns the browser being used -->
+<% if !client_browser_supported? %>
+	 
+	 <h1>Sorry but our alpha is not yet working on IE....please use latest versions of Chrome, Firefox or Safari. We'll get to IE at some point probably...:-) </h1>
+	 
+<% else %> 		
    		<!-- Header - Main Navigation & New Activity Bar -->
 	  	<!-- <div id="main-nav-background"> -->
 	      	<%= render 'layouts/header' %>
@@ -137,7 +145,9 @@
     <div style="clear: both;"></div>
     
     	<%= debug(params) if Rails.env.development? %>
-      
+
+<% end %>
+     
 	</body>
 	
 <!-- Beta Easy Widget -->
