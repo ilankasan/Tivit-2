@@ -97,13 +97,7 @@ class Activity < ActiveRecord::Base
                   AND     (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id).count
  
    return results
-#   results = self.joins(:tivit_user_statuses).where(
- #                 "       activities.owner_id         = ? 
-  #                AND     tivit_user_statuses.user_id = activities.owner_id
-   #               AND NOT activities.activity_type    = 'activity' 
-    #              AND     activities.id               = tivit_user_statuses.activity_id 
-     #             AND     ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",currentuser.id).count
-    #return 2 
+
   end
 
 
@@ -447,10 +441,10 @@ ORDER BY tivits.due"
 #1. show MY tivits that I have not read or not responded to
 #2. show OTHERS tivits that have not been read or not responded to in activities I own
 #3. show OTHERS tivits that have not been read or not responded that i invited someone
-    puts "---->>>>>>>>>>>>>> get_unresponded_tivits"
+ #   puts "---->>>>>>>>>>>>>> get_unresponded_tivits"
     if(self.get_owner == user)
 #User is the owner of the activity
-        puts "---->>>>>>>>>>>>>> get_unresponded_tivits"
+     #   puts "---->>>>>>>>>>>>>> get_unresponded_tivits"
         unresponded_tivits = self.tivits.joins(:tivit_user_statuses).where("(tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
             AND tivit_user_statuses.user_id = activities.owner_id")
     else
