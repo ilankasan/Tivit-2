@@ -1,16 +1,14 @@
 
 <div id="new-activity">
 	
-	<% form_tag(:controller => "activities", :method => "post", :multipart => true) do %>
-	
-	
+	<% form_tag({:controller => "activities", :method => "post"}, :id => "new-activity-form") do %>
                    
 	<!-- Acitivity Name -->
 	<div class="field">
 			<div class="field-label">
 				<%= label_tag(:name, "New Activity:") %>
 			</div>
-		<%= text_field_tag(:name, nil, :placeholder => "enter name...", :class => "input-name") %>
+		<%= text_field_tag(:name, nil, :placeholder => "Enter the name of your new micro-project", :class => "input-name required") %>
 	</div>
  
 	<!-- The complete Activiti form, opened upon activity name on focus --> 

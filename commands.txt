@@ -139,6 +139,8 @@ You will receive an email with instructions about how to reset your password in 
 $ git add .
 git commit -am "1-18-12 link to tivit staging 1"
 git commit -am "1-25-12 staging 1"
+git commit -am "1-29-12 yanivs bug fixes stg 1"
+
 
 git checkout master
 git merge updating-users
@@ -181,7 +183,7 @@ rails -d mysql my_rails_app
 
  git remote add origin git@github.com:<ilankasan>/first-app.git
  git push origin master
- git checkout -b 8-29-11
+ git checkout -b 1-25-12
  
  Add a column to activity table
  rails generate migration add_invited_by_to_activities invited_by:integer

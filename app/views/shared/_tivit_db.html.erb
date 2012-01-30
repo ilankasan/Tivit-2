@@ -74,10 +74,20 @@
 		<% else %>
 			<% status_line_middle = " hasn't read this." %>
 		<% end %>
-		
-	<% else %>
-		<% status_line_middle = " agreed to help by" %>
-   	<% end %>			
+	<% elsif (owner_tivit_status == "OnIt" || owner_tivit_status == "Accepted") %>
+				<% status_line_middle = " agreed to help by" %>
+				
+			<% elsif owner_tivit_status == "Reviewed"%>
+				<% if tivit_owner_name == "You" %>
+					<% status_line_middle = " haven't responded." %>
+				<% else %>
+					<% status_line_middle = " hasn't responded." %>
+				<% end %>
+			
+			<% else %>
+				<% status_line_middle = "un-handled status...if you see this let yaniv know" %>
+	  	 	<% end %>
+	  	 			
 <% elsif (owner_tivit_status == "OnIt" || owner_tivit_status == "Accepted")%>
 
 	<li class="record inprog">
@@ -244,12 +254,16 @@
 	              		<% end %>
 	              		
 		              	<% if (tivit.get_invited_by.get_id != current_account.user.get_id && (owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed") ) %>
-	              		[invited by <%=tivit.get_invited_by.get_name%>
-	              		<% if owner_tivit_status != "Reminded" %>
-	              			 <%= time_ago_in_words(tivit.created_at)%> ago]
+		              		<% if tivit.due != nil && tivit.due.localtime.end_of_day < Time.now.end_of_day %>
+		              				[overdue <font color="red"><%= status_line_window %></font>]
+			              		<% else %>
+			              			
+			              			[invited by <%=tivit.get_invited_by.get_name%>
+				              		<% if owner_tivit_status != "Reminded" %>
+				              			 <%= time_ago_in_words(tivit.created_at)%> ago]
+				              		<%end%>
+			              	<% end %>
 	              		<%end%>
-
-	              	<%end%>
 	              	
 	              </span>
 	         
