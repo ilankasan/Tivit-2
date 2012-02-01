@@ -61,7 +61,9 @@ end
   get "tivitcomments/new"
 
   resources :users
-  match "/ajax/autoname"         => "users#autoname"
+  #match "/ajax/autoname"         => "users#autoname"
+  match "/ajax/invitees"         => "users#autoname"
+    
   
   resources :sessions,   :only => [:new, :create, :destroy]
   #resources :activities, :only => [:create, :destroy, :update, :show, :edit]
@@ -89,7 +91,7 @@ resources :activities
     match "/completed_activity"    => "activities#completed_activity"
   	match "/update_tivit/:id" 	   => "activities#update_tivit"
   	match "/update_reviewed/:id"  => "activities#update_reviewed"
-    
+  	
   	
   	#match "/images"    => "../images"
 #resources :bireports  

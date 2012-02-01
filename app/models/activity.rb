@@ -814,20 +814,20 @@ return count.inspect + "/" + self.tivits.size.inspect+" tivits have been complet
 
   def change_status_to_completed (summary)
    puts "change_status_to_completed"
-self.completed_at = Time.now()
+   self.completed_at = Time.now()
    self.status = "Completed"
    self.summary = summary if(summary != nil)
-   if(!self.save)
-   return false
-   end
-   if(self.tivits != nil || self.tivits.size > 0)
-self.tivits.each do |tivit|
-if(!tivit.change_status_to_completed (nil))
-return false
-end
-end
-end
-return true
+    if(!self.save)
+      return false
+    end
+  #  if(self.tivits != nil || self.tivits.size > 0)
+   #     self.tivits.each do |tivit|
+    #      if(!tivit.change_status_to_completed (nil))
+     #         return false
+      #    end
+      #  end
+    #end
+    return true
   end
 
   def change_status_to_in_progress
