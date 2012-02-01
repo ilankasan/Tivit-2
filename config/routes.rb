@@ -61,6 +61,8 @@ end
   get "tivitcomments/new"
 
   resources :users
+  match "/ajax/autoname"         => "users#autoname"
+  
   resources :sessions,   :only => [:new, :create, :destroy]
   #resources :activities, :only => [:create, :destroy, :update, :show, :edit]
 
