@@ -51,39 +51,18 @@ class User < ActiveRecord::Base
   def autoname
   end
   
-  def funky_method
-  	#puts "^^^^^^^^^^^^^^^^9090909090909090^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-    "#{self.name}.camelize"
-  end
-def isAdmin?
+  
+  def isAdmin?
  # ilan need to rewrite
-  email = self.account.email
-  if(email =="ilan.kasan@gmail.com" || email =="yanivlevi1@gmail.com" || email =="jon.nakasone@gmail.com")
-    return true
-  else
-    return false
+    email = self.account.email
+    if(email =="ilan.kasan@gmail.com" || email =="yanivlevi1@gmail.com" || email =="jon.nakasone@gmail.com")
+      return true
+    else
+      return false
+    end
+    #return self.admin
   end
-  #return self.admin
-end
 
-def user_email
-	puts "!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!!!!!!!!!!!!"
-	return self.clone_email    if  self.account.nil?
-	return self.account.email  if !self.account.nil?
-	
-end
-  
-  def get_autocomplete_items(parameters)
-    items = super(parameters)
-    items = items.where(:user_id => current_account.user.id)
-  end
-  
-            #@users = User.where("is_active = false AND clone_email = ?",email)
-        #@users = User.where(:is_active => false,  :clone_email => email)
-    
-    #get_user
-
-  
   def deactivate_user
     self.is_active = false
   end
