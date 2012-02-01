@@ -9,15 +9,16 @@ class UsersController < ApplicationController
  autocomplete :user, :email, :extra_data => [:slogan], :display_value => :funky_method
   
  def autoname
-  names = User.all
-  #if params[:term]
-  #  like= "%".concat(params[:term].concat("%"))
-  #  names = inventory.where("name LIKE ?", like)
+  puts "term = "+params[:term]
+  #names = Account.all
+  if params[:term]
+    like= "%".concat(params[:term].concat("%"))
+    emails = Account.where("email LIKE ?", like)
   #else
   #  names = inventory
-  #end
+  end
 
-  list = names.map {|u| Hash[ :id => u.id, :label => u.name, :name => u.name]}
+  list = emails.map {|u| Hash[ :id => u.id, :label => u.email, :name => u.email]}
   render :json => list
 end
 
