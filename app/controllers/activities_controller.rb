@@ -31,16 +31,11 @@ class ActivitiesController < ApplicationController
 #Adding invitees to activity
 		  if (invitees != nil && invitees.empty? == false)
     		add_activity_participants(invitees, @activity)
-# email invitee an email
-			#UserMailer.new_tivit_email(user,owner,self).deliver
-
       end     
         config.debug("------>>>>> creating activity" + @activity.name )
         flash[:success] = @activity.name + " Activity created succesfully!"
-#        redirect_to root_path
 #redirect_to 'shared/activitydetails'
         render 'show'
-                       
     else
         config.debug("creating activity failed")
 #ilan: not sure why we need the below row 
@@ -154,7 +149,7 @@ class ActivitiesController < ApplicationController
     return if(params == nil || params[:id] == nil)
        
     @activity = Activity.find(params[:id])   
-   if(!validate_user_access_to_activity(@activity,current_account.user))
+   if(@activity == nil || !validate_user_access_to_activity(@activity,current_account.user))
       render 'shared/access_denied' 
    end
    
@@ -271,7 +266,6 @@ class ActivitiesController < ApplicationController
      end
     if(current_account.user != @activity.get_invited_by)
 # do not send email if the inviter (assigner)is the the assignee  
-   #   UserMailer.tivit_status_change_onit_email(current_account.user, params["comment"],@activity).deliver
       EMAIL_QUEUE << {:email_type => "tivit_status_change_onit_email", :assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}
       
     end
@@ -390,12 +384,9 @@ class ActivitiesController < ApplicationController
     	@activity.update_tivit_user_propose_date(current_account.user,params["comment"], proposed_date)
     	log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)
       
-      
     	 if(current_account.user != @activity.get_invited_by)
     	   puts "--------------------------- sending email -----------------------------------"
-        EMAIL_QUEUE << {:email_type => "tivit_propose_new_date_email", :assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}
-        #UserMailer.tivit_propose_new_date_email({:assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}).deliver
-      
+         EMAIL_QUEUE << {:email_type => "tivit_propose_new_date_email", :assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}
        end
     end  
     
@@ -424,9 +415,15 @@ class ActivitiesController < ApplicationController
  #ilan: do i need to change the owner status as accepted? maybe later
  
  # Send an email to the owner of the tivit the the activity owner accepted the proposed date
-    UserMailer.tivit_accept_new_date_email(@activity.get_owner,current_account.user , @activity,params["comment"]).deliver
+    #UserMailer.tivit_accept_new_date_email(@activity.get_owner,current_account.user , @activity,params["comment"]).deliver
+    EMAIL_QUEUE << {:email_type => "tivit_accept_new_date_email", 
+                    :assigner   => current_account.user,
+                    :comment    => params["comment"], 
+                    :tivit      => @activity,
+                    :assignee   => @activity.get_owner}
+     # def tivit_accept_new_date_email(assignee, assigner, tivit,comment )
+     
     
-
     redirect_to @activity.get_parent
   end
 
@@ -514,7 +511,6 @@ class ActivitiesController < ApplicationController
       puts "sending email"
   #reassign_tivit_old_owner(old_owner, new_owner,assigner, comment,tivit)     
       if(current_account.user != @invited_by)      
-          #UserMailer.reassign_tivit_old_owner(current_account.user, @assigned_user, @invited_by, params["comment"], @tivit).deliver
           EMAIL_QUEUE << {:email_type => "reassign_tivit_old_owner", :old_owner => current_account.user, 
                                                                      :new_owner => @assigned_user,
                                                                      :assigner  => @invited_by, 
@@ -527,12 +523,7 @@ class ActivitiesController < ApplicationController
                                                                      :assigner  => @invited_by, 
                                                                      :comment   => params["comment"], 
                                                                      :tivit    =>  @tivit}
-                                                                     
-        #  UserMailer.reassign_tivit_new_owner(current_account.user, @assigned_user, @invited_by, params["comment"], @tivit).deliver
-        #  def reassign_tivit_new_owner(old_owner, new_owner, assigner, comment,  tivit)
       end
-
-      
       flash[:success] = "You successfuly re-assigned tivit to "+@assigned_user.get_name
       @tivit.save
     end
@@ -553,9 +544,8 @@ class ActivitiesController < ApplicationController
 # ilan: need to change status to reminded. next version
      @activity.update_tivit_user_status_reminded(@activity.get_owner,params["comment"])
   
-    #UserMailer.remind_user_to_review_tivit(current_account.user, params["comment"],@activity).deliver
      EMAIL_QUEUE << {:email_type => "remind_user_to_review_tivit", :assignee => @activity.get_owner ,:user_reminding => current_account.user , :message => params["comment"], :tivit =>@activity}
-  	redirect_to  root_path
+  	 redirect_to  root_path
   end
  
   private

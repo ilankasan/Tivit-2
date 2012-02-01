@@ -49,7 +49,6 @@ class TivitcommentsController < ApplicationController
     
       #notify_comment_added_to_tivit(commenter, comment,activity, send_to)
       
-     # UserMailer.notify_comment_added_to_tivit(current_account.user, @comment.comment,@activity, send_to.uniq).deliver
     else
       puts "not sending notificaiton"
     end

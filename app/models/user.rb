@@ -48,6 +48,9 @@ class User < ActiveRecord::Base
                     :length   => { :maximum => 50 }
    
   
+  def autoname
+  end
+  
   def funky_method
   	#puts "^^^^^^^^^^^^^^^^9090909090909090^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
     "#{self.name}.camelize"

@@ -32,7 +32,7 @@ class Tivitcomment < ActiveRecord::Base
   def wasReviewed?(user)
      tivit_user_status = self.activity.tivit_user_statuses.find_by_user_id(user.id)
      if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
-       if (self.user.id != user.id && self.created_at > tivit_user_status.last_reviewed)
+       if (self.user != user && self.created_at > tivit_user_status.last_reviewed)
     #     puts "was Revewed ----->>>>>>    user "+user.id.to_s+" did not review this comment"
      #    puts "___________________________________________________________________________"
          return false 

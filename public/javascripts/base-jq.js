@@ -23,7 +23,12 @@ jQuery(document).ready(function() {
 
 jQuery(document).ready(function($){
 
+	
 	console.log ('[Yaniv] in Artem DOM ready function');
+
+	
+
+
 	
 	$("#new-activity-form").validate({
    		//debug: true,
@@ -520,7 +525,13 @@ function closeNewActivity(){
 // Scripts for Activity Page
 // from Irina Sorokina (sorokina333@gmail.com)
 jQuery(document).ready(function($){
- 
+ 	
+ 	// autocomplete for new tivit. Example taken from http://stackoverflow.com/questions/6245161/jquery-ui-autocomplete-rails3-and-cancan-model-access-problem
+ 	jQuery("input[id=invitees]").autocomplete({
+  		source: '/ajax/invitees',
+  		minLength: 2
+	});
+
  	// Validate form input before submission to make sure we don't send crap to the server!
  	$("#create-new-tivit-form").validate({
    		//debug: true,
@@ -532,11 +543,6 @@ jQuery(document).ready(function($){
 			return false;
      	}     
 	});
- 	
- 	
-	
- 	
- 	
  	
 	var description = $('.description p span').text();
 	

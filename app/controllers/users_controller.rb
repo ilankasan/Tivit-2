@@ -2,13 +2,26 @@
 
 class UsersController < ApplicationController
  before_filter :authenticate_account!
- before_filter :validate_user_access_to_user_profile
+ #before_filter :validate_user_access_to_user_profile
  # :only => :show, :update,:edit,:create 
  
   
  autocomplete :user, :email, :extra_data => [:slogan], :display_value => :funky_method
   
- 
+ def autoname
+  names = User.all
+  #if params[:term]
+  #  like= "%".concat(params[:term].concat("%"))
+  #  names = inventory.where("name LIKE ?", like)
+  #else
+  #  names = inventory
+  #end
+
+  list = names.map {|u| Hash[ :id => u.id, :label => u.name, :name => u.name]}
+  render :json => list
+end
+
+
   def get_autocomplete_items(parameters)
   	puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"
   	

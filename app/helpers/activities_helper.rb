@@ -31,20 +31,32 @@ module ActivitiesHelper
 
   def validate_user_access_to_activity (activity, user)
     puts "validating that user "+user.get_name+" can access activity "+activity.get_name
-    #if(user.get_if== activity.get_owner_id || activity.tivits.where(:owner_id => user.get_id).count > 0)
+# check user is the owner of the tivitor activity
     return true if(user == activity.get_owner)
-    parent = activity.get_parent  
+    
+# check user is the owner of the activity
+    parent = activity.get_parent
     return true if(parent != nil && user == parent.get_owner) 
-     
+
+#check if user is the user if theowner of one of the tivits (assumming activity is a parent) 
     return true if (activity.tivits.where(:owner_id => user.get_id).count > 0)
     
+#check if user is the user is the owner of one of the tivits of the parent  
     if( parent != nil && parent.tivits.where(:owner_id => user.get_id).count > 0)
       return true
-    else 
+
+  
+    elsif (parent.tivits.joins(:tivitcomments).where("tivitcomments.user_id  = ?",user.get_id).count > 0)
+      puts "user did comment"
+      
+#check if the user has commented on one of the tivits
+       
+      return true
+    else
       puts "-----------------------------------------------------"
       puts "Access Denied!!!!!!!!!!!!!!!!!!!!!!!!!"
       puts "-----------------------------------------------------"
-      
+        
       return false
     end 
   end
