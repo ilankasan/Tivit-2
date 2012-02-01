@@ -9,6 +9,7 @@ class UsersController < ApplicationController
  autocomplete :user, :email, :extra_data => [:slogan], :display_value => :funky_method
   
  def autoname
+# auto completed to get list of users. Nee to expand it to seach name field and names in the user table
   puts "term = "+params[:term]
   #names = Account.all
   if params[:term]
