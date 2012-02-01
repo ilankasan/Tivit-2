@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
   
   def get_email
   	return self.clone_email    if  self.account.nil?
-	return self.account.email  if !self.account.nil?
+	  return self.account.email  if !self.account.nil?
 	
   end
   

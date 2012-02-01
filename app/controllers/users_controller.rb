@@ -12,11 +12,18 @@ class UsersController < ApplicationController
 # auto completed to get list of users. Nee to expand it to seach name field and names in the user table
   puts "term = "+params[:term]
   #names = Account.all
-  if params[:term]
+  if (params[:term] && !current_account.user.mycontacts.nil?)
     like= "%".concat(params[:term].concat("%"))
-    emails = Account.where("email LIKE ?", like)
-  #else
-  #  names = inventory
+    #emails = Account.where("email LIKE ?", like)
+   # puts "my contacts = "+current_account.user.mycontacts.inspect
+    #users  = current_account.user.mycontacts.joins(:accounts).where("email LIKE ?", like)
+    #emails  = current_account.user.mycontacts.account.where("email LIKE ?", like)
+    #emails = Account.where("email LIKE ?", like)
+    emails = Account.joins(:user).where(:id => current_account.user.mycontacts)
+   #   puts "emails = "+emails.inspect
+    
+  else
+    email = []
   end
 
   list = emails.map {|u| Hash[ :id => u.id, :label => u.email, :name => u.email]}
@@ -24,7 +31,7 @@ class UsersController < ApplicationController
 end
 
 
-  def get_autocomplete_items(parameters)
+  def delete_get_autocomplete_items(parameters)
   	puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"
   	
     items = super(parameters)
