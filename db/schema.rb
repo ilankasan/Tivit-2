@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(:version => 20120116213007) do
     t.integer  "activity_id"
     t.integer  "assigned_to"
     t.string   "status_id"
-    t.string   "comment"
+    t.string   "comment",            :limit => 1024
     t.datetime "last_reviewed"
     t.datetime "proposed_date"
     t.datetime "last_status_change"

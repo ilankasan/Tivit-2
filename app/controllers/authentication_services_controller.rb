@@ -113,7 +113,7 @@ def create
 			        puts "user = "+@user.inspect
       			  if(@user == nil)
       					puts "user == nil"
-      					account.user = User.new({"name"=>name})
+      					account.user = User.new({:name=>name, :clone_email => email})
       				else
       					puts "user != nil"
       				if(account.user == nil)

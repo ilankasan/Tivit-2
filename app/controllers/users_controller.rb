@@ -12,6 +12,8 @@ class UsersController < ApplicationController
 # auto completed to get list of users. Nee to expand it to seach name field and names in the user table
   puts "term = "+params[:term]
   #names = Account.all
+  puts "my contacts "+current_account.user.mycontacts.inspect
+puts "_________________________________________"
   if (params[:term] && !current_account.user.mycontacts.nil?)
     like= "%".concat(params[:term].concat("%"))
     #emails = Account.where("email LIKE ?", like)
@@ -19,17 +21,44 @@ class UsersController < ApplicationController
     #users  = current_account.user.mycontacts.joins(:accounts).where("email LIKE ?", like)
     #emails  = current_account.user.mycontacts.account.where("email LIKE ?", like)
     #emails = Account.where("email LIKE ?", like)
-    emails = Account.joins(:user).where(:id => current_account.user.mycontacts)
-   #   puts "emails = "+emails.inspect
+    #emails = Account.joins(:user).where(:id => current_account.user.mycontacts)
+    clone_emails  = current_account.user.mycontacts.where("clone_email LIKE ? OR name LIKE ? ", like, like)
+    
+    
+    
+    # puts "emails = "+emails.inspect
+     puts "clone emails = "+clone_emails.inspect
+ 
     
   else
-    email = []
+    clone_emails = []
   end
 
-  list = emails.map {|u| Hash[ :id => u.id, :label => u.email, :name => u.email]}
+  #list = clone_emails.map {|u| Hash[ :id => u.id, :label => (u.clone_email), :name => u.clone_email]}
+  list = clone_emails.map {|u| Hash[ :id => u.id, :label => concat_email_name(u), :name => u.clone_email]}
   render :json => list
 end
 
+  def concat_email_name (user)
+    puts "******************************"
+    if (user.account == nil)
+   #   str = "(#{user.name}) #{user.clone_email}"
+       str = user.clone_email
+      
+    else
+       str = user.account.email
+      
+    end
+    puts str
+    return str
+    
+      #:g => "You sure you want to delete #{activitydetails.name}?"
+        
+    #else
+      
+   # end
+    
+  end
 
   def delete_get_autocomplete_items(parameters)
   	puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"

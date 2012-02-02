@@ -45,7 +45,8 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 	#puts "user = "+@user.inspect
 	if(@user == nil)
 		#puts "user == nil"
-		@account.user = User.new(params[:account][:user])
+		@account.user = User.new(params[:account][:user], :clone_email => email)
+		
 	else
 	#	puts "user != nil"
 		if(@account.user == nil)
