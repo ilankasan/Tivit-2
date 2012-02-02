@@ -83,8 +83,7 @@ class User < ActiveRecord::Base
   def get_email
   	return self.clone_email    if  self.account.nil?
 	  return self.account.email  if !self.account.nil?
-	
-  end
+	end
   
   def get_id
   	return self.id
@@ -94,7 +93,6 @@ class User < ActiveRecord::Base
   def addContact(user)
   	if(!self.isContact?(user))
   		self.mycontacts << user
-
   	end
   end
   
