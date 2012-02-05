@@ -298,9 +298,15 @@ class ActivitiesController < ApplicationController
   	params["parent_id"]  = params[:id] 						#   adding Parent ID
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
 	  params["status"]     = "in-progress"
-	  params[:name]        = params[:name].gsub("'", "\\'")
-    params[:description] = params[:description].gsub("'", "\\'")
-	 
+	  puts "name = "+params[:name]
+	  #puts "name replace  = "+params[:name].replace(/'/g,"\'")
+	  #puts JSON.stringify({params[:name]}).inspect
+	  #params[:name]        = params[:name].gsub("'", "\'")
+	  #params[:name] = params[:name].gsub(/\\|'/) { |c| "\\#{c}" }
+	  params[:name] = params[:name].gsub("\\","\\\\\\\\").gsub("'","\\\\'")
+    #params[:description] = params[:description].gsub("'", "\\\\'")
+	 puts "name = "+params[:name]
+    
     invitees = params["invitees"]	
    
     # if no invitee provided, assign tivit to current user
