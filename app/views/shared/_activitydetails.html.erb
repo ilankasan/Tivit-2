@@ -1,3 +1,10 @@
+<% if activitydetails.get_owner.id == current_account.user.get_id %>
+	<% activity_owner_name = "You" %>
+<% else %>
+	<% activity_owner_name = activitydetails.get_owner.name %>
+<% end %>
+
+
 <!-- Full window overlay -->
 <div id="activity-overlay"></div>
 
@@ -89,7 +96,8 @@
 			<h1><%= activitydetails.name %> </h1>
 			
 			<!-- <p><small>Don Draper, Yesterday @ 8:09 AM</small></p> -->
-			<p><small><%= activitydetails.get_owner.get_name %>, <%= time_ago_in_words(activitydetails.created_at) %> ago.</small></p>
+			
+			<p><small><%= activity_owner_name %>, <%= time_ago_in_words(activitydetails.created_at) %> ago.</small></p>
 			
 			<!-- <p class="progress-complete"><span>20%</span> (1/5 tivits complete)</p> -->	
 			<p class="progress-complete">

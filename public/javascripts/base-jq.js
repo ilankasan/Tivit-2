@@ -1,34 +1,14 @@
 jQuery.noConflict();
 
-/* Yaniv's stuff */
+/* Yaniv's Ajax stuff */
 jQuery.ajaxSetup({ 
   'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
 })
-/*
-jQuery.fn.submitWithAjax = function() {
-  this.submit(function() {
-  	console.log ('[Yaniv] in submitWithAjax function');
-    jQuery.post(this.action, jQuery(this).serialize(), null, "script");
-    return false;
-  })
-  return this;
-};
-
-jQuery(document).ready(function() {
-  console.log('in Ajax DOM Ready function');  
-  jQuery("#create-new-tivit-form").submitWithAjax();
-})
-
-*/
 
 jQuery(document).ready(function($){
 
 	
 	console.log ('[Yaniv] in Artem DOM ready function');
-
-	
-
-
 	
 	$("#new-activity-form").validate({
    		//debug: true,
@@ -38,8 +18,7 @@ jQuery(document).ready(function($){
 	});
 	
 	/**************************************************************************/
-	/* Yaniv - Create new tivit with Ajax */
-	
+	/* Yaniv - Create new tivit with Ajax */	
 	//jQuery("#create-new-tivit-form").submit(function() {
 	//	console.log ('[Yaniv] #create-new-tivit-form clicked');
 	//	showLoadingAnimation('.loading-popup');
@@ -47,7 +26,6 @@ jQuery(document).ready(function($){
 	//	$.post($(this).attr("action"), $(this).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
 	//	return false;
 	//});
-	
 	/**************************************************************************/
 	
 	//$('.post-button').live('click', function(){
@@ -56,29 +34,31 @@ jQuery(document).ready(function($){
 		showInlineLoadingAnimation();
 		console.log ('[Yaniv] Post comment button clicked');
 		
-		var actionparam = $(this).attr("action") + "";
-		console.log('[Yaniv] action=', actionparam); 
+		var record = jQuery(this).parents('.record');				
+		addNewComment (record);
+						
+		//var actionparam = $(this).attr("action") + "";
+		//console.log('[Yaniv] action=', actionparam); 
 
 		//var mystring = "hello/world/test/world";
-		var find = "/";
-		var regex = new RegExp(find, "g");
-		var newcommentId = actionparam.replace(regex, "");
-		//document.write (mystring.replace(regex, "****"))
+		//var find = "/";
+		//var regex = new RegExp(find, "g");
+		//var newcommentId = actionparam.replace(regex, "");
 		
-		console.log('[Yaniv] newcommentId=', newcommentId); 
+		//console.log('[Yaniv] newcommentId=', newcommentId); 
 		
 		//var newCommentId = "new_comment_to_add";
 		
-		var ullist = $(this).parents('.list .list');
-		var lastPost = ullist.find ('.post');
+		//var ullist = $(this).parents('.list .list');
+		//var lastPost = ullist.find ('.post');
 		//var newComment = '<li class="record" id="new_comment_to_add"></li>';
 		
 		// This is critical for making sure the Ajax call will insert the div in the right place. See create.js.erb in tivitcomments viewer folder (JS view)
-		var newComment = '<li class="record" id="' + newcommentId + '"></li>';
+		//var newComment = '<li class="record" id="' + newcommentId + '"></li>';
 		
-		console.log ('[Yaniv] newComment=', newComment);
+		//console.log ('[Yaniv] newComment=', newComment);
 		
-		lastPost.before(newComment);
+		//lastPost.before(newComment);
 		 
 		console.log ('[Yaniv] new comments record should be added by now and can accept the new comment partial to be rendered');
 		
@@ -101,7 +81,7 @@ jQuery(document).ready(function($){
 	    effect: "fade",
 	    hashchange: false
 	});
-
+    
 	var inputEl = jQuery('#new-activity input#name');
     inputEl.live('focus',function(){
         openNewActivity();
@@ -178,79 +158,23 @@ jQuery(document).ready(function($){
 	    //$(this).children('.menu-dialog').toggle();
 	  }
 	});
-	
-	
-    /*jQuery(document).click(function(){
-         console.log('click');
-        jQuery('.status-list-dialog').remove();
-     });*/
-	
+	  	
 	/***********************************************************************************************/
 	// tivit status checkbox
+    //var statusIcon = jQuery('.status .icon');
+    var respondStatus = jQuery('.respond .form-button'); 
     var statusIcon = jQuery('.status .icon');
-    var statusList = '<div class="status-list-dialog">'+
-                        '<ul class="status-list">'+
-                            //'<li class="unread"><div class="ico"></div>Not started</li>'+
-                            '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
-                            '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
-                            '<li class="busy"><div class="ico"></div>Sorry, I can\'t help</li>'+
-                            '<li class="attention"><div class="ico"></div>Propose new date</li>'+
-                            '<li class="re-assign"><div class="ico"></div>Reassign</li>'+
-                        '</ul>'+
-                     '</div>';
-                     
-     statusIcon.live('click',function(){
-     	
-     	//var tivitobject = jQuery(this).parent();
-     	//console.log ("[Yaniv] tivitobject=", tivitobject);
-     	
-     	// Check if the user owns this tivit or not. If not, don't allow to change status therefor dropdown will not open
-		var mytivit = jQuery(this).parent().find("input").attr("mytivit");
-    	console.log ("[Yaniv] status mytivit=", mytivit);
-    	
-     	if (mytivit == "yes")
-     	{
-     	
-	    	var recState = jQuery(this).closest('li');
-	    		console.log(recState.attr('class'));
-		    	if(recState.hasClass('unread'))
-		    	{
-		    		jQuery(this).parent().append(statusList);
-		    		jQuery('.status-list-dialog').find('.unread').remove();
-		    		jQuery('.status-list-dialog').show();
-		    	}
-		    	else if(recState.hasClass('inprog'))
-		    	{
-		    		jQuery(this).parent().append(statusList);
-		    		jQuery('.status-list-dialog').find('.inprog').remove();
-		    		jQuery('.status-list-dialog').show();
-		    	}
-		    	else if(recState.hasClass('complete'))
-		    	{
-		    		jQuery(this).parent().append(statusList);
-		    		jQuery('.status-list-dialog').find('.complete').remove();
-		    		jQuery('.status-list-dialog').show();
-		    	}
-		    	else if(recState.hasClass('busy'))
-		    	{
-		    		jQuery(this).parent().append(statusList);
-		    		jQuery('.status-list-dialog').find('.busy').remove();
-		    		jQuery('.status-list-dialog').show();
-		    	}
-		    	else if(recState.hasClass('attention'))
-		    	{
-		    		jQuery(this).parent().append(statusList);
-		    		jQuery('.status-list-dialog').find('.attention').remove();
-		    		jQuery('.status-list-dialog').show();
-		    	}
-		    	else if(recState.hasClass('re-assign'))
-		    	{
-		    		jQuery(this).parent().append(statusList);
-		    		jQuery('.status-list-dialog').show();
-		    	}
-		}
-     });
-	/***********************************************************************************************/
+     
+    // status icon on each tivit on the left AND in the respond button
+    statusIcon.live('click',function(){
+    	showStatusListDialog (this);    	
+    });
+    
+    // respond button - click should open the status menu
+	respondStatus.live('click',function(){
+    	showStatusListDialog (this);   	
+    });
+    /***********************************************************************************************/
 	// Hide open menu dialogs (such as status change, edit/delete, etc.)
      $('body').click(function(event) {
 
@@ -382,17 +306,55 @@ jQuery(document).ready(function($){
 						
 						$.post($(form).attr("action"), $(form).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
 						
-						// Find the new status we need to chagen the checkbox to, it's hidden in the HTML of the confirmation popup.
+						// Find the new status we need to change the checkbox to, it's hidden in the HTML of the confirmation popup.
 						var statusobject = jQuery(form).parents('.popup'); 
-						//console.log ("[Yaniv] statusobject=", statusobject);
+						
 						var newState = 'record ' + statusobject.find("input").attr("newstate");
 				    	//console.log ("[Yaniv] new state=", newState);
 						record = jQuery(form).parents('.record');
 						record.attr('class', newState);
 						
+						// Show comment of status change
+						addNewComment (record);
+						
+						// Update respond button text
+						updateRespondButtonText (record, statusobject.find("input").attr("newstate"));
+						
 						return false;
 					}     
 				});
+				
+				function updateRespondButtonText (record, state)
+				{
+						//console.log ("Respond Button:: state=", state);
+						var newRespondButtonText = "Yaniv";
+						
+						switch(state){
+				    		case 'inprog':
+				    			newRespondButtonText = 'I\'m on it!';
+				    			break;
+				    		case 'complete':
+				    			newRespondButtonText = 'I\'m done!';
+				    			break;
+				    		case 'busy':
+				    			newRespondButtonText = 'can\'t help';
+				    			break;
+				    		case 'attention':
+				    			newRespondButtonText = 'new date?';
+				    			break;
+				    		case 're-assign':
+				    			break;
+				    			
+				    		case 'unread':
+				    			newRespondButtonText = 'respond';
+				    			break;
+	    			
+    				}
+                        
+					record.find ('.respond .form-button').text(newRespondButtonText);			
+				}
+				
+	
 			//}
     	 //}
     	 //else
@@ -453,7 +415,84 @@ jQuery(document).ready(function($){
      */
      
  });
-
+ // Insert new comment dummy after status change so it can be updated by eash status .js.erb file
+function addNewComment (record)
+{
+	console.log ('[Yaniv] addLastComment(record):: called.');
+			
+	var tivitID = record.find("input").attr("tivitid");
+	console.log ("[Yaniv] addLastComment(record):: tivitID=", tivitID);
+	var lastPost = record.find ('.post');
+	var newcommentId = "newcomment" + tivitID;
+				
+	var newComment = '<li class="record" id="' + newcommentId + '"></li>';
+	console.log ('[Yaniv] newComment=', newComment);
+			
+	lastPost.before(newComment);
+			
+	console.log ('[Yaniv] addLastComment(record):: END.');
+}
+				
+function showStatusListDialog(clickedObject){
+    	//var tivitobject = jQuery(this).parent();
+     	//console.log ("[Yaniv] tivitobject=", tivitobject);
+     	var statusList = '<div class="status-list-dialog">'+
+                        '<ul class="status-list">'+
+                            //'<li class="unread"><div class="ico"></div>Not started</li>'+
+                            '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
+                            '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
+                            '<li class="busy"><div class="ico"></div>Sorry, I can\'t help</li>'+
+                            '<li class="attention"><div class="ico"></div>Propose new date</li>'+
+                            '<li class="re-assign"><div class="ico"></div>Reassign</li>'+
+                        '</ul>'+
+                     '</div>';
+                     
+     	// Check if the user owns this tivit or not. If not, don't allow to change status therefor dropdown will not open
+		var mytivit = jQuery(clickedObject).parent().find("input").attr("mytivit");
+    	console.log ("[Yaniv] status mytivit=", mytivit);
+    	
+     	if (mytivit == "yes")
+     	{	
+	    	var recState = jQuery(clickedObject).closest('li');
+	    		console.log(recState.attr('class'));
+		    	if(recState.hasClass('unread'))
+		    	{
+		    		jQuery(clickedObject).parent().append(statusList);
+		    		jQuery('.status-list-dialog').find('.unread').remove();
+		    		jQuery('.status-list-dialog').show();
+		    	}
+		    	else if(recState.hasClass('inprog'))
+		    	{
+		    		jQuery(clickedObject).parent().append(statusList);
+		    		jQuery('.status-list-dialog').find('.inprog').remove();
+		    		jQuery('.status-list-dialog').show();
+		    	}
+		    	else if(recState.hasClass('complete'))
+		    	{
+		    		jQuery(clickedObject).parent().append(statusList);
+		    		jQuery('.status-list-dialog').find('.complete').remove();
+		    		jQuery('.status-list-dialog').show();
+		    	}
+		    	else if(recState.hasClass('busy'))
+		    	{
+		    		jQuery(clickedObject).parent().append(statusList);
+		    		//jQuery('.status-list-dialog').find('.busy').remove();
+		    		jQuery('.status-list-dialog').show();
+		    	}
+		    	else if(recState.hasClass('attention'))
+		    	{
+		    		jQuery(clickedObject).parent().append(statusList);
+		    		jQuery('.status-list-dialog').find('.attention').remove();
+		    		jQuery('.status-list-dialog').show();
+		    	}
+		    	else if(recState.hasClass('re-assign'))
+		    	{
+		    		jQuery(clickedObject).parent().append(statusList);
+		    		jQuery('.status-list-dialog').show();
+		    	}
+		}
+	}
+	
 function openNewActivity(){
     var layer = jQuery('#new-activity-complete');
 
