@@ -162,6 +162,10 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:id])   
     
     params["due"] = adjust_date_to_end_of_day(parse_date(params, "due"))
+    params[:name]        = params[:name].gsub("'", "\\\\'")
+    params[:description] = params[:description].gsub("'", "\\\\'")
+  
+    
    
     
 # checking to see if the tivit was previously closed. This will be used before the email is sent out below
@@ -281,17 +285,24 @@ class ActivitiesController < ApplicationController
   
   
   def create_tivit
-  	puts "--------------->> create Tvit"
-  	  
+  	puts "--------------->> create Tivit"
+  	puts "params = "+params.inspect  
   	due = parse_date(params,"due")
   	
   	puts "due date = "+due.to_s
 #adding a strign representation of due date 
-  	params["due"] 		= adjust_date_to_end_of_day(due).to_s
-  	params["parent_id"] = params[:id] 						#   adding Parent ID
+  	params["due"] 		   = adjust_date_to_end_of_day(due).to_s
+  	params["parent_id"]  = params[:id] 						#   adding Parent ID
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
-	  params["status"]    = "in-progress"
-	 
+	  params["status"]     = "in-progress"
+	  params[:name]        = params[:name].gsub("'", "\\\\'")
+	  params[:description] = params[:description].gsub("'", "\\\\'")
+    
+	  
+	  puts "______________________________________________________"
+	  puts "params = "+params.inspect  
+    
+	  
     invitees = params["invitees"]	
    
     # if no invitee provided, assign tivit to current user
@@ -303,19 +314,19 @@ class ActivitiesController < ApplicationController
       @invited_user = user_by_email(invitees.strip)
     end
     
-	  params["owner_id"] =  @invited_user.id
+	  params["owner_id"]      =  @invited_user.id
 	  params["activity_type"] = "tivit"
 	
 	  #puts "Inspect Params " +params.inspect
 	  
    	
 	  current_account.user.addTwoWayContact(@invited_user)
-	  params["description"] = clean_comment(params["description"]) 
-    @tivit = @invited_user.activities.create(params)
+	  params["description"] = clean_comment(params["description"])
+	  @tivit = @invited_user.activities.create(params)
     @tivit.get_parent
     @tivit.update_tivit_user_status_reviewed(current_account.user,"")
     #Change status to on it is tivit assigned to self. Ilan - optimize this section to one function
-    if(@invited_user.get_id == current_account.user.get_id)
+    if(@invited_user == current_account.user)
       @tivit.update_tivit_user_status_onit(current_account.user,"")
     end
     

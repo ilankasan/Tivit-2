@@ -1,9 +1,4 @@
 
-<%= javascript_include_tag "autocomplete-rails.js" %>
-<script type="text/javascript">
-        jQuery.noConflict();
-        var $j = jQuery;
- </script>
 <h1>Edit user</h1>
 
 <% form_for :user, @user, :url => user_path,  :html => { :multipart => true } do |f| %>
@@ -17,9 +12,7 @@
     <%= f.label :email %><br />
     <%= current_account.email %>
   </div>
-  
-
-      
+   
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
