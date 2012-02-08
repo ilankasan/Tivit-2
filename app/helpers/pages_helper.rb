@@ -290,8 +290,32 @@ def delete_get_activities_i_participate_ondeck (user_id)
     
 ################################# Completed ACTITVITIES #######################################################################################
 # Returns activities completed the last 15 days
-  def get_activities_completed_or_with_completed_tivits(user_id)
-    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
+
+def get_activities_completed_or_with_completed_tivits(user_id)
+    #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
+    sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
+                 WHERE (activities.status      = 'Completed'  
+                 AND activities.activity_type   = 'activity' 
+                 AND (activities.owner_id       = "+user_id+"
+                 OR ( 
+                 tivits.owner_id      = "+user_id+" 
+                 AND tivits.parent_id   = activities.id)))
+                 OR
+                 (NOT activities.status      = 'Completed'  
+                 AND activities.activity_type   = 'activity' 
+                 AND ((activities.owner_id       = "+user_id+")
+                 OR (tivits.owner_id      = "+user_id+" AND tivits.parent_id   = activities.id)))
+                 
+                 
+                 ORDER BY activities.due DESC"
+     completed_activities = Activity.find_by_sql(sql_completed_activities_or_with_completed_tivits)
+     #puts "1. ------>>>>  "+completed_activities.inspect
+      return completed_activities
+  end
+
+
+  def old_get_activities_completed_or_with_completed_tivits(user_id)
+    #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
     sql_completed_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE activities.status      = 'Completed'  
                  AND activities.activity_type   = 'activity' 
@@ -301,7 +325,7 @@ def delete_get_activities_i_participate_ondeck (user_id)
                  AND tivits.parent_id   = activities.id))
                  ORDER BY activities.due DESC"
      completed_activities = Activity.find_by_sql(sql_completed_activities)
-     puts "1. ------>>>>  "+completed_activities.inspect
+     #puts "1. ------>>>>  "+completed_activities.inspect
     sql_activities_with_closed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE NOT activities.status      = 'Completed'  
                  AND activities.activity_type   = 'activity' 
@@ -309,11 +333,10 @@ def delete_get_activities_i_participate_ondeck (user_id)
                  OR (tivits.owner_id      = "+user_id+" AND tivits.parent_id   = activities.id))
                  ORDER BY activities.due DESC"
      activities_with_closed_tivits  = Activity.find_by_sql(sql_activities_with_closed_tivits)
-     puts "2. ------>>>>  "+activities_with_closed_tivits.inspect
-     puts "_________________________________________________"
+    # puts "2. ------>>>>  "+activities_with_closed_tivits.inspect
+    # puts "_________________________________________________"
                           
      return (completed_activities + activities_with_closed_tivits).uniq
-#AND activities.completed_at    > ? 15.days.ago  
   end               
          
 
