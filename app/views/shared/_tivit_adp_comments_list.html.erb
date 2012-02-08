@@ -27,12 +27,14 @@
     		</p>
 --> 
  	 <% end %>
- <!-- 
   		<p>
   			<input type="submit" value="Post" class="post-button">
-  			<a href="#" class="attach-file">attach a file</a>
+  			<!--a href="#" class="attach-file">attach a file</a-->
+  			<li class="attach-file"><%= link_to "attache a file", 	:controller  => "documents", 
+					   											:action      => "new",
+					   											:id          => tivit.id, 
+					  							    			:title       => "Manage Files" %>
   		</p>
--->  	
 </div>
   	
 <!--   	

@@ -41,6 +41,7 @@ class UserMailer < ActionMailer::Base
    
   # def tivit_accept_new_date_email(assignee, assigner, tivit,comment )
    def tivit_accept_new_date_email(params)
+     
 
 #108  Tivit - New Date Accepted. When: Assigner accepts alternate due date, Who: Assignee
     puts "tivit_access_new_date_email"
