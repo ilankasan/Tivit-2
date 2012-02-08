@@ -299,7 +299,7 @@ def delete_get_activities_i_participate_ondeck (user_id)
                  OR ( 
                  tivits.owner_id      = "+user_id+" 
                  AND tivits.parent_id   = activities.id))
-                 ORDER BY activities.due"
+                 ORDER BY activities.due DESC"
      completed_activities = Activity.find_by_sql(sql_completed_activities)
      puts "1. ------>>>>  "+completed_activities.inspect
     sql_activities_with_closed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
@@ -307,7 +307,7 @@ def delete_get_activities_i_participate_ondeck (user_id)
                  AND activities.activity_type   = 'activity' 
                  AND ((activities.owner_id       = "+user_id+")
                  OR (tivits.owner_id      = "+user_id+" AND tivits.parent_id   = activities.id))
-                 ORDER BY activities.due"
+                 ORDER BY activities.due DESC"
      activities_with_closed_tivits  = Activity.find_by_sql(sql_activities_with_closed_tivits)
      puts "2. ------>>>>  "+activities_with_closed_tivits.inspect
      puts "_________________________________________________"
