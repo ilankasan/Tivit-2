@@ -75,7 +75,9 @@ def home
       end
 # Filter only product On Deck (for now)
     @completed_activities          = get_activities_completed_or_with_completed_tivits(current_user_id)
-    #@tivits_completed          = get_activities_completed_or_with_completed_tivits(current_user_id)
+  #  puts "----------------    111111111111111111111111   completed activities "
+  #  puts @completed_activities.inspect
+        
     
     @incoming_activities       = get_activities_with_new_tivit_requests(current_user_id)
   #  @need_attention_activities = get_need_attention (current_user_id)

@@ -24,7 +24,7 @@
 			<%return%>
 		<%else%>
 		<!-- Do not show empty activities (all closed) if user is not the owner-->
-			<%if !activity_db.isOwner?(current_account.user)%>
+			<%if !activity_db.isOwner?(current_account.user) && (tabview != "Completed")%>
 				<%return%>
 			<%end%>
 		<%end%>

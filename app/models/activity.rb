@@ -115,8 +115,14 @@ class Activity < ActiveRecord::Base
    
  def get_closed_tivits
      #self.tivits.joins(:tivit_user_statuses).where(:status_id => 'Done')
-     self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id
+     puts "in get_closed_tivits ----->>>>>  "+self.get_name
+     
+     array = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id
             AND tivit_user_statuses.status_id = 'Done'")
+            
+     puts "closed "+array.inspect
+            
+    return array
  
  end
   
@@ -136,7 +142,7 @@ class Activity < ActiveRecord::Base
     tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
     if(tivit_user_status == nil )
       last_reviewed = Time.now
-      puts "last review is nill?"
+      #puts "last review is nill?"
     else
       last_reviewed = tivit_user_status.last_reviewed
     end
@@ -302,67 +308,6 @@ AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner
     
 puts "-------------<<<<<<<<<<<<<<"
        
-  end
-
-  
-  def old1_get_on_deck_tivits (user)
-    puts "------------->>>>>>>>>>>>"
-    puts "On deck filter!"
-    last_reviewed = get_last_reviewed (user)
-    
-
-    
-    if(self.owner_id == user.get_id)
-#activity owned by user
-      puts "user is the owner of activity"
-      
-      all_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-AND tivit_user_statuses.user_id = activities.owner_id")
-         
-     # puts "_______________________________________________________________________________________"
-      puts "Open tivits size "+all_open_tivits.size.to_s
-      
-
-        closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id = activities.id
-AND tivitcomments.created_at > ?
-AND NOT tivitcomments.user_id = ?",last_reviewed, user.get_id)
-         
-      puts "closed_tivits_with_comments size "+closed_tivits_with_comments.size.to_s
-      return (all_open_tivits + closed_tivits_with_comments).uniq
-   
-    else
-# User is not the owner of the activity
-      puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is NOT the owner of activity"
-      
-# Get only my open tivits and tivits i am the invitee (asignee)
-      my_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
-       
-      open_tivits_im_asignee = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
-      puts "Open invited by "+open_tivits_im_asignee.size.to_s
-         
-      
-# get all tivits i participated in the conversation and there are new comments
-# need to add the case i am the asignee
-       
-    sql = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments
-WHERE tivits.activity_type = 'tivit'
-AND tivits.parent_id = "+self.id.to_s+"
-AND mycomments.activity_id = tivits.id
-AND mycomments.user_id = "+user.get_id.to_s+"
-AND othercomments.activity_id = tivits.id
-AND othercomments.created_at > ?
-AND NOT othercomments.user_id = "+user.get_id.to_s+"
-ORDER BY tivits.due"
-                 
-        tivits_i_commented_with_new_comments = Activity.find_by_sql([sql,last_reviewed])
-        
-        puts "tivits_i_commented_with_new_comments "+tivits_i_commented_with_new_comments.size.to_s
-        puts "my open tivites "+my_open_tivits.size.to_s
-                 
-      return (tivits_i_commented_with_new_comments + my_open_tivits+open_tivits_im_asignee).uniq
-    end
   end
 
   def get_requests_tivits(currentuser)
