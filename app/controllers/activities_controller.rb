@@ -461,7 +461,8 @@ class ActivitiesController < ApplicationController
     
     if(@activity.change_status_to_completed(params["summary"]))   
 #send email to all participants that tivit was completed (not including owner):
-      notify_users_activity_is_closed(@activity,params["summary"])
+      notify_users_activity_is_closed(@activity,params["summary"],current_account.user)
+   
       flash[:success] = "Actvitity " + @activity.name + " successfuly marked as completed"
     else
       flash[:failed] = "Errrorrororororor"
