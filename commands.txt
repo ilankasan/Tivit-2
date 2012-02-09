@@ -183,7 +183,7 @@ rails -d mysql my_rails_app
 
  git remote add origin git@github.com:<ilankasan>/first-app.git
  git push origin master
- git checkout -b 1-25-12
+ git checkout -b 2-8-12
  
  Add a column to activity table
  rails generate migration add_invited_by_to_activities invited_by:integer
