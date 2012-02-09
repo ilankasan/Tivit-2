@@ -142,27 +142,25 @@ def home
     @tivits_completed          = get_activities_completed(current_user_id)
     @incoming_activities       = get_activities_with_new_tivit_requests(current_user_id)
   #  @need_attention_activities = get_need_attention (current_user_id)
-    
     account_session[:filter_id] = @filter_id
   end
 
   def myteam
     @title = "My Team"
   end
-
-  
-
+ 
   def bireport
      @title = "Product Adoption Dashboard"
      @user_adopt   = get_user_stats
      @tivit_stats  = get_tivits_stats
      #@users = User.paginate(:page => params[:page], :per_page => 30)
-     @users = User.joins(:account).order(:current_sign_in_at).reverse_order.paginate(:page => params[:page], :per_page => 25)
+     #@users = User.joins(:account).order(:current_sign_in_at).reverse_order.paginate(:page => params[:page], :per_page => 25)
+     #@users = User.includes(:accounts).order(:current_sign_in_at).reverse_order.paginate(:page => params[:page], :per_page => 25)
+     @users = User.joins("LEFT OUTER JOIN accounts ON accounts.id = users.account_id").order(:current_sign_in_at).reverse_order.paginate(:page => params[:page], :per_page => 25)
      
-     #emails = Account.joins(:user).where(:id => current_account.user.mycontacts)
-  #   @accounts = Account.paginate(:page => params[:page], :per_page => 25).order(:current_sign_in_at)
+   #  LEFT OUTER JOIN users ON users.id = posts.user_id
+     
   end
-
 
   def myaccount
      @title = "My Account"
