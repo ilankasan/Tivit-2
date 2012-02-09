@@ -156,7 +156,11 @@ def home
      @title = "Product Adoption Dashboard"
      @user_adopt   = get_user_stats
      @tivit_stats  = get_tivits_stats
-     @users = User.paginate(:page => params[:page], :per_page => 30)
+     #@users = User.paginate(:page => params[:page], :per_page => 30)
+     @users = User.joins(:account).order(:current_sign_in_at).reverse_order.paginate(:page => params[:page], :per_page => 25)
+     
+     #emails = Account.joins(:user).where(:id => current_account.user.mycontacts)
+  #   @accounts = Account.paginate(:page => params[:page], :per_page => 25).order(:current_sign_in_at)
   end
 
 
