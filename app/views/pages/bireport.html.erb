@@ -31,7 +31,7 @@
 				<b>User Count</b> 
 				  <tr> <td>Activated     : </td> <td><%=@user_adopt["activated"]%></td> </tr>
 				  <tr> <td>Non Activated : </td> <td><%=@user_adopt["non_activated"]%></td> </tr>
-				  <tr> <td>Total  Users  : </td> <td><%=@user_adopt["total"]%></td> </tr>
+				  <tr> <td>Total Users   : </td> <td><%=@user_adopt["total"]%></td> </tr>
 				  
 				  <tr></tr><tr></tr>
 				  <tr> <td>Joined Viraly : </td> <td><%=@user_adopt["viraly_joined"]%></td> </tr>
@@ -55,10 +55,10 @@
 				<h1>tiviti user report</h1>
 				<td><b>Name</b></td>
 				<td><b>email</b></td>
-				<td><b>Joined </b></td>
+				<td><b>Created </b></td>
 				<td><b>Activities </b></td>
- 				<td><b>tivits assigned to me </b></td>
- 				<td><b>tivits I assigned </b></td>
+ 				<td><b>tivits for me </b></td>
+ 				<td><b>tivits to others </b></td>
  				<td><b>Signed in </b></td>
  				<%= render :partial => 'reports/user_stats', :collection =>  @users       , :as => :user  %> 
 

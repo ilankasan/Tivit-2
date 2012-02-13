@@ -17,10 +17,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
   end
 
    def update
-   	puts "update ++++++++++++++++++++++++++++++++++++++++++++++++++"
-	puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
-	
-   	puts "UUUUUUPPPPPDDDATE"
+     	puts "UUUUUUPPPPPDDDATE"
    	puts params.inspect
 	
     super
@@ -45,7 +42,8 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 	#puts "user = "+@user.inspect
 	if(@user == nil)
 		#puts "user == nil"
-		@account.user = User.new(params[:account][:user], :clone_email => email)
+		@account.user = User.new(params[:account][:user])
+		@account.user.clone_email = email
 		
 	else
 	#	puts "user != nil"
