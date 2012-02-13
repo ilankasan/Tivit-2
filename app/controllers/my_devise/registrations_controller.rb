@@ -6,10 +6,14 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  
   def new
   	puts " new ++++++++++++ registration ++++++++++++++++++++++++++++++++++++++"
-	puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
+	#puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
 	
-  	puts "NNNNEEEEEEEEEEEEEEEEWWWWWWWWWWWWWWWWWWWWW"
+  puts "NNNNEEEEEEEEEEEEEEEEWWWWWWWWWWWWWWWWWWWWW"
 	puts params.inspect
+	@email = params[:email]
+	if(@email != nil)
+	  flash[:warning] = "Sign up with email"+@email
+	end
 	@title = "Sign Up"
     
     super
@@ -34,7 +38,6 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
   @account = Account.find_by_email(email)
 	
 #	puts @account.inspect if @account != nil
-	
 # fist find the user clone
 	@users = User.where("is_active = ? AND clone_email = ?","false",email)
 	@user = @users[0] if @users.size > 0

@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 # auto completed to get list of users. Nee to expand it to seach name field and names in the user table
   puts "term = "+params[:term]
   #names = Account.all
-  puts "my contacts "+current_account.user.mycontacts.inspect
+ 
 puts "_________________________________________"
   if (params[:term] && !current_account.user.mycontacts.nil?)
     like= "%".concat(params[:term].concat("%"))

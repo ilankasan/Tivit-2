@@ -75,6 +75,8 @@ end
 resources :activities
 #match '/activities',    :to => 'activities#update'
 	  match "activities/:id"  	     => "activities#update"
+	  #match "activities/*id/*email"         => "activities#show"
+   
 	  match "/onit" 				         => "activities#on_it"
 	  match "/reassign"              => "activities#reassign"
   	match "/decline" 			         => "activities#decline"
@@ -90,7 +92,7 @@ resources :activities
   	match "/mark_as_completed"     => "activities#mark_as_completed"
     match "/completed_activity"    => "activities#completed_activity"
   	match "/update_tivit/:id" 	   => "activities#update_tivit"
-  	match "/update_reviewed/:id"  => "activities#update_reviewed"
+  	match "/update_reviewed/:id"   => "activities#update_reviewed"
   	
   	
   	#match "/images"    => "../images"

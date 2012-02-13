@@ -1,5 +1,7 @@
 class ActivitiesController < ApplicationController
-  before_filter :authenticate_account!
+  #before_filter :authenticate_account!
+  before_filter :tiviti_authenticate_account
+  
   before_filter :validate_access, :except => [:remove_tivit, :reassign]
   after_filter  :update_view_status,   :only => :show
   #after_filter  :send_email_create_tivit, :only => :create_tivit 
@@ -10,14 +12,34 @@ class ActivitiesController < ApplicationController
   # this solution didn't work for me: http://stackoverflow.com/questions/1245618/rails-invalidauthenticitytoken-for-json-xml-requests
   skip_before_filter :verify_authenticity_token
   
-   
+   def tiviti_authenticate_account
+     puts "------->>>>>>>>>>>>>>>>  tiviti_authenticate_account"
+     if(params[:email] != nil)
+       #render '../my_devise/registrations/new'
+       #redirect_to sign_up_path_for(User.new)
+       puts "email is "+params[:email]
+       user = User.where(:clone_email => params[:email])
+       puts "users = "+user.inspect
+       
+       if (user != nil && user[0] != nil && user[0].get_account == nil)
+        #redirect_to new_registration_path(user[0].get_account)
+        @account = Account.new()
+        #puts "account = "+@account.inspect
+        redirect_to new_registration_path(@account,:email =>params[:email])
+
+       else
+        authenticate_account!
+       end
+     end
+   end
+  
    def create
 
 # Create Activity
     if(params[:name] == nil || params[:name].empty?)
       flash[:failed] = "Activity name cannot be empty"
       account_session[:flash_error] = "Activity name cannot be empty"
-      redirect_to root_path
+      redirect_to root_path 
       return
     end
   	params["due"] = adjust_date_to_end_of_day(parse_date(params,"due"))
@@ -37,8 +59,6 @@ class ActivitiesController < ApplicationController
       end     
         config.debug("------>>>>> creating activity" + @activity.name )
         flash[:success] = @activity.name + " Activity created succesfully!"
-#        redirect_to root_path
-#redirect_to 'shared/activitydetails'
         render 'show'
                        
     else
@@ -102,6 +122,8 @@ class ActivitiesController < ApplicationController
   def show
     
     puts "----------->>>>>>>>>>> show activity detailed page"
+    puts "SHHHOOOOWWWW"
+    puts "params = "+params.inspect
     @activity_temp = Activity.find(params[:id])
     if(!@activity_temp.isActivity?)
 #this is a tivit

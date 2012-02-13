@@ -48,9 +48,9 @@ class User < ActiveRecord::Base
                     :length   => { :maximum => 50 }
    
   
-  def autoname
+  def get_account
+    return self.account
   end
-  
   
   def isAdmin?
  # ilan need to rewrite
