@@ -64,7 +64,7 @@ def create
   
     # continue only if provider and uid exist
     if uid != '' and provider != ''
-        puts "user id not nil"
+      #  puts "user id not nil"
         puts "email = "+email+" name = "+name+" uid = "+uid+" provider = "+provider
         
         

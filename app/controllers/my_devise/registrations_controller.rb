@@ -34,7 +34,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
   @account = Account.find_by_email(email)
 	
 #	puts @account.inspect if @account != nil
-	puts "email = "+email
+	
 # fist find the user clone
 	@users = User.where("is_active = ? AND clone_email = ?","false",email)
 	@user = @users[0] if @users.size > 0
