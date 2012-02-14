@@ -14,7 +14,14 @@ class ActivitiesController < ApplicationController
   skip_before_filter :verify_authenticity_token
   
    def tiviti_authenticate_account
+     puts "---------------------------------------------------------------"
+     puts "---------------------------------------------------------------"
+     
      puts "------->>>>>>>>>>>>>>>>  tiviti_authenticate_account"
+     
+     puts "---------------------------------------------------------------"
+     puts "---------------------------------------------------------------"
+     
      if(params[:email] != nil)
        #render '../my_devise/registrations/new'
        #redirect_to sign_up_path_for(User.new)
@@ -27,6 +34,11 @@ class ActivitiesController < ApplicationController
         @account = Account.new()
         #puts "account = "+@account.inspect
         redirect_to new_registration_path(@account,:email =>params[:email])
+        puts "---------------------------------------------------------------"
+        puts "---------------------------------------------------------------"
+        puts "-------------------------     redirect_to new_registration_path    --------------------------------------"
+        
+     
 
        else
         authenticate_account!
