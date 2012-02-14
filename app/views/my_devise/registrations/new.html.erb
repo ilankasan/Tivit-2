@@ -34,11 +34,13 @@
 				<%= f.label :email %>
 			</div>
 			<% if(@email == nil) %>
-				<%= f.email_field :email, :class => "input", :autofocus => "true" %>
+				<%= f.email_field :email, :class => "input" %>
 				
 			<%else%>
 			<%puts "email = "+@email%>
-				<%= @email%>
+				<%= f.email_field :email, :class => "input", :placeholder => @email,  :disabled => true %>
+				<%= f.hidden_field :email, :value =>@email%>
+				
 				
 			<%end%>
 			
