@@ -38,9 +38,7 @@ class ActivitiesController < ApplicationController
         puts "---------------------------------------------------------------"
         puts "-------------------------     redirect_to new_registration_path    --------------------------------------"
         
-     
-
-       else
+      else
         authenticate_account!
        end
      end
