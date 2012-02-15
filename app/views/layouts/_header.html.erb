@@ -12,13 +12,29 @@
  
         <ul class="nav-item">
         	
-        	<li><%= link_to "Dashboard", root_path, :class => "current" %></li>
+        	<% if @title == "Home" %>  	
+        		<li><%= link_to "Home", root_path, :class => "current" %></li>
+        	<% else %>
+	    		<li><%= link_to "Home", root_path %></li>
+	    	<% end %>
+	    	
 	    	<!-- <li><%= link_to "Activities", about_path %></li> -->
 	    	<!-- <li><%= link_to "Team", contact_path %></li> -->
+	    	<% if @title == "How it works?" %>
+	    		<li><%= link_to "How it works?", help_path, :class => "current" %></li>
+	    	<% else %>
+	    		<li><%= link_to "How it works?", help_path %></li>
+	    	<% end %>
+	    	
 	    	<%if current_account.user.isAdmin?%>
-				<li><%= link_to "Analytics", bireport_path%></li>
+				<% if @title == "Analytics" %>
+	    		<li><%= link_to "Analytics", bireport_path, :class => "current" %></li>
+	    	<% else %>
+	    		<li><%= link_to "Analytics", bireport_path %></li>
+	    	<% end %>
+	    	
 			<%end%>
-      
+
 
         </ul>
 

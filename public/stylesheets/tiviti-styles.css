@@ -67,7 +67,18 @@ a:visited {
 	margin: auto; /*this will center the div on the page*/
     padding-top:40px;
 }
+#howitworks {
 
+	background: url('/images/howitworks.png') no-repeat scroll center center transparent; 
+    display: inline-block;
+    height: 680px;
+    width: 968px;
+    margin: 2px 2px 2px 2px;
+    overflow: hidden;
+    z-index: 50;
+    	
+	
+}
 /* Main Navigation **************************************************/
 #main-nav-background {
 	background: #333333; /*#15628c;*/
