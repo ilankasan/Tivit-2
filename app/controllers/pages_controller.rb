@@ -90,7 +90,7 @@ def home
   end
  
   def bireport
-     @title = "Product Adoption Dashboard"
+     @title = "Analytics"
      @user_adopt   = get_user_stats
      @tivit_stats  = get_tivits_stats
      #@users = User.paginate(:page => params[:page], :per_page => 30)
@@ -100,6 +100,10 @@ def home
      
   end
 
+  def help
+     @title = "How it works?"
+  end
+  
   def myaccount
      @title = "My Account"
   end
@@ -109,3 +113,4 @@ def home
   end
 
 end
+
