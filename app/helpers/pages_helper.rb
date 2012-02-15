@@ -110,7 +110,7 @@ module PagesHelper
   end
 
 def delete_get_activities_i_participate_ondeck (user_id)
-  puts "----->>>>>>> get_activities_i_participate_ondeck"
+  #puts "----->>>>>>> get_activities_i_participate_ondeck"
     
       sql_activities_i_have_open_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status      = 'Completed'  

@@ -66,7 +66,6 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  end
  
  def awaiting_confirmation
-   #puts "---------->>>>>>>>>>>>> confirm message  <<<<__________________"
    
    @email = Account.find_by_id(params[:format]).get_email
    puts "email " + @email.inspect
@@ -78,7 +77,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  protected
  def after_inactive_sign_up_path_for(resource)
    puts "UUUUUUUUU kkk  UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"
-   puts "resource " + resource.inspect
+  # puts "resource " + resource.inspect
   # @email = resource[:email]
   # @params[:email]= resource[:email]
     

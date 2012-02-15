@@ -13,7 +13,6 @@ class PagesController < ApplicationController
   end
   
   def awaiting_confirmation(resource)
-#   puts "---------->>>>>>>>>>>>> confirm message  <<<<__________________"
    puts "resource " + resource.inspect
    #render "http://www.google.com"
    render 'awaiting_confirmation'

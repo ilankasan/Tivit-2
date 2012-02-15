@@ -203,7 +203,7 @@ puts ": in reminder email"
     @assignee   = params[:assignee]
     @tivit      = params[:tivit]
     @comment    = params[:comment]
-    puts "---->>>> sending email to "+@assigner.get_email
+ #   puts "---->>>> sending email to "+@assigner.get_email
     mail(:from => create_from_str(@assignee.get_name),:to => @assigner.get_email,:reply_to => @assignee.get_email,
          :subject => "tiviti: "+@assignee.get_name+" has accepted your request for help with '"+@tivit.get_name+"'" )
      
@@ -220,7 +220,7 @@ puts ": in reminder email"
     @comment     = params[:comment]
     @assigner    = params[:assigner]
     
-    puts "---->>>> sending email to "+@assigner.get_email
+    #puts "---->>>> sending email to "+@assigner.get_email
     mail(:from => create_from_str(@assignee.get_name),:to => @assigner.get_email,:reply_to => @assignee.get_email,
          :subject => "tiviti: "+@assignee.get_name+" isn't able to work on '"+@tivit.get_name+"'" )
   end

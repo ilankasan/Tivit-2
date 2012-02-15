@@ -33,12 +33,20 @@ class ActivitiesController < ApplicationController
         #redirect_to new_registration_path(user[0].get_account)
         @account = Account.new()
         #puts "account = "+@account.inspect
-        redirect_to new_registration_path(@account,:email =>params[:email])
         puts "---------------------------------------------------------------"
         puts "---------------------------------------------------------------"
         puts "-------------------------     redirect_to new_registration_path    --------------------------------------"
+       
+        redirect_to new_registration_path(@account,:email =>params[:email])
         
       else
+           puts "---------------------------------------------------------------"
+        puts "---------------------------------------------------------------"
+        puts "-----------------------   authenticate_account! ----------------------------------------"
+        puts "-----------------------------   authenticate_account!---------------------------------"
+        puts "---------------------------------------------------------------"
+        puts "---------------------------------------------------------------"
+     
         authenticate_account!
        end
      end
