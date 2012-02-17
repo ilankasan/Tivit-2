@@ -78,10 +78,10 @@ a:visited {
     z-index: 50;
     top: -20px;	
 }
+/*
 .form-button {
 	margin: 0;
 	vertical-align: middle;
-	/*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
 	position: relative;
 	text-align: center;
 	width: 200px;
@@ -102,7 +102,7 @@ a:visited {
 #howitworks a {
 	color: #fff;
 }
-
+*/
 /* Main Navigation **************************************************/
 #main-nav-background {
 	background: #333333; /*#15628c;*/
