@@ -1,3 +1,11 @@
+<% if activity_db.get_owner.id == current_account.user.get_id %>
+	<% loggedInUserIsTheOwner = "yes" %>
+	<% tivit_owner_name = "You" %>
+<% else %>
+	<% loggedInUserIsTheOwner = "no" %>
+	<% tivit_owner_name = activity_db.get_owner.name %>
+<% end %>
+
 <div class="tvit-day">
 	
 
@@ -92,8 +100,9 @@
 	  									   :method => "get",
 	                                       :title  => activity_db.name,
 	                                       :class => "activity-name" %>
-	                                       
-	                        (by <%= (activity_db.get_owner).name %>)
+	                        
+	                                      
+	                        (by <%= tivit_owner_name %>)
 	    </div>
 	        
 	        <!-- If activity has tivits, go a head and rended all the tivits in that activity -->
