@@ -12,7 +12,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 	puts params.inspect
 	@email = params[:email]
 	if(@email != nil)
-	  flash[:warning] = "Sign up with email"+@email
+	  flash[:warning] = "Sign up with email "+@email
 	end
 	@title = "Sign Up"
     
