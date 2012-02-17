@@ -194,8 +194,8 @@ class ActivitiesController < ApplicationController
  def validate_access
     return if(params == nil || params[:id] == nil)
        
-    @activity = Activity.find(params[:id])   
-   if(!validate_user_access_to_activity(@activity,current_account.user))
+    @activity = Activity.find_by_id(params[:id])   
+   if(@activity == nil || !validate_user_access_to_activity(@activity,current_account.user))
       render 'shared/access_denied' 
    end
    
