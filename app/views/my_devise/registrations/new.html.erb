@@ -2,12 +2,7 @@
 
 <div id="sign-in-up-box"> 
 	<h1>tiviti</h1>
-	<%puts "resource= "+resource.inspect%>
-	<%puts "___________________________________________________"%>
 	
-	<!--%puts "@email= "+@email%-->
-	<%puts "___________________________________________________"%>
-	 
 		
 	<div id="sign-in-up-form">
 		
@@ -21,7 +16,6 @@
 				<!-- User Name -->
 				<div class="label">
 					<%= user.label :name %>
-					
 				</div>
 				
 				<%= user.text_field :name, :class => "input", :autofocus => "true" %>
