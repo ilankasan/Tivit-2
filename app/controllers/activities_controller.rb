@@ -3,7 +3,6 @@ class ActivitiesController < ApplicationController
   
   prepend_before_filter :tiviti_authenticate_account
   
-  
   before_filter :validate_access, :except => [:remove_tivit, :reassign]
   after_filter  :update_view_status,   :only => :show
   #after_filter  :send_email_create_tivit, :only => :create_tivit 
@@ -32,18 +31,18 @@ class ActivitiesController < ApplicationController
         #puts "account = "+@account.inspect
         puts "---------------------------------------------------------------"
         puts "-------------------------     redirect_to new_registration_path    --------------------------------------"
-       
         redirect_to new_registration_path(@account,:email =>params[:email])
-        
-      else
-        puts "---------------------------------------------------------------"
-        puts "-----------------------------   no user authenticate_account!---------------------------------"
-        puts "---------------------------------------------------------------"
-     
-        authenticate_account!
        end
+       # puts "---------------------------------------------------------------"
+       # puts "-----------------------------   no user authenticate_account!---------------------------------"
+       # puts "---------------------------------------------------------------"
+     
+        #authenticate_account!
+      #end
      end
-   end
+     authenticate_account!
+     
+   end # end def
   
    def create
 
