@@ -1,7 +1,8 @@
 class ActivitiesController < ApplicationController
   #before_filter :authenticate_account!
   
-  before_filter :tiviti_authenticate_account
+  prepend_before_filter :tiviti_authenticate_account
+  
   
   before_filter :validate_access, :except => [:remove_tivit, :reassign]
   after_filter  :update_view_status,   :only => :show
