@@ -567,6 +567,13 @@ function hidePopup(){
 	// Confirmation dialog div HAS to be removed form the page, but popup should be hidden since I'm using it for add tivit which is on the view/server side
 	jQuery('#confirmDialog').remove();
 	jQuery('#edit-tivit-popup').remove();
+	
+	jQuery('#wholine').show();
+	
+	// Make sure the new tivit dialog always have the assign to myself unchecked and the input field for invitees is zero'd out
+	jQuery('#invitees').val('');
+	jQuery('#assignmyselfchk').removeClass('active');
+			
 	jQuery('.popup').hide();
 	jQuery('#activity-overlay').fadeOut();
 	jQuery('#new-activity-background').removeClass('tempHide');

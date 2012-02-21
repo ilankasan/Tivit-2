@@ -48,11 +48,11 @@
 		</p>
 		
 		<!-- tivit invitee -->
-		<p class="assign"><i></i> assign to myself</p>
+		<p class="assign" id="assignmyselfchk"><i></i> assign to myself</p>
 		<!-- <p><label for="who">Who:</label><input type="text" id="who" /></p> -->
 		<p id="wholine">
 			<label for="who">Who:</label>
-			<%= text_field_tag(:invitees, nil, :placeholder => "invite by email address", :class => "optional email" ) %> 
+			<%= text_field_tag(:invitees, nil, :placeholder => "invite by email address", :class => "required email" ) %> 
 		</p>
 		
 		<!-- tivit description -->

@@ -349,7 +349,7 @@ class ActivitiesController < ApplicationController
 	  #puts "name = "+params[:name]
 	  #params[:description] = params[:description].gsub("'", "\\\\'")
 	#  params[:name]        = params[:name].gsub("'", "\\'")
-	   params[:name]        = params[:name].gsub("'", "\\'")
+	   #params[:name]        = params[:name].gsub("'", "\\'")
     
   
 	 #puts "name = "+params[:name]
