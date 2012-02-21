@@ -141,7 +141,7 @@ class ActivitiesController < ApplicationController
     
     puts "----------->>>>>>>>>>> show activity detailed page"
     puts "SHHHOOOOWWWW"
-    puts "params = "+params.inspect
+    #puts "params = "+params.inspect
     @activity_temp = Activity.find(params[:id])
     if(!@activity_temp.isActivity?)
 #this is a tivit
@@ -191,9 +191,9 @@ class ActivitiesController < ApplicationController
  
  
  def validate_access
-    return if(params == nil || params[:id] == nil)
+   return if(params == nil || params[:id] == nil)
        
-    @activity = Activity.find_by_id(params[:id])   
+   @activity = Activity.find_by_id(params[:id])   
    if(@activity == nil || !validate_user_access_to_activity(@activity,current_account.user))
       render 'shared/access_denied' 
    end
