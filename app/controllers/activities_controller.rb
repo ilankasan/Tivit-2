@@ -328,6 +328,7 @@ class ActivitiesController < ApplicationController
   	puts "due date = "+due.to_s
 #adding a strign representation of due date 
   	params["due"] 		   = adjust_date_to_end_of_day(due).to_s
+  	puts " adujested due date "+params["due"]
   	params["parent_id"]  = params[:id] 						#   adding Parent ID
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
 	  params["status"]     = "in-progress"
@@ -354,7 +355,7 @@ class ActivitiesController < ApplicationController
 	  params["owner_id"] =  @invited_user.id
 	  params["activity_type"] = "tivit"
 	
-	  #puts "Inspect Params " +params.inspect
+	  puts "Inspect Params " +params.inspect
 	  
    	
 	  current_account.user.addTwoWayContact(@invited_user)
