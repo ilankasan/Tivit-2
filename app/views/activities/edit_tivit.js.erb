@@ -16,18 +16,18 @@ var edittivitDialog = '<div class="popup" id="edit-tivit-popup" style="display: 
 							'<h3>Edit tivit</h3>' + 
 							'<%= form_tag({:controller => "activities", :action => "update_tivit", :method => "put", :id => @activity.id}, :id => "edit-tivit-form", :class => "edittivitPopup") do %>' +
 							'<p><label for="tivit">tivit:</label>' +
-								'<%= text_field_tag(:name, @activity.name) %>' +
+								'<%= text_field_tag(:name, @activity.name.gsub("'", "\\\\'"), :class => "required") %>' +
 							'</p>' +
 							'<p style="display: none"><label for="who">Who:</label>' +
-								'<%= text_field_tag(:invitees, who, :placeholder => "myself -OR- invite by email address") %>' +
+								'<%= text_field_tag(:invitees, who, :placeholder => "myself -OR- invite by email address", :class => "optional email") %>' +
 							'</p>' +
 							'<p><label for="what">What:</label>' + 
-								'<%= text_area_tag(:description, @activity.description) %>' +
+								'<%= text_area_tag(:description, @activity.description.gsub("'", "\\\\'")) %>' +
 							'</p>' +						  
 							
 							'<p class="input-date"><label for="due">Needed by:</label>' +
 						       '<%= text_field_tag(:due, @activity.get_local_due_date_str, :placeholder => "choose date", :name => "due",  :id => "duedate", :autocomplete => "off", :class => "input-date") %>' +
-						    	'<img class="ico_calc" src="/images/cal.gif" onclick="javascript:NewCssCal(\'duedate\', \'mmddyyyy\', \'arrow\')" class="ico_calc" style="cursor:pointer"/>' + 	
+						    	'<img class="ico_calc" src="/images/cal.gif" onclick="javascript:NewCssCal(\'duedate\', \'mmddyyyy\', \'arrow\', false, \'24\', true,\'future\')" class="ico_calc" style="cursor:pointer"/>' + 	
 							'</p>' + 
 							'<div class="request">' + 
 								'<div class="form-button" id="cancel">Cancel</div>' +
@@ -40,5 +40,12 @@ var edittivitDialog = '<div class="popup" id="edit-tivit-popup" style="display: 
 						
 jQuery('#page-container').append(edittivitDialog);
 
+// Registering new added form for jQuery validation. No Ajax used here for submit for now....
+jQuery("#edit-tivit-form").validate({
+   		submitHandler: function(form) {
+	     	form.submit();
+     	}     
+});
 
+console.log('edit tivit.js: after validation added');  
 

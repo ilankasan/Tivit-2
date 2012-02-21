@@ -1,0 +1,53 @@
+//alert ('edit activity JS!');
+console.log('in edit.js.erb function');  
+
+
+var actDesc = "<%= @activity.description %>";
+console.log('Orig Activity Desc=', actDesc);  
+
+//var find = "'";
+//var regex = new RegExp(find, "g");
+//var newActDesc = actDesc.replace(regex, "\'");
+
+//var newActDesc = "<%= @activity.description.gsub(/'/, '$$') %>";
+
+//<% newActDescription = @activity.description.gsub("'", "\\\\'") %>
+
+//console.log('New Activity Desc=', newActDesc);  
+
+var editActivityDialog = '<div class="popup" id="edit-activity-popup" style="display: block">' + 	
+							'<div class="loading-popup"></div>' +
+							'<h3>Edit Activity</h3>' + 
+							'<%= form_tag({:controller => "activities", :action => "update", :method => "put", :id => @activity.id}, :id => "edit-activity-form", :class => "edittivitPopup") do %>' +
+							'<p><label for="name">Name:</label>' +
+								'<%= text_field_tag(:name, @activity.name.gsub("'", "\\\\'"), :class => "required") %>' +
+							'</p>' +
+							
+							'<p><label for="description">What:</label>' + 
+								'<%= text_area_tag(:description, @activity.description.gsub("'", "\\\\'")) %>' +
+							'</p>' +	
+														
+							'<p class="input-date"><label for="due">Needed by:</label>' +
+						       '<%= text_field_tag(:due, @activity.get_local_due_date_str, :placeholder => "choose date", :name => "due",  :id => "duedate", :autocomplete => "off", :class => "input-date") %>' +
+						    	'<img class="ico_calc" src="/images/cal.gif" onclick="javascript:NewCssCal(\'duedate\', \'mmddyyyy\', \'arrow\', false, \'24\', true,\'future\')" class="ico_calc" style="cursor:pointer"/>' + 	
+							'</p>' + 
+							
+							'<div class="request">' + 
+								'<div class="form-button" id="cancel">Cancel</div>' +
+								  '<%= submit_tag("OK", :class => "form-button") %>' +
+								  
+								'<% end %>' +
+								'<div class="close" id="popup-close"></div>' +			
+							'</div>' +
+						'</div>';
+						
+jQuery('#page-container').append(editActivityDialog);
+
+// Registering new added form for jQuery validation. No Ajax used here for submit for now....
+jQuery("#edit-activity-form").validate({
+   		submitHandler: function(form) {
+	     	form.submit();
+     	}     
+});
+
+console.log('Edit Activity popup should be rendered now!');  

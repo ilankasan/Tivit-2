@@ -151,7 +151,11 @@
 			
 		<!-- tivit owner=assignee -->
 		<% if loggedInUserIsTheOwner == "yes" %>
-			<input type="hidden" tivitid="<%= tivit.id %>" mytivit="yes">
+			<% if tivit.wasInvitedByUser? (current_account.user) %>
+				<input type="hidden" tivitid="<%= tivit.id %>" mytivit="yes" imtivitcreator="yes">
+			<% else %>
+				<input type="hidden" tivitid="<%= tivit.id %>" mytivit="yes">
+			<% end %>
 		<!-- activity owner, strongest role should be assigned first -->
 		<% elsif tivit.isParentOwner? (current_account.user) %>
 			<input type="hidden" tivitid="<%= tivit.id %>" mytivit="activityOwner">

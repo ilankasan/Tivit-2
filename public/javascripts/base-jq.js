@@ -7,7 +7,6 @@ jQuery.ajaxSetup({
 
 jQuery(document).ready(function($){
 
-	
 	console.log ('[Yaniv] in Artem DOM ready function');
 	
 	$("#new-activity-form").validate({
@@ -231,7 +230,7 @@ jQuery(document).ready(function($){
 	    			var actionPost = 'action="/proposedate?id=' + tivitID + '&method=put" accept-charset="UTF-8">';
 	    			dueDate = '<p class="input-date"><label for="propose_date">How about:</label>' +
 									'<input id="propose_date" name="propose_date" type="text" autocomplete="off" placeholder="choose date"/>' + 
-								    '<img src="/images/cal.gif" onclick="javascript:NewCssCal(\'propose_date\', \'mmddyyyy\', \'arrow\')" class="ico_calc"/>' +
+								    '<img src="/images/cal.gif" onclick="javascript:NewCssCal(\'propose_date\', \'mmddyyyy\', \'arrow\', false,\'24\', true,\'future\' )" class="ico_calc"/>' +
 							  '</p>';			           
 	    			break;
 	    		case 're-assign':
@@ -289,6 +288,16 @@ jQuery(document).ready(function($){
     		 // by defaults, all popups are display=none which means they don't show. Let's make sure this popup shows up! 
     		 $('#confirmDialog').css('display', 'block');
     		 jQuery('.status-list-dialog').remove();
+    		 
+    		 if (who != "")
+    		 {
+	    		 // autocomplete for reassign
+				 jQuery("input[id=assign_to]").autocomplete({
+			  	 	source: '/ajax/invitees',
+			  		 minLength: 2
+				 });
+			 }
+	
     		 //////////////////////////////////////////////////////////
     		 // Change status on UI to the new selected state (need to use this for Ajax callback)
     		 //record.attr('class',newClassValue);
@@ -436,7 +445,25 @@ function addNewComment (record)
 function showStatusListDialog(clickedObject){
     	//var tivitobject = jQuery(this).parent();
      	//console.log ("[Yaniv] tivitobject=", tivitobject);
-     	var statusList = '<div class="status-list-dialog">'+
+     	var imtivitcreator = jQuery(clickedObject).parent().find("input").attr("imtivitcreator");
+    	console.log ("[Yaniv] imtivitcreator=", imtivitcreator);
+    	
+    	var statusList = '';
+    	
+    	if ( imtivitcreator == "yes")
+    	{
+    		statusList = '<div class="status-list-dialog">'+
+                        '<ul class="status-list">'+
+                            //'<li class="unread"><div class="ico"></div>Not started</li>'+
+                            '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
+                            '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
+                            '<li class="re-assign"><div class="ico"></div>Reassign</li>'+
+                        '</ul>'+
+                     '</div>';
+    	}
+    	else
+    	{ 
+     	   statusList = '<div class="status-list-dialog">'+
                         '<ul class="status-list">'+
                             //'<li class="unread"><div class="ico"></div>Not started</li>'+
                             '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
@@ -446,11 +473,11 @@ function showStatusListDialog(clickedObject){
                             '<li class="re-assign"><div class="ico"></div>Reassign</li>'+
                         '</ul>'+
                      '</div>';
-                     
+         }            
      	// Check if the user owns this tivit or not. If not, don't allow to change status therefor dropdown will not open
 		var mytivit = jQuery(clickedObject).parent().find("input").attr("mytivit");
     	console.log ("[Yaniv] status mytivit=", mytivit);
-    	
+    	    	
      	if (mytivit == "yes")
      	{	
 	    	var recState = jQuery(clickedObject).closest('li');
@@ -530,6 +557,7 @@ function hideLoadingAnimation(classorid){
 function removePopup(){
 	console.log ('[Yaniv] Closing popup');
 	jQuery('.popup').remove();
+	jQuery('#new-activity-background').removeClass('tempHide');
 	jQuery('#activity-overlay').fadeOut();
 }
 /**************/
@@ -541,6 +569,7 @@ function hidePopup(){
 	jQuery('#edit-tivit-popup').remove();
 	jQuery('.popup').hide();
 	jQuery('#activity-overlay').fadeOut();
+	jQuery('#new-activity-background').removeClass('tempHide');
 	hideLoadingAnimation('.loading-popup');
 }
 			
@@ -570,6 +599,9 @@ jQuery(document).ready(function($){
   		source: '/ajax/invitees',
   		minLength: 2
 	});
+	
+	//'<p><label for="who">Who:</label><input type="text" name="assign_to" id="assign_to" placeholder="- enter one email address -" class="required email" /></p>';    
+	
 
  	// Validate form input before submission to make sure we don't send crap to the server!
  	$("#create-new-tivit-form").validate({
@@ -616,17 +648,26 @@ jQuery(document).ready(function($){
 	$('.popup .assign').click(function(){
 		if($(this).is('.active')){
 			$(this).removeClass('active');
-			$('#who').val('').removeAttr('disabled');
+			//$('#who').val('').removeAttr('disabled');
+			$('#wholine').show();
 		} else {
 			$(this).addClass('active');
-			$('#who').val('don.drapper@sterlingcooper.com').attr('disabled','disabled');
+			$('#wholine').hide();
+			//$('#who').val('don.drapper@sterlingcooper.com').attr('disabled','disabled');
+			$('#invitees').val('');
 		}
 	});
 	
 	/* Yaniv - Show/Hide comments when clicking on a tivit */
-	$('.text-conteiner').live('click', function(){
+	$('.text-conteiner').live('click', function(e){
 		//alert($(this).parents('.record').children('ul').attr('class'));
 		//console.log('[Yaniv] tivit clicked - show/hide comments...');
+		
+		// This is used to isolate clicks on remind hyperlink on ADP page in each tivit, without this, the remind link will not work
+		if( $(e.target).is("a") ){
+			console.log("Run function because clicking on something else");
+			return;
+		}
 		
 		// Mark any un-read comments as read 
 		
@@ -996,13 +1037,32 @@ jQuery(document).ready(function($){
 			
 	});
 	/////////////////////////////////////////////////////////////////////////
+	// Edit Activity - ADP
+	jQuery('.edit-yaniv').live('click', function(){
+		console.log ("[Yaniv] edit activity clicked!");	
+				
+		var record = jQuery(this).parents('.act-main');
+		var activityID = record.find("input").attr("activityid");
+    	console.log ("[Yaniv] activityid=", activityID);
+    	
+		var actionPost = '/activities/' + activityID + '/edit';
+								
+		jQuery('#activity-overlay').show();
+		console.log ("[Yaniv] actionPost=", actionPost);
+		
+		$.post(actionPost, $(this).serialize(), null, "script");		
+		
+		return false;
+		
+	});	
+	/////////////////////////////////////////////////////////////////////////
 	// Mark as completed - ADP
 	jQuery('.cmpl-yaniv').live('click', function(){
 	 	console.log ("[Yaniv] Mark as completed clicked.");	
 		
 		var record = jQuery(this).parents('.act-main');
 		var activityID = record.find("input").attr("activityid");
-    	console.log ("[Yaniv] accept new date activityid=", activityID);
+    	console.log ("[Yaniv] activityid=", activityID);
     	
 		var actionPost = 'action="/completed_activity?id=' + activityID + '&method=put"' + ' accept-charset="UTF-8">';
 		

@@ -1,18 +1,22 @@
+
+
+
 //Javasript name: My Date Time Picker
 //Date created: 16-Nov-2003 23:19
 //Creator: TengYong Ng
 //Website: http://www.rainforestnet.com
 //Copyright (c) 2003 TengYong Ng
 //FileName: DateTimePicker_css.js
-//Version: 2.2.0
+//Version: 2.2.2
 // Note: Permission given to use and modify this script in ANY kind of applications if
 //       header lines are left unchanged.
 //Permission is granted to redistribute and modify this javascript under the terms of the GNU General Public License 3.0.
 //New Css style version added by Yvan Lavoie (Québec, Canada) 29-Jan-2009
 //Formatted for JSLint compatibility by Labsmedia.com (30-Dec-2010)
-// http://www.rainforestnet.com/datetimepicker-tutorial.htm
+
 
 //Global variables
+
 var winCal;
 var dtToday;
 var Cal;
@@ -30,36 +34,39 @@ var ypos = 0; // mouse y position
 var calHeight = 0; // calendar height
 var CalWidth = 208;// calendar width
 var CellWidth = 30;// width of day cell.
-var TimeMode = 24;// Default TimeMode value. 12 or 24
-var CalPosOffsetX = 8; //X position offset relative to calendar icon, can be negative value
-var CalPosOffsetY = 8; //Y position offset relative to calendar icon, can be negative value
+var TimeMode = 24;// TimeMode value. 12 or 24
+var StartYear = 1940; //First Year in drop down year selection
+var EndYear = 5; // The last year of pickable date. if current year is 2011, the last year that still picker will be 2016 (2011+5)
+var CalPosOffsetX = -1; //X position offset relative to calendar icon, can be negative value
+var CalPosOffsetY = 0; //Y position offset relative to calendar icon, can be negative value
 
-//Configurable parameters - start
-var SpanBorderColor = "#aaaaaa";//Calendar border color
-var MonthYearColor = "#cc0033"; //Font Color of Month and Year in Calendar header
-var WeekHeadColor = "#ffffff"; //Background Color in Week header
-var SundayColor = "#ccc"; //Background color of Sunday
-var SaturdayColor = "#aaa"; //Background color of Saturday
+//Configurable parameters start
+var SpanBorderColor = "#aaaaaa";//span border color
+var SpanBgColor = "#FFFFFF"; //span background color
+var MonthYearColor = "#cc0033"; //Font Color of Month and Year in Calendar header.
+var WeekHeadColor = "gray"; //var WeekHeadColor="#18861B";//Background Color in Week header.
+var SundayColor = "#ccc"; //var SundayColor="#C0F64F";//Background color of Sunday.
+var SaturdayColor = "#aaa"; //Background color of Saturday.
 var WeekDayColor = "#fff"; //Background color of weekdays
+var FontColor = "blue"; //color of font in Calendar day cell.
 var TodayColor = "#ffbd35"; //Background color of today
 var SelDateColor = "#ff0000"; //Backgrond color of selected date in textbox
 var YrSelColor = "#888888"; //color of font of Month-Year selector.Applies only for Arrow navigation
+var MthSelColor = "#cc0033"; //color of font of Month selector if "MonthSelector" is "arrow".
 var HoverColor = "#eee"; //color of cell background when mouse move over
-var DisableColor = "#999966"; //color of disabled cell
-var CalBgColor = "#FFFFFF"; //Background color of Calendar window not cell
+var DisableColor = "#CCCCCC"; //color of disabled cell.
+var CalBgColor = "#FFFFFF"; //Background color of Calendar window.
 
-var StartYear = 1940; //First selectable year
-var EndYear = 5; // The offset last year of pickable date. If current year is 2011, the last year that still picker will be 2016 (2011+5)
-var WeekChar = 2;//number of character for week day. if 2 then Mo,Tu,We. if 3 then Mon,Tue,Wed
-var DateSeparator = "-";//Date Separator, you can change it to "/" as you wish
-var ShowLongMonth = true;//Show long month name in Calendar header. example: "January"
-var ShowMonthYear = true;//Show Month and Year in Calendar header.Not applicable for Arrow navigation
-var PrecedeZero = true;//Preceding zero in date format
-var MondayFirstDay = true;//true:Use Monday as first day; false:Sunday as first day. [true|false]
+var WeekChar = 2;//number of character for week day. if 2 then Mo,Tu,We. if 3 then Mon,Tue,Wed.
+var DateSeparator = "-";//Date Separator, you can change it to "-" if you want.
+var ShowLongMonth = true;//Show long month name in Calendar header. example: "January".
+var ShowMonthYear = true;//Show Month and Year in Calendar header.
+var ThemeBg = "";//Background image of Calendar window.
+var PrecedeZero = true;//Preceding zero [true|false]
+var MondayFirstDay = true;//true:Use Monday as first day; false:Sunday as first day. [true|false]  //added in version 1.7
 var UseImageFiles = true;//Use image files with "arrows" and "close" button
-var DisableBeforeToday = false; //Make date before today unclickable
 var imageFilesPath = "images/calendarpicker/"; //Path of date time picker image files relative to HTML page.
-//Configurable parameters - end
+//Configurable parameters end
 
 //use the Month and Weekday in your preferred language.
 var MonthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -75,7 +82,6 @@ var WeekDayName2 = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Sat
 // Calendar prototype
 function Calendar(pDate, pCtrl)
 {
-
 	//Properties
 	this.Date = pDate.getDate();//selected date
 	this.Month = pDate.getMonth();//selected month number
@@ -99,8 +105,6 @@ function Calendar(pDate, pCtrl)
 	{
 		this.Seconds = pDate.getSeconds();
 	}
-
-
 	this.MyWindow = winCal;
 	this.Ctrl = pCtrl;
 	this.Format = "ddMMyyyy";
@@ -115,8 +119,8 @@ function Calendar(pDate, pCtrl)
 	{
 		this.AMorPM = "PM";
 	}
-
 	this.ShowSeconds = false;
+	this.EnableDateMode = ""
 }
 
 Calendar.prototype.GetMonthIndex = function (shortMonthName)
@@ -436,7 +440,7 @@ Calendar.prototype.FormatDate = function (pDate)
 	if (PrecedeZero === true)
 	{
 		if ((pDate < 10) && String(pDate).length===1) //length checking added in version 2.2
-		{
+		{		
 			pDate = "0" + pDate;
 		}
 		if (MonthDigit < 10)
@@ -488,7 +492,7 @@ function GenCell(pValue, pHighLight, pColor, pClickable)
 
 	if (pColor === undefined)
 	    pColor = CalBgColor;
-
+	
 	if (pClickable !== undefined){
 		PClickable = pClickable;
 	}
@@ -532,7 +536,6 @@ function GenCell(pValue, pHighLight, pColor, pClickable)
 
 function RenderCssCal(bNewCal)
 {
-
 	if (typeof bNewCal === "undefined" || bNewCal !== true)
 	{
 		bNewCal = false;
@@ -668,7 +671,7 @@ function RenderCssCal(bNewCal)
 	}
 	for (i = 0; i < 7; i += 1)
 	{
-	    vCalHeader += "<td style='background-color:"+WeekHeadColor+";width:"+CellWidth+"px;color:#666666' class='calTD'>" + WeekDayName[i].substr(0, WeekChar) + "</td>";
+	    vCalHeader += "<td style='background-color:"+WeekHeadColor+";width:"+CellWidth+"px;color:#FFFFFF' class='calTD'>" + WeekDayName[i].substr(0, WeekChar) + "</td>";
 	}
 
 	calHeight += 19;
@@ -680,7 +683,6 @@ function RenderCssCal(bNewCal)
 	vFirstDay = CalDate.getDay();
 
 	//Added version 1.7
-
 	if (MondayFirstDay === true)
 	{
 		vFirstDay -= 1;
@@ -709,14 +711,17 @@ function RenderCssCal(bNewCal)
 
 		vDayCount = vDayCount + 1;
 		//added version 2.1.2
-		if (DisableBeforeToday === true && ((j < dtToday.getDate()) && (Cal.Month === dtToday.getMonth()) && (Cal.Year === dtToday.getFullYear()) || (Cal.Month < dtToday.getMonth()) && (Cal.Year === dtToday.getFullYear()) || (Cal.Year < dtToday.getFullYear())))
+		if (Cal.EnableDateMode === "future" && ((j < dtToday.getDate()) && (Cal.Month === dtToday.getMonth()) && (Cal.Year === dtToday.getFullYear()) || (Cal.Month < dtToday.getMonth()) && (Cal.Year === dtToday.getFullYear()) || (Cal.Year < dtToday.getFullYear())))
 		{
-			strCell = GenCell(j, false, DisableColor, false);//Before today's date is not clickable
-		}
+			strCell = GenCell(j, false, DisableColor, false); //Before today's date is not clickable
+        }
+        else if (Cal.EnableDateMode === "past" && ((j >= dtToday.getDate()) && (Cal.Month === dtToday.getMonth()) && (Cal.Year === dtToday.getFullYear()) || (Cal.Month > dtToday.getMonth()) && (Cal.Year === dtToday.getFullYear()) || (Cal.Year > dtToday.getFullYear()))) {
+            strCell = GenCell(j, false, DisableColor, false); //After today's date is not clickable
+        }
 		//if End Year + Current Year = Cal.Year. Disable.
 		else if (Cal.Year > (dtToday.getFullYear()+EndYear))
 		{
-		    strCell = GenCell(j, false, DisableColor, false);
+		    strCell = GenCell(j, false, DisableColor, false); 
 		}
 		else if ((j === dtToday.getDate()) && (Cal.Month === dtToday.getMonth()) && (Cal.Year === dtToday.getFullYear()))
 		{
@@ -767,7 +772,7 @@ function RenderCssCal(bNewCal)
 
 		if ((vDayCount % 7 === 0) && (j < Cal.GetMonDays()))
 		{
-			vCalData = vCalData + "\n</tr>";
+			vCalData = vCalData + "</tr>";
 			calHeight += 19;
 		}
 	}
@@ -820,7 +825,7 @@ function RenderCssCal(bNewCal)
 			SelectPm = (Cal.AMorPM === "PM") ? "Selected" : "";
 
 			vCalTime += "</td><td>";
-			vCalTime += "<select name=\"ampm\" onChange=\"javascript:Cal.SetAmPm(this.options[this.selectedIndex].value);\">";
+			vCalTime += "<select name=\"ampm\" onChange=\"javascript:Cal.SetAmPm(this.options[this.selectedIndex].value);\">\n";
 			vCalTime += "<option " + SelectAm + " value=\"AM\">AM</option>";
 			vCalTime += "<option " + SelectPm + " value=\"PM\">PM<option>";
 			vCalTime += "</select>";
@@ -832,7 +837,7 @@ function RenderCssCal(bNewCal)
 		}
 
 		vCalTime += "</td>\n<td align='right' valign='bottom' width='" + HourCellWidth + "px'></td></tr>";
-		vCalTime += "<tr><td colspan='7' style=\"text-align:center;\"><input style='width:60px;font-size:12px;' onClick='javascript:closewin(\"" + Cal.Ctrl + "\");'  type=\"button\" value=\"OK\">&nbsp;<input style='width:60px;font-size:12px;' onClick='javascript: winCal.style.visibility = \"hidden\"' type=\"button\" value=\"Cancel\"></td></tr>";
+		vCalTime += "<tr><td colspan='8' style=\"text-align:center;\"><input style='width:60px;font-size:12px;' onClick='javascript:closewin(\"" + Cal.Ctrl + "\");'  type=\"button\" value=\"OK\">&nbsp;<input style='width:60px;font-size:12px;' onClick='javascript: winCal.style.visibility = \"hidden\"' type=\"button\" value=\"Cancel\"></td></tr>";
 	}
 	else //if not to show time.
 	{
@@ -846,21 +851,18 @@ function RenderCssCal(bNewCal)
 	    }
 	    vCalClosing += "</tr>";
 	}
-
-
-
 	vCalClosing += "</tbody></table></td></tr>";
 	calHeight += 31;
 	vCalClosing += "</tbody></table>\n</span>";
 
 	//end time picker
-	funcCalback = "function callback(id, datum) {\n";
-	funcCalback += " var CalId = document.getElementById(id); if (datum=== 'undefined') { var d = new Date(); datum = d.getDate() + '/' +(d.getMonth()+1) + '/' + d.getFullYear(); } window.calDatum=datum;CalId.value=datum;\n";
-	funcCalback += " if (Cal.ShowTime) {\n";
-	funcCalback += " CalId.value+=' '+Cal.getShowHour()+':'+Cal.Minutes;\n";
-	funcCalback += " if (Cal.ShowSeconds)\n  CalId.value+=':'+Cal.Seconds;\n";
-	funcCalback += " if (TimeMode === 12)\n  CalId.value+=''+Cal.getShowAMorPM();\n";
-	funcCalback += "}\n winCal.style.visibility='hidden';\n}\n";
+	funcCalback = "function callback(id, datum) {";
+	funcCalback += " var CalId = document.getElementById(id);if (datum=== 'undefined') { var d = new Date(); datum = d.getDate() + '/' +(d.getMonth()+1) + '/' + d.getFullYear(); } window.calDatum=datum;CalId.value=datum;";
+	funcCalback += " if(Cal.ShowTime){";
+	funcCalback += " CalId.value+=' '+Cal.getShowHour()+':'+Cal.Minutes;";
+	funcCalback += " if (Cal.ShowSeconds)  CalId.value+=':'+Cal.Seconds;";
+	funcCalback += " if (TimeMode === 12)  CalId.value+=''+Cal.getShowAMorPM();";
+	funcCalback += "}if(CalId.onchange!=undefined) CalId.onchange();CalId.focus();winCal.style.visibility='hidden';}";
 
 
 	// determines if there is enough space to open the cal above the position where it is called
@@ -881,8 +883,8 @@ function RenderCssCal(bNewCal)
 		headID.appendChild(e);
 		// add stylesheet to the span cal
 
-		cssStr = ".calTD {font-family: verdana; font-size: 12px; text-align: center; border:0; }\n";
-		cssStr += ".calR {font-family: verdana; font-size: 12px; text-align: center; font-weight: bold;}";
+		cssStr = ".calTD {font-family: Arial, 'Liberation Sans', FreeSans, sans-serif; font-size: 12px; text-align: center; border:0; }\n";
+		cssStr += ".calR {font-family: Arial, 'Liberation Sans', FreeSans, sans-serif; font-size: 12px; text-align: center; font-weight: bold;}";
 
 		style = document.createElement("style");
 		style.type = "text/css";
@@ -909,7 +911,7 @@ function RenderCssCal(bNewCal)
 		span.style.border = "solid 1pt " + SpanBorderColor;
 		span.style.padding = "0";
 		span.style.cursor = "move";
-		span.style.backgroundColor = CalBgColor;
+		span.style.backgroundColor = SpanBgColor;
 		span.style.zIndex = 100;
 		document.body.appendChild(span);
 		winCal = document.getElementById(calSpanID);
@@ -933,7 +935,7 @@ function RenderCssCal(bNewCal)
 }
 
 
-function NewCssCal(pCtrl, pFormat, pScroller, pShowTime, pTimeMode, pShowSeconds)
+function NewCssCal(pCtrl, pFormat, pScroller, pShowTime, pTimeMode, pShowSeconds, pEnableDateMode)
 {
 	// get current date and time
 
@@ -985,7 +987,7 @@ function NewCssCal(pCtrl, pFormat, pScroller, pShowTime, pTimeMode, pShowSeconds
 		Cal.Ctrl = pCtrl;
 	}
 
-	if (pFormat !== undefined)
+	if (pFormat!== undefined && pFormat !=="")
 	{
 		Cal.Format = pFormat.toUpperCase();
 	}
@@ -994,7 +996,7 @@ function NewCssCal(pCtrl, pFormat, pScroller, pShowTime, pTimeMode, pShowSeconds
 		Cal.Format = "MMDDYYYY";
 	}
 
-	if (pScroller !== undefined)
+	if (pScroller!== undefined && pScroller!=="")
 	{
 		if (pScroller.toUpperCase() === "ARROW")
 		{
@@ -1004,7 +1006,11 @@ function NewCssCal(pCtrl, pFormat, pScroller, pShowTime, pTimeMode, pShowSeconds
 		{
 			Cal.Scroller = "DROPDOWN";
 		}
-	}
+    }
+
+    if (pEnableDateMode !== undefined && (pEnableDateMode === "future" || pEnableDateMode === "past")) {
+        Cal.EnableDateMode= pEnableDateMode;
+    }
 
 	exDateTime = document.getElementById(pCtrl).value; //Existing Date Time value in textbox.
 
@@ -1114,7 +1120,7 @@ function NewCssCal(pCtrl, pFormat, pScroller, pShowTime, pTimeMode, pShowSeconds
 		        Cal.Year = parseInt(strYear, 10);
 		}
 		//end parse year
-
+		
 		//parse Date
 		if ((parseInt(strDate, 10) <= Cal.GetMonDays()) && (parseInt(strDate, 10) >= 1)) {
 			Cal.Date = strDate;
@@ -1160,7 +1166,6 @@ function NewCssCal(pCtrl, pFormat, pScroller, pShowTime, pTimeMode, pShowSeconds
 		}
 
 	}
-
 	selDate = new Date(Cal.Year, Cal.Month, Cal.Date);//version 1.7
 	RenderCssCal(true);
 }
@@ -1179,7 +1184,7 @@ function closewin(id) {
                     (Cal.Year < dtToday.getFullYear());
 
         if ((Cal.Year <= MaxYear) && (Cal.Year >= StartYear) && (Cal.Month === selDate.getMonth()) && (Cal.Year === selDate.getFullYear())) {
-            if (DisableBeforeToday === true) {
+            if (Cal.EnableDateMode === "future") {
                 if (beforeToday === false) {
                     callback(id, Cal.FormatDate(Cal.Date));
                 }
@@ -1188,7 +1193,7 @@ function closewin(id) {
                 callback(id, Cal.FormatDate(Cal.Date));
         }
     }
-
+    
 	var CalId = document.getElementById(id);
 	CalId.focus();
 	winCal.style.visibility = 'hidden';

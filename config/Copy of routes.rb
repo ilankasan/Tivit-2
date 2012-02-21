@@ -61,8 +61,9 @@ end
   get "tivitcomments/new"
 
   resources :users
-  
-  match "/ajax/autoname"         => "users#autoname"
+  #match "/ajax/autoname"         => "users#autoname"
+  match "/ajax/invitees"         => "users#autoname"
+    
   
   resources :sessions,   :only => [:new, :create, :destroy]
   #resources :activities, :only => [:create, :destroy, :update, :show, :edit]
@@ -74,6 +75,8 @@ end
 resources :activities
 #match '/activities',    :to => 'activities#update'
 	  match "activities/:id"  	     => "activities#update"
+	  #match "activities/*id/*email"         => "activities#show"
+   
 	  match "/onit" 				         => "activities#on_it"
 	  match "/reassign"              => "activities#reassign"
   	match "/decline" 			         => "activities#decline"
@@ -90,10 +93,8 @@ resources :activities
     match "/completed_activity"    => "activities#completed_activity"
   	match "/update_tivit/:id" 	   => "activities#update_tivit"
   	match "/update_reviewed/:id"   => "activities#update_reviewed"
-  	match "/ajax/invitees"         => "users#autoname"
-  	# Add by Yaniv 2/19 to enable Edit Activity with Ajax
-  	match "activities/:id/edit"                  => "activities#edit"
-      	
+  	
+  	
   	#match "/images"    => "../images"
 #resources :bireports  
  #match "bireports/show"   => "bireports#show"

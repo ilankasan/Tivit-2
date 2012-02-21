@@ -15,7 +15,11 @@ class ActivitiesController < ApplicationController
   
    def tiviti_authenticate_account
      puts "---------------------------------------------------------------"
+     puts "---------------------------------------------------------------"
+     
      puts "------->>>>>>>>>>>>>>>>  tiviti_authenticate_account"
+     
+     puts "---------------------------------------------------------------"
      puts "---------------------------------------------------------------"
      
      if(params[:email] != nil)
@@ -29,16 +33,12 @@ class ActivitiesController < ApplicationController
         #redirect_to new_registration_path(user[0].get_account)
         @account = Account.new()
         #puts "account = "+@account.inspect
+        redirect_to new_registration_path(@account,:email =>params[:email])
+        puts "---------------------------------------------------------------"
         puts "---------------------------------------------------------------"
         puts "-------------------------     redirect_to new_registration_path    --------------------------------------"
-       
-        redirect_to new_registration_path(@account,:email =>params[:email])
         
       else
-        puts "---------------------------------------------------------------"
-        puts "-----------------------------   no user authenticate_account!---------------------------------"
-        puts "---------------------------------------------------------------"
-     
         authenticate_account!
        end
      end
@@ -100,10 +100,10 @@ class ActivitiesController < ApplicationController
    redirect_to root_path
   end
   
-  
+  # [Yaniv] Edit Activity 
   def edit
-    puts "edit activit"
-    @activity = Activity.find(params[:id])
+  	puts "edit activit"
+        @activity = Activity.find(params[:id])
     @title = "Edit tivit: " +@activity.name
     
     respond_to do |format|
@@ -112,7 +112,6 @@ class ActivitiesController < ApplicationController
        puts "[Yaniv] (activities controller)------->> after edit activity."
     end  
   end
-  
   
   def remove_tivit
   	puts "Remove Tivit"
@@ -193,8 +192,8 @@ class ActivitiesController < ApplicationController
  def validate_access
     return if(params == nil || params[:id] == nil)
        
-    @activity = Activity.find_by_id(params[:id])   
-   if(@activity == nil || !validate_user_access_to_activity(@activity,current_account.user))
+    @activity = Activity.find(params[:id])   
+   if(!validate_user_access_to_activity(@activity,current_account.user))
       render 'shared/access_denied' 
    end
    
@@ -259,6 +258,7 @@ class ActivitiesController < ApplicationController
       if ( invitee_emails != nil )
         update_activity_participants_by_email(invitee_emails, @activity)
       end 
+       
       @activity.save
       
 #send email to all parcicipants that tivit was completed (not including owner):
@@ -337,17 +337,17 @@ class ActivitiesController < ApplicationController
   	puts "due date = "+due.to_s
 #adding a strign representation of due date 
   	params["due"] 		   = adjust_date_to_end_of_day(due).to_s
-  	puts " adujested due date "+params["due"]
   	params["parent_id"]  = params[:id] 						#   adding Parent ID
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
 	  params["status"]     = "in-progress"
-	  #puts "name = "+params[:name]
-	  #params[:description] = params[:description].gsub("'", "\\\\'")
-	#  params[:name]        = params[:name].gsub("'", "\\'")
-	   params[:name]        = params[:name].gsub("'", "\\'")
-    
-  
-	 #puts "name = "+params[:name]
+	  puts "name = "+params[:name]
+	  #puts "name replace  = "+params[:name].replace(/'/g,"\'")
+	  #puts JSON.stringify({params[:name]}).inspect
+	  #params[:name]        = params[:name].gsub("'", "\'")
+	  #params[:name] = params[:name].gsub(/\\|'/) { |c| "\\#{c}" }
+	  params[:name] = params[:name].gsub("\\","\\\\\\\\").gsub("'","\\\\'")
+    #params[:description] = params[:description].gsub("'", "\\\\'")
+	 puts "name = "+params[:name]
     
     invitees = params["invitees"]	
    
@@ -363,7 +363,7 @@ class ActivitiesController < ApplicationController
 	  params["owner_id"] =  @invited_user.id
 	  params["activity_type"] = "tivit"
 	
-	  puts "Inspect Params " +params.inspect
+	  #puts "Inspect Params " +params.inspect
 	  
    	
 	  current_account.user.addTwoWayContact(@invited_user)

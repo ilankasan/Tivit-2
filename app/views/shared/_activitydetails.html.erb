@@ -48,12 +48,12 @@
 		</p>
 		
 		<!-- tivit invitee -->
+		<p class="assign"><i></i> assign to myself</p>
 		<!-- <p><label for="who">Who:</label><input type="text" id="who" /></p> -->
-		<p><label for="who">Who:</label>
-			<%= text_field_tag(:invitees, nil, :placeholder => "myself -OR- invite by email address", :class => "optional email" ) %> 
-			</p>
-		
-		<!-- <p class="assign"><i></i> assign myself</p> -->
+		<p id="wholine">
+			<label for="who">Who:</label>
+			<%= text_field_tag(:invitees, nil, :placeholder => "invite by email address", :class => "optional email" ) %> 
+		</p>
 		
 		<!-- tivit description -->
 		<!-- <p><label for="what">What:</label><textarea id="what" cols="10" rows="10"></textarea></p>-->
@@ -64,7 +64,7 @@
 		<!-- need by date -->		  	
 		<p class="input-date"><label for="due">Needed by:</label>
 	     	<%= text_field_tag(:due, nil, :placeholder => "choose date", :name => "due",  :id => "due", :autocomplete => "off", :class => "input-date") %> 
-	     	<img class="ico_calc" src="/images/cal.gif" onclick="javascript:NewCssCal('due', 'mmddyyyy', 'arrow')" class="ico_calc" style="cursor:pointer"/> 	
+	     	<img class="ico_calc" src="/images/cal.gif" onclick="javascript:NewCssCal('due', 'mmddyyyy', 'arrow', false,'24',true,'future')" class="ico_calc" style="cursor:pointer"/> 	
 		</p>
 		 	
 		<div class="request">
@@ -111,21 +111,12 @@
 	        		<%end%>   
 	        </p>                                        
     		</br>  
-    		<!-- Ilan temp code -->                              
-  			<% if @tivit_id != nil && false %>
-					<li class="edit-yaniv"><%= link_to "Mark Read "+@tivit_id.to_s,
-													   :controller  => "activities", 
-					   								   :action      => "update_reviewed",
-					   								   :id          => @tivit_id %>
-					
-					 </li>
-				<% end %>
-				<!-- Ilan end temp code -->   
-			
+    		
 	  		<% if current_account.user.get_id == (activitydetails.owner_id) %>
 			<ul>
 				
-				<li class="edit-yaniv"><%= link_to "edit", edit_activity_path(activitydetails) %></li>
+				<!-- <li class="edit-yaniv1"><%= link_to "EDIT", edit_activity_path(activitydetails) %></li> -->
+				<li class="edit-yaniv">edit</li>
 				
 				<!-- 
 				<li class="add-yaniv"><%= link_to "add a file", 	:controller  => "documents", 

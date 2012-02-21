@@ -184,7 +184,11 @@
 					<!-- tivit owner=assignee -->
 			
 					<% if loggedInUserIsTheOwner == "yes" %>
-						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes">
+						<% if tivit_adp.wasInvitedByUser? (current_account.user) %>
+							<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes" imtivitcreator="yes">
+						<% else %>
+							<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes">
+						<% end %>
 					<!-- activity owner, strongest role should be assigned first -->
 					<% elsif tivit_adp.isParentOwner? (current_account.user) %>
 						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="activityOwner">
@@ -297,14 +301,15 @@
 	              		<!-- add remind if user didn't read or did respond yet -->
 	              		<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
 		              		<%if((current_account.user.get_id == tivit_adp.get_parent.get_owner.get_id && current_account.user.get_id != tivit_adp.get_owner.get_id)|| (current_account.user.get_id == tivit_adp.get_invited_by.id) )%>	              	
-			              			<a>
+			              		
 									<%= link_to "Remind",    :controller  => "activities",
 		    												:action      => "change_tivit_status",
 		    												:status      => "remind",
 		    												:id          => tivit_adp.id, 
 		  							    					:confirm     => "Are you sure you want to accepet new date " +tivit_adp.name+"?",
-		                                					:title       => tivit_adp.name %>
-									</a>
+		                                					:title       => tivit_adp.name
+		                                					%>
+									
 							<%end%>
 	              		<% end %>
 	              		
@@ -330,15 +335,15 @@
 				<!-- only activity owner or tivit creator (invited by) can edit tivits -->
 				<% if ( (tivit_adp.wasInvitedByUser?(current_account.user)) || (tivit_adp.isParentOwner? (current_account.user )) ) %>
 				
-				<div class="edit-menu">
-					<div class="icon"></div>
-					<div class="menu-dialog">
-						<ul>
-							<li class="edit">edit</li>
-							<li class="del">delete</li>
-						</ul>
+					<div class="edit-menu">
+						<div class="icon"></div>
+						<div class="menu-dialog">
+							<ul>
+								<li class="edit">edit</li>
+								<li class="del">delete</li>
+							</ul>
+						</div>
 					</div>
-				</div>
 				<% end %>													
 				<div class="clear"></div>
 			</div><!-- conteiner -->
@@ -346,15 +351,15 @@
 			<!-- Show respond button only to owner -->
 			<% if tivit_adp.get_owner.id == current_account.user.id %>
 			<%# if unread_comments > 0 %> 	
-			<% if tivit_adp.id == @tivit_id %>
-			<div class="respond" style="display: block">
-			<% else %>
-			<div class="respond">	
-			<% end %>
+				<% if tivit_adp.id == @tivit_id %>
+				<div class="respond" style="display: block">
+				<% else %>
+				<div class="respond">	
+				<% end %>
 				<div class="status">
 					<div class="icon"></div>
-						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes">
-				</div>
+							<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes">
+					</div>
 				<div class="form-button"><%= respondbutton %></div>
 				<!--
 				<div class="status">
