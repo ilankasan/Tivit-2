@@ -17,7 +17,7 @@
 	
 	 
 		<%= @assignee.get_name%>, <br>
-        <font size="2" face="Arial"><b><%= @assigner.get_name %></b> is OK with <%= @tivit.due.localtime.strftime("%m-%d-%Y") %> for finishing '<u><font color="#0000FF"><%= @tivit.get_name%></font></u>'<br>
+        <font size="2" face="Arial"><b><%= @assigner.get_name %></b> is OK with <%= @tivit.due.localtime.strftime("%b %d, %Y") %> for finishing '<%= link_to @tivit.get_name,activity_url(@tivit) %>'<br>
         
         </tr>
       </table>
