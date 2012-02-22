@@ -192,7 +192,8 @@ def delete_get_activities_i_participate_ondeck (user_id)
         
   end
   
-  def get_activities_i_have_open_tivits(user_id)
+  
+  def old_get_activities_i_have_open_tivits(user_id)
     
       sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status           = 'Completed'  
@@ -203,7 +204,7 @@ def delete_get_activities_i_participate_ondeck (user_id)
                  AND tivit_user_statuses.activity_id   = tivits.id 
                  AND NOT tivit_user_statuses.status_id = 'Done' 
                  AND tivit_user_statuses.user_id       = "+user_id+"
-                 ORDER BY activities.due"
+                 ORDER BY tivits.due"
                  
       sql_activities_i_participate_without_due_date  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status           = 'Completed'  
@@ -219,10 +220,38 @@ def delete_get_activities_i_participate_ondeck (user_id)
         activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_without_due_date)
         
         return activities_i_participate_with_due_date + activities_i_participate_without_due_date
-      
+  end
+  
+  
+  
+  
+  def get_activities_i_have_open_tivits(user_id)
+    
+      sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
+                 WHERE NOT activities.status           = 'Completed'  
+                 AND activities.activity_type          = 'activity' 
+                 
+                 AND tivits.owner_id                   = "+user_id+"
+                 AND tivits.parent_id                  = activities.id
+                 AND tivit_user_statuses.activity_id   = tivits.id 
+                 AND NOT tivit_user_statuses.status_id = 'Done' 
+                 AND tivit_user_statuses.user_id       = "+user_id+"
+                 ORDER BY tivits.due"
+                 
+      sql_activities_i_participate_without_due_date  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
+                 WHERE NOT activities.status           = 'Completed'  
+                 AND activities.activity_type          = 'activity'
+                 AND activities.due IS                   NULL   
+                 AND tivits.owner_id                   = "+user_id+"
+                 AND tivits.parent_id                  = activities.id
+                 AND tivit_user_statuses.activity_id   = tivits.id 
+                 AND NOT tivit_user_statuses.status_id = 'Done' 
+                 AND tivit_user_statuses.user_id       = "+user_id
+                         
+        activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
+      #  activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_without_due_date)
         
-    #    return Activity.find_by_sql(sql_activities_i_participate)
-        
+        return activities_i_participate_with_due_date 
   end
   
   def get_activities_i_have_unresponed_tivits(user_id)

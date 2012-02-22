@@ -57,7 +57,7 @@ def home
           @activities_summary             = get_activities_i_participate(current_user_id)
                 
       when ("2") # Just My tivits
-          puts "Just My tivits"
+          puts "My tivits"
          @activities_summary             = get_activities_i_have_open_tivits (current_user_id)
          
       when ("3") # All unresponded
