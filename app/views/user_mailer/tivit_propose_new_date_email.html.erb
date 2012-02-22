@@ -19,12 +19,14 @@
 	
 	 
 		<%= @assigner.get_name %>, <br>
-        <font size="2" face="Arial"><b><%= @assignee.get_name %></b> is asking for a different delivery date for '<u><font color="#0000FF"><%= @tivit.get_name%></font></u>'<br>
+        <font size="2" face="Arial"><b><%= @assignee.get_name %></b> is asking for a different delivery date for '<%= link_to @tivit.get_name,activity_url(@tivit) %>'
+        
+        <br>
          
 		<%if @tivit.get_due_date != nil%>
         	How about <b><%= @tivit.get_owner_proposed_date.localtime.strftime("%b %d, %Y")%></b> instead of <%= @tivit.get_due_date.localtime.strftime("%b %d, %Y") %>?</font></font></td>
         <%else%>
-	        I can get it done by <b><%= @tivit.get_owner_proposed_date.localtime.strftime("%m-%d-%Y")%></b>?</font></font></td>
+	        I can get it done by <b><%= @tivit.get_owner_proposed_date.localtime.strftime("%b %d, %Y"")%></b>?</font></font></td>
 	 
         <%end%>
 
