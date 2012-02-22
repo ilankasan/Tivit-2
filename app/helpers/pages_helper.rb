@@ -306,8 +306,7 @@ def get_activities_completed_or_with_completed_tivits(user_id)
                  AND ((activities.owner_id       = "+user_id+")
                  OR (tivits.owner_id      = "+user_id+" AND tivits.parent_id   = activities.id)))
                  
-                 
-                 ORDER BY activities.due DESC"
+                 ORDER BY activities.due ASC"
      completed_activities = Activity.find_by_sql(sql_completed_activities_or_with_completed_tivits)
      #puts "1. ------>>>>  "+completed_activities.inspect
       return completed_activities

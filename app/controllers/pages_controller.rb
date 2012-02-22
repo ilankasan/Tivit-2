@@ -27,10 +27,7 @@ def home
     @title = "Home"
     
     puts "Home"
-    puts "HHHHHHHHHHHHHHHHHHHHOOOOOOOOOOOOOOOOOOOOOOOOOMMMMMMMMMMMMMMMMMEEEEEEEEEEEEEEEEEEEE"
-    puts "HHHHHHHHHHHHHHHHHHHHOOOOOOOOOOOOOOOOOOOOOOOOOMMMMMMMMMMMMMMMMMEEEEEEEEEEEEEEEEEEEE"
-    
-   
+       
     current_user_id = current_account.user.get_id.to_s
     puts "current_user_id = "+current_user_id
     puts "Sign in account = "+current_account.sign_in_count.to_s
