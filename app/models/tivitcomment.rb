@@ -45,5 +45,16 @@ class Tivitcomment < ActiveRecord::Base
      end
       
   end
+  def update_comment(str)
+    comment_without_carriage = str.gsub(/\r/,"")
+    comment_without_carriage = comment_without_carriage.gsub(/\n/," ")
+      
+    self.comment = comment_without_carriage
+  end
+  
+  def self.clean_carriage(comment)
+    return comment_without_carriage(comment)
+  end
+  
                  
 end

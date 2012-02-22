@@ -134,7 +134,6 @@ class ActivitiesController < ApplicationController
   def show
     
     puts "----------->>>>>>>>>>> show activity detailed page"
-    puts "SHHHOOOOWWWW"
     #puts "params = "+params.inspect
     @activity_temp = Activity.find(params[:id])
     if(!@activity_temp.isActivity?)
@@ -215,7 +214,7 @@ class ActivitiesController < ApplicationController
       comment = @activity.tivitcomments.order(:created_at).first
       puts "comment ----=====>>>>>>>>    "+comment.inspect
       if(comment != nil)
-        comment.comment =  params[:description]
+        comment.update_comment(params[:description])
         comment.save
       end
            
@@ -347,14 +346,7 @@ class ActivitiesController < ApplicationController
   	params["parent_id"]  = params[:id] 						#   adding Parent ID
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
 	  params["status"]     = "in-progress"
-	  #puts "name = "+params[:name]
-	  #params[:description] = params[:description].gsub("'", "\\\\'")
-	#  params[:name]        = params[:name].gsub("'", "\\'")
-	   #params[:name]        = params[:name].gsub("'", "\\'")
-    
-  
-	 #puts "name = "+params[:name]
-    
+	  
     invitees = params["invitees"]	
    
     # if no invitee provided, assign tivit to current user
