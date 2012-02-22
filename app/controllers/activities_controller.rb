@@ -32,16 +32,10 @@ class ActivitiesController < ApplicationController
         puts "---------------------------------------------------------------"
         puts "-------------------------     redirect_to new_registration_path    --------------------------------------"
         redirect_to new_registration_path(@account,:email =>params[:email])
+        puts "---------------------------------------------------------------"
        end
-       # puts "---------------------------------------------------------------"
-       # puts "-----------------------------   no user authenticate_account!---------------------------------"
-       # puts "---------------------------------------------------------------"
-     
-        #authenticate_account!
-      #end
      end
      authenticate_account!
-     
    end # end def
   
    def create
@@ -218,6 +212,13 @@ class ActivitiesController < ApplicationController
 # checking to see if the tivit was previously closed. This will be used before the email is sent out below
   if (@activity != nil && @activity.update_attributes(params))
    
+      comment = @activity.tivitcomments.order(:created_at).first
+      puts "comment ----=====>>>>>>>>    "+comment.inspect
+      if(comment != nil)
+        comment.comment =  params[:description]
+        comment.save
+      end
+           
       flash[:success] = "tivit " + @activity.name + " has been updated"
       redirect_to @activity
       
