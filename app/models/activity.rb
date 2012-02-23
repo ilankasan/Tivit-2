@@ -309,12 +309,12 @@ puts "-------------<<<<<<<<<<<<<<"
 # retuen my new requests  
    my_tivits    = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
        AND   activities.owner_id     = ? AND NOT activities.invited_by = ? AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id,currentuser.id)
-   puts " number of my new requests "+my_tivits.length.to_s
+ #  puts " number of my new requests "+my_tivits.length.to_s
              
    other_tivits = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
-       AND   NOT activities.owner_id = ? AND activities.invited_by = ? AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Decline')",currentuser.id,currentuser.id)
+       AND   NOT activities.owner_id = ? AND activities.invited_by = ? AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",currentuser.id,currentuser.id)
              
-    puts " number of  requests nee my action "+other_tivits.length.to_s          
+#    puts " number of  requests nee my action "+other_tivits.length.to_s          
    
     return my_tivits + other_tivits
   end
@@ -349,19 +349,16 @@ puts "-------------<<<<<<<<<<<<<<"
                    AND     tivits.id                     = tivit_user_statuses.activity_id 
                    AND  ( tivit_user_statuses.status_id  = 'Declined' OR tivit_user_statuses.status_id  = 'Proposed')
                    ORDER BY activities.due"
-    #AND     activities.owner_id           = "+current_user_id+"  
+    #AND     activities.owner_id           = "+current_user_id+"
+    
+    
                    
                  
       results2  =  Activity.find_by_sql(sql_activities_i_assigned_with_tivit_requests).count
       puts " number of my other requests "+results2.to_s
      
       return results1+results2
-
-  
-
   end
-  
-  
   
   def get_incoming_tivits (currentuser)
   
