@@ -167,8 +167,7 @@ class Activity < ActiveRecord::Base
 #All open tivits and thoses with comments
 #Only when they are in my activity and have a new status or comment since last view
 
-      #puts "user is the owner of activity ---  "+self.name
-      
+     
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
                                     AND tivit_user_statuses.user_id = activities.owner_id 
                                     AND activities.owner_id         = ? ",user.get_id).order(:due).reverse_order
@@ -310,12 +309,12 @@ puts "-------------<<<<<<<<<<<<<<"
 # retuen my new requests  
    my_tivits    = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
        AND   activities.owner_id     = ? AND NOT activities.invited_by = ? AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id,currentuser.id)
-  # puts " number of my new requests "+my_tivits.length.to_s
+   puts " number of my new requests "+my_tivits.length.to_s
              
    other_tivits = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
        AND   NOT activities.owner_id = ? AND activities.invited_by = ? AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Decline')",currentuser.id,currentuser.id)
              
- #   puts " number of  requests nee my action "+other_tivits.length.to_s          
+    puts " number of  requests nee my action "+other_tivits.length.to_s          
    
     return my_tivits + other_tivits
   end
