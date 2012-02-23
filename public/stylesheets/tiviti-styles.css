@@ -310,10 +310,13 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     display: inline-block;
     height: 78px;
     width: 285px;
-    margin: 8px 2px 2px 493px;
+    top: 8px;
+    left: 494px;
+    right: 10px;
+    bottom: 10px;
     /*overflow: hidden;*/
     z-index: 20;
-    position: relative;
+    position: absolute;
 }
 
 
