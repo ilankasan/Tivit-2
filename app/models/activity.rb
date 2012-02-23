@@ -224,8 +224,7 @@ class Activity < ActiveRecord::Base
   #         puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
      
         tivits_i_commented_with_new_comments = Activity.find_by_sql([sql])
-           #   puts "tivits_i_commented_with_new_comments "+tivits_i_commented_with_new_comments.size.to_s
-     #   puts "my open tivites "+my_open_tivits.size.to_s
+           #   puts "my open tivites "+my_open_tivits.size.to_s
                  
       return (my_open_tivits+open_tivits_im_asignee+tivits_i_commented_with_new_comments).uniq
     end
