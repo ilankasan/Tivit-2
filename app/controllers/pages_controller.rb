@@ -20,7 +20,6 @@ class PagesController < ApplicationController
    
  end
  
-#<%= select_tag(:filter_id, options_for_select([['On Deck', 1],['Just My Tivits', 2], ['All Unresponded', 3],['All Open', 4]],account_session[:filter_id])) %>
 
 def home
     puts "HHHHHHHHHHHHHHHHHHHHOOOOOOOOOOOOOOOOOOOOOOOOOMMMMMMMMMMMMMMMMMEEEEEEEEEEEEEEEEEEEE"

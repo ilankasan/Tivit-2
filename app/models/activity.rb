@@ -403,13 +403,13 @@ puts "-------------<<<<<<<<<<<<<<"
   
   def get_all_my_open_tivits (user)
     self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
+AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id).order(:due)
     
   end
   
   def get_open_tivits 
     self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-                     AND tivit_user_statuses.user_id = activities.owner_id")
+                     AND tivit_user_statuses.user_id = activities.owner_id").order(:due)
     
   end
   

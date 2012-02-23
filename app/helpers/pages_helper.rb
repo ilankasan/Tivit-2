@@ -236,7 +236,8 @@ def delete_get_activities_i_participate_ondeck (user_id)
                  AND tivit_user_statuses.activity_id   = tivits.id 
                  AND NOT tivit_user_statuses.status_id = 'Done' 
                  AND tivit_user_statuses.user_id       = "+user_id+"
-                 ORDER BY tivits.due"
+                 ORDER BY  tivits.due ASC "
+                 #NULLS LAST
                  
       sql_activities_i_participate_without_due_date  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status           = 'Completed'  
