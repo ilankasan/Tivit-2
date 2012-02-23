@@ -520,17 +520,7 @@ function showStatusListDialog(clickedObject){
 		}
 	}
 	
-function openNewActivity(){
-    var layer = jQuery('#new-activity-complete');
 
-    if (!jQuery(layer).is(":visible"))
-    {
-        jQuery('#activity-overlay').show();
-        jQuery(layer).slideDown('slow');
-
-    }
-
-}
 function hideInlineLoadingAnimation(){
 	console.log ('[Yaniv] hideInlineLoadingAnimation called.');
 	jQuery('.loading').hide();
@@ -579,7 +569,22 @@ function hidePopup(){
 	jQuery('#new-activity-background').removeClass('tempHide');
 	hideLoadingAnimation('.loading-popup');
 }
-			
+function openNewActivity(){
+    var layer = jQuery('#new-activity-complete');
+
+	// Check if new activity FTE bubble is shown. If yes, hide it for now...
+	if (jQuery("#newactivityFTE").is(":visible"))
+    {
+    	jQuery("#newactivityFTE").hide();
+    }
+    
+    if (!jQuery(layer).is(":visible"))
+    {
+        jQuery('#activity-overlay').show();
+        jQuery(layer).slideDown('slow');
+
+    }
+}			
 function closeNewActivity(){
     var layer = jQuery('#new-activity-complete');
     if(jQuery('#calBorder').is(':visible')){
@@ -587,6 +592,10 @@ function closeNewActivity(){
     }
     jQuery(layer).slideUp('slow',function(){
 		jQuery('#activity-overlay').fadeOut();
+		if (jQuery("#newactivityFTE").is(":hidden"))
+   		{
+    		jQuery("#newactivityFTE").fadeIn();
+    	}
     });    
     
     jQuery(':input','#new-activity-form')
@@ -595,6 +604,8 @@ function closeNewActivity(){
     .removeAttr('checked')
     .removeAttr('selected');
     jQuery('#new-activity-form textarea').val('');
+    
+    
 }
 /***********************************************************************************************************************************************************/
 // Scripts for Activity Page

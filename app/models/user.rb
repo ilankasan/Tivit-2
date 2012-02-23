@@ -48,10 +48,14 @@ class User < ActiveRecord::Base
                     :length   => { :maximum => 50 }
    
   def does_own_activity?
+    return true
     activity = Activity.where(:activity_type => "activity", :owner_id => self.id).first
     if(activity == nil)
+      puts "does_own_activity? = false"
        return false
     else
+      puts "does_own_activity? = true"
+      
        return true
     end
       

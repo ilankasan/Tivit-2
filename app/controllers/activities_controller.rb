@@ -33,8 +33,10 @@ class ActivitiesController < ApplicationController
         puts "-------------------------     redirect_to new_registration_path    --------------------------------------"
         redirect_to new_registration_path(@account,:email =>params[:email])
         puts "---------------------------------------------------------------"
+        return
        end
      end
+     puts "++++++++++++++++++++++++++++++++++++++++++++++(((()()()())))"
      authenticate_account!
    end # end def
   

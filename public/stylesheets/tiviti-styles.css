@@ -304,6 +304,19 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 
 
 /* New Activity Bar / Input*****************************************/
+#newactivityFTE {
+    /*background: url('/images/tivity.jpg') no-repeat scroll center center transparent;*/
+    background: url('/images/newactivityFTE.jpg') no-repeat scroll center center transparent; 
+    display: inline-block;
+    height: 78px;
+    width: 285px;
+    margin: 8px 2px 2px 493px;
+    /*overflow: hidden;*/
+    z-index: 20;
+    position: relative;
+}
+
+
 #new-activity {
 	background: #DDDDDD; /*#365461;*/
 	height: 40px;

@@ -29,7 +29,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 
  
  def create
- 	puts "In Regitration Create Controller"
+ 	puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------"
  #	puts " Params "+params.inspect
  	@params = params
 	super
