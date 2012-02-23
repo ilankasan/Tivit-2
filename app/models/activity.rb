@@ -340,7 +340,7 @@ puts "-------------<<<<<<<<<<<<<<"
                    ORDER BY activities.due"
     
      results1  =  Activity.find_by_sql(sql_activities_with_my_tivits).count
-     #puts " number of my new requests "+results1.to_s
+     puts " number of my new requests "+results1.to_s
              
    
       
