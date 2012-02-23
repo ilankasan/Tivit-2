@@ -34,13 +34,9 @@ def home
       puts "befor render"
       render 'help'
       account_session[:show_help] = true
-      #render help_path
-      
       return
     else
 
-    puts current_account.user.does_own_activity?
-    #ccount_session[:filter_id] = "1" if account_session[:filter_id] == nil
      
       if((account_session[:filter_id]==nil) && (params[:filter_id]==nil))
         @filter_id = "1"  

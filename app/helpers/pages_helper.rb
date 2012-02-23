@@ -75,6 +75,7 @@ module PagesHelper
                    ORDER BY activities.due"
     
       results1  =  Activity.find_by_sql(sql_activities_with_my_tivits)
+      puts "-------->>>>>>>>>>>>>>> R1 = "+results1.size.to_s
       
       
       sql_activities_i_assigned_with_tivit_requests = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
@@ -90,6 +91,8 @@ module PagesHelper
     
                  
       results2  =  Activity.find_by_sql(sql_activities_i_assigned_with_tivit_requests)
+      puts "-------->>>>>>>>>>>>>>> R2 = "+results2.size.to_s
+      
       
       return (results2 + results1).uniq 
   #    AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')

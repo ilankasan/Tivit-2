@@ -115,12 +115,12 @@ class Activity < ActiveRecord::Base
    
  def get_closed_tivits
      #self.tivits.joins(:tivit_user_statuses).where(:status_id => 'Done')
-     puts "in get_closed_tivits ----->>>>>  "+self.get_name
+  #   puts "in get_closed_tivits ----->>>>>  "+self.get_name
      
      array = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id
             AND tivit_user_statuses.status_id = 'Done'")
             
-     puts "closed "+array.inspect
+   #  puts "closed "+array.inspect
             
     return array
  
