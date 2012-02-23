@@ -402,14 +402,19 @@ puts "-------------<<<<<<<<<<<<<<"
  end
   
   def get_all_my_open_tivits (user)
-    self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id).order(:due)
+    tivit_with_due = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
+AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NOT NULL",user.get_id).order(:due).reverse_order
+
+    tivit_due_null = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
+AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NULL",user.get_id)
+
+  return (tivit_with_due + tivit_due_null)
     
   end
   
   def get_open_tivits 
     self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-                     AND tivit_user_statuses.user_id = activities.owner_id").order(:due)
+                     AND tivit_user_statuses.user_id = activities.owner_id").order(:due).reverse_order
     
   end
   

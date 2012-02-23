@@ -47,7 +47,16 @@ class User < ActiveRecord::Base
   validates :name,  :presence => true,
                     :length   => { :maximum => 50 }
    
-  
+  def does_own_activity?
+    activity = Activity.where(:activity_type => "activity", :owner_id => self.id).first
+    if(activity == nil)
+       return false
+    else
+       return true
+    end
+      
+    
+  end
   def get_account
     return self.account
   end
