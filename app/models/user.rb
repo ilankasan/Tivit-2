@@ -50,11 +50,10 @@ class User < ActiveRecord::Base
   def does_own_activity?
     activity = Activity.where(:activity_type => "activity", :owner_id => self.id).first
     if(activity == nil)
-      puts "does_own_activity? = false"
+    #  puts "does_own_activity? = false"
        return false
     else
-      puts "does_own_activity? = true"
-      
+   #   puts "does_own_activity? = true"
        return true
     end
       
