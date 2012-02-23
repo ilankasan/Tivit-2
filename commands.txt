@@ -141,6 +141,7 @@ git commit -am "2-20-12 yaniv's changes s 1"
 git commit -am "1-25-12 staging 1"
 git commit -am "1-29-12 yanivs bug fixes stg 1"
 git commit -am "1-31-12 autocomplete"
+git commit -am "2-23-12 s2 1"
 
 git checkout master
 git merge updating-users
