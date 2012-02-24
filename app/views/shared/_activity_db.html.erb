@@ -106,15 +106,16 @@
 	    </div>
 	        
 	        <!-- If activity has tivits, go a head and rended all the tivits in that activity -->
-	        <% puts "______________________________________ lalalalalala" %>			 
-			
+	      <%if (tabview == "Requests")%>
+			<% puts "______________________________________ Tabview requests ___________________________________________________"%>
+			<%end%>			 
+						
 <% if activity_db.tivits !=nil && activity_db.tivits.size > 0%>
 	        	
 		<ul class="list">
 			<!--%= render :partial => 'shared/tivit_db', get_need_attention_tivits (nil)
 					   :collection =>  activity_db.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id AND ((NOT tivit_user_statuses.status_id = 'Done') OR ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now.localtime-1.day), 
 					   :as => :tivit  %!-->
-			<% puts "______________________________________ activity_db 1___________________________________________________"%>			 
 			
 			<%if (tabview != nil && tabview == "Need Attention") %>
 				<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_need_attention_tivits(current_account.user), :as => :tivit  %>

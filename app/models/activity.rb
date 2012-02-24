@@ -235,7 +235,7 @@ class Activity < ActiveRecord::Base
        
   end
   
-  def latestold_get_on_deck_tivits (user)
+  def delete_latestold_get_on_deck_tivits (user)
    # puts "On deck filter!"
     last_reviewed = get_last_reviewed (user)
     
@@ -328,7 +328,8 @@ AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner
   
   def self.get_num_of_requests_tivits(currentuser)
     current_user_id = currentuser.get_id.to_s
-    sql_activities_with_my_tivits = "SELECT DISTINCT tivits.id FROM activities, activities as tivits, tivit_user_statuses 
+    sql_activities_with_my_tivits = "SELECT DISTINCT tivits.id FROM activities, activities as tivits, tivit_user_statuses
+                                                         
                    WHERE NOT activities.status        = 'Completed'  
                    AND  activities.activity_type      = 'activity' 
                    AND  tivits.owner_id               = "+current_user_id+"
