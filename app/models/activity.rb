@@ -316,8 +316,9 @@ AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner
    puts " number of my new requests "+my_tivits.length.to_s
              
    other_tivits = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
-       AND   NOT activities.owner_id = ? AND activities.invited_by = ? AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",currentuser.id,currentuser.id)
-             
+       AND   NOT activities.owner_id = ? AND activities.invited_by = ? 
+       AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",currentuser.id,currentuser.id)
+       
     puts " number of  requests nee my action "+other_tivits.length.to_s          
    
     return my_tivits + other_tivits

@@ -97,7 +97,7 @@
    		<div id="tivit-incoming" class="tivit-incoming tabInfo"> 
 
 			<% unless @incoming_activities == nil %>
-			 
+			<% puts "______________________________________ incoming ___________________________________________________"%>			 
 			     <%= render :partial => 'shared/activity_db', :collection =>  @incoming_activities, :locals => {:tabview => "Requests"} %>
 		     
 			<% end %>
