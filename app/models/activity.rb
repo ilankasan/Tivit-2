@@ -166,11 +166,12 @@ class Activity < ActiveRecord::Base
 #My activity - show: 
 #All open tivits and thoses with comments
 #Only when they are in my activity and have a new status or comment since last view
-
-     
-      my_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-                                    AND tivit_user_statuses.user_id = activities.owner_id 
-                                    AND activities.owner_id         = ? ",user.get_id).order(:due).reverse_order
+# added remove tivits i declined
+      my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
+                                       "NOT tivit_user_statuses.status_id = 'Done'
+                                    AND NOT tivit_user_statuses.status_id = 'Declined'
+                                    AND tivit_user_statuses.user_id       = activities.owner_id 
+                                    AND activities.owner_id               = ? ",user.get_id).order(:due).reverse_order
                                     
    #  puts "my_open_tivits "+my_open_tivits.size.to_s
      
@@ -196,8 +197,10 @@ class Activity < ActiveRecord::Base
  #     puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is NOT the owner of activity"
       
 # Get only my open tivits and tivits i am the invitee (asignee)
-      my_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-                      AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id).order(:due).reverse_order
+      my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
+                     "NOT tivit_user_statuses.status_id = 'Done'
+                  AND NOT tivit_user_statuses.status_id = 'Declined'
+                  AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id).order(:due).reverse_order
        
       #puts "My open tivit "+my_open_tivits.size.to_s
      
