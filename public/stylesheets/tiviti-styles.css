@@ -1226,6 +1226,7 @@ a img{border:none;}
 .start.attention{padding-left:26px !important;background:url(../images/status_attention.png) no-repeat;}
 .start.complete{padding-left:26px !important;background:url(../images/status_complete_small.png) no-repeat;}
 .start.accepted{padding-left:26px !important;background:url(../images/status_accepted_small.png) no-repeat;}
+.start.reassigned{padding-left:26px !important;background:url(../images/status_re-assign.png) no-repeat;}
 
 .request{font-size:11px;}
 .request span{color:red;}
