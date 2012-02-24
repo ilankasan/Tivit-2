@@ -303,13 +303,14 @@ AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner
                  
       return (tivits_i_commented_with_new_comments + my_open_tivits+open_tivits_im_asignee).uniq
     end
-    
-puts "-------------<<<<<<<<<<<<<<"
-       
   end
 
   def get_requests_tivits(currentuser)
-# retuen my new requests  
+# retuen my new requests
+    puts "-------------<<<<<<<<<<<<<<"
+    puts "-------------<<<<<<<<<<<<<<"
+    puts "-------------<<<<<<<<<<<<<<"
+  
    my_tivits    = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
        AND   activities.owner_id     = ? AND NOT activities.invited_by = ? AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id,currentuser.id)
    puts " number of my new requests "+my_tivits.length.to_s
