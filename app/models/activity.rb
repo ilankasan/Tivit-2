@@ -312,12 +312,12 @@ puts "-------------<<<<<<<<<<<<<<"
 # retuen my new requests  
    my_tivits    = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
        AND   activities.owner_id     = ? AND NOT activities.invited_by = ? AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id,currentuser.id)
- #  puts " number of my new requests "+my_tivits.length.to_s
+   puts " number of my new requests "+my_tivits.length.to_s
              
    other_tivits = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
        AND   NOT activities.owner_id = ? AND activities.invited_by = ? AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",currentuser.id,currentuser.id)
              
-#    puts " number of  requests nee my action "+other_tivits.length.to_s          
+    puts " number of  requests nee my action "+other_tivits.length.to_s          
    
     return my_tivits + other_tivits
   end
@@ -326,7 +326,7 @@ puts "-------------<<<<<<<<<<<<<<"
   
   def self.get_num_of_requests_tivits(currentuser)
     current_user_id = currentuser.get_id.to_s
-    sql_activities_with_my_tivits = "SELECT DISTINCT tivits.* FROM activities, activities as tivits, tivit_user_statuses 
+    sql_activities_with_my_tivits = "SELECT DISTINCT tivits.id FROM activities, activities as tivits, tivit_user_statuses 
                    WHERE NOT activities.status        = 'Completed'  
                    AND  activities.activity_type      = 'activity' 
                    AND  tivits.owner_id               = "+current_user_id+"
@@ -342,7 +342,7 @@ puts "-------------<<<<<<<<<<<<<<"
              
    
       
-     sql_activities_i_assigned_with_tivit_requests = "SELECT DISTINCT tivits.* FROM activities, activities as tivits, tivit_user_statuses 
+     sql_activities_i_assigned_with_tivit_requests = "SELECT DISTINCT tivits.id FROM activities, activities as tivits, tivit_user_statuses 
                    WHERE NOT activities.status           = 'Completed'  
                    AND     activities.activity_type      = 'activity'
                    AND NOT tivits.owner_id               = "+current_user_id+"
@@ -350,7 +350,7 @@ puts "-------------<<<<<<<<<<<<<<"
                    AND     tivits.parent_id              = activities.id  
                    AND     tivits.owner_id               = tivit_user_statuses.user_id 
                    AND     tivits.id                     = tivit_user_statuses.activity_id 
-                   AND  ( tivit_user_statuses.status_id  = 'Declined' OR tivit_user_statuses.status_id  = 'Proposed')
+                   AND  ( tivit_user_statuses.status_id  = 'Declined' OR tivit_user_statuses.status_id  = 'Proposed' )
                    ORDER BY activities.due"
     #AND     activities.owner_id           = "+current_user_id+"
     
