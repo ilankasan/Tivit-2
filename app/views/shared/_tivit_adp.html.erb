@@ -136,8 +136,12 @@
 			<% else %>
 				<% status_line_middle = " hasn't read this." %>
 			<% end %>
-			<!-- status line not relevant with tivit is unread or not responded. -->
-			<% status_line_window = "" %>
+			
+			<% if tivit_adp.due != nil %>
+				<% status_line_window = " Due " + status_line_window %>
+			<% else %>
+				<% status_line_window = "" %>
+			<% end %>
 	                		                            
 		<% elsif owner_tivit_status == "Reviewed"%>
 			<li class="record unread">
@@ -146,8 +150,12 @@
 			<% else %>
 				<% status_line_middle = " hasn't responded." %>
 			<% end %>
-			<!-- status line not relevant with tivit is unread or not responded. -->
-			<% status_line_window = "" %>
+			
+			<% if tivit_adp.due != nil %>
+				<% status_line_window = " Due " + status_line_window %>
+			<% else %>
+				<% status_line_window = "" %>
+			<% end %>
 	
 		<% elsif owner_tivit_status == "Reassigned"%>
 			<li class="record re-assign">
@@ -163,7 +171,12 @@
 			<% else %>
 				<% status_line_middle = " reassigned to " +  tivit_adp.get_owner.get_name %> 
 			<% end %>
-			<% status_line_window = "" %>
+			
+			<% if tivit_adp.due != nil %>
+				<% status_line_window = " Due " + status_line_window %>
+			<% else %>
+				<% status_line_window = "" %>
+			<% end %>
 				
 		<% else %>	                            
 		
@@ -313,17 +326,15 @@
 							<%end%>
 	              		<% end %>
 	              		
-		              	<% if (tivit_adp.get_invited_by.get_id != current_account.user.get_id && (owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed") ) %>
-	              			<!-- if tivit is overdue, tell the user how much overdue we're handeling here --> 
-	              			<% if tivit_adp.due != nil && tivit_adp.due.localtime.end_of_day < Time.now.end_of_day %>
-	              				[overdue <font color="red"><%= status_line_window %></font>]
-	              			<% else %>
-		              			[invited by <%=tivit_adp.get_invited_by.get_name%>
-		              			<% if owner_tivit_status != "Reminded" %>
-		              				 <%= time_ago_in_words(tivit_adp.created_at)%> ago]
-		              			<%end%>
-		              		<% end %>
-
+		              	<% #if (tivit_adp.get_invited_by.get_id != current_account.user.get_id && (owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed") ) %>
+		              	<% if (tivit_adp.get_invited_by.get_id != current_account.user.get_id ) %>
+		              		
+		              		<% if owner_tivit_status == "Reviewed" %>
+		              			[invited by <%=tivit_adp.get_invited_by.get_name%>,  <%= time_ago_in_words(tivit_adp.created_at)%> ago]
+		              		<% else %>
+		              			[invited by <%=tivit_adp.get_invited_by.get_name%>]
+		              		<% end %>           			
+	              		
 	              		<%end%>
 	              	
 	              </span>

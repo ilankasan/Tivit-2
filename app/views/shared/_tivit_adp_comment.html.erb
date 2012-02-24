@@ -31,7 +31,8 @@
 		# Done      - User has completed the Tivit
 		# Declined  - User declined to do the tivit for some reason
 		# Proposed  - user proposes a change in the tivit (initially a new date)
-		# Accepted  - Tiviti Owner Accepter the tivit	 
+		# Accepted  - Tiviti Owner Accepter the tivit	
+		# Reassigned 
 		-->							
 		<div class="text">
 			<%case tivit_adp_comment.action%>
@@ -53,6 +54,9 @@
 		  	  	<!-- Completed -->	
 		  	  	<%when ("Done")%>
 		  	  		<p class="start complete">Proposed new time accepted.</p>		
+		  	  		<!-- Completed -->	
+		  	  	<%when ("Reassigned")%>
+		  	  		<p class="start reassigned">Reassigned to <strong><%= tivit_adp_comment.activity.get_owner.name %></strong>.</p>	
 			<%end%>
 		
 			<!-- Display actual comment -->
