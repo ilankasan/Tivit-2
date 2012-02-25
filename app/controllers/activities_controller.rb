@@ -207,8 +207,8 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:id])   
     
     params["due"] = adjust_date_to_end_of_day(parse_date(params, "due"))
-    params[:name]        = params[:name].gsub("'", "\\'")
-    params[:description] = params[:description].gsub("'", "\\'")
+   # params[:name]        = params[:name].gsub("'", "\\'")
+   # params[:description] = params[:description].gsub("'", "\\'")
     
 # checking to see if the tivit was previously closed. This will be used before the email is sent out below
   if (@activity != nil && @activity.update_attributes(params))
