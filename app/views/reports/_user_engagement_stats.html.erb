@@ -7,7 +7,14 @@
  <font size = "4">
  	<td><%=user.get_name%></td>
  	<td><%=user.get_email%></td>
- 	<td><%=time_ago_in_words(user.account.created_at)%></td>
+ 	
+ 	<%if user.account != nil && user.account.created_at != nil%>
+		<td><%=time_ago_in_words(user.account.created_at)%> ago</td>
+ 	<%else%>
+		<td>?</td>
+	<%end%>
+ 	
+ 	
  	
  	<!--b>Last event</b-->
  	<td ><%=time_ago_in_words(user.tivitcomments.last.updated_at)%> ago</td>
