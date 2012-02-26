@@ -279,8 +279,8 @@ def get_activities_completed_or_with_completed_tivits(user_id)
                  AND activities.activity_type   = 'activity' 
                  AND ((activities.owner_id       = "+user_id+")
                  OR (tivits.owner_id      = "+user_id+" AND tivits.parent_id   = activities.id)))
-                 ORDER BY tivits.completed_at ASC"
-                 #ORDER BY activities.due DESC"
+                 ORDER BY tivits.completed_at DESC"
+                 #ORDER BY activities.due ASC DESC"
      
      #SELECT completed, ISNULL(completed, NULL) AS 'isnull'
      #FROM TABLE
