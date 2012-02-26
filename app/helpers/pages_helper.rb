@@ -170,8 +170,11 @@ module PagesHelper
   
   
   def get_activities_i_have_open_tivits(user_id)
+    puts "_______________________________________"
+    puts "get_activities_i_have_open_tivits"
+    puts "______________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^_________"
     
-      sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.*, tivits.due, ISNULL(tivits.due) AS 'isnull' FROM activities, activities as tivits, tivit_user_statuses 
+      sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.*, ISNULL(tivits.due) AS 'isnull' FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status           = 'Completed'  
                  AND activities.activity_type          = 'activity' 
                  AND tivits.owner_id                   = "+user_id+"
@@ -179,7 +182,7 @@ module PagesHelper
                  AND tivit_user_statuses.activity_id   = tivits.id 
                  AND NOT tivit_user_statuses.status_id = 'Done' 
                  AND tivit_user_statuses.user_id       = "+user_id+"
-                 ORDER BY  tivits.due ASC, isnull"
+                 ORDER BY  isnull ASC, tivits.due ASC "
                           
         activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
         
