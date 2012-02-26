@@ -186,7 +186,7 @@ class Activity < ActiveRecord::Base
       
       #closed_tivits_with_comments =[]
       if(self.name.eql?("Email formatting")|| self.id == 911)
-                       Email formatting
+                       
         puts closed_tivits_with_comments.uniq.inspect
          puts "my_open_tivits "+my_open_tivits.size.to_s
           puts "other_open_tivits "+other_open_tivits.size.to_s
