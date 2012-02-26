@@ -185,7 +185,7 @@ class Activity < ActiveRecord::Base
                                     AND NOT tivitcomments.user_id = ?",last_reviewed, user.get_id).uniq
       
       #closed_tivits_with_comments =[]
-      if(self.name.eql?("Email formatting"))
+      if(self.name.eql?("Email formatting")|| self.id == 911)
                        Email formatting
         puts closed_tivits_with_comments.uniq.inspect
          puts "my_open_tivits "+my_open_tivits.size.to_s
