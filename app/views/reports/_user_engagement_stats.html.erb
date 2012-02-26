@@ -1,0 +1,30 @@
+<!-- Display a single tivits in Team tivit within an acitivty-->
+	<%if user_engagement_stats == nil%>
+		<%return%>
+	<%end%>
+	<%user = user_engagement_stats%>
+ <tr> 
+ <font size = "4">
+ 	<td><%=user.get_name%></td>
+ 	<td><%=user.get_email%></td>
+ 	<td><%=time_ago_in_words(user.account.created_at)%></td>
+ 	
+ 	<!--b>Last event</b-->
+ 	<td ><%=time_ago_in_words(user.tivitcomments.last.updated_at)%> ago</td>
+ 	<!--b>Last week</b-->
+	<td align="center"><%=user.tivitcomments.where("created_at > ?", Time.now-7.day).count%> </td>
+ 			
+ 	<!--b>Last 2 weeks</b-->
+ 	<td align="center"><%=user.tivitcomments.where("created_at > ?", Time.now-14.day).count%> </td>
+ 	
+	<!--b>Last 30 days</b-->
+	<td align="center"><%=user.tivitcomments.where("created_at > ?", Time.now-30.day).count%> </td>
+ 	
+	<!--b>Since inception</b-->
+	<td align="center"><%=user.tivitcomments.where("created_at > ?", Time.now-30.year).count%> </td>
+ 	 			 
+ 	
+ 	
+ </font>	 	
+ </tr>
+ 				

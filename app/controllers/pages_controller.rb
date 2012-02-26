@@ -89,6 +89,9 @@ def home
      #@users = User.joins(:account).order(:current_sign_in_at).reverse_order.paginate(:page => params[:page], :per_page => 25)
      @users = User.joins("LEFT OUTER JOIN accounts ON accounts.id = users.account_id").order(:current_sign_in_at,:created_at).reverse_order.paginate(:page => params[:page], :per_page => 25)
      
+     @active_users = User.where(:is_active => true)
+     puts "Number of active user is = "+@active_users.size.to_s
+     
   end
 
   def help

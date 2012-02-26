@@ -170,9 +170,9 @@ module PagesHelper
   
   
   def get_activities_i_have_open_tivits(user_id)
-    puts "_______________________________________"
+  #  puts "_______________________________________"
     puts "get_activities_i_have_open_tivits"
-    puts "______________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^_________"
+   # puts "______________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^_________"
     
       sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.*, ISNULL(tivits.due) AS 'isnull' FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status           = 'Completed'  
@@ -253,7 +253,6 @@ module PagesHelper
     
     
 ################################# Completed ACTITVITIES #######################################################################################
-# Returns activities completed the last 15 days
 
 def get_activities_completed_or_with_completed_tivits(user_id)
     #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"

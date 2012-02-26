@@ -15,8 +15,9 @@
 	                <a href="#users-report">Users</a>
 	            </li>
 	            
-            	<!--li class="tab"-->
-	                <!--a href="#need-attention">TBD</a-->
+            	<li class="tab">
+	                <a href="#user-engagement">Engagement</a>
+	            </li>
 	                
             	
             </ul>
@@ -52,15 +53,15 @@
 				
 				
 				<table class="profile" summary="Profile information">
-				<h1>tiviti user report</h1>
-				<td><b>Name</b></td>
-				<td><b>email</b></td>
-				<td><b>Created </b></td>
-				<td><b>Activities </b></td>
- 				<td><b>tivits for me </b></td>
- 				<td><b>tivits to others </b></td>
- 				<td><b>Signed in </b></td>
- 				<%= render :partial => 'reports/user_stats', :collection =>  @users       , :as => :user  %> 
+					<h1>tiviti user report</h1>
+					<td><b>Name</b></td>
+					<td><b>email</b></td>
+					<td><b>Created </b></td>
+					<td><b>Activities </b></td>
+	 				<td><b>tivits for me </b></td>
+	 				<td><b>tivits to others </b></td>
+	 				<td><b>Signed in </b></td>
+	 				<%= render :partial => 'reports/user_stats', :collection =>  @users       , :as => :user  %> 
 
  							       
 				</table>
@@ -68,19 +69,26 @@
 				<%= will_paginate @users %>
 			</div>
 			
-			<div id="new-requests" class="new-requests tabInfo">
-				<% unless @tivits_new == nil %>
-				 
-				     <%= render :partial => 'shared/activity_db', :collection =>  @tivits_new,:locals => {:tabview => "New"} %>
-			     
-				<% end %>
-			</div>
 		
-			<div id="need-attention" class="need-attention tabInfo">
-				<% unless @need_attention_activities == nil %>
-				 
-				     <%= render :partial => 'shared/activity_db', :collection =>  @need_attention_activities,:locals => {:tabview => "Need Attention"} %>
-			     
+			<div id="user-engagement" class="user-engagement tabInfo">
+				 	</br>
+
+				<% unless @active_users == nil %>
+				<table class="profile" summary="Profile information">
+					<h1>User Engagement </h1>
+					<tr>Engagement event is when a user creates, closes, responds or comments on a tivit<br></tr></br> 
+			
+					<td><b> Name </b></td>
+					<td><b> email </b></td>
+					<td width="100"><b> Joined </b></td>
+					<td width="100"><b> Last event </b></td>
+					<td width="100"><b> Last week </b></td>
+					<td width="100"><b> Last 2 weeks </b></td>
+	 				<td width="100"><b> Last 30 days </b></td>
+	 				<td width="100"><b> Since inception </b></td>
+	 				
+				     <%= render :partial => 'reports/user_engagement_stats', :collection =>  @active_users,:locals => {:tabview => "user-engagement"} %>
+			    </table> 
 				<% end %>
 			</div>
 		</div>  
