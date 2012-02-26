@@ -189,7 +189,7 @@ class Activity < ActiveRecord::Base
         temp = closed_tivits_with_comments.uniq
       puts "my_open_tivits "+my_open_tivits.size.to_s
       puts "other_open_tivits "+other_open_tivits.size.to_s
-      puts "closed_tivits_with_comments size "+tamp.size.to_s
+      puts "closed_tivits_with_comments size "+temp.size.to_s
       puts "last reviewed = "+last_reviewed.to_s 
     
          temp.each do |tivit|
