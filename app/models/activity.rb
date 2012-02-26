@@ -137,7 +137,7 @@ class Activity < ActiveRecord::Base
     self.tivits.where(:owner_id => user.get_id)
   end
   
-  def get_last_reviewed (user)
+  def Delete_get_last_reviewed (user)
     #tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
     tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
     if(tivit_user_status == nil )
@@ -159,7 +159,6 @@ class Activity < ActiveRecord::Base
   
   def get_on_deck_tivits (user)
     puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name+ "  "+self.id.to_s
-    #last_reviewed = get_last_reviewed (user)
     
      sql = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments, tivit_user_statuses
             WHERE tivits.activity_type            = 'tivit'
@@ -200,18 +199,6 @@ class Activity < ActiveRecord::Base
       #                              AND NOT tivitcomments.user_id = ?",last_reviewed, user.get_id).uniq
       
       #closed_tivits_with_comments =[]
-      if(self.name.eql?("Email formatting")|| self.id == 911)
-        temp = tivits_i_commented_with_new_comments.uniq
-      puts "my_open_tivits "+my_open_tivits.size.to_s
-      puts "other_open_tivits "+other_open_tivits.size.to_s
-      puts "closed_tivits_with_comments size "+temp.size.to_s
-    #  puts "last reviewed = "+last_reviewed.to_s 
-    
-         temp.each do |tivit|
-          puts tivit.inspect
-          puts "----------------------"
-        end
-      end
       return (my_open_tivits + other_open_tivits + tivits_i_commented_with_new_comments).uniq
    
     else
