@@ -158,7 +158,7 @@ class Activity < ActiveRecord::Base
   end
   
   def get_on_deck_tivits (user)
-    puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name
+    puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name+ "  "+self.id.to_s
     last_reviewed = get_last_reviewed (user)
     
     
@@ -186,6 +186,7 @@ class Activity < ActiveRecord::Base
       
       #closed_tivits_with_comments =[]
       if(self.name == "Email formatting")
+                       Email formatting
         puts closed_tivits_with_comments.uniq.inspect
          puts "my_open_tivits "+my_open_tivits.size.to_s
           puts "other_open_tivits "+other_open_tivits.size.to_s
