@@ -171,25 +171,27 @@ class Activity < ActiveRecord::Base
                                        "NOT tivit_user_statuses.status_id = 'Done'
                                     AND NOT tivit_user_statuses.status_id = 'Declined'
                                     AND tivit_user_statuses.user_id       = activities.owner_id 
-                                    AND activities.owner_id               = ? ",user.get_id).order(:due).reverse_order
+                                    AND activities.owner_id               = ? ",user.get_id).order(:due).reverse_order.uniq
                                     
-     puts "my_open_tivits "+my_open_tivits.size.to_s
      
       other_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
                                     AND tivit_user_statuses.user_id = activities.owner_id 
                                     AND NOT activities.owner_id = ? ",user.get_id).order(:due).reverse_order
          
-     puts "other_open_tivits "+other_open_tivits.size.to_s
       
 #   Since status change adds a comment this will include tivits with a status changed
      closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id = activities.id
                                     AND tivitcomments.created_at  > ?
-                                    AND NOT tivitcomments.user_id = ?",last_reviewed, user.get_id)
+                                    AND NOT tivitcomments.user_id = ?",last_reviewed, user.get_id).uniq
       
       #closed_tivits_with_comments =[]
-      puts "closed_tivits_with_comments size "+closed_tivits_with_comments.size.to_s
       if(self.name == "Email formatting")
         puts closed_tivits_with_comments.uniq.inspect
+         puts "my_open_tivits "+my_open_tivits.size.to_s
+          puts "other_open_tivits "+other_open_tivits.size.to_s
+      puts "closed_tivits_with_comments size "+closed_tivits_with_comments.size.to_s
+    
+    
       end
       return (my_open_tivits + other_open_tivits + closed_tivits_with_comments).uniq
    
