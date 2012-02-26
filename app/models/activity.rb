@@ -159,9 +159,24 @@ class Activity < ActiveRecord::Base
   
   def get_on_deck_tivits (user)
     puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name+ "  "+self.id.to_s
-    last_reviewed = get_last_reviewed (user)
+    #last_reviewed = get_last_reviewed (user)
     
-    
+     sql = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments, tivit_user_statuses
+            WHERE tivits.activity_type            = 'tivit'
+              AND tivits.parent_id                = "+self.id.to_s+"
+              AND mycomments.activity_id          = tivits.id
+              AND mycomments.user_id              = "+user.get_id.to_s+"
+              AND tivit_user_statuses.user_id     = "+user.get_id.to_s+"
+              AND tivit_user_statuses.activity_id = tivits.id
+              AND othercomments.activity_id       = tivits.id
+              AND othercomments.created_at        > tivit_user_statuses.last_reviewed
+              AND NOT othercomments.user_id       = "+user.get_id.to_s+"
+              ORDER BY tivits.due"
+         
+  #         puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
+     
+    tivits_i_commented_with_new_comments = Activity.find_by_sql([sql])
+   
     if(self.owner_id == user.get_id)
 #My activity - show: 
 #All open tivits and thoses with comments
@@ -180,13 +195,13 @@ class Activity < ActiveRecord::Base
          
       
 #   Since status change adds a comment this will include tivits with a status changed
-     closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id = activities.id
-                                    AND tivitcomments.created_at  > ?
-                                    AND NOT tivitcomments.user_id = ?",last_reviewed, user.get_id).uniq
+    # tivits_with_unread_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id = activities.id
+     #                               AND tivitcomments.created_at  > ?
+      #                              AND NOT tivitcomments.user_id = ?",last_reviewed, user.get_id).uniq
       
       #closed_tivits_with_comments =[]
       if(self.name.eql?("Email formatting")|| self.id == 911)
-        temp = closed_tivits_with_comments.uniq
+        temp = tivits_i_commented_with_new_comments.uniq
       puts "my_open_tivits "+my_open_tivits.size.to_s
       puts "other_open_tivits "+other_open_tivits.size.to_s
       puts "closed_tivits_with_comments size "+temp.size.to_s
@@ -196,11 +211,8 @@ class Activity < ActiveRecord::Base
           puts tivit.inspect
           puts "----------------------"
         end
-    
-    
-    
       end
-      return (my_open_tivits + other_open_tivits + closed_tivits_with_comments).uniq
+      return (my_open_tivits + other_open_tivits + tivits_i_commented_with_new_comments).uniq
    
     else
 # Not my activity - show
@@ -223,21 +235,6 @@ class Activity < ActiveRecord::Base
       
 # get all tivits i participated in the conversation and there are new comments
        
-    sql = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments, tivit_user_statuses
-            WHERE tivits.activity_type            = 'tivit'
-              AND tivits.parent_id                = "+self.id.to_s+"
-              AND mycomments.activity_id          = tivits.id
-              AND mycomments.user_id              = "+user.get_id.to_s+"
-              AND tivit_user_statuses.user_id     = "+user.get_id.to_s+"
-              AND tivit_user_statuses.activity_id = tivits.id
-              AND othercomments.activity_id       = tivits.id
-              AND othercomments.created_at        > tivit_user_statuses.last_reviewed
-              AND NOT othercomments.user_id       = "+user.get_id.to_s+"
-              ORDER BY tivits.due"
-         
-  #         puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
-     
-        tivits_i_commented_with_new_comments = Activity.find_by_sql([sql])
            #   puts "my open tivites "+my_open_tivits.size.to_s
                  
       return (my_open_tivits+open_tivits_im_asignee+tivits_i_commented_with_new_comments).uniq
@@ -247,77 +244,7 @@ class Activity < ActiveRecord::Base
        
   end
   
-  def delete_latestold_get_on_deck_tivits (user)
-   # puts "On deck filter!"
-    last_reviewed = get_last_reviewed (user)
-    
-#My Activities
-#Always show all my Activites that are not closed - so I could close it
-#Show the following tivits in each activity:
-#Not completed (basically everything that is not yet completed - on it, in progress, late, etc.)
-#Completed that had new comments on it
-
-#Other's activity:
-#Only show the activity if I have a tivit there and it's not completed yet.
-#If I completed all my tivits in others activity, only show it if other tivits
-#I participated in the discussion had new comments or someone commented it my tivit.
-#Otherwise, don't show the activity at all.
-#My tivits should show up at the top
-#Only show other team tivits IF I ever participated in the discussion and there's a status change or new comment there
-#Don't show closed/completed activities
-
-    
-    if(self.owner_id == user.get_id)
-#activity owned by user
-      #puts "user is the owner of activity"
-      all_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-AND tivit_user_statuses.user_id = activities.owner_id").order(:due).reverse_order
-         
-      puts "Open tivits size "+all_open_tivits.size.to_s
-      
-
-        closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id = activities.id
-AND tivitcomments.created_at > ?
-AND NOT tivitcomments.user_id = ?",last_reviewed, user.get_id)
-         
-      puts "closed_tivits_with_comments size "+closed_tivits_with_comments.size.to_s
-      return (all_open_tivits + closed_tivits_with_comments).uniq
-   
-    else
-# User is not the owner of the activity
-   #   puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is NOT the owner of activity"
-      
-# Get only my open tivits and tivits i am the invitee (asignee)
-      my_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id).order(:due).reverse_order
-       
-      open_tivits_im_asignee = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
-      puts "Open invited by "+open_tivits_im_asignee.size.to_s
-      
-# get all tivits i participated in the conversation and there are new comments
-# need to add the case i am the asignee
-       
-    sql = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments
-            WHERE tivits.activity_type      = 'tivit'
-              AND tivits.parent_id          = "+self.id.to_s+"
-              AND mycomments.activity_id    = tivits.id
-              AND mycomments.user_id        = "+user.get_id.to_s+"
-              AND othercomments.activity_id = tivits.id
-              AND othercomments.created_at  > ?
-              AND NOT othercomments.user_id = "+user.get_id.to_s+"
-              ORDER BY tivits.due"
-                 
-        tivits_i_commented_with_new_comments = Activity.find_by_sql([sql,last_reviewed])
-        
-    #    puts "tivits_i_commented_with_new_comments "+tivits_i_commented_with_new_comments.size.to_s
-     #   puts "my open tivites "+my_open_tivits.size.to_s
-                 
-      return (tivits_i_commented_with_new_comments + my_open_tivits+open_tivits_im_asignee).uniq
-    end
-  end
-
-  def get_requests_tivits(currentuser)
+   def get_requests_tivits(currentuser)
 # retuen my new requests
     puts "-------------<<<<<<<<<<<<<<"
     puts "-------------<<<<<<<<<<<<<<"
