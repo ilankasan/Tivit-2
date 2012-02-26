@@ -118,7 +118,8 @@ class Activity < ActiveRecord::Base
   #   puts "in get_closed_tivits ----->>>>>  "+self.get_name
      
      array = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id
-            AND tivit_user_statuses.status_id = 'Done'")
+            AND tivit_user_statuses.status_id = 'Done'").order(:completed_at).reverse_order
+            #ilan
             
    #  puts "closed "+array.inspect
             
