@@ -85,7 +85,6 @@ class DocumentsController < ApplicationController
 		if(@document.name == nil)
 		  puts "nnniiilllll"
 		end
-#		puts "_____________________________________________________________________"
 		puts "URL          = " + @document.name.url # => '/url/to/file.png'
 		puts "Current path = " + @document.name.current_path # => 'path/to/file.png'else
 		puts "Current path = " + @document.name.filename# => 'path/to/file.png'else

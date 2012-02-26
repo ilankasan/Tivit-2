@@ -87,7 +87,6 @@ def home
      @tivit_stats  = get_tivits_stats
      #@users = User.paginate(:page => params[:page], :per_page => 30)
      #@users = User.joins(:account).order(:current_sign_in_at).reverse_order.paginate(:page => params[:page], :per_page => 25)
-     #@users = User.includes(:accounts).order(:current_sign_in_at).reverse_order.paginate(:page => params[:page], :per_page => 25)
      @users = User.joins("LEFT OUTER JOIN accounts ON accounts.id = users.account_id").order(:current_sign_in_at,:created_at).reverse_order.paginate(:page => params[:page], :per_page => 25)
      
   end

@@ -97,7 +97,7 @@
    		<div id="tivit-incoming" class="tivit-incoming tabInfo"> 
 
 			<% unless @incoming_activities == nil %>
-			<% puts "______________________________________ incoming ___________________________________________________"%>
+			<!--% puts "______________________________________ incoming ___________________________________________________"%-->
 			<% puts @incoming_activities.inspect%>
 			
 						 
@@ -111,6 +111,7 @@
 			<div id="completed-items" class="completed-items tabInfo">
 				<% unless @completed_activities == nil %>
 					<%= render :partial => 'shared/activity_db', :collection =>  @completed_activities,:locals => {:tabview => "Completed"} %>
+					<%= will_paginate @completed_activities %>
 				
 				<% end %>
 			</div>

@@ -75,15 +75,12 @@ end
   
   def allusers
     @title = "All users"
-    @users = User.paginate(:page => params[:page])
+   # @users = User.paginate(:page => params[:page])
 
   end
   
       
-	def activity_name
-		
-	end
-  def new
+	def new
     @user = User.new
     @title = "Sign up"
   end
