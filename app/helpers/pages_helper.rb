@@ -180,15 +180,8 @@ module PagesHelper
                  AND NOT tivit_user_statuses.status_id = 'Done' 
                  AND tivit_user_statuses.user_id       = "+user_id+"
                  ORDER BY  tivits.due ASC, isnull"
-                 #NULLS LAST
-                 
-    #SELECT completed, ISNULL(completed, NULL) AS 'isnull'
-     #FROM TABLE
-    #ORDER BY isnull DESC, completed DESC
-    #      ORDER BY tivits.completed_at DESC"
-                         
+                          
         activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
-      #  activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_without_due_date)
         
         return activities_i_participate_with_due_date.uniq 
   end
