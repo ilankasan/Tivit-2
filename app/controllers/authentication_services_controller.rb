@@ -77,7 +77,7 @@ def create
         puts "in after AuthenticationService Auth = "+auth.inspect
         if auth
           
-          flash[:notice] = 'Signed in successfully via ' + provider.capitalize + '.'
+       #   flash[:notice] = 'Signed in successfully via ' + provider.capitalize + '.'
           puts "sign_in_and_redirect"
           sign_in_and_redirect(:account, auth.account)
         else
