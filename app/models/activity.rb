@@ -176,7 +176,7 @@ class Activity < ActiveRecord::Base
      
       other_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
                                     AND tivit_user_statuses.user_id = activities.owner_id 
-                                    AND NOT activities.owner_id = ? ",user.get_id).order(:due).reverse_order
+                                    AND NOT activities.owner_id = ? ",user.get_id).order(:due).reverse_order.uniq
          
       
 #   Since status change adds a comment this will include tivits with a status changed
@@ -186,11 +186,17 @@ class Activity < ActiveRecord::Base
       
       #closed_tivits_with_comments =[]
       if(self.name.eql?("Email formatting")|| self.id == 911)
-                       
-        puts closed_tivits_with_comments.uniq.inspect
-         puts "my_open_tivits "+my_open_tivits.size.to_s
-          puts "other_open_tivits "+other_open_tivits.size.to_s
-      puts "closed_tivits_with_comments size "+closed_tivits_with_comments.size.to_s
+        temp = closed_tivits_with_comments.uniq
+      puts "my_open_tivits "+my_open_tivits.size.to_s
+      puts "other_open_tivits "+other_open_tivits.size.to_s
+      puts "closed_tivits_with_comments size "+tamp.size.to_s
+      puts "last reviewed = "+last_reviewed.to_s 
+    
+         temp.each do |tivit|
+          putes tiviti.inspect
+          puts "----------------------"
+        end
+    
     
     
       end
