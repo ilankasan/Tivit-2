@@ -174,7 +174,9 @@ class Activity < ActiveRecord::Base
          
   #         puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
      
-    tivits_i_commented_with_new_comments = Activity.find_by_sql([sql])
+    tivits_i_commented_with_new_comments = Activity.find_by_sql([sql]).uniq
+    
+    puts "tivits with comments "+tivits_i_commented_with_new_comments.size.to_s
    
     if(self.owner_id == user.get_id)
 #My activity - show: 
