@@ -158,7 +158,7 @@ class Activity < ActiveRecord::Base
   end
   
   def get_on_deck_tivits (user)
-#    puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name+ "  "+self.id.to_s
+    puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name+ "  "+self.id.to_s
     
      sql = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments, tivit_user_statuses
             WHERE tivits.activity_type            = 'tivit'
@@ -167,6 +167,7 @@ class Activity < ActiveRecord::Base
               AND mycomments.user_id              = "+user.get_id.to_s+"
               AND tivit_user_statuses.user_id     = "+user.get_id.to_s+"
               AND tivit_user_statuses.activity_id = tivits.id
+              AND othercomments.activity_id       = tivits.id
               AND othercomments.created_at        > tivit_user_statuses.last_reviewed
               AND NOT othercomments.user_id       = "+user.get_id.to_s+"
               ORDER BY tivits.due"

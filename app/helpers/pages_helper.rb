@@ -104,6 +104,9 @@ module PagesHelper
   
   
   def get_activities_i_participate (user_id)
+    puts "_______________________________________________"
+    puts "get_activities_i_participate "
+    puts "_______________________________________________"
     
       sql_activities_i_participate_no_due_date = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE NOT activities.status      = 'Completed'
