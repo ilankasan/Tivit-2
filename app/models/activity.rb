@@ -158,7 +158,7 @@ class Activity < ActiveRecord::Base
   end
   
   def get_on_deck_tivits (user)
- #   puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name
+    puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name
     last_reviewed = get_last_reviewed (user)
     
     
