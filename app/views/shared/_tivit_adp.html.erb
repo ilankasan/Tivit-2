@@ -291,7 +291,7 @@
 							<font color="red"><%= status_line_middle %></font>
 							<% if tivit_adp.get_parent.get_owner.id == current_account.user.get_id || tivit_adp.get_invited_by.get_id == current_account.user.get_id %> 
 								-
-								<span class="accept-proposed">accept</span>
+								<span class="accept-proposed">Accept</span>
 								
 					    	<% end %>
 					    <!-- overdue -->
@@ -314,15 +314,16 @@
 	              		<!-- add remind if user didn't read or did respond yet -->
 	              		<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
 		              		<%if((current_account.user.get_id == tivit_adp.get_parent.get_owner.get_id && current_account.user.get_id != tivit_adp.get_owner.get_id)|| (current_account.user.get_id == tivit_adp.get_invited_by.id) )%>	              	
-			              		
-									<%= link_to "Remind",    :controller  => "activities",
+			              			<span class="send-reminder">Remind</span>
+			              			<!-- 
+									<%#= link_to "Remind",    :controller  => "activities",
 		    												:action      => "change_tivit_status",
 		    												:status      => "remind",
 		    												:id          => tivit_adp.id, 
 		  							    					:confirm     => "Are you sure you want to accepet new date " +tivit_adp.name+"?",
 		                                					:title       => tivit_adp.name
 		                                					%>
-									
+									-->
 							<%end%>
 	              		<% end %>
 	              		

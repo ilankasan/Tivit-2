@@ -670,16 +670,20 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     padding: 2px 0 2px 5px;
     border-bottom:1px dotted #e0e0e0;
     margin-bottom:1px;
-    /*background: #f8f8f8;*/
+    background: #EAEAEA;
     border-radius:5px 5px 0 0;
     }
     .tvit-list .label .progress{
         float:right;
+        margin-top: 0px;
+        margin-right: 8px;
     }
     /***********************************/
     /* Yaniv */
     .tvit-list .label .activity-name{
         color: #8A8AD8;
+        font-size: 12px;
+        margin-left: 3px;
     }
 	/***********************************/    
 
@@ -798,6 +802,12 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     }
     /* used for accept link on _tivit_db style */
      .tvit-list .record .text .accept-proposed {
+        color:#8A8AD8;
+        font-size:11px;
+        margin:0;
+    }
+    /* used for accept link on _tivit_db style */
+     .tvit-list .record .text .send-reminder {
         color:#8A8AD8;
         font-size:11px;
         margin:0;

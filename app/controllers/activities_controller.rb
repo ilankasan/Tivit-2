@@ -609,8 +609,13 @@ class ActivitiesController < ApplicationController
   
     #UserMailer.remind_user_to_review_tivit(current_account.user, params["comment"],@activity).deliver
      EMAIL_QUEUE << {:email_type => "remind_user_to_review_tivit", :assignee => @activity.get_owner ,:user_reminding => current_account.user , :message => params["comment"], :tivit =>@activity}
-  	redirect_to  root_path
-  end
+     
+     respond_to do |format|
+       format.html { redirect_to @activity }
+       format.js {}
+       puts "[Yaniv] (activities controller)------->> after remind activity."
+    end  
+ end
  
   private
   

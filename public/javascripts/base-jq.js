@@ -16,6 +16,17 @@ jQuery(document).ready(function($){
      	}     
 	});
 	
+	$.validator.addMethod(
+	    "tivitiDate",
+	    function(value, element) {
+	        // put your own logic here, this is just a (crappy) example
+	        return value.match( /^\d{2}([./-])\d{2}\1\d{4}$/);
+	    },
+	    "Please enter date in format dd-mm-yyyy"
+	);
+
+
+	
 	/**************************************************************************/
 	/* Yaniv - Create new tivit with Ajax */	
 	//jQuery("#create-new-tivit-form").submit(function() {
@@ -229,7 +240,7 @@ jQuery(document).ready(function($){
 	    			var confirmDialogTitle = 'Propose Another Date';
 	    			var actionPost = 'action="/proposedate?id=' + tivitID + '&method=put" accept-charset="UTF-8">';
 	    			dueDate = '<p class="input-date"><label for="propose_date">How about:</label>' +
-									'<input id="propose_date" name="propose_date" type="text" autocomplete="off" placeholder="choose date"/>' + 
+									'<input id="propose_date" name="propose_date" type="text" autocomplete="off" placeholder="choose date" class="required tivitiDate"/>' + 
 								    '<img src="/images/cal.gif" onclick="javascript:NewCssCal(\'propose_date\', \'mmddyyyy\', \'arrow\', false,\'24\', true,\'future\' )" class="ico_calc"/>' +
 							  '</p>';			           
 	    			break;
@@ -302,67 +313,74 @@ jQuery(document).ready(function($){
     		 // Change status on UI to the new selected state (need to use this for Ajax callback)
     		 //record.attr('class',newClassValue);
     		 //////////////////////////////////////////////////////////
-    		 
+    		
+    		$("#confirmDialogForm").validate({
+  				rules : {
+      				myDate : { tivitiDate : true }
+   				}
+			});
+
+
     		 // Add validation in case of re-assign (we have email input)
     		 //if (newState == 're-assign')
     		 //{
-	    		 $("#confirmDialogForm").validate({
-			   		submitHandler: function(form) {
-				     	console.log ('[Yaniv] confirm dialog submit button clicked!');
-						showLoadingAnimation('.loading-popup');
-						var actionparam = $(this).attr("action") + "";
-						console.log('[Yaniv] action=', actionparam);
+    		 $("#confirmDialogForm").validate({
+	    		 	  				           			
+			 	submitHandler: function(form) {
+					console.log ('[Yaniv] confirm dialog submit button clicked!');
+					showLoadingAnimation('.loading-popup');
+					var actionparam = $(this).attr("action") + "";
+					console.log('[Yaniv] action=', actionparam);
 						
-						$.post($(form).attr("action"), $(form).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
+					$.post($(form).attr("action"), $(form).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
 						
-						// Find the new status we need to change the checkbox to, it's hidden in the HTML of the confirmation popup.
-						var statusobject = jQuery(form).parents('.popup'); 
+					// Find the new status we need to change the checkbox to, it's hidden in the HTML of the confirmation popup.
+					var statusobject = jQuery(form).parents('.popup'); 
 						
-						var newState = 'record ' + statusobject.find("input").attr("newstate");
-				    	//console.log ("[Yaniv] new state=", newState);
-						record = jQuery(form).parents('.record');
-						record.attr('class', newState);
+					var newState = 'record ' + statusobject.find("input").attr("newstate");
+				    //console.log ("[Yaniv] new state=", newState);
+					record = jQuery(form).parents('.record');
+					record.attr('class', newState);
 						
-						// Show comment of status change
-						addNewComment (record);
+					// Show comment of status change
+					addNewComment (record);
+					
+					// Update respond button text
+					updateRespondButtonText (record, statusobject.find("input").attr("newstate"));
 						
-						// Update respond button text
-						updateRespondButtonText (record, statusobject.find("input").attr("newstate"));
-						
-						return false;
-					}     
-				});
+					return false;
+				}     
+			});
 				
-				function updateRespondButtonText (record, state)
-				{
-						//console.log ("Respond Button:: state=", state);
-						var newRespondButtonText = "Yaniv";
+			function updateRespondButtonText (record, state)
+			{
+					//console.log ("Respond Button:: state=", state);
+					var newRespondButtonText = "Yaniv";
 						
-						switch(state){
-				    		case 'inprog':
-				    			newRespondButtonText = 'I\'m on it!';
-				    			break;
-				    		case 'complete':
-				    			newRespondButtonText = 'I\'m done!';
-				    			break;
-				    		case 'busy':
-				    			newRespondButtonText = 'can\'t help';
-				    			break;
-				    		case 'attention':
-				    			newRespondButtonText = 'new date?';
-				    			break;
-				    		case 're-assign':
-				    			break;
-				    			
-				    		case 'unread':
-				    			newRespondButtonText = 'respond';
-				    			break;
-	    			
+					switch(state){
+			    		case 'inprog':
+			    			newRespondButtonText = 'I\'m on it!';
+			    			break;
+			    		case 'complete':
+			    			newRespondButtonText = 'I\'m done!';
+			    			break;
+			    		case 'busy':
+			    			newRespondButtonText = 'can\'t help';
+			    			break;
+			    		case 'attention':
+			    			newRespondButtonText = 'new date?';
+			    			break;
+			    		case 're-assign':
+			    			break;
+			    			
+			    		case 'unread':
+			    			newRespondButtonText = 'respond';
+			    			break;
+	    		
     				}
                         
 					record.find ('.respond .form-button').text(newRespondButtonText);			
 				}
-				
 	
 			//}
     	 //}
@@ -989,6 +1007,59 @@ jQuery(document).ready(function($){
 	 	
 	});
 	/////////////////////////////////////////////////////////////////////////
+	// send reminder in tivit status line
+	jQuery('.grey .send-reminder').hover(		
+		function() {
+	      //$(this).css('cursor','pointer');
+	      //console.log ("[Yaniv] status line accept hovered.");
+	      $(this).css('text-decoration','underline');
+	      $(this).css('cursor','pointer');
+	   },
+	   function() {
+	   	//console.log ("[Yaniv] status line accept un-hovered.");
+	      $(this).css('text-decoration','none');
+	      $(this).css('cursor','none');
+	   }	 	
+	);
+	// Send Reminder clicked
+	jQuery('.grey .send-reminder').live('click', function(){
+	 	
+	 	//console.log ("[Yaniv] status line accept clicked.");	
+		
+		var record = jQuery(this).parents('.record');
+		var tivitID = record.find("input").attr("tivitid");
+    	console.log ("[Yaniv] send reminder tivitID=", tivitID);
+			
+		var actionPost = 'action="/remind?id=' + tivitID + '&method=put"' + ' accept-charset="UTF-8">';
+		
+		console.log ("[Yaniv] ", actionPost);
+		var confirmDialogTitle = "Send Reminder (email)";
+		
+		var confirmDialog =	'<div class="popup" id="confirmDialog">'	+
+    								'<div class="loading-popup"></div>' + 
+									'<form id="confirmDialogForm" method="post" class="confirmPopup" ' + actionPost +
+											'<h1>' + confirmDialogTitle + '</h1>' +
+											'<p><textarea rows="10" cols="10" id="comment" name="comment" placeholder="- enter a message here if you\'d like... -"/></p>' +
+											'<div class="request"><div id="popup-cancel" class="form-button">Cancel</div><input class="form-button" type="submit" name="commit" value="OK"/></div>' +
+									'</form>' +
+									'<div id="popup-close" class="close"></div>' +
+								'</div>';
+			 
+    		 jQuery('#new-activity-background').addClass('tempHide');
+    		 // Show overlay screen
+    		 jQuery('#activity-overlay').show();
+    		
+    		 jQuery(this).parents('.record').append(confirmDialog);
+    		 // Center the dialog relative to where dropdown was clicked. Default for popups is 70px because of the add tivit window.
+    		 $('#confirmDialog').css('top', '-70px');
+    		 // by defaults, all popups are display=none which means they don't show. Let's make sure this popup shows up! 
+    		 $('#confirmDialog').css('display', 'block');
+		
+		return false;
+ 	
+	});
+	
+	/////////////////////////////////////////////////////////////////////////
 	// accept new proposed date in tivit status line
 	jQuery('.grey .accept-proposed').hover(		
 		function() {
@@ -1003,6 +1074,7 @@ jQuery(document).ready(function($){
 	      $(this).css('cursor','none');
 	   }	 	
 	);
+	
 	// Accept clicked
 	jQuery('.grey .accept-proposed').live('click', function(){
 	 	console.log ("[Yaniv] status line accept clicked.");	

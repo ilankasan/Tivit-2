@@ -228,7 +228,7 @@
 							<font color="red"><%= status_line_middle %></font>
 							<% if tivit.get_parent.get_owner.id == current_account.user.get_id || tivit.get_invited_by.get_id == current_account.user.get_id %> 
 								-
-								<span class="accept-proposed">accept</span>
+								<span class="accept-proposed">Accept</span>
 								<!-- 
 								<%= link_to "accept",	:controller  => "activities",
 					    											:action      => "change_tivit_status",
@@ -259,14 +259,18 @@
 	              		<!-- add remind if user didn't read or did respond yet -->
 	              		<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
 		              		<%if((current_account.user.get_id == tivit.get_parent.get_owner.get_id && current_account.user.get_id != tivit.get_owner.get_id)|| (current_account.user.get_id == tivit.get_invited_by.id) )%>	              	
+			              			<span class="send-reminder">Remind</span>
+			              			<!-- 
 			              			<a>
-									<%= link_to "Remind",    :controller  => "activities",
+									<%#= link_to "Remind",    :controller  => "activities",
 		    												:action      => "change_tivit_status",
 		    												:status      => "remind",
 		    												:id          => tivit.id, 
 		  							    					:confirm     => "Are you sure you want to accepet new date " +tivit.name+"?",
 		                                					:title       => tivit.name %>
 									</a>
+									-->
+									
 							<%end%>
 	              		<% end %>
 	              		
