@@ -424,6 +424,7 @@ class ActivitiesController < ApplicationController
        format.html { redirect_to @activity  }
        format.js {}
        puts "--------[change status to done! activities controller]------->> after responding to Ajax"
+       return
     end
      
   end
