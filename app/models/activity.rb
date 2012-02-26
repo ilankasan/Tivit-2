@@ -193,7 +193,7 @@ class Activity < ActiveRecord::Base
       puts "last reviewed = "+last_reviewed.to_s 
     
          temp.each do |tivit|
-          putes tiviti.inspect
+          puts tivit.inspect
           puts "----------------------"
         end
     
