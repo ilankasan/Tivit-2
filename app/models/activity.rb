@@ -173,13 +173,13 @@ class Activity < ActiveRecord::Base
                                     AND tivit_user_statuses.user_id       = activities.owner_id 
                                     AND activities.owner_id               = ? ",user.get_id).order(:due).reverse_order
                                     
-   #  puts "my_open_tivits "+my_open_tivits.size.to_s
+     puts "my_open_tivits "+my_open_tivits.size.to_s
      
       other_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
                                     AND tivit_user_statuses.user_id = activities.owner_id 
                                     AND NOT activities.owner_id = ? ",user.get_id).order(:due).reverse_order
          
-    # puts "other_open_tivits "+other_open_tivits.size.to_s
+     puts "other_open_tivits "+other_open_tivits.size.to_s
       
 #   Since status change adds a comment this will include tivits with a status changed
      closed_tivits_with_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id = activities.id
@@ -187,7 +187,7 @@ class Activity < ActiveRecord::Base
                                     AND NOT tivitcomments.user_id = ?",last_reviewed, user.get_id)
       
       #closed_tivits_with_comments =[]
- #     puts "closed_tivits_with_comments size "+closed_tivits_with_comments.size.to_s
+      puts "closed_tivits_with_comments size "+closed_tivits_with_comments.size.to_s
       return (my_open_tivits + other_open_tivits + closed_tivits_with_comments).uniq
    
     else
@@ -307,7 +307,6 @@ AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner
 
   def get_requests_tivits(currentuser)
 # retuen my new requests
-    puts "-------------<<<<<<<<<<<<<<"
     puts "-------------<<<<<<<<<<<<<<"
     puts "-------------<<<<<<<<<<<<<<"
   
