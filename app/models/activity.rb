@@ -328,6 +328,12 @@ class Activity < ActiveRecord::Base
  end
   
   def get_all_my_open_tivits (user)
+    puts "__________________________________________"
+    puts "get_all_my_open_tivits"
+    puts "__________________________________________"
+    puts "__________________________________________"
+    puts "__________________________________________"
+    
     tivit_with_due = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
 AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NOT NULL",user.get_id).order(:due).reverse_order
 
