@@ -7,6 +7,7 @@
  <font size = "4">
  	<td><%=user.get_name%></td>
  	<td><%=user.get_email%></td>
+ 	<%puts "______>>>>>>>>>>>>  user engagement stats 1 <<<<__________________"%>
  	
  	<%if user.account != nil && user.account.created_at != nil%>
 		<td><%=time_ago_in_words(user.account.created_at)%> ago</td>
@@ -14,11 +15,13 @@
 		<td>?</td>
 	<%end%>
  	
- 	<%puts "______>>>>>>>>>>>>  user engagement stats  <<<<__________________"%>
+ 	<%puts "______>>>>>>>>>>>>  user engagement stats 2 <<<<__________________"%>
  	
  	<!--b>Last event</b-->
  	<td ><%=time_ago_in_words(user.tivitcomments.last.updated_at)%> ago</td>
  	<!--b>Last week</b-->
+ 	<%puts "______>>>>>>>>>>>>  user engagement stats 3 <<<<__________________"%>
+ 	
 	<td align="center"><%=user.tivitcomments.where("created_at > ?", Time.now-7.day).count%> </td>
  			
  	<!--b>Last 2 weeks</b-->
