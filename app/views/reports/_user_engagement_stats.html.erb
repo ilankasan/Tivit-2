@@ -18,7 +18,14 @@
  	<%puts "______>>>>>>>>>>>>  user engagement stats 2 <<<<__________________"%>
  	
  	<!--b>Last event</b-->
- 	<td ><%=time_ago_in_words(user.tivitcomments.last.updated_at)%> ago</td>
+ 	<%if user.tivitcomments != nil && user.tivitcomments.size > 0 %>
+		<td ><%=time_ago_in_words(user.tivitcomments.last.updated_at)%> ago</td>
+ 	<%else%>
+		<td>?</td>
+	<%end%>
+ 	
+ 	
+ 	
  	<!--b>Last week</b-->
  	<%puts "______>>>>>>>>>>>>  user engagement stats 3 <<<<__________________"%>
  	
