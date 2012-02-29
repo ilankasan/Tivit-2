@@ -56,10 +56,10 @@
 					<h1>tiviti user report</h1>
 					<td><b>Name</b></td>
 					<td><b>email</b></td>
-					<td><b>Created </b></td>
+					<td><b>Created/Joined </b></td>
 					<td><b>Activities </b></td>
-	 				<td><b>tivits for me </b></td>
-	 				<td><b>tivits to others </b></td>
+	 				<td><b>my tivits</b></td>
+	 				<td><b>team tivits</b></td>
 	 				<td><b>Signed in </b></td>
 	 				<%= render :partial => 'reports/user_stats', :collection =>  @users       , :as => :user  %> 
 
@@ -78,8 +78,8 @@
 					<h1>User Engagement </h1>
 					<tr>Engagement event is when a user creates, closes, responds or comments on a tivit<br></tr></br> 
 			
-					<td><b> Name </b></td>
-					<td><b> email </b></td>
+					<td width="200"><b> Name </b></td>
+					<td width="150"><b> email </b></td>
 					<td width="200"><b> Joined </b></td>
 					<td width="200"><b> Last event </b></td>
 					<td width="100"><b> Last week </b></td>

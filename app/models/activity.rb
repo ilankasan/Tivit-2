@@ -159,7 +159,7 @@ class Activity < ActiveRecord::Base
   end
   
   def get_on_deck_tivits (user)
-    puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name+ "  "+self.id.to_s
+    #puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name+ "  "+self.id.to_s
     
      sql = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments, tivit_user_statuses
             WHERE tivits.activity_type            = 'tivit'
@@ -177,7 +177,7 @@ class Activity < ActiveRecord::Base
      
     tivits_i_commented_with_new_comments = Activity.find_by_sql([sql]).uniq
     
-    puts "tivits with comments "+tivits_i_commented_with_new_comments.size.to_s
+ #   puts "tivits with comments "+tivits_i_commented_with_new_comments.size.to_s
    
     if(self.owner_id == user.get_id)
 #My activity - show: 
@@ -297,9 +297,6 @@ class Activity < ActiveRecord::Base
   def get_incoming_tivits (currentuser)
   
 # Returns tivits i own and required my response or in play (awaiting the assiger to response with my proposal).
-   #results = self.tivits.joins(:tivit_user_statuses).where("activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id
-    #         AND ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",currentuser.id)
-             
    results = self.tivits.joins(:tivit_user_statuses).where("activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id
              AND     (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id)
              
