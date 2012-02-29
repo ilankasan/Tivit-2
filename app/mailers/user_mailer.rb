@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
         
     def old_tivit_propose_new_date_email(assignee, assigner, tivit,comment )
 #107 Tivit - New Date Request. When: CAssignee requests alternate due date, Who: Assigner
-      puts "tivit_propose_new_date_email"
+   #   puts "tivit_propose_new_date_email"
            
       @assignee   = assignee
       @assigner   = assigner
@@ -17,15 +17,15 @@ class UserMailer < ActionMailer::Base
       
           
       mail(:from => create_from_str(assignee.get_name),:reply_to => assignee.get_email,:to => assigner.get_email,
-           :subject => "tiviti: "+ assignee.get_name+ " is requesting a different date for "+tivit.name)
+           :subject => "tiviti: "+ assignee.get_name+ " is requesting a different date for '"+tivit.name+"'")
     end
    
    
    def tivit_propose_new_date_email(params)
 #107 Tivit - New Date Request. When: CAssignee requests alternate due date, Who: Assigner
-      puts "--->>>>  tivit_propose_new_date_email"
-      puts params.inspect
-      puts "______________________________________"
+    #  puts "--->>>>  tivit_propose_new_date_email"
+    #  puts params.inspect
+    #  puts "______________________________________"
            
       @assignee   = params[:assignee]
       @assigner   = params[:assigner]
@@ -34,7 +34,7 @@ class UserMailer < ActionMailer::Base
       
           
       mail(:from => create_from_str(@assignee.get_name),:reply_to => @assignee.get_email,:to => @assigner.get_email,
-           :subject => "tiviti: "+ @assignee.get_name+ " is requesting a different date for "+@tivit.get_name)
+           :subject => "tiviti: "+ @assignee.get_name+ " is requesting a different date for '"+@tivit.get_name+"'")
     end
    
    
@@ -52,7 +52,7 @@ class UserMailer < ActionMailer::Base
     @comment    = params[:comment]
     
     mail(:from => create_from_str(@assigner.get_name),:reply_to => @assigner.get_email,:to => @assignee.get_email,
-         :subject => "tiviti: "+ @assigner.get_name+ " accepted your proposed date for "+@tivit.name)
+         :subject => "tiviti: "+ @assigner.get_name+ " accepted your proposed date for '"+@tivit.name++"'")
          
      
    end
@@ -69,7 +69,7 @@ class UserMailer < ActionMailer::Base
     @tivit     = params[:tivit]
     
     mail(:from => create_from_str(@inviter.get_name),:reply_to => @inviter.get_email,:to => @invitee.get_email,
-         :subject => "tiviti: "+@inviter.get_name+" needs your help with "+@tivit.name)
+         :subject => "tiviti: "+@inviter.get_name+" needs your help with '"+@tivit.name+"'")
          
  #def old_new_tivit_email(assignee, assigner,tivit)
         
@@ -78,7 +78,7 @@ class UserMailer < ActionMailer::Base
 
  def notify_comment_added_to_tivit(params)
 #103 Tivit - New Comment(s). When: Comment added (non-self), Who: Assigner, Assignee, Commenters  Ilan: sent only to asigner if asigne comments
-puts ">>>>>>>>>>    notify_comment_added_to_tivit "
+#puts ">>>>>>>>>>    notify_comment_added_to_tivit "
     @commenter  = params[:commenter]
     @comment    = params[:comment]
     @tivit      = params[:tivit]
@@ -133,7 +133,7 @@ puts "<<<<<<<<<<<<    notify_comment_added_to_tivit "
     @message 			= message
     @assignee			= tivit.get_owner
     mail(:to => @assignee.get_email, 
-         :subject =>"tiviti: "+user_reminding.get_name+" still needs your help with "+tivit.name+" !")
+         :subject =>"tiviti: "+user_reminding.get_name+" still needs your help with '"+tivit.name+"' !")
   end
   
   
@@ -146,7 +146,7 @@ puts ": in reminder email"
     @assignee       = params[:assignee]
     
     mail(:to => @assignee.get_email, :from => create_from_str(@user_reminding.get_name),
-         :subject =>"tiviti: "+@user_reminding.get_name+" still needs your help with "+@tivit.get_name+" !")
+         :subject =>"tiviti: "+@user_reminding.get_name+" still needs your help with '"+@tivit.get_name+"' !")
          
   end
   
@@ -162,11 +162,11 @@ puts ": in reminder email"
     
     
   	mail(:from => create_from_str(@activity_owner.get_name),:to => @stakeholder.get_email,:reply_to => @activity_owner.get_email,
-         :subject =>    "tiviti: "+@activity_owner.get_name+" says "+@activity.name+" is complete.  Thanks for your help!" )
+         :subject =>    "tiviti: "+@activity_owner.get_name+" says '"+@activity.name+"' is complete.  Thanks for your help!" )
   end
   
   
-    def old_activity_completed_email(stakeholder, comment,activity)
+    def delete_old_activity_completed_email(stakeholder, comment,activity)
 
 #202 Activity - Closed. When Owner closes activity, Who: All Assignees
     puts "in activity_completed_email. sending to "+stakeholder.get_email
@@ -176,7 +176,7 @@ puts ": in reminder email"
     @activity_owner  = activity.get_owner
     
     mail(:from => create_from_str(@activity_owner.get_name),:to => @stakeholder.get_email,:reply_to => @activity_owner.get_email,
-         :subject =>    "tiviti: "+@activity_owner.get_name+" says "+@activity.name+" is complete.  Thanks for your help!" )
+         :subject =>    "tiviti: "+@activity_owner.get_name+" says '"+@activity.name+"' is complete.  Thanks for your help!" )
          
      
   end
@@ -192,7 +192,7 @@ puts ": in reminder email"
     @tivit    = params[:tivit]
     
     mail(:from => create_from_str(@assignee.get_name),:to => @assigner.get_email,:reply_to => @assignee.get_email,
-         :subject => "tiviti: "+@assignee.get_name+" has completed "+@tivit.get_name+"!")     
+         :subject => "tiviti: "+@assignee.get_name+" has completed '"+@tivit.get_name+"'!")     
   end
   
   
