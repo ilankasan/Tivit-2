@@ -400,11 +400,11 @@ class ActivitiesController < ApplicationController
     @activity.change_status_to_completed (params["comment"])
     @lastcomment = log_action_as_comment(@activity,params["comment"],"Done",current_account.user)
     
-    respond_to do |format|
-       format.html { redirect_to @activity  }
-       format.js
-       puts "--------[change status to Done activities controller]------->> after responding to Ajax"
-    end
+  #  respond_to do |format|
+  #     format.html { redirect_to @activity  }
+  #     format.js
+  #     puts "--------[change status to Done activities controller]------->> after responding to Ajax"
+  #  end
     
     if(@activity.isActivity?)
       UserMailer.user_activity_status_change_done_email(current_account.user,params["comment"],@activity).deliver
@@ -424,7 +424,7 @@ class ActivitiesController < ApplicationController
        format.html { redirect_to @activity  }
        format.js {}
        puts "--------[change status to done! activities controller]------->> after responding to Ajax"
-       return
+       #return
     end
      
   end

@@ -308,17 +308,16 @@ jQuery(document).ready(function($){
 			  		 minLength: 2
 				 });
 			 }
-	
-    		 //////////////////////////////////////////////////////////
-    		 // Change status on UI to the new selected state (need to use this for Ajax callback)
-    		 //record.attr('class',newClassValue);
-    		 //////////////////////////////////////////////////////////
-    		
-    		$("#confirmDialogForm").validate({
-  				rules : {
-      				myDate : { tivitiDate : true }
-   				}
-			});
+	    	
+	    	// Validate date only for propose new date case
+	    	if ( newState == 'attention' )
+	    	{  		
+	    		$("#confirmDialogForm").validate({
+	  				rules : {
+	      				myDate : { tivitiDate : true }
+	   				}
+				});
+			}
 
 
     		 // Add validation in case of re-assign (we have email input)
@@ -340,6 +339,7 @@ jQuery(document).ready(function($){
 					var newState = 'record ' + statusobject.find("input").attr("newstate");
 				    //console.log ("[Yaniv] new state=", newState);
 					record = jQuery(form).parents('.record');
+					// Change status on UI to the new selected state (need to use this for Ajax callback)
 					record.attr('class', newState);
 						
 					// Show comment of status change

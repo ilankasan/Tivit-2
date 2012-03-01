@@ -289,7 +289,8 @@
 	              		<% if owner_tivit_status == "Proposed" %>
 		              		<%= tivit_owner_name %> 
 							<font color="red"><%= status_line_middle %></font>
-							<% if tivit_adp.get_parent.get_owner.id == current_account.user.get_id || tivit_adp.get_invited_by.get_id == current_account.user.get_id %> 
+							<!-- only tivit creator and activity owner can accept new time proposed. The only exception is when activity owner request a new time for a tivit s/he got assigned -->
+							<% if (tivit_adp.get_parent.get_owner.id == current_account.user.get_id || tivit_adp.get_invited_by.get_id == current_account.user.get_id) && (tivit_adp.get_owner.id != current_account.user.get_id) %> 
 								-
 								<span class="accept-proposed">Accept</span>
 								
