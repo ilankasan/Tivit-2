@@ -484,6 +484,7 @@ function addNewComment (record)
 }
 				
 function showStatusListDialog(clickedObject){
+    	
     	//var tivitobject = jQuery(this).parent();
      	//console.log ("[Yaniv] tivitobject=", tivitobject);
      	
@@ -968,15 +969,42 @@ jQuery(document).ready(function($){
 	/* edit tivit on ADP */
 	$('.activity .calendar').live('click', function(){
 		console.log ("[Yaniv] calendar clicked.");
-		openEdittivitDialog (this);
+		
+		var mytivit = jQuery(this).parents().find("input").attr("mytivit");
+    	var activityOwner = jQuery(this).parents().find("input").attr("activityOwner");
+		var invitedByMe = jQuery(this).parents().find("input").attr("invitedByMe");
+		
+		console.log ("[Yaniv] mytivit=", mytivit);
+		console.log ("[Yaniv] activityOwner=", activityOwner);
+		console.log ("[Yaniv] invitedByMe=", invitedByMe);
+		if ( activityOwner == "yes" || invitedByMe == "yes")
+		{
+			openEdittivitDialog (this);
+		}
+		
 	});
 	
 	jQuery('.activity .calendar').hover(		
 		function() {
-	       $(this).css('cursor','pointer');
+		
+			var mytivit = jQuery(this).parents().find("input").attr("mytivit");
+    	var activityOwner = jQuery(this).parents().find("input").attr("activityOwner");
+		var invitedByMe = jQuery(this).parents().find("input").attr("invitedByMe");
+		
+		console.log ("[Yaniv] mytivit=", mytivit);
+		console.log ("[Yaniv] activityOwner=", activityOwner);
+		console.log ("[Yaniv] invitedByMe=", invitedByMe);
+		if ( activityOwner == "yes" || invitedByMe == "yes")
+		{
+			$(this).css('cursor','pointer');
+	    }
+	    else
+	    {
+	    	$(this).css('cursor','default');
+	    }
 	   },
 	   function() {
-	      $(this).css('cursor','none');
+	      $(this).css('cursor','default');
 	   }	 	
 	);
 			
