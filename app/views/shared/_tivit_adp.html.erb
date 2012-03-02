@@ -194,23 +194,37 @@
 					<!-- if I'm the activity owner / tivit creator or assignee, use class="status"
 						so jQuery for dropdown list will work, otherwise use other status so it'll be ignored -->
 			
-					<!-- tivit owner=assignee -->
-			
+					<% if loggedInUserIsTheOwner == "yes" %>
+						<% mytivit = "yes"%>
+					<% else %>
+						<% mytivit = "no"%>
+					<% end %>
+					<% if tivit_adp.isParentOwner? (current_account.user) %>
+						<% activityOwner = "yes"%>
+					<% end %>
+					<% if tivit_adp.wasInvitedByUser? (current_account.user) %>
+						<% invitedByMe = "yes"%>
+					<% end %>
+					
+					<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit= "<%=mytivit%>" activityOwner="<%=activityOwner%>" invitedByMe="<%=invitedByMe%>" >
+					
+					<!-- 
 					<% if loggedInUserIsTheOwner == "yes" %>
 						<% if tivit_adp.wasInvitedByUser? (current_account.user) %>
 							<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes" imtivitcreator="yes">
 						<% else %>
 							<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes">
 						<% end %>
-					<!-- activity owner, strongest role should be assigned first -->
+					
 					<% elsif tivit_adp.isParentOwner? (current_account.user) %>
 						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="activityOwner">
-					<!-- tivit creator -->
+					
 					<% elsif tivit_adp.wasInvitedByUser? (current_account.user) %>
 						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="invitedBy">	
 					<% else %>
 						<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="no">
 					<%end%>
+					-->
 				</div>
 		
 				<!-- Render User Avatar -->
@@ -371,7 +385,21 @@
 				<% end %>
 				<div class="status">
 					<div class="icon"></div>
-							<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes">
+						<% if loggedInUserIsTheOwner == "yes" %>
+							<% mytivit = "yes"%>
+						<% else %>
+							<% mytivit = "no"%>
+						<% end %>
+						<% if tivit_adp.isParentOwner? (current_account.user) %>
+							<% activityOwner = "yes"%>
+						<% end %>
+						<% if tivit_adp.wasInvitedByUser? (current_account.user) %>
+							<% invitedByMe = "yes"%>
+						<% end %>
+					
+					<input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit= "<%=mytivit%>" activityOwner="<%=activityOwner%>" invitedByMe="<%=invitedByMe%>" >
+					
+							<!-- <input type="hidden" tivitid="<%= tivit_adp.id %>" mytivit="yes"> -->
 					</div>
 				<div class="form-button"><%= respondbutton %></div>
 				<!--

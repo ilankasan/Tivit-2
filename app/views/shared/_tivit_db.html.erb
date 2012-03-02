@@ -161,25 +161,20 @@
 		<div class="icon"></div>
 		<!-- if I'm the activity owner / tivit creator or assignee, use class="status"
 			so jQuery for dropdown list will work, otherwise use other status so it'll be ignored -->
-			
-		<!-- tivit owner=assignee -->
 		<% if loggedInUserIsTheOwner == "yes" %>
-			<% if tivit.wasInvitedByUser? (current_account.user) %>
-				<input type="hidden" tivitid="<%= tivit.id %>" mytivit="yes" imtivitcreator="yes">
-			<% else %>
-				<input type="hidden" tivitid="<%= tivit.id %>" mytivit="yes">
-			<% end %>
-		<!-- activity owner, strongest role should be assigned first -->
-		<% elsif tivit.isParentOwner? (current_account.user) %>
-			<input type="hidden" tivitid="<%= tivit.id %>" mytivit="activityOwner">
-		<!-- tivit creator -->
-		<% elsif tivit.wasInvitedByUser? (current_account.user) %>
-			<input type="hidden" tivitid="<%= tivit.id %>" mytivit="invitedBy">	
+			<% mytivit = "yes"%>
 		<% else %>
-			<input type="hidden" tivitid="<%= tivit.id %>" mytivit="no">
-		<%end%>
+			<% mytivit = "no"%>
+		<% end %>
+		<% if tivit.isParentOwner? (current_account.user) %>
+			<% activityOwner = "yes"%>
+		<% end %>
+		<% if tivit.wasInvitedByUser? (current_account.user) %>
+				<% invitedByMe = "yes"%>
+		<% end %>
 					
-		<input type="hidden" tivitid="<%= tivit.id %>">
+		<input type="hidden" tivitid="<%= tivit.id %>" mytivit= "<%=mytivit%>" activityOwner="<%=activityOwner%>" invitedByMe="<%=invitedByMe%>" >
+				
 	</div>
 
 <!-- if the status is new, that means the owner didn't read it yet, dim avatar and put the remind link -->

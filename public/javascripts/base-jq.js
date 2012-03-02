@@ -91,7 +91,8 @@ jQuery(document).ready(function($){
 	    effect: "fade",
 	    hashchange: false
 	});
-    
+	
+	   
 	var inputEl = jQuery('#new-activity input#name');
     inputEl.live('focus',function(){
         openNewActivity();
@@ -463,25 +464,21 @@ function addNewComment (record)
 function showStatusListDialog(clickedObject){
     	//var tivitobject = jQuery(this).parent();
      	//console.log ("[Yaniv] tivitobject=", tivitobject);
-     	var imtivitcreator = jQuery(clickedObject).parent().find("input").attr("imtivitcreator");
-    	console.log ("[Yaniv] imtivitcreator=", imtivitcreator);
+     	
+     	var mytivit = jQuery(clickedObject).parent().find("input").attr("mytivit");
+    	var activityOwner = jQuery(clickedObject).parent().find("input").attr("activityOwner");
+		var invitedByMe = jQuery(clickedObject).parent().find("input").attr("invitedByMe");
+		
+		console.log ("[Yaniv] mytivit=", mytivit);
+		console.log ("[Yaniv] activityOwner=", activityOwner);
+		console.log ("[Yaniv] invitedByMe=", invitedByMe);
+		    	
     	
     	var statusList = '';
     	
-    	if ( imtivitcreator == "yes")
+    	if (mytivit == "yes" && invitedByMe != "yes")
     	{
     		statusList = '<div class="status-list-dialog">'+
-                        '<ul class="status-list">'+
-                            //'<li class="unread"><div class="ico"></div>Not started</li>'+
-                            '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
-                            '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
-                            '<li class="re-assign"><div class="ico"></div>Reassign</li>'+
-                        '</ul>'+
-                     '</div>';
-    	}
-    	else
-    	{ 
-     	   statusList = '<div class="status-list-dialog">'+
                         '<ul class="status-list">'+
                             //'<li class="unread"><div class="ico"></div>Not started</li>'+
                             '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
@@ -491,12 +488,46 @@ function showStatusListDialog(clickedObject){
                             '<li class="re-assign"><div class="ico"></div>Reassign</li>'+
                         '</ul>'+
                      '</div>';
-         }            
+        }
+        // I created tivit for myself
+        else if ( mytivit == "yes" && invitedByMe == "yes" )
+        {
+         		statusList = '<div class="status-list-dialog">'+
+                        '<ul class="status-list">'+
+                            //'<li class="unread"><div class="ico"></div>Not started</li>'+
+                            '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
+                            '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
+                            '<li class="re-assign"><div class="ico"></div>Reassign</li>'+
+                        '</ul>'+
+                     '</div>';
+    	}
+        else if ( activityOwner == "yes" || invitedByMe == "yes" )
+        {
+         		statusList = '<div class="status-list-dialog">'+
+                        '<ul class="status-list">'+
+                            //'<li class="unread"><div class="ico"></div>Not started</li>'+
+                            //'<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
+                            '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
+                            '<li class="re-assign"><div class="ico"></div>Reassign</li>'+
+                        '</ul>'+
+                     '</div>';
+    	}
+    	//else
+    	//{ 
+     	//  statusList = '<div class="status-list-dialog">'+
+        //                '<ul class="status-list">'+
+        //                   //'<li class="unread"><div class="ico"></div>Not started</li>'+
+        //                    '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
+        //                    '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
+        //                    '<li class="busy"><div class="ico"></div>Sorry, I can\'t help</li>'+
+        //                    '<li class="attention"><div class="ico"></div>Propose new date</li>'+
+        //                    '<li class="re-assign"><div class="ico"></div>Reassign</li>'+
+        //                '</ul>'+
+         //            '</div>';
+         //}            
      	// Check if the user owns this tivit or not. If not, don't allow to change status therefor dropdown will not open
-		var mytivit = jQuery(clickedObject).parent().find("input").attr("mytivit");
-    	console.log ("[Yaniv] status mytivit=", mytivit);
-    	    	
-     	if (mytivit == "yes")
+		    	    	
+     	if (mytivit == "yes" || activityOwner == "yes" || invitedByMe == "yes" )
      	{	
 	    	var recState = jQuery(clickedObject).closest('li');
 	    		console.log(recState.attr('class'));
@@ -1116,7 +1147,10 @@ jQuery(document).ready(function($){
 	// status icon mouse status. Only show pointer when dropdown will actually open
 	$('.icon').live('hover', function(){
 		var mytivit = jQuery(this).parent().find("input").attr("mytivit");
-		if (mytivit == "yes")
+		var activityOwner = jQuery(this).parent().find("input").attr("activityOwner");
+		var invitedByMe = jQuery(this).parent().find("input").attr("invitedByMe");
+				
+		if (mytivit == "yes" || activityOwner == "yes" || invitedByMe == "yes")
 		{
 			$(this).css('cursor','pointer');
 		}

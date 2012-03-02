@@ -91,7 +91,7 @@
 
 	</head>
 
-<% if account_signed_in? %>
+<% if account_signed_in? || @title == "How it works?" %>
 	<body class="bk1">
 <% else %>
 	<body class="bk2">		
@@ -110,7 +110,7 @@
 	    <!-- </div> -->
      	
      	<!-- Page Content Area -->
-<% if account_signed_in? %>
+<% if account_signed_in? || @title == "How it works?" %>
 		<div id="page-container" class="bk1">
 <%else%>
 		<div id="page-container" class="bk2">
@@ -129,11 +129,7 @@
 	       <div style="clear: both;"></div>
 	       
     	</div>    
-    	
-    	
-	 
-		
-		    	
+    			    	
 		
 	    <!-- Lighbox effect! -->
 		<div style="clear: both;"></div>
