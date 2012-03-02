@@ -24,8 +24,6 @@ jQuery(document).ready(function($){
 	    },
 	    "Please enter date in format dd-mm-yyyy"
 	);
-
-
 	
 	/**************************************************************************/
 	/* Yaniv - Create new tivit with Ajax */	
@@ -443,7 +441,31 @@ jQuery(document).ready(function($){
      */
      
  });
- // Insert new comment dummy after status change so it can be updated by eash status .js.erb file
+function openEdittivitDialog (clickedObject)
+{
+	var record = jQuery(clickedObject).parent();
+	//console.log ("[Yaniv] in opentivitDialog func.");
+	
+	jQuery(clickedObject).parents('.menu-dialog').toggle();
+		
+	jQuery('#activity-overlay').show();
+	/* Yaniv - clear the form before creating new tivit **/
+	//$("#create-new-tivit-form")[0].reset();
+	/*****************************************************/
+	//$('#add-tivit-window').show();
+		
+	var record = jQuery(clickedObject).parents('.record')
+	var tivitID = record.find("input").attr("tivitid");
+    console.log ("[Yaniv] edit tivit: tivitID=", tivitID);
+	var action = '/edit_tivit?id=' + tivitID;
+	console.log ("[Yaniv] action=", action);
+		
+	jQuery.post(action, jQuery(clickedObject).serialize(), null, "script");		
+		
+	return false;
+	
+}
+// Insert new comment dummy after status change so it can be updated by eash status .js.erb file
 function addNewComment (record)
 {
 	console.log ('[Yaniv] addLastComment(record):: called.');
@@ -568,7 +590,6 @@ function showStatusListDialog(clickedObject){
 		    	}
 		}
 	}
-	
 
 function hideInlineLoadingAnimation(){
 	console.log ('[Yaniv] hideInlineLoadingAnimation called.');
@@ -932,29 +953,33 @@ jQuery(document).ready(function($){
 	});
 	
 	/***********************************************************************************************/
+	jQuery('.icon').hover(		
+		function() {
+	       $(this).css('cursor','pointer');
+	   },
+	   function() {
+	      $(this).css('cursor','none');
+	   }	 	
+	);
 	/* edit tivit on ADP */
 	$('.edit').live('click', function(){
-		var record = $(this).parent();
-		console.log ("[Yaniv] edit tivit clicked.");
-	
-		$(this).parents('.menu-dialog').toggle();
-		
-		jQuery('#activity-overlay').show();
-		/* Yaniv - clear the form before creating new tivit **/
-		//$("#create-new-tivit-form")[0].reset();
-		/*****************************************************/
-		//$('#add-tivit-window').show();
-		
-		var record = jQuery(this).parents('.record')
-		var tivitID = record.find("input").attr("tivitid");
-    	console.log ("[Yaniv] edit tivit: tivitID=", tivitID);
-		var action = '/edit_tivit?id=' + tivitID;
-		console.log ("[Yaniv] action=", action);
-		
-		$.post(action, $(this).serialize(), null, "script");		
-		
-		return false;
+		openEdittivitDialog (this);
 	});
+	/* edit tivit on ADP */
+	$('.activity .calendar').live('click', function(){
+		console.log ("[Yaniv] calendar clicked.");
+		openEdittivitDialog (this);
+	});
+	
+	jQuery('.activity .calendar').hover(		
+		function() {
+	       $(this).css('cursor','pointer');
+	   },
+	   function() {
+	      $(this).css('cursor','none');
+	   }	 	
+	);
+			
 	/*
 	jQuery("#edit-tivit-form").live('submit', function() {
 		console.log ('[Yaniv] #edit-tivit-form submit clicked');
