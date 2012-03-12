@@ -44,7 +44,7 @@
 		<!-- tivit name -->
 		<!-- <p><label for="tivit">tivit:</label><input type="text" id="tivit" /></p> -->	
 		<p><label for="tivit">tivit:</label>
-			<%= text_field_tag(:name, nil, :class => "required") %> 
+			<%= text_field_tag(:name, nil, :placeholder => "What needs to get done?", :class => "required") %> 
 		</p>
 		
 		<!-- tivit invitee -->
@@ -58,7 +58,7 @@
 		<!-- tivit description -->
 		<!-- <p><label for="what">What:</label><textarea id="what" cols="10" rows="10"></textarea></p>-->
 		<p><label for="what">What:</label>
-			<%= text_area_tag(:description, nil) %> 
+			<%= text_area_tag(:description, nil, :placeholder => "Any details to provide?") %> 
 			</p>
 	
 		<!-- need by date -->		  	

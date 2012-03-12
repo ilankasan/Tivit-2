@@ -183,23 +183,21 @@ class Activity < ActiveRecord::Base
 #Only when they are in my activity and have a new status or comment since last view
 # added remove tivits i declined
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
-                                       "NOT tivit_user_statuses.status_id = 'Done'
+  #                                     "NOT tivit_user_statuses.status_id = 'Done'
+                                   "status = 'in-progress'
                                     AND NOT tivit_user_statuses.status_id = 'Declined'
                                     AND tivit_user_statuses.user_id       = activities.owner_id 
                                     AND activities.owner_id               = ? ",user.get_id).order(:due).reverse_order.uniq
                                     
      
-      other_open_tivits = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
+      other_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
+                                   #"NOT tivit_user_statuses.status_id = 'Done'
+                                   "status = 'in-progress'
                                     AND tivit_user_statuses.user_id = activities.owner_id 
                                     AND NOT activities.owner_id = ? ",user.get_id).order(:due).reverse_order.uniq
          
       
-#   Since status change adds a comment this will include tivits with a status changed
-    # tivits_with_unread_comments = self.tivits.joins(:tivitcomments).where("tivitcomments.activity_id = activities.id
-     #                               AND tivitcomments.created_at  > ?
-      #                              AND NOT tivitcomments.user_id = ?",last_reviewed, user.get_id).uniq
-      
-      #closed_tivits_with_comments =[]
+
       return (my_open_tivits + other_open_tivits + tivits_i_commented_with_new_comments).uniq
    
     else
@@ -210,14 +208,19 @@ class Activity < ActiveRecord::Base
       
 # Get only my open tivits and tivits i am the invitee (asignee)
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
-                     "NOT tivit_user_statuses.status_id = 'Done'
+                 #    "NOT tivit_user_statuses.status_id = 'Done'
+                 "status = 'in-progress'
+                                   
                   AND NOT tivit_user_statuses.status_id = 'Declined'
                   AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id).order(:due).reverse_order
        
       #puts "My open tivit "+my_open_tivits.size.to_s
      
-      open_tivits_im_asignee = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-                      AND activities.invited_by = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
+      open_tivits_im_asignee = self.tivits.joins(:tivit_user_statuses).where(
+                    #"NOT tivit_user_statuses.status_id = 'Done'
+                    "    status = 'in-progress'
+                     AND activities.invited_by = ? 
+                     AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
                       
    #   puts "Open tivits in other activity i invited "+open_tivits_im_asignee.size.to_s
       
@@ -414,7 +417,7 @@ return results
     team_open_tivits_due  = self.tivits.where("NOT owner_id = ? AND NOT (status = 'Done' OR status = 'Completed') AND due IS NOT NULL",user.get_id)
      
   # puts "my_open_activities = "+my_open_activities.size.to_s
- #  puts "my_done_activities = "+my_done_activities.size.to_s
+ #  puts "my_done_activities = "+my_done_activities.size.to_send
     return team_open_tivits_due + team_open_tivits_no_due + team_done_tivits
   end
 
