@@ -126,7 +126,7 @@ class Activity < ActiveRecord::Base
  
  end
   
-  def get_open_or_recently_done_tivits
+  def Delete_get_open_or_recently_done_tivits
       self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id
             AND ((NOT tivit_user_statuses.status_id = 'Done')
             OR ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now-1.day)
@@ -442,10 +442,13 @@ return results
 
   def get_my_tivits (user)
     #return self.tivits.where("owner_id = ? " ,user.id)
-    puts "----------------->>>> in get_my tivits"
-    my_done_tivits = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.status_id = 'Done'
-      AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id ",user.get_id)
+    puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
+    #my_done_tivits = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.status_id = 'Done'
+    #  AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id ",user.get_id)
 
+    my_done_tivits = self.tivits.where(:owner_id => user.get_id ,:status => ["Completed", "Done"])
+puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
+    
     my_open_tivits_no_due = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
       AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NULL",user.get_id)
    

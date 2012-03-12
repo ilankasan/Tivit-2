@@ -121,7 +121,6 @@
 				<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_need_attention_tivits(current_account.user), :as => :tivit  %>
 																												
 			<%elsif (tabview == "Requests")%>
-			<% puts "______________________________________ activity_db ___________________________________________________"%>			 
 			
 				<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_requests_tivits(current_account.user)       , :as => :tivit  %>
 																					  

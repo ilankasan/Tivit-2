@@ -257,7 +257,7 @@ module PagesHelper
 def get_activities_completed_or_with_completed_tivits(user_id)
     #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
     sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
-                 WHERE (activities.status      = 'Completed'  
+                 WHERE (activities.status       = 'Completed'  
                  AND activities.activity_type   = 'activity' 
                  AND (activities.owner_id       = "+user_id+"
                  OR ( 
@@ -283,7 +283,7 @@ def get_activities_completed_or_with_completed_tivits(user_id)
   end
 
 
-  def old_get_activities_completed_or_with_completed_tivits(user_id)
+  def very_old_get_activities_completed_or_with_completed_tivits(user_id)
     #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
     sql_completed_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE activities.status      = 'Completed'  
