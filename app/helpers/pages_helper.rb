@@ -277,7 +277,7 @@ def get_activities_completed_or_with_completed_tivits(user_id)
     #      ORDER BY tivits.completed_at DESC"
      
      
-     @completed_activities = Activity.find_by_sql(sql_completed_activities_or_with_completed_tivits).paginate(:page => params[:page], :per_page => 30)
+     @completed_activities = Activity.find_by_sql(sql_completed_activities_or_with_completed_tivits).paginate(:page => params[:page], :per_page => 60)
      #puts "1. ------>>>>  "+completed_activities.inspect
       return @completed_activities
   end

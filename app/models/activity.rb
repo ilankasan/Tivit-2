@@ -184,7 +184,7 @@ class Activity < ActiveRecord::Base
 # added remove tivits i declined
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
   #                                     "NOT tivit_user_statuses.status_id = 'Done'
-                                   "status = 'in-progress'
+                                   "not status = 'Completed'
                                     AND NOT tivit_user_statuses.status_id = 'Declined'
                                     AND tivit_user_statuses.user_id       = activities.owner_id 
                                     AND activities.owner_id               = ? ",user.get_id).order(:due).reverse_order.uniq
@@ -192,7 +192,7 @@ class Activity < ActiveRecord::Base
      
       other_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
                                    #"NOT tivit_user_statuses.status_id = 'Done'
-                                   "status = 'in-progress'
+                                   "NOT status = 'Completed'
                                     AND tivit_user_statuses.user_id = activities.owner_id 
                                     AND NOT activities.owner_id = ? ",user.get_id).order(:due).reverse_order.uniq
          
