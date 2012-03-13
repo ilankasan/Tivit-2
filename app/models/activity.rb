@@ -674,7 +674,7 @@ return User.find_by_id(self.owner_id)
      status = tivit.get_user_status(tivit.get_owner)
      if (status == "Done")
       count = count+1
-      if(tivit.status == "Completed"
+      if(tivit.status == "Completed")
         puts "____________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ _______________"
       end
       tivit.status = "Completed"
