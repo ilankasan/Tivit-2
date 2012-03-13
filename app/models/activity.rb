@@ -499,7 +499,8 @@ return results
    if(tivit_user_status == nil)
    tivit_user_status = create_status_new(user)
    end
-  
+    self.status = "Completed" if(tivit_user_status.status_id == "Done")
+      
     return tivit_user_status.status_id
   end
  
@@ -510,6 +511,8 @@ return results
     if(tivit_user_status == nil)
       tivit_user_status = create_status_new(self.get_owner)
     end
+    self.status = "Completed" if(tivit_user_status.status_id == "Done")
+   
     return tivit_user_status.status_id
   end
   
@@ -704,13 +707,8 @@ return count.inspect + "/" + self.tivits.size.inspect+" tivits have been complet
 
 # Checking to see if the task was previously closed. This will be used before the email is sent out below
 
-  def old_update_activity_status (summary)
-   puts "Changng status from " +self.status+" to = " +status
-   puts "Changng status from " +self.status+" to = " +status
-   puts "Changng status from " +self.status+" to = " +status
-   puts "Changng status from " +self.status+" to = " +status
-   puts "Changng status from " +self.status+" to = " +status
-   puts "Changng status from " +self.status+" to = " +status
+  def update_activity_status (summary)
+   #puts "Changng status from " +self.status+" to = " +status
    
    #if(self.status == status)
      #return
