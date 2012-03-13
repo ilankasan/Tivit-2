@@ -499,7 +499,14 @@ return results
    if(tivit_user_status == nil)
    tivit_user_status = create_status_new(user)
    end
+    puts "************************************************"
+    puts "************************************************"
+    puts "************************************************  "+tivit_user_status.status_id+"***********************************"
+    puts "************************************************"
+    puts "************************************************"
+    
     self.status = "Completed" if(tivit_user_status.status_id == "Done")
+    self.save
       
     return tivit_user_status.status_id
   end
