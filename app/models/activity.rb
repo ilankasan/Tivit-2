@@ -501,10 +501,10 @@ return results
    if(tivit_user_status == nil)
    tivit_user_status = create_status_new(user)
    end
-    puts "******666666666666666666666666***************************  "+tivit_user_status.status_id+"********************"
+    #puts "******666666666666666666666666***************************  "+tivit_user_status.status_id+"********************"
     
-    self.status = "Completed" if(tivit_user_status.status_id == "Done")
-    self.save
+   # self.status = "Completed" if(tivit_user_status.status_id == "Done")
+   # self.save
       
     return tivit_user_status.status_id
   end
@@ -517,9 +517,9 @@ return results
       tivit_user_status = create_status_new(self.get_owner)
     end
     
-    puts "**************555555555555555555555555555555555555555555555555**********************************"
-    puts "********************************************  "+tivit_user_status.status_id+" ******************************"
-    self.status = "Completed" if(tivit_user_status.status_id == "Done")
+ #   puts "**************555555555555555555555555555555555555555555555555**********************************"
+ #   puts "********************************************  "+tivit_user_status.status_id+" ******************************"
+ #   self.status = "Completed" if(tivit_user_status.status_id == "Done")
    
     return tivit_user_status.status_id
   end
@@ -666,24 +666,30 @@ return User.find_by_id(self.owner_id)
   
   def get_number_of_completed_tivits
    return 0 if (self.tivits == nil || self.tivits.size == 0)
-   #puts "***************** start **********************************************"
+   puts "***************** start **********************************************"
    
- #  puts "Activity = "+self.name
-  # count = 0
-  # self.tivits.each do |tivit|
-  #   status = tivit.get_user_status(tivit.get_owner)
-  #   if (status == "Done")
-  #    count = count+1
-  #   end
-  # end
+   puts "Activity = "+self.name
+   count = 0
+   self.tivits.each do |tivit|
+     status = tivit.get_user_status(tivit.get_owner)
+     if (status == "Done")
+      count = count+1
+      if(tivit.status == "Completed"
+        puts "____________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ _______________"
+      end
+      tivit.status = "Completed"
+      puts "Completed!!!!!!!"
+      tivit.save()
+     end
+   end
                                          
-   count1 = self.tivits.where(:status=>["Completed", "Done"]).count
+  # count1 = self.tivits.where(:status=>["Completed", "Done"]).count
    #puts "count 1 = "+count1.to_s
    #puts "count  = "+count.to_s
    
    #puts "************* end **************************************************"
      
-   return count1
+   return count
  end
   
   def get_total_tivits
