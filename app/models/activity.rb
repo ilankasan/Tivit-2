@@ -157,7 +157,7 @@ class Activity < ActiveRecord::Base
   end
   
   def get_on_deck_tivits (user)
-    #puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name+ "  "+self.id.to_s
+    puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name+ "  "+self.id.to_s
     
      sql = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments, tivit_user_statuses
             WHERE tivits.activity_type            = 'tivit'
@@ -183,16 +183,16 @@ class Activity < ActiveRecord::Base
 #Only when they are in my activity and have a new status or comment since last view
 # added remove tivits i declined
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
-  #                                     "NOT tivit_user_statuses.status_id = 'Done'
-                                   "not status = 'Completed'
+                                   "NOT tivit_user_statuses.status_id = 'Done'
+                                    AND NOT activities.status = 'Completed'
                                     AND NOT tivit_user_statuses.status_id = 'Declined'
                                     AND tivit_user_statuses.user_id       = activities.owner_id 
                                     AND activities.owner_id               = ? ",user.get_id).order(:due).reverse_order.uniq
                                     
      
       other_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
-                                   #"NOT tivit_user_statuses.status_id = 'Done'
-                                   "NOT status = 'Completed'
+                                   "NOT tivit_user_statuses.status_id = 'Done'
+                                    AND NOT activities.status = 'Completed'
                                     AND tivit_user_statuses.user_id = activities.owner_id 
                                     AND NOT activities.owner_id = ? ",user.get_id).order(:due).reverse_order.uniq
          
@@ -208,8 +208,9 @@ class Activity < ActiveRecord::Base
       
 # Get only my open tivits and tivits i am the invitee (asignee)
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
-                 #    "NOT tivit_user_statuses.status_id = 'Done'
-                 "status = 'in-progress'
+                 "NOT tivit_user_statuses.status_id = 'Done'
+                 AND NOT activities.status = 'Completed'
+                              
                                    
                   AND NOT tivit_user_statuses.status_id = 'Declined'
                   AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id).order(:due).reverse_order
@@ -217,8 +218,9 @@ class Activity < ActiveRecord::Base
       #puts "My open tivit "+my_open_tivits.size.to_s
      
       open_tivits_im_asignee = self.tivits.joins(:tivit_user_statuses).where(
-                    #"NOT tivit_user_statuses.status_id = 'Done'
-                    "    status = 'in-progress'
+                    "NOT tivit_user_statuses.status_id = 'Done'
+                    AND NOT activities.status = 'Completed'
+                              
                      AND activities.invited_by = ? 
                      AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
                       
