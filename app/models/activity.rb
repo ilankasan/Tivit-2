@@ -500,10 +500,7 @@ return results
    tivit_user_status = create_status_new(user)
    end
     puts "************************************************"
-    puts "************************************************"
     puts "************************************************  "+tivit_user_status.status_id+"***********************************"
-    puts "************************************************"
-    puts "************************************************"
     
     self.status = "Completed" if(tivit_user_status.status_id == "Done")
     self.save
@@ -519,10 +516,8 @@ return results
       tivit_user_status = create_status_new(self.get_owner)
     end
     
-    puts "************************************************"
     puts "**************55555555555555555555555555555555555555555555555555555555555555555555555**********************************"
-    puts "************************************************  "+tivit_user_status.status_id+"***********************************"
-    puts "************************************************"
+    puts "************************************************  "+tivit_user_status.status_id+" ***********************************"
     puts "************************************************"
     self.status = "Completed" if(tivit_user_status.status_id == "Done")
    
@@ -548,6 +543,7 @@ return results
  
  
  def get_owner_last_status_change
+   puts ")()()()()()()()))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))"
   return self.tivit_user_statuses.find_by_user_id(self.owner_id).last_status_change
  end
  
