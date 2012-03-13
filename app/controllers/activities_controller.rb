@@ -121,7 +121,7 @@ class ActivitiesController < ApplicationController
   
   def edit_tivit
       puts "edit tivit"
-      puts params.inspect  
+    #  puts params.inspect  
     
     @activity = Activity.find(params[:id])
     @title = "Edit tivit: " +@activity.name
@@ -203,7 +203,7 @@ class ActivitiesController < ApplicationController
   
   def update_tivit
     puts "-----------    UPDATE tivit"  
-    puts params.inspect
+ #   puts params.inspect
     @activity = Activity.find(params[:id])   
     
     params["due"] = adjust_date_to_end_of_day(parse_date(params, "due"))
@@ -240,7 +240,7 @@ class ActivitiesController < ApplicationController
     
     @activity = Activity.find(params[:id])   
     
-    puts params.inspect
+  #  puts params.inspect
     params["due"] = adjust_date_to_end_of_day(parse_date(params, "due"))
    
     
@@ -288,7 +288,7 @@ class ActivitiesController < ApplicationController
   def change_tivit_status
     
     puts "<<<<<<<<<<<<----------->>>>>>>>>>>"  
-    puts params.inspect  
+   # puts params.inspect  
  #ilan: the below can be optimized   
     @activity = Activity.find(params[:id])
     
@@ -500,7 +500,7 @@ class ActivitiesController < ApplicationController
     
     @activity = Activity.find(params[:id])   
     
-    puts params.inspect
+    #puts params.inspect
     
     if(@activity.change_status_to_completed(params["summary"]))   
 #send email to all participants that tivit was completed (not including owner):
