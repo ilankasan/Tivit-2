@@ -501,8 +501,7 @@ return results
    if(tivit_user_status == nil)
    tivit_user_status = create_status_new(user)
    end
-    puts "************************************************"
-    puts "************************************************  "+tivit_user_status.status_id+"***********************************"
+    puts "******666666666666666666666666***************************  "+tivit_user_status.status_id+"********************"
     
     self.status = "Completed" if(tivit_user_status.status_id == "Done")
     self.save
@@ -518,9 +517,8 @@ return results
       tivit_user_status = create_status_new(self.get_owner)
     end
     
-    puts "**************55555555555555555555555555555555555555555555555555555555555555555555555**********************************"
-    puts "************************************************  "+tivit_user_status.status_id+" ***********************************"
-    puts "************************************************"
+    puts "**************555555555555555555555555555555555555555555555555**********************************"
+    puts "********************************************  "+tivit_user_status.status_id+" ******************************"
     self.status = "Completed" if(tivit_user_status.status_id == "Done")
    
     return tivit_user_status.status_id
@@ -749,8 +747,8 @@ return count.inspect + "/" + self.tivits.size.inspect+" tivits have been complet
 
   def change_status_to_in_progress
     puts "change_status_to_in_progress"
-self.status = "in-progress"
-self.save
+    self.status = "in-progress"
+    self.save
    if(self.tivits != nil || self.tivits.size > 0)
 self.tivits.each do |tivit|
 tivit.change_status_to_in_progress
@@ -760,7 +758,7 @@ end
   
   def change_status_to_done
     puts "change_status_to_Done"
-    self.status = "Done"
+    self.status = "Completed"
     self.save
   end
   
