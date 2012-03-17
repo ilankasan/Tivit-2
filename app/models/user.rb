@@ -73,6 +73,17 @@ class User < ActiveRecord::Base
     end
     #return self.admin
   end
+  
+  def isSuppoerAdmin?
+ # ilan need to rewrite
+    email = self.account.email
+    if(email =="ilan.kasan@gmail.com")
+      return true
+    else
+      return false
+    end
+    #return self.admin
+  end
 
   def deactivate_user
     self.is_active = false

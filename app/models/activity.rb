@@ -676,16 +676,17 @@ return User.find_by_id(self.owner_id)
       count = count+1
       if(tivit.status == "Completed")
         puts "____________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ _______________"
+      else
+        puts "Completed!!!!!!!"
       end
       tivit.status = "Completed"
-      puts "Completed!!!!!!!"
       tivit.save()
      end
    end
                                          
-  # count1 = self.tivits.where(:status=>["Completed", "Done"]).count
-   #puts "count 1 = "+count1.to_s
-   #puts "count  = "+count.to_s
+   count1 = self.tivits.where(:status=>["Completed", "Done"]).count
+   puts "count 1 = "+count1.to_s
+   puts "count  = "+count.to_s
    
    #puts "************* end **************************************************"
      
