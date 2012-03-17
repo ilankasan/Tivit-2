@@ -87,8 +87,9 @@ class Activity < ActiveRecord::Base
   end
 
 
-  def self.get_num_of_incoming_tivits(currentuser)
+  def self.DELETE_get_num_of_incoming_tivits(currentuser)
 # Returns tivits i own and required my response or in play (awaiting the assiger to response with my proposal).
+put "______________     incoming reqyests __________________"
    results = self.joins(:tivit_user_statuses).where(
                   "       activities.owner_id         = ? 
                   AND     tivit_user_statuses.user_id = activities.owner_id
@@ -242,7 +243,7 @@ class Activity < ActiveRecord::Base
   
    def get_requests_tivits(currentuser)
 # retuen my new requests
-    puts "-------------<<<<<<<<<<<<<<"
+    puts "-------------<<<<<<<<<<<<<<  get_requests_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
   
    my_tivits    = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
        AND   activities.owner_id     = ? AND NOT activities.invited_by = ? AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id,currentuser.id)
@@ -252,7 +253,7 @@ class Activity < ActiveRecord::Base
        AND   NOT activities.owner_id = ? AND activities.invited_by = ? 
        AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",currentuser.id,currentuser.id)
        
-    puts " number of  requests nee my action "+other_tivits.length.to_s          
+    puts " number of  requests new  new requests"+other_tivits.length.to_s          
    
     return my_tivits + other_tivits
   end
@@ -260,17 +261,22 @@ class Activity < ActiveRecord::Base
   
   
   def self.get_num_of_requests_tivits(currentuser)
+    puts "______>>>>>  get_num_of_requests_tivits   <<<<_____"
+    puts "______>>>>>  get_num_of_requests_tivits   <<<<_____"
+    puts "______>>>>>  get_num_of_requests_tivits   <<<<_____"
+    
     current_user_id = currentuser.get_id.to_s
     sql_activities_with_my_tivits = "SELECT DISTINCT tivits.id FROM activities, activities as tivits, tivit_user_statuses
                                                          
-                   WHERE NOT activities.status        = 'Completed'  
-                   AND  activities.activity_type      = 'activity' 
-                   AND  tivits.owner_id               = "+current_user_id+"
-                   AND  NOT tivits.invited_by         = "+current_user_id+"   
-                   AND  tivits.parent_id              = activities.id  
-                   AND  tivits.owner_id               = tivit_user_statuses.user_id 
-                   AND  tivits.id                     = tivit_user_statuses.activity_id 
+                   WHERE NOT activities.status         = 'Completed'  
+                   AND  activities.activity_type       = 'activity' 
+                   AND  tivits.owner_id                = "+current_user_id+"
+                   AND  NOT tivits.invited_by          = "+current_user_id+"   
+                   AND  tivits.parent_id               = activities.id  
+                   AND  tivits.owner_id                = tivit_user_statuses.user_id 
+                   AND  tivits.id                      = tivit_user_statuses.activity_id 
                    AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
+                   AND  NOT tivit.status               = 'Completed'
                    ORDER BY activities.due"
     
      results1  =  Activity.find_by_sql(sql_activities_with_my_tivits).count
