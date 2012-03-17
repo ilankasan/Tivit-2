@@ -287,7 +287,7 @@ put "______________     incoming reqyests __________________"
                    ORDER BY activities.due"
     
      results1  =  Activity.find_by_sql(sql_activities_with_my_tivits).count
-    # puts " number of my new requests "+results1.to_s
+     puts " number of my new requests "+results1.to_s
              
    
       
@@ -307,7 +307,7 @@ put "______________     incoming reqyests __________________"
                    
                  
       results2  =  Activity.find_by_sql(sql_activities_i_assigned_with_tivit_requests).count
-   #   puts " number of my other requests "+results2.to_s
+      puts " number of my other requests "+results2.to_s
      
       return results1+results2
   end
@@ -691,7 +691,7 @@ return User.find_by_id(self.owner_id)
      if (status == "Done")
       count = count+1
       if(tivit.status == "Completed")
-        puts "____________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ _______________"
+   #     puts "____________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ _______________"
       else
         puts "Completed!!!!!!!"
       end
@@ -706,7 +706,7 @@ return User.find_by_id(self.owner_id)
    
    #puts "************* end **************************************************"
      
-   return count
+   return count1
  end
   
   def get_total_tivits
