@@ -72,6 +72,8 @@ module PagesHelper
                    AND  tivits.owner_id               = tivit_user_statuses.user_id 
                    AND  tivits.id                     = tivit_user_statuses.activity_id 
                    AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
+                   AND  NOT tivits.status                = 'Completed'
+                 
                    ORDER BY activities.due"
     
       results1  =  Activity.find_by_sql(sql_activities_with_my_tivits)
@@ -87,6 +89,8 @@ module PagesHelper
                    AND     tivits.owner_id               = tivit_user_statuses.user_id 
                    AND     tivits.id                     = tivit_user_statuses.activity_id 
                    AND  ( tivit_user_statuses.status_id  = 'Declined' OR tivit_user_statuses.status_id  = 'Proposed')
+                   AND  NOT tivits.status                = 'Completed'
+                 
                    ORDER BY activities.due"
     
                  

@@ -287,7 +287,7 @@ class ActivitiesController < ApplicationController
   
   def change_tivit_status
     
-    puts "<<<<<<<<<<<<----------->>>>>>>>>>>"  
+    #puts "<<<<<<<<<<<<----------->>>>>>>>>>>"  
    # puts params.inspect  
  #ilan: the below can be optimized   
     @activity = Activity.find(params[:id])
