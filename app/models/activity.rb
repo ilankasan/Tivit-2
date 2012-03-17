@@ -182,17 +182,20 @@ class Activity < ActiveRecord::Base
 #All open tivits and thoses with comments
 #Only when they are in my activity and have a new status or comment since last view
 # added remove tivits i declined
+
+  puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is  the OWNER of activity"
+    
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
-                                   "NOT tivit_user_statuses.status_id = 'Done'
-                                    AND NOT activities.status = 'Completed'
+                                 #  "NOT tivit_user_statuses.status_id = 'Done'
+                                    "NOT activities.status = 'Completed'
                                     AND NOT tivit_user_statuses.status_id = 'Declined'
                                     AND tivit_user_statuses.user_id       = activities.owner_id 
                                     AND activities.owner_id               = ? ",user.get_id).order(:due).reverse_order.uniq
                                     
      
       other_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
-                                   "NOT tivit_user_statuses.status_id = 'Done'
-                                    AND NOT activities.status = 'Completed'
+                                   #"NOT tivit_user_statuses.status_id = 'Done'
+                                    "NOT activities.status = 'Completed'
                                     AND tivit_user_statuses.user_id = activities.owner_id 
                                     AND NOT activities.owner_id = ? ",user.get_id).order(:due).reverse_order.uniq
          
@@ -204,12 +207,12 @@ class Activity < ActiveRecord::Base
 # Not my activity - show
 # my open tivits
 # tivits i commented and have a comment
- #     puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is NOT the owner of activity"
+      puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is NOT the owner of activity"
       
 # Get only my open tivits and tivits i am the invitee (asignee)
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
-                 "NOT tivit_user_statuses.status_id = 'Done'
-                 AND NOT activities.status = 'Completed'
+                # "NOT tivit_user_statuses.status_id = 'Done'
+                 "NOT activities.status = 'Completed'
                               
                                    
                   AND NOT tivit_user_statuses.status_id = 'Declined'
@@ -218,8 +221,8 @@ class Activity < ActiveRecord::Base
       #puts "My open tivit "+my_open_tivits.size.to_s
      
       open_tivits_im_asignee = self.tivits.joins(:tivit_user_statuses).where(
-                    "NOT tivit_user_statuses.status_id = 'Done'
-                    AND NOT activities.status = 'Completed'
+                    #"NOT tivit_user_statuses.status_id = 'Done'
+                    "NOT activities.status = 'Completed'
                               
                      AND activities.invited_by = ? 
                      AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
