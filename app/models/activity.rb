@@ -245,12 +245,19 @@ put "______________     incoming reqyests __________________"
 # retuen my new requests
     puts "-------------<<<<<<<<<<<<<<  get_requests_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
   
-   my_tivits    = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
-       AND   activities.owner_id     = ? AND NOT activities.invited_by = ? AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id,currentuser.id)
+   my_tivits    = self.tivits.joins(:tivit_user_statuses).where(
+      "      tivit_user_statuses.user_id     = activities.owner_id 
+       AND     activities.owner_id           = ?
+       AND NOT activities.status             = 'Completed'
+       AND NOT activities.invited_by         = ? 
+       AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id,currentuser.id)
    puts " number of my new requests "+my_tivits.length.to_s
              
    other_tivits = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
-       AND   NOT activities.owner_id = ? AND activities.invited_by = ? 
+       AND   NOT activities.owner_id           = ? 
+       AND activities.invited_by               = ?
+       AND   NOT activities.status             = 'Completed'
+        
        AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",currentuser.id,currentuser.id)
        
     puts " number of  requests new  new requests"+other_tivits.length.to_s          
@@ -276,7 +283,7 @@ put "______________     incoming reqyests __________________"
                    AND  tivits.owner_id                = tivit_user_statuses.user_id 
                    AND  tivits.id                      = tivit_user_statuses.activity_id 
                    AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
-                   AND  NOT tivit.status               = 'Completed'
+                   AND  NOT tivits.status               = 'Completed'
                    ORDER BY activities.due"
     
      results1  =  Activity.find_by_sql(sql_activities_with_my_tivits).count
