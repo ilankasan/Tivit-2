@@ -158,7 +158,7 @@ put "______________     incoming reqyests __________________"
   end
   
   def get_on_deck_tivits (user)
-    puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name+ "  "+self.id.to_s
+    #puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name+ "  "+self.id.to_s
     
      sql = "SELECT DISTINCT tivits.* FROM activities as tivits, tivitcomments as mycomments , tivitcomments as othercomments, tivit_user_statuses
             WHERE tivits.activity_type            = 'tivit'
@@ -184,7 +184,7 @@ put "______________     incoming reqyests __________________"
 #Only when they are in my activity and have a new status or comment since last view
 # added remove tivits i declined
 
-  puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is  the OWNER of activity"
+  #puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is  the OWNER of activity"
     
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
                                  #  "NOT tivit_user_statuses.status_id = 'Done'
@@ -208,7 +208,7 @@ put "______________     incoming reqyests __________________"
 # Not my activity - show
 # my open tivits
 # tivits i commented and have a comment
-      puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is NOT the owner of activity"
+      #puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is NOT the owner of activity"
       
 # Get only my open tivits and tivits i am the invitee (asignee)
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(

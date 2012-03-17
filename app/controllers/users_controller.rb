@@ -112,7 +112,6 @@ end
  puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
  #ilan: need to revisit error handling
   if (@user != nil)
-    puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>    saving user"
     @user.save
     puts "->>>>>>>>>>>>>>>  After Saving "   
 # sending a welcome email to the new user

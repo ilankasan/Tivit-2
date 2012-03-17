@@ -14,9 +14,9 @@ class ActivitiesController < ApplicationController
   skip_before_filter :verify_authenticity_token
   
    def tiviti_authenticate_account
-     puts "---------------------------------------------------------------"
-     puts "------->>>>>>>>>>>>>>>>  tiviti_authenticate_account"
-     puts "---------------------------------------------------------------"
+ #    puts "---------------------------------------------------------------"
+ #    puts "------->>>>>>>>>>>>>>>>  tiviti_authenticate_account"
+ #    puts "---------------------------------------------------------------"
      
      if(params[:email] != nil)
        #render '../my_devise/registrations/new'
@@ -172,7 +172,7 @@ class ActivitiesController < ApplicationController
   end
    
   def update_view_status
-   puts "----------->>>>>>>>>>> update_view_status"
+   #puts "----------->>>>>>>>>>> update_view_status"
    if(@tivit_id != nil)
     @tivit = Activity.find(params[:id])
     if(@tivit != nil)
