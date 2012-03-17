@@ -214,8 +214,6 @@ put "______________     incoming reqyests __________________"
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
                 # "NOT tivit_user_statuses.status_id = 'Done'
                  "NOT activities.status = 'Completed'
-                              
-                                   
                   AND NOT tivit_user_statuses.status_id = 'Declined'
                   AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",user.get_id).order(:due).reverse_order
        
@@ -270,7 +268,6 @@ put "______________     incoming reqyests __________________"
   def self.get_num_of_requests_tivits(currentuser)
     puts "______>>>>>  get_num_of_requests_tivits   <<<<_____"
     puts "______>>>>>  get_num_of_requests_tivits   <<<<_____"
-    puts "______>>>>>  get_num_of_requests_tivits   <<<<_____"
     
     current_user_id = currentuser.get_id.to_s
     sql_activities_with_my_tivits = "SELECT DISTINCT tivits.id FROM activities, activities as tivits, tivit_user_statuses
@@ -300,6 +297,8 @@ put "______________     incoming reqyests __________________"
                    AND     tivits.owner_id               = tivit_user_statuses.user_id 
                    AND     tivits.id                     = tivit_user_statuses.activity_id 
                    AND  ( tivit_user_statuses.status_id  = 'Declined' OR tivit_user_statuses.status_id  = 'Proposed' )
+                   AND  NOT tivits.status                = 'Completed'
+                 
                    ORDER BY activities.due"
     
     
