@@ -63,7 +63,7 @@
 	 				<td><b>team tivits</b></td>
 	 				<td><b>Signed in </b></td>
 	 				<% if current_account.user.isSupperAdmin? %>
-	 					<td><b>Signed in </b></td>
+	 					<td><b>action </b></td>
 	 					
 	 				<%end%>
 	 				<%= render :partial => 'reports/user_stats', :collection =>  @users       , :as => :user  %> 
