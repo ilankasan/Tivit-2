@@ -16,20 +16,8 @@ class UsersController < ApplicationController
 puts "_________________________________________"
   if (params[:term] && !current_account.user.mycontacts.nil?)
     like= "%".concat(params[:term].concat("%"))
-    #emails = Account.where("email LIKE ?", like)
-   # puts "my contacts = "+current_account.user.mycontacts.inspect
-    #users  = current_account.user.mycontacts.joins(:accounts).where("email LIKE ?", like)
-    #emails  = current_account.user.mycontacts.account.where("email LIKE ?", like)
-    #emails = Account.where("email LIKE ?", like)
-    #emails = Account.joins(:user).where(:id => current_account.user.mycontacts)
     clone_emails  = current_account.user.mycontacts.where("clone_email LIKE ? OR name LIKE ? ", like, like)
-    
-    
-    
-    # puts "emails = "+emails.inspect
-     puts "clone emails = "+clone_emails.inspect
- 
-    
+  #   puts "clone emails = "+clone_emails.inspect
   else
     clone_emails = []
   end
@@ -162,9 +150,18 @@ end
  
  
   def destroy
-    user1 = User.find(params[:id]).destroy
+    puts "_______________________________________________________"
+    puts "params = "+params.inspect
+    user1 = User.find(params[:id])
+    if(user1.is_active?)
+        flash[:failure] = "Cannot delete and active user."
+        return
+    end
+    puts "destoying.... "
+    user1.destroy
     flash[:success] = "User "+user1.name+" destroyed."
-    redirect_to allusers_path
+    #redirect_to allusers_path
+    redirect_back
   end
  
  

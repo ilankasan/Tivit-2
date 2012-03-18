@@ -25,10 +25,20 @@
 		
 		<td><%=time_ago_in_words(user.account.current_sign_in_at)%> ago</td>
 	<%else%>
-		<td>not activated</td>
+		<td>not activated
+			
+			<%= user.account %>
+			
+			</td>
  	
 	<%end%>
+	
+	<% if current_account.user.isSupperAdmin? %>
+   	<td><%= link_to "delete", user, :method => :delete, :confirm => "You sure?",
+                                :title => "Delete #{user.name}" %></td>
+  <% end %>
  	
+	
  </font>	 	
  </tr>
  				

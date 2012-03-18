@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   has_many :mycontacts, :through => :contacts, :class_name => "User"
   
   has_and_belongs_to_many :activities
-  has_and_belongs_to_many :preferences
+  #has_and_belongs_to_many :preferences
   
   
 # each user has many user status (show the specific status for each task)
