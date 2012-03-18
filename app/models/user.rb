@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   def isAdmin?
  # ilan need to rewrite
     email = self.account.email
-    if(email =="ilan.kasan@gmail.com" || email =="yanivlevi1@gmail.com" || email =="jon.nakasone@gmail.com")
+    if(email =="ilan.kasan@gmail.com" || "ilan_kasan@yahoo.com" || email =="yanivlevi1@gmail.com" || email =="jon.nakasone@gmail.com")
       return true
     else
       return false
@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
     #return self.admin
   end
   
-  def isSuppoerAdmin?
+  def isSupperAdmin?
  # ilan need to rewrite
     email = self.account.email
     if(email =="ilan.kasan@gmail.com")
