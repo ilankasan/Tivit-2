@@ -174,9 +174,9 @@ module PagesHelper
   
   
   def get_activities_i_have_open_tivits(user_id)
-  #  puts "_______________________________________"
+    puts "_______________________________________"
     puts "get_activities_i_have_open_tivits"
-   # puts "______________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^_________"
+    puts "______________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^_________"
     
       sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.*, ISNULL(tivits.due) AS 'isnull' FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status           = 'Completed'  
@@ -184,9 +184,11 @@ module PagesHelper
                  AND tivits.owner_id                   = "+user_id+"
                  AND tivits.parent_id                  = activities.id
                  AND tivit_user_statuses.activity_id   = tivits.id 
-                 AND NOT tivit_user_statuses.status_id = 'Done' 
+                 AND NOT tivits.status                 = 'Completed' 
+               
                  AND tivit_user_statuses.user_id       = "+user_id+"
                  ORDER BY  isnull ASC, tivits.due ASC "
+               #  AND NOT tivit_user_statuses.status_id = 'Done'
                           
         activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
         
@@ -201,9 +203,11 @@ module PagesHelper
                  AND tivits.owner_id                   = "+user_id+"
                  AND tivits.parent_id                  = activities.id
                  AND tivit_user_statuses.activity_id   = tivits.id 
-                 AND NOT tivit_user_statuses.status_id = 'Done' 
+                 AND NOT tivits.status                 = 'Completed' 
+                
                  AND tivit_user_statuses.user_id       = "+user_id+"
                  ORDER BY activities.due"
+               #  AND NOT tivit_user_statuses.status_id = 'Done'
                          
         return Activity.find_by_sql(sql_activities_i_participate)
         
