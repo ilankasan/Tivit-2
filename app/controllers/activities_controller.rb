@@ -349,8 +349,11 @@ class ActivitiesController < ApplicationController
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
 	  params["status"]     = "in-progress"
 	  
-    invitees = params["invitees"]	
-   
+    invitees = params["invitees"]
+    puts "________________________________________________"
+    puts " invitees --->>>>    " +invitees	
+   puts "________________________________________________"
+    
     # if no invitee provided, assign tivit to current user
     if invitees.empty? 
     #  puts "[Yaniv] invitees is empty!"
