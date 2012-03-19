@@ -175,9 +175,16 @@ end
       tivit.destroy
     end 
     
+    
+    
     #puts "destoying...tivits for use  "+user1.get_name
     
     #activities
+    puts "---***>>>> destoying account"
+    if(user1.account != nil)
+      user1.account.destroy 
+    end
+    
     puts "---***>>>> destoying user"
     user1.destroy
     flash[:success] = "User "+user1.name+" destroyed."

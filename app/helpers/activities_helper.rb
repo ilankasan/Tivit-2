@@ -59,7 +59,11 @@ module ActivitiesHelper
   	
 		puts "------------------ adding new invitee: " + @email 
 	  	account  = Account.find_by_email(@email)
-	  	
+	  	if(@email == "ilan.kasan1@gmail.com")
+	  	   puts "destrot account!!!!!!"
+	  	   account.destroy
+	  	   account = nil
+	  	end
 	  	return account.user if !account.nil?
 	  	
 	  	if(account  == nil)
