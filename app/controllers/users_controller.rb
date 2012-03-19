@@ -151,27 +151,38 @@ end
  
   def destroy
     puts "_______________________________________________________"
+    puts "_______________________________________________________"
+    puts "_______________________________________________________"
+    puts "_______________________________________________________"
+    puts "________________________hhhhhhhhhhhhhhhhhhhhhhhhh_______________________________"
+    puts "_______________________________________________________"
+    puts "____________________________hhhhhhhhhhhhhhhhhhhhhhhh___________________________"
+    
     puts "params = "+params.inspect
     user1 = User.find(params[:id])
-    if(user1.is_active?)
+    puts "!!!>>>>  destoying...tivits for use  "+user1.get_name
+    
+    if(!(user1.account == nil || user1.account.current_sign_in_at == nil) )
         flash[:failure] = "Cannot delete and active user."
+        puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
         return
     end
-    puts "destoying...tivits for use  "+user1.get_name
+    puts "--->>> destoying...tivits for use  "+user1.get_name
     tivits = Activity.where(:owner_id => user1.get_id)
     
     tivits.each do |tivit|
-      puts "destroying tivit "+tivit.name
+      puts "--->>>> destroying tivit "+tivit.name
       tivit.destroy
     end 
     
     #puts "destoying...tivits for use  "+user1.get_name
     
     #activities
+    puts "---***>>>> destoying user"
     user1.destroy
     flash[:success] = "User "+user1.name+" destroyed."
-    redirect_to home
-    
+    render 'pages/home'
+
   end
  
  

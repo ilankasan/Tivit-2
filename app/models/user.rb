@@ -87,13 +87,15 @@ class User < ActiveRecord::Base
 
   def deactivate_user
     self.is_active = false
+    self.save
   end
   
   def activate_user
     self.is_active = true
+    self.save
   end
   
-  def is_active?
+  def isActive?
     return self.is_active 
   end
   

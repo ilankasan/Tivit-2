@@ -27,15 +27,16 @@
 	<%else%>
 		<td>not activated
 			
-			<%= user.account %>
 			
 			</td>
  	
 	<%end%>
 	
-	<% if current_account.user.isSupperAdmin? %>
+	<% if current_account.user.isSupperAdmin? && (user.account == nil || user.account.current_sign_in_at == nil) %>
    	<td><%= link_to "delete", user, :method => :delete, :confirm => "You sure?",
-                                :title => "Delete #{user.name}" %></td>
+                                :title => "Delete #{user.name}" %>
+                                
+                                <%=user.isActive?%></td>
   <% end %>
  	
 	
