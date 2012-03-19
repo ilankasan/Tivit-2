@@ -350,9 +350,9 @@ class ActivitiesController < ApplicationController
 	  params["status"]     = "in-progress"
 	  
     invitees = params["invitees"]
-    puts "________________________________________________"
+    puts "______________________________________________y__"
     puts " invitees --->>>>    " +invitees	
-   puts "________________________________________________"
+   puts "______________________________________________y__"
     
     # if no invitee provided, assign tivit to current user
     if invitees.empty? 
@@ -360,7 +360,12 @@ class ActivitiesController < ApplicationController
       puts "[Yaniv] current_account user email=" + current_account.user.get_email
       @invited_user = current_account.user
     else
+    puts "____________________________________________f____"
+    puts " invitees --->>>>    " +invitees  
+   puts "____________________________________________f____"
+      
       @invited_user = user_by_email(invitees.strip)
+    
     end
     
 	  params["owner_id"] =  @invited_user.get_id
