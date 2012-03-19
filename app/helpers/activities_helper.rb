@@ -53,6 +53,7 @@ module ActivitiesHelper
   
   
   def user_by_email (email_input)
+    puts "in ---->>>   user_by_email "+email_input
   	if(email_input != nil && !email_input.empty? )
 		@email = email_input.downcase
   	
