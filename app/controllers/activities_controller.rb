@@ -360,7 +360,7 @@ class ActivitiesController < ApplicationController
       @invited_user = user_by_email(invitees.strip)
     end
     
-	  params["owner_id"] =  @invited_user.id
+	  params["owner_id"] =  @invited_user.get_id
 	  params["activity_type"] = "tivit"
 	
 	  puts "Inspect Params " +params.inspect
