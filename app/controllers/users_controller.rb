@@ -157,11 +157,21 @@ end
         flash[:failure] = "Cannot delete and active user."
         return
     end
-    puts "destoying.... "
+    puts "destoying...tivits for use  "+user1.get_name
+    tivits = Activity.where(:owner_id => user1.get_id)
+    
+    tivits.each do |tivit|
+      puts "destroying tivit "+tivit.name
+      tivit.destroy
+    end 
+    
+    #puts "destoying...tivits for use  "+user1.get_name
+    
+    #activities
     user1.destroy
     flash[:success] = "User "+user1.name+" destroyed."
-    #redirect_to allusers_path
-    redirect_back
+    redirect_to home
+    
   end
  
  
