@@ -65,7 +65,7 @@ a:visited {
 	width: 980px;
 	min-height: 768px;
 	margin: auto; /*this will center the div on the page*/
-    padding-top:40px;
+    padding-top:0px;
 }
 #howitworks {
 
@@ -244,8 +244,8 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	width: 780px;
 	margin: 0;
 	position: absolute;
-	top:0;
-	left:0;
+	top:50px;
+	left:206px;
 }
 .popup{position:absolute;top:70px;left:239px;z-index:100;width:480px;padding:10px;color:#000;display:none;
 	background:#fff;border-radius:6px;border:1px solid #eaeaea;}
@@ -375,8 +375,8 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	font-size: 14px;
 }
 #new-activity .field-label{
-	font-weight:normal;
-    padding-top:3px;
+	font-weight: bold;
+    padding-top: 3px;
 }
 #new-activity .input-name{
     width:385px;
@@ -471,6 +471,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 	position: relative;
 	/* if no width is specified, the whole browser will be take over */
 	min-height: 768px;
+	padding-top: 40px;
 }
 
 /*tabs styles*/
@@ -1024,7 +1025,7 @@ footer li{
 
 a img{border:none;}
 .team .wrapper h2{font-size:24px;font-weight:bold;border:none;margin:0;}
-.activities{font-size:13px;}
+.activities{font-size:13px; padding-top:54px;}
 .activities p, .activities h1, .activities h2{margin:0;padding:0;}
 .activities h1{font-size:24px;font-weight:bold;color:#000;margin:9px 0 2px;}
 .activities h2{font-size:18px;color:#333;font-weight:normal;border-bottom:1px dotted #eaeaea;}

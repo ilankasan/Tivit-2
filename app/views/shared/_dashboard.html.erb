@@ -1,28 +1,13 @@
 <title>Home</title>
 
 <!-- Create new activity form only for logged in users The second condition is to make sure not to display new activity when creating a new tivit -->  
-<% if signed_in? && !(controller.controller_name=="activities" && controller.action_name == "new_tivit")%>
-	
-		
-	<div id="new-activity-background">
-		
-		<div id="new-activity">
-			<%= render 'activities/activity_form',:collection =>  [Activity.new], :as => @activity, :locals => {:activity => @activity} %>
-		</div>
-		
-		
-		
-	</div>
-	
-	
-<% end %>
 
 
 <div id="homepage-tivit-list-container">
 	
     <div class="filter">
         <dl>
-            <dt><h2>Filter:</h2></dt>
+            <dt>Filter:</dt>
             <dd>
 	            <% form_tag(:controller => "pages", :action => "home", :method => "put") do %>
 	            	<%= select_tag(:filter_id, options_for_select([['On Deck', 1],['My Open tivits', 2], ['No Response', 3],['All Open tivits', 4]],account_session[:filter_id])) %>
@@ -97,7 +82,7 @@
    		<div id="tivit-incoming" class="tivit-incoming tabInfo"> 
 
 			<% unless @incoming_activities == nil %>
-			<!--% puts "______________________________________ incoming ___________________________________________________"%-->
+			<% puts "______________________________________ incoming ___________________________________________________"%>
 			<% puts @incoming_activities.inspect%>
 			
 						 
@@ -111,7 +96,6 @@
 			<div id="completed-items" class="completed-items tabInfo">
 				<% unless @completed_activities == nil %>
 					<%= render :partial => 'shared/activity_db', :collection =>  @completed_activities,:locals => {:tabview => "Completed"} %>
-					<%= will_paginate @completed_activities %>
 				
 				<% end %>
 			</div>
