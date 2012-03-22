@@ -44,7 +44,7 @@
 		<!-- tivit name -->
 		<!-- <p><label for="tivit">tivit:</label><input type="text" id="tivit" /></p> -->	
 		<p><label for="tivit">tivit:</label>
-			<%= text_field_tag(:name, nil, :placeholder => "What needs to get done?", :class => "required") %> 
+			<%= text_field_tag(:name, nil, :placeholder => "Add a task for this activity", :class => "required") %> 
 		</p>
 		
 		<!-- tivit invitee -->
@@ -52,7 +52,7 @@
 		<!-- <p><label for="who">Who:</label><input type="text" id="who" /></p> -->
 		<p id="wholine">
 			<label for="who">Who:</label>
-			<%= text_field_tag(:invitees, nil, :placeholder => "invite by email address", :class => "required email" ) %> 
+			<%= text_field_tag(:invitees, nil, :placeholder => "Who can help? (enter an email address)", :class => "required email" ) %> 
 		</p>
 		
 		<!-- tivit description -->
