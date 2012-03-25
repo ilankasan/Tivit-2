@@ -1227,7 +1227,8 @@ jQuery(document).ready(function($){
     	console.log ("[Yaniv] activityid=", activityID);
     	
 		var actionPost = '/activities/' + activityID + '/edit';
-								
+		
+		jQuery('#new-activity-background').addClass('tempHide');						
 		jQuery('#activity-overlay').show();
 		console.log ("[Yaniv] actionPost=", actionPost);
 		

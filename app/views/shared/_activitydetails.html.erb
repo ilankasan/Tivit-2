@@ -63,9 +63,11 @@
 	
 		<!-- need by date -->		  	
 		<p class="input-date"><label for="due">Needed by:</label>
-	     	<%= text_field_tag(:due, nil, :placeholder => "choose date", :name => "due",  :id => "due", :autocomplete => "off", :class => "input-date") %> 
-	     	<img class="ico_calc" src="/images/cal.gif" onclick="javascript:NewCssCal('due', 'mmddyyyy', 'arrow', false,'24',true,'future')" class="ico_calc" style="cursor:pointer"/> 	
+	     	<%= text_field_tag(:due, nil, :placeholder => "choose date", :name => "due",  :id => "addtivitduedate", :autocomplete => "off", :class => "input-date") %> 
+	     	<img class="ico_calc" src="/images/cal.gif" onclick="javascript:NewCssCal('addtivitduedate', 'mmddyyyy', 'arrow', false,'24',true,'future')" class="ico_calc" style="cursor:pointer"/> 	
 		</p>
+		
+		
 		 	
 		<div class="request">
 			<div class="form-button" id="cancel">Cancel</div>
