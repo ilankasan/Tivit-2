@@ -318,7 +318,20 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     z-index: 20;
     position: absolute;
 }
-
+#dashboardFTE {
+    /*background: url('/images/tivity.jpg') no-repeat scroll center center transparent;*/
+    background: url('/images/dashboardFTE.png') no-repeat scroll center center transparent; 
+    display: inline-block;
+    height: 362px;
+    width: 471px;
+    top: 42px;
+    left: 242px;
+    right: 2px;
+    bottom: 2px;
+    /*overflow: hidden;*/
+    z-index: 100;
+    position: absolute;
+}
 
 #new-activity {
 	background: #DDDDDD; /*#365461;*/

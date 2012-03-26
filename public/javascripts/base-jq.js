@@ -651,6 +651,11 @@ function openNewActivity(){
     	jQuery("#newactivityFTE").hide();
     }
     
+    if (jQuery("#dashboardFTE").is(":visible"))
+    {
+    	jQuery("#dashboardFTE").hide();
+    }
+    
     if (!jQuery(layer).is(":visible"))
     {
         jQuery('#activity-overlay').show();
@@ -669,6 +674,11 @@ function closeNewActivity(){
    		{
     		jQuery("#newactivityFTE").fadeIn();
     	}
+    	if (jQuery("#dashboardFTE").is(":hidden"))
+   		{
+    		jQuery("#dashboardFTE").fadeIn();
+    	}
+    	
     });    
     
     jQuery(':input','#new-activity-form')

@@ -5,6 +5,13 @@
 
 <div id="homepage-tivit-list-container">
 	
+	<% if @activities_summary.count == 0 && @incoming_activities.count == 0 && @completed_activities.count == 0 %>
+	
+		<div id="dashboardFTE">
+		</div>
+	
+	<% else %>
+		
     <div class="filter">
         <dl>
             <dt>Filter:</dt>
@@ -24,85 +31,92 @@
         
     </div>
 	
+		
 	
 	
-	<div id="tivit-container" class="tab-content">
-
-		<div class="tabs">
-             <!-- <div class="status">You have <%#= @tivits_ondeck.count%> activities / tivits </div> -->
-
-			<ul id="tabs-nav">
-				<li class="tab open">
-	                <a href="#tivit-desk">Summary</a>
-	            </li>
-	    		<li class="tab">
-	                <a href="#tivit-incoming">Requests</a>
-	                <% count = Activity.get_num_of_requests_tivits(current_account.user)%>
-	                	
-	      			<%if count > 0%>
-	                	<i><%=count%></i>
-	                <%end%>
-          
-	            </li>
-	    
-	            <li class="tab">
-	                <a href="#completed-items">Completed</a>
-	            </li>
+		
+	
+	
+	
+		<div id="tivit-container" class="tab-content">
+	
+			<div class="tabs">
+	             <!-- <div class="status">You have <%#= @tivits_ondeck.count%> activities / tivits </div> -->
+	
+				<ul id="tabs-nav">
+					<li class="tab open">
+		                <a href="#tivit-desk">Summary</a>
+		            </li>
+		    		<li class="tab">
+		                <a href="#tivit-incoming">Requests</a>
+		                <% count = Activity.get_num_of_requests_tivits(current_account.user)%>
+		                	
+		      			<%if count > 0%>
+		                	<i><%=count%></i>
+		                <%end%>
+	          
+		            </li>
+		    
+		            <li class="tab">
+		                <a href="#completed-items">Completed</a>
+		            </li>
+		            
+	            	<!--li class="tab"-->
+		                <!--a href="#need-attention">Needs Attention</a-->
+		                <%if false && @need_attention_activities.count > 0%>
+		                	<i><%=@need_attention_activities.count%></i>
+		                <%end%>
+	            	<!--/li-->
+	            	
+	            </ul>
 	            
-            	<!--li class="tab"-->
-	                <!--a href="#need-attention">Needs Attention</a-->
-	                <%if false && @need_attention_activities.count > 0%>
-	                	<i><%=@need_attention_activities.count%></i>
-	                <%end%>
-            	<!--/li-->
-            	
-            </ul>
-            
-            <!-- draw new activity FTE if user doesn't own any activity -->
-            <% if !current_account.user.does_own_activity? %>
-				<div id="newactivityFTE">
-				</div>
-			<% end %>
-		
-        </div>
-    
-   		<!-- This is the div that holds the On Deck/All Updates/New Requests tab Content -->    
-		<div class="tabContent">
-					
-	        <div id="tivit-desk" class="tivit-desk tabInfo"> 
-
-			<% unless @activities_summary == nil %>
-			 
-			     <%= render :partial => 'shared/activity_db', :collection =>  @activities_summary, :locals => {:tabview => "Summary"} %>
-		     
-			<% end %>
-
-			</div>
-
-   		<div id="tivit-incoming" class="tivit-incoming tabInfo"> 
-
-			<% unless @incoming_activities == nil %>
-			<% puts "______________________________________ incoming ___________________________________________________"%>
-			<% puts @incoming_activities.inspect%>
-			
-						 
-			     <%= render :partial => 'shared/activity_db', :collection =>  @incoming_activities, :locals => {:tabview => "Requests"} %>
-		     
-			<% end %>
-
-			</div>
-
-
-			<div id="completed-items" class="completed-items tabInfo">
-				<% unless @completed_activities == nil %>
-					<%= render :partial => 'shared/activity_db', :collection =>  @completed_activities,:locals => {:tabview => "Completed"} %>
-				
+	            <!-- draw new activity FTE if user doesn't own any activity -->
+	            <% if !current_account.user.does_own_activity? %>
+					<div id="newactivityFTE">
+					</div>
 				<% end %>
-			</div>
+				
+				
+	        </div>
+	    
+	   		<!-- This is the div that holds the On Deck/All Updates/New Requests tab Content -->    
+			<div class="tabContent">
+						
+		        <div id="tivit-desk" class="tivit-desk tabInfo"> 
+	
+				<% unless @activities_summary == nil %>
+				 
+				     <%= render :partial => 'shared/activity_db', :collection =>  @activities_summary, :locals => {:tabview => "Summary"} %>
+			     
+				<% end %>
+	
+				</div>
+	
+	   		<div id="tivit-incoming" class="tivit-incoming tabInfo"> 
+	
+				<% unless @incoming_activities == nil %>
+				<% puts "______________________________________ incoming ___________________________________________________"%>
+				<% puts @incoming_activities.inspect%>
+				
+							 
+				     <%= render :partial => 'shared/activity_db', :collection =>  @incoming_activities, :locals => {:tabview => "Requests"} %>
+			     
+				<% end %>
+	
+				</div>
+	
+	
+				<div id="completed-items" class="completed-items tabInfo">
+					<% unless @completed_activities == nil %>
+						<%= render :partial => 'shared/activity_db', :collection =>  @completed_activities,:locals => {:tabview => "Completed"} %>
+					
+					<% end %>
+				</div>
+				
 			
-		
-		</div>  
-	</div>
+			</div>  
+		</div>
+	<% end %>
 </div>
  
  		
