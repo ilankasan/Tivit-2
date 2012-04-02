@@ -105,9 +105,38 @@ module PagesHelper
   end
 
 
+def get_activities_i_participate (user_id)
+    puts "_______________________________________________"
+    puts "get_activities_i_participate "
+    puts "_______________________________________________"
+    puts "_________________^^^^^^^^__________________________________"
+    
+     #sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.*FROM activities, ac#tivities as tivits, tivit_user_statuses 
+     
+      sql_activities_i_participate = "SELECT DISTINCT activities.*, ISNULL(tivits.due) AS 'isnull'  FROM activities, activities as tivits 
+                 WHERE NOT activities.status      = 'Completed'
+                 AND activities.activity_type     = 'activity' 
+                 AND (activities.owner_id         = "+user_id+"
+                 OR (
+                 tivits.owner_id        = "+user_id+" 
+                 AND tivits.parent_id   = activities.id))
+                 ORDER BY  isnull ASC, tivits.due ASC "
+     #            ORDER BY activities.due"
+                            
+        activities_i_participate    = Activity.find_by_sql(sql_activities_i_participate)
+        puts "activities = "+activities_i_participate.inspect
+      #  activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_no_due_date)
+       # puts "without date = "+activities_i_participate_without_due_date.inspect
+        
+        return activities_i_participate
+        
+  end
+  
+
+
   
   
-  def get_activities_i_participate (user_id)
+  def OLD_get_activities_i_participate (user_id)
     puts "_______________________________________________"
     puts "get_activities_i_participate "
     puts "_______________________________________________"
@@ -141,7 +170,7 @@ module PagesHelper
   end
   
   
-  def old_get_activities_i_have_open_tivits(user_id)
+  def delete_old_get_activities_i_have_open_tivits(user_id)
     
       sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status           = 'Completed'  
@@ -174,7 +203,6 @@ module PagesHelper
   
   
   def get_activities_i_have_open_tivits(user_id)
-    puts "_______________________________________"
     puts "get_activities_i_have_open_tivits"
     puts "______________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^_________"
     
