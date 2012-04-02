@@ -141,7 +141,7 @@ git commit -am "3-12-12 completed tivit bugs and performance"
 git commit -am "1-25-12 staging 1"
 git commit -am "1-29-12 yanivs bug fixes stg 1"
 git commit -am "1-31-12 autocomplete"
-git commit -am "3-17-12 complete status"
+git commit -am "4-1-12 get rid of the create activity in ADP"
 
 git checkout master
 git merge updating-users
