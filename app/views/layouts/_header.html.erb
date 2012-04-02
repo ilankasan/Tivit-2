@@ -67,14 +67,5 @@
 
 <% end %>	
 	
-<% if signed_in? && !(controller.controller_name=="activities" && controller.action_name == "new_tivit") && @title != "How it works?" && @title != "Analytics" %>
-	<div id="new-activity-background">
-		<div id="new-activity">
-			<%= render 'activities/activity_form',:collection =>  [Activity.new], :as => @activity, :locals => {:activity => @activity} %>
-		</div>
-	</div>
-<% end %>
-
-
-
+	
 

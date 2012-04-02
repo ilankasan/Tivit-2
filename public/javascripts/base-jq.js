@@ -447,10 +447,8 @@ function openEdittivitDialog (clickedObject)
 	//console.log ("[Yaniv] in opentivitDialog func.");
 	
 	jQuery(clickedObject).parents('.menu-dialog').toggle();
-	
-	jQuery('#new-activity-background').addClass('tempHide');
+		
 	jQuery('#activity-overlay').show();
-	openEdittivitDialog
 	/* Yaniv - clear the form before creating new tivit **/
 	//$("#create-new-tivit-form")[0].reset();
 	/*****************************************************/
@@ -678,7 +676,6 @@ function closeNewActivity(){
    		{
     		jQuery("#dashboardFTE").fadeIn();
     	}
-    	
     });    
     
     jQuery(':input','#new-activity-form')
@@ -723,7 +720,6 @@ jQuery(document).ready(function($){
 	// add a tivit popup
 	$('#add-tivit').click(function(){
 		console.log ('[Yaniv] add a tivit button clicked');
-		jQuery('#new-activity-background').addClass('tempHide');
 		jQuery('#activity-overlay').show();
 		/* Yaniv - clear the form before creating new tivit **/
 		$("#create-new-tivit-form")[0].reset();
@@ -1060,7 +1056,6 @@ jQuery(document).ready(function($){
 								'</div>';
 			 
     		 jQuery('#new-activity-background').addClass('tempHide');
-    		
     		 jQuery('#activity-overlay').show();
     		 jQuery(this).parents('.record').append(confirmDialog);
     		 // Center the dialog relative to where dropdown was clicked. Default for popups is 70px because of the add tivit window.
@@ -1237,8 +1232,7 @@ jQuery(document).ready(function($){
     	console.log ("[Yaniv] activityid=", activityID);
     	
 		var actionPost = '/activities/' + activityID + '/edit';
-		
-		jQuery('#new-activity-background').addClass('tempHide');						
+								
 		jQuery('#activity-overlay').show();
 		console.log ("[Yaniv] actionPost=", actionPost);
 		
