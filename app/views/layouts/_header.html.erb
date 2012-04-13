@@ -29,9 +29,7 @@
 	    	<%if current_account.user.isAdmin?%>
 				<% if @title == "Analytics" %>
 	    		<li><%= link_to "Analytics", bireport_path, :class => "current" %></li>
-	    	<% else %>
-	    		<li><%= link_to "Analytics", bireport_path %></li>
-	    	<% end %>
+	    		<% end %>
 	    	
 			<%end%>
 
