@@ -128,7 +128,7 @@ def get_activities_i_participate (user_id)
       #  activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_no_due_date)
        # puts "without date = "+activities_i_participate_without_due_date.inspect
         
-        return activities_i_participate
+        return activities_i_participate.uniq
         
   end
   
