@@ -105,7 +105,7 @@ module PagesHelper
   end
 
 
-def get_activities_i_participate (user_id)
+def Order_according_to_tivit_get_activities_i_participate (user_id)
     puts "_______________________________________________"
     puts "get_activities_i_participate "
     puts "_______________________________________________"
@@ -136,7 +136,7 @@ def get_activities_i_participate (user_id)
 
   
   
-  def OLD_get_activities_i_participate (user_id)
+  def get_activities_i_participate (user_id)
     puts "_______________________________________________"
     puts "get_activities_i_participate "
     puts "_______________________________________________"
