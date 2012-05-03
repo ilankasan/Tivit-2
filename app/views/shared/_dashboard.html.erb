@@ -30,7 +30,7 @@
 	
     <div class="filter">
         <dl>
-            <dt><h2>Filter:</h2></dt>
+            <dt><h2>Filter tivits:</h2></dt>
             <dd>
 	            <% form_tag(:controller => "pages", :action => "home", :method => "put") do %>
 	            	<%= select_tag(:filter_id, options_for_select([['On Deck', 1],['My Open tivits', 2], ['No Response', 3],['All Open tivits', 4]],account_session[:filter_id])) %>
