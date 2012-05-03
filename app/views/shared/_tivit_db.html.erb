@@ -193,14 +193,29 @@
 		   		<i>1</i>
 		    </div>
 		   -->
-		    <% unread_comments = tivit.get_number_of_unread_comments(current_account.user)%>
-		    
-		    <!-- Only show comments icon if there're new comments -->
-		    <% if unread_comments > 0 %>
-		   		<div class="comments">	
-		   			<i><%=unread_comments%></i>
-		   		</div>
-		  	<% end %>
+		  	<% if owner_need_to_respond? tivit, current_account.user %>
+
+				<div class="happy-path-button">
+					
+					<%= link_to "respond >", tivit, :action => "show",
+	  									   :method => "get"
+	                                        %>     
+	                                       
+					
+				</div>
+			
+			<% else %>
+
+			    <% unread_comments = tivit.get_number_of_unread_comments(current_account.user)%>
+			    
+			    <!-- Only show comments icon if there're new comments -->
+			    <% if unread_comments > 0 %>
+			   		<div class="comments">	
+			   			<i><%=unread_comments%></i>
+			   		</div>
+			  	<% end %>
+			  	
+			<% end %>
 		  	  
 		</div>
 		<div class="wrapp">

@@ -292,6 +292,39 @@ def Order_according_to_tivit_get_activities_i_participate (user_id)
 
 def get_activities_completed_or_with_completed_tivits(user_id)
     #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
+    
+    sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
+                 WHERE 
+                      activities.activity_type   = 'activity' 
+                 AND  activities.status          = 'Completed'  
+                 
+                 ORDER BY tivits.completed_at DESC"
+        
+    
+    old_sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
+                 WHERE 
+                 activities.activity_type   = 'activity' 
+                 AND ((  
+                     activities.status          = 'Completed'  
+                 AND activities.owner_id       = "+user_id+")
+                 OR ( 
+                 NOT activities.status          = 'Completed'
+                 AND tivits.parent_id   = activities.id
+                 AND tivits.owner_id    = "+user_id+" 
+                 AND tivits.status      = 'Completed')
+                 ORDER BY tivits.completed_at DESC"
+                
+     @completed_activities = Activity.find_by_sql(sql_completed_activities_or_with_completed_tivits).paginate(:page => params[:page], :per_page => 60)
+    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
+    
+    puts " size = "+@completed_activities.size.to_s
+     
+      return @completed_activities
+  end
+
+
+def old_get_activities_completed_or_with_completed_tivits(user_id)
+    #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
     sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE (activities.status       = 'Completed'  
                  AND activities.activity_type   = 'activity' 
@@ -307,18 +340,10 @@ def get_activities_completed_or_with_completed_tivits(user_id)
                  ORDER BY tivits.completed_at DESC"
                  #ORDER BY activities.due ASC DESC"
      
-     #SELECT completed, ISNULL(completed, NULL) AS 'isnull'
-     #FROM TABLE
-    #ORDER BY isnull DESC, completed DESC
-    #      ORDER BY tivits.completed_at DESC"
-     
-     
      @completed_activities = Activity.find_by_sql(sql_completed_activities_or_with_completed_tivits).paginate(:page => params[:page], :per_page => 60)
      #puts "1. ------>>>>  "+completed_activities.inspect
       return @completed_activities
   end
-
-
   def very_old_get_activities_completed_or_with_completed_tivits(user_id)
     #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
     sql_completed_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits 

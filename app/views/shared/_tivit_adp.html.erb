@@ -241,13 +241,16 @@
 						<div class="activity">
 							
 							<!-- comments icon -->
+							<!-- don't show comments icon for owner if status is not responded yet -->
+							<%# if tivit_adp.get_owner.id != current_account.user.id && (owner_tivit_status != "New" && owner_tivit_status != "Reminded" && owner_tivit_status != "Reviewed") %>
 								
 							<div class="comments">
-					   		<% if unread_comments > 0 %>
-					   			<i><%=unread_comments%></i>
-					   		<%end%>
-			    			</div>
+						   		<% if unread_comments > 0 %>
+						   			<i><%=unread_comments%></i>
+						   		<%end%>
+				    		</div>
 							
+							<%# end %>
 							<!-- calendar icon -->
 							<!-- Yaniv to-do: change calendar rendering to be partial, adjust label from day/number to Month/number and different bacgkround icon as needed depending on when the tivit is due -->
 							
@@ -277,12 +280,12 @@
 									<!-- activity due within a week -->
 											<div class="calendar past">
 												<div class="week"><%= (tivit_adp.due.localtime.strftime ("%a")).upcase %></div>
-											    <div class="text"><%= tivit_adp.due.localtime.strftime ("%d") %></div>
+											    <div class="text"><%= tivit_adp.due.localtime.strftime ("%-d") %></div>
 												
 									<% else %>
 									<!-- activity due within more than a week -->
 											<div class="calendar date beyondaweek">
-											<div class="text"><%= tivit_adp.due.localtime.strftime ("%m-%d") %></div>
+											<div class="text"><%= tivit_adp.due.localtime.strftime ("%-m-%-d") %></div>
 											
 									<%end%>
 									</div>
@@ -376,6 +379,9 @@
 			</div><!-- conteiner -->
 			
 			<!-- Show respond button only to owner -->
+			
+			<!-- line below is if we want to hide the repond button in case of response needed - elevate CTAs -->
+			<%# if tivit_adp.get_owner.id == current_account.user.id && false == (owner_need_to_respond? tivit_adp, current_account.user) %>
 			<% if tivit_adp.get_owner.id == current_account.user.id %>
 			<%# if unread_comments > 0 %> 	
 				<% if tivit_adp.id == @tivit_id %>

@@ -1,6 +1,15 @@
 module ActivitiesHelper
 
 
+  def owner_need_to_respond? (activity, user)
+    
+    if ((activity.get_owner.id == current_account.user.id) && (activity.get_owner_status == "New" || activity.get_owner_status == "Reminded" || activity.get_owner_status == "Reviewed"))
+      return true
+    else
+      return false    
+    end
+  end
+  
   def notify_users_tivit_done(send_to,assigee,comment, tivit)
     
     send_to.each do |to_user|

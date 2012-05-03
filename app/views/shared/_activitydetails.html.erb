@@ -169,12 +169,12 @@
 	<!-- activity due within a week -->
 			<div class="calendar past">
 				<div class="week"><%= (activitydetails.due.localtime.strftime ("%a")).upcase %></div>
-			    <div class="text"><%= activitydetails.due.localtime.strftime ("%d") %></div>
+			    <div class="text"><%= activitydetails.due.localtime.strftime ("%-d") %></div>
 				
 		<% else %>
 	<!-- activity due within more than a week -->
 			<div class="calendar date beyondaweek">
-				<div class="text"><%= activitydetails.due.localtime.strftime ("%m-%d") %></div>
+				<div class="text"><%= activitydetails.due.localtime.strftime ("%-m-%-d") %></div>
 			
 		<%end%>
 		

@@ -66,12 +66,12 @@
 <!-- activity due within a week -->
 		<div class="calendar date nearlyDay">
 			<div class="week"><%= (activity_db.due.strftime ("%a")).upcase %></div>
-		    <div class="text"><%= activity_db.due.strftime ("%d") %></div>
+		    <div class="text"><%= activity_db.due.strftime ("%-d") %></div>
 			
 	<% else %>
 <!-- activity due within more than a week -->
 		<div class="calendar date beyondaweek">
-		<div class="text"><%= activity_db.due.strftime ("%m-%d") %></div>
+		<div class="text"><%= activity_db.due.strftime ("%-m-%-d") %></div>
 		
 	<%end%>
 	

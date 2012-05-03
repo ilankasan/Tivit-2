@@ -57,6 +57,29 @@ a:visited {
     white-space:nowrap;
     margin: -6px auto;
 }
+
+.happy-path-button {
+	margin: 0;
+	vertical-align: middle;
+	/*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
+	position: relative;
+	text-align: center;
+	/*width: 140px;*/
+	color: #fff;
+	background: #61b010;
+	border:1px solid #c0c0c0;
+	font-size: 110%;
+	font-weight: bold;
+	padding: 4px;
+	-moz-border-radius:    4px;
+	-webkit-border-radius: 4px;
+	border-radius:         4px;
+	margin-left: 10px;
+	cursor:pointer;
+}
+.happy-path-button a {color: #FFFFFF;}
+.happy-path-button a:hover {text-decoration: none;}
+
 #page-container{
 	/*background: white;*/
 	position: relative;
@@ -664,8 +687,9 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     .tvit-day .beyondaweek .text{
         color:#969696;
         font-weight:normal;
-       	padding:13px 0px 0px 5px;
+       	padding:13px 0px 0px 0px;
        	font-size: 12px;
+       	text-align: center;
         
     }
     .tvit-day .pastDay .text{
@@ -1218,7 +1242,8 @@ a img{border:none;}
 	color: #969696;
 	font-size:13px;padding-left:7px;
 	font-weight: normal;
-	padding: 12px 6px 0 0;
+	padding: 12px 0px 0 0;
+	text-align: center;
 }
 .tivits .record{padding-right:0;}
 .tivits .record .text-conteiner{width:465px;cursor:hover;}
@@ -1254,10 +1279,10 @@ a img{border:none;}
 .request span{color:red;}
 .request a{color:#2525f8;display:inline-block;padding:0 6px;}
 
-.request .form-button{position:relative;top:0;display:inline-block;background: #fff;padding:3px 15px;margin:20px 0 5px 5px;color:#929292;
+.request .form-button{position:relative;top:0;display:inline-block;background: #fff;padding:3px 15px;margin:20px 0 40px 5px;color:#929292;
 		border: 1px solid #C0C0C0;border-radius:4px;}
 		
-.request .form-button:first-child{background-image:none;background-color:#61B010;color:#fff;margin:20px 0 5px 200px;}
+.request .form-button:first-child{background-image:none;background-color:#61B010;color:#fff;margin:20px 0 40px 5px;}
 
 .fupload{padding:3px 0 3px 50px !important;height:38px;}
 .fupload.pptx{background:url(../images/file_pptx.gif) no-repeat;}

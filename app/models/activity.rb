@@ -621,10 +621,25 @@ return results
    
  def get_owner
  #adding the user to the existing users on the task
-return User.find_by_id(self.owner_id)
+     #puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   error no owner!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    return User.find_by_id(self.owner_id)
  end
  
+ def get_owner_name
+ #adding the user to the existing users on the task
+     user = User.find_by_id(self.owner_id)
+    if user == nil
+       "no owner error, call admin"
+    else
+       return user.name
+    end
+ end
+ 
+ 
+ 
+ 
  def get_owner_id
+   puts" in get opwner id  ---------> "+self.owner_id.to_s
   return self.owner_id
  end
 
@@ -672,6 +687,8 @@ return User.find_by_id(self.owner_id)
  
  def get_number_of_tivits
 #returns number of tivits
+#puts "get_number_of_tivits" 
+   
   if(self.tivits == nil || self.tivits.size == 0)
     return 0
   else
@@ -682,6 +699,7 @@ return User.find_by_id(self.owner_id)
 
   
   def get_number_of_completed_tivits
+   puts "get_number_of_completed_tivits" 
    return 0 if (self.tivits == nil || self.tivits.size == 0)
    
   # puts "^^^^^^^^^^^^^^^^^^^^^  Activity = "+self.name

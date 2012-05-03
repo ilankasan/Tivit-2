@@ -11,25 +11,33 @@
 <!-- add comment input field -->  
     	
   	<!-- <div class="post"><textarea cols="10" rows="1">Leave a note...</textarea> -->
-  			
+  		
+  		<% if (owner_need_to_respond? tivit, current_account.user) && true == false %>
+  		<div class="request">
+  			<div class="form-button">I'm on it!</div>
+			<div class="form-button">Sorry, can't help</div>
+			<div class="form-button">Suggest someone else</div>
+		</div>
+  		<% else %>	
+  		
   		<div class="post">
   			<div class="loading"></div>
  	
- 		<%= form_for([tivit, tivit.tivitcomments.build], :html => { :id => "post-comment-form"}) do |f| %>
-    
-		<%= f.text_area :comment %>
-<!-- 
-			<p>
-    			<%= f.submit "post", :class => "post-button" %>
-    			
-    			// attach a file is handeled in jQuery file
-    			<a href="#" class="attach-file">attach a file</a>
-    		</p>
---> 
- 	 <% end %>
+	 		<%= form_for([tivit, tivit.tivitcomments.build], :html => { :id => "post-comment-form"}) do |f| %>
+	    
+			<%= f.text_area :comment %>
+	<!-- 
+				<p>
+	    			<%= f.submit "post", :class => "post-button" %>
+	    			
+	    			// attach a file is handeled in jQuery file
+	    			<a href="#" class="attach-file">attach a file</a>
+	    		</p>
+	--> 
+	 		<% end %>
   		
-</div>
-  	
+		</div>
+  	<% end %>
 <!--   	
   <div class="post">
   	
