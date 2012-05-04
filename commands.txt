@@ -210,6 +210,7 @@ rails -d mysql my_rails_app
  rails generate migration add_user_id_to_documents user_id:integer
  
  rails generate migration add_index_to_status_column_in_activities 
+ rails generate migration add_index_to_user_id_column_in_tivit_user_statuses.user_id 
  
  
  
