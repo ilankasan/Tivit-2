@@ -13,10 +13,10 @@ console.log('in edit_tivit.js.erb function');
 
 var edittivitDialog = '<div class="popup" id="edit-tivit-popup" style="display: block">' + 	
 							'<div class="loading-popup"></div>' +
-							'<h3>Edit tivit</h3>' + 
+							'<h3>Edit task</h3>' + 
 							'<%= form_tag({:controller => "activities", :action => "update_tivit", :method => "put", :id => @activity.id}, :id => "edit-tivit-form", :class => "edittivitPopup") do %>' +
 							'<p><label for="tivit">tivit:</label>' +
-								'<%= text_field_tag(:name, @activity.name.gsub("'", "\\\\'"), :class => "required") %>' +
+								'<%= text_field_tag(:name, @activity.name.gsub("\'", "\\\\'"), :class => "required") %>' +
 							'</p>' +
 							'<p style="display: none"><label for="who">Who:</label>' +
 								'<%= text_field_tag(:invitees, who, :placeholder => "myself -OR- invite by email address", :class => "optional email") %>' +

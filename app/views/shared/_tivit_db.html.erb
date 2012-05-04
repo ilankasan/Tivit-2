@@ -49,7 +49,9 @@
 <% status_line_middle = "" %>
 <% if owner_tivit_status == "Done" %>
 
-	<li class="record complete">
+	<li class="record complete tivit-name-line-through">
+	
+								
 	<% status_line_middle = " finished this " +  (time_ago_in_words (tivit.completed_at)) + " ago." %>
 	<% status_line_window = "" %>
 		

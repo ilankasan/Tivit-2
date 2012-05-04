@@ -15,7 +15,10 @@ console.log('done.js.erb function');
 		// Mark new added comment as new with yellow background
 		var record = jQuery(newcommentId).find('.record');
 		record.addClass('active');
-					
+		var tivitrecord = jQuery(newcommentId).parents('.record');
+		
+		tivitrecord.addClass('tivit-name-line-through');
+		
 		console.log('done.js.erb:: succeeded?'); 
 		console.log('done.js.erb:: new comment should be rendered by now...'); 
 

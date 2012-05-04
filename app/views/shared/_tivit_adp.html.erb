@@ -73,8 +73,9 @@
 		<% if owner_tivit_status == "Done" %>
 			<% status_line_middle = " finished this " +  (time_ago_in_words (tivit_adp.completed_at)) + " ago." %>
 			<% status_line_window = "" %>
-			
-		<li class="record complete">
+		
+		<!-- if tivit is done, add line-through on tivit name label -->	
+		<li class="record complete tivit-name-line-through">
 		<% respondbutton = "I'm done!" %>
 		
 		<% elsif owner_tivit_status == "Proposed" %>
@@ -292,11 +293,12 @@
 							<% end %>					
 							
 						</div>
-							
+						
 						<div class="text-conteiner">
-																	
+															
 							<!-- tiviti name -->
 							<h3><%= tivit_adp.name %></h3>
+							
 							<!-- ********* -->
 					 
 					<!-- all gray status lines -->

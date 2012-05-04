@@ -245,7 +245,7 @@ jQuery(document).ready(function($){
 	    			break;
 	    		case 're-assign':
 	    			console.log('[Yaniv] re-assign tivit selected.');
-	    			var confirmDialogTitle = 'Reassign tivit to someone else';
+	    			var confirmDialogTitle = 'Reassign task to someone else';
 	    			var actionPost = 'action="/reassign?id=' + tivitID + '&method=put" accept-charset="UTF-8">';
 					who = '<p><label for="who">Who:</label><input type="text" name="assign_to" id="assign_to" placeholder="- enter one email address -" class="required email" /></p>';    
 	    			break;
@@ -334,11 +334,20 @@ jQuery(document).ready(function($){
 						
 					// Find the new status we need to change the checkbox to, it's hidden in the HTML of the confirmation popup.
 					var statusobject = jQuery(form).parents('.popup'); 
-						
-					var newState = 'record ' + statusobject.find("input").attr("newstate");
+					
+					var newStateVal = statusobject.find("input").attr("newstate");
+					if (newStateVal == "complete")	
+					{
+						var newState = 'record ' + statusobject.find("input").attr("newstate") + ' tivit-name-line-through';
+					}
+					else
+					{
+						var newState = 'record ' + statusobject.find("input").attr("newstate");
+					}
 				    //console.log ("[Yaniv] new state=", newState);
 					record = jQuery(form).parents('.record');
 					// Change status on UI to the new selected state (need to use this for Ajax callback)
+					
 					record.attr('class', newState);
 						
 					// Show comment of status change
@@ -1043,7 +1052,7 @@ jQuery(document).ready(function($){
 		var actionPost = 'action="/remove_tivit?id=' + tivitID + '&method=post"' + ' accept-charset="UTF-8">';
 		
 		console.log ("[Yaniv] action=", actionPost);
-		var confirmDialogTitle = "Sure you want to delete this tivit?";
+		var confirmDialogTitle = "Sure you want to delete this task?";
 		
 		var confirmDialog =	'<div class="popup" id="confirmDialog">'	+
     								'<div class="loading-popup"></div>' + 

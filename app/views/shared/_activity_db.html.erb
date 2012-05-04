@@ -84,7 +84,7 @@
 	    	<div class="progress">
 	    		<%unless activity_db.get_number_of_tivits == 0%>
 	            	<strong> <%=(( 100 * activity_db.get_number_of_completed_tivits) / activity_db.get_number_of_tivits)%>%</strong>
-	            	(<%= activity_db.get_number_of_completed_tivits %>/<%= activity_db.get_number_of_tivits %> tivits completed)
+	            	(<%= activity_db.get_number_of_completed_tivits %>/<%= activity_db.get_number_of_tivits %> tasks completed)
 	        		
 	        	<%end%>   
 	        </div>

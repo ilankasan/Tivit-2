@@ -329,16 +329,16 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 /* New Activity Bar / Input*****************************************/
 #newactivityFTE {
     /*background: url('/images/tivity.jpg') no-repeat scroll center center transparent;*/
-    background: url('/images/newactivityFTE.jpg') no-repeat scroll center center transparent; 
+    background: url('/images/newactivityFTE.png') no-repeat scroll center center transparent; 
     display: inline-block;
     height: 78px;
     width: 285px;
-    top: 8px;
-    left: 494px;
+    top: -27px;
+    left: 525px;
     right: 10px;
     bottom: 10px;
     /*overflow: hidden;*/
-    z-index: 20;
+    z-index: 110;
     position: absolute;
 }
 #dashboardFTE {
@@ -735,6 +735,8 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     color: black;
     text-decoration:none;
 }
+.tvit-list .tivit-name-line-through h3{ text-decoration:line-through;}
+
 .tvit-list .record-hovered{
 	background: #ccecff;
 }
@@ -1068,6 +1070,7 @@ a img{border:none;}
 
 /* This line controls the tivit titles style on both dashboard AND ADP */
 .activities h3,.tvit-list .record .text h3{margin:6px 0 0;font-size:15px;color:#000;font-weight:normal;}
+.activities .tivit-name-line-through h3{ text-decoration:line-through;}
 
 .activities small{color:#8d8d8d;font-size:12px;}
 .activities a{color:#7b7bd2;}
@@ -1229,7 +1232,7 @@ a img{border:none;}
 	color: #969696;
 	font-size:18px;padding-left:7px;
 	font-weight: bold;
-	padding: 0px 13px 2px 0px;
+	padding: 0px 18px 2px 0px;
 }
 .tivits .past .week{
 	color: #969696;

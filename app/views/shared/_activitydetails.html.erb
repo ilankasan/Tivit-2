@@ -36,7 +36,7 @@
 	<div class="loading-popup"></div>
 
 	<!-- Popup title -->
-	<h3>Assign yourself a tivit or invite others to help</h3>
+	<h3>Assign yourself a task or invite others to help</h3>
 
 	<!-- in the form tag below, the second id is the actual HTML ID of the form which I use in jQuery -->
 	<%= form_tag({:controller => "activities", :action => "create_tivit", :method => "post", :id => @activity.id}, :id => "create-new-tivit-form") do %>
@@ -108,7 +108,7 @@
 	            		<strong> <%=(( 100 * activitydetails.get_number_of_completed_tivits) / activitydetails.get_number_of_tivits)%>%</strong>
 	     
 	        			</span> 
-	     				(<%= activitydetails.get_number_of_completed_tivits %>/<%= activitydetails.get_number_of_tivits %> tivits completed)	
+	     				(<%= activitydetails.get_number_of_completed_tivits %>/<%= activitydetails.get_number_of_tivits %> tasks completed)	
 	     			   		
 	        		<%end%>   
 	        </p>                                        
@@ -222,7 +222,7 @@
 			<% if mytivits != nil && mytivits.size > 0 %>
 				<div class="tivits main-tivit" id="alltivits">
 				
-					<h2>my tivits <span>(<%= mytivits.size %>)</span></h2>
+					<h2>my tasks <span>(<%= mytivits.size %>)</span></h2>
 					<div class="tvit-list" id="mytivits">
 						<%= render :partial => 'shared/tivit_adp', :collection =>  mytivits %>
 					</div>
@@ -233,7 +233,7 @@
 			<%end%>
 				
 				<!-- add tivit button -->
-				<p><input type="submit" value="add a tivit" id="add-tivit" class="form-button"></p>
+				<p><input type="submit" value="add a task" id="add-tivit" class="form-button"></p>
 				   			
 			<!-- End of Main Tivits -->
 			</div> <!-- My tivits -->
@@ -246,7 +246,7 @@
 				<% if teamtivits !=nil && teamtivits.size > 0 %>
 				
 				<div class="team tivits" id="team-tivits">
-					<h2>team tivits <span>(<%= teamtivits.size %>)</span></h2>
+					<h2>team tasks <span>(<%= teamtivits.size %>)</span></h2>
 					<div class="tvit-list" id="teamtivits">
 					
 						<%= render :partial => 'shared/tivit_adp', :collection =>  teamtivits %>
