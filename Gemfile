@@ -11,7 +11,7 @@ gem 'carrierwave', '0.5.1'
 gem 'fog', '0.5.2'
 gem 'gravatar_image_tag', '1.0.0.pre2'
 #gem 'rake', '0.8.7'
-gem "rake", "0.9.2.2"  
+gem "rake", "0.9.2"  
 
 gem 'sqlite3-ruby', '1.3.2', :require => 'sqlite3'
 gem 'sqlite3-ruby', '1.3.2'
