@@ -117,7 +117,7 @@
 
 
 			<div id="completed-items" class="completed-items tabInfo">
-				<% unless @completed_activities == nil %>
+				<% unless @completed_activities == nil || @completed_activities.size == 0 %>
 					<%= render :partial => 'shared/activity_db', :collection =>  @completed_activities,:locals => {:tabview => "Completed"} %>
 					<%= will_paginate @completed_activities %>
 				
