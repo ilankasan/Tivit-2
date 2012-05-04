@@ -246,7 +246,7 @@ rails generate migration add_proposed_date_to_tivit_user_statuses proposed_date:
 rails generate migration add_last_signin_to_users last_signin:datetime
 rails generate migration add_action_to_tivitcomments action:string
 
-
+rails generate model tivit_status status_id:integer status:string
 rails generate migration add_assigned_to_to_tivit_user_statuses assigned_to:id
 
 
