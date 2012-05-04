@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504053454) do
+ActiveRecord::Schema.define(:version => 20120504064159) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -128,6 +128,8 @@ ActiveRecord::Schema.define(:version => 20120504053454) do
     t.datetime "updated_at"
   end
 
+  add_index "tivit_user_statuses", ["user_id"], :name => "index_tivit_user_statuses_on_user_id"
+
   create_table "tivitcomments", :force => true do |t|
     t.integer  "user_id"
     t.string   "comment",     :limit => 1024
@@ -136,6 +138,8 @@ ActiveRecord::Schema.define(:version => 20120504053454) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "tivitcomments", ["activity_id"], :name => "index_tivitcomments_on_activity_id"
 
   create_table "user_preferences", :id => false, :force => true do |t|
     t.integer  "user_id"
