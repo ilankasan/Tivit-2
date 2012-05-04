@@ -46,7 +46,7 @@ group :development do
  # gem 'rails3-jquery-autocomplete'
   gem 'faker', '0.3.1'
   
-  
+#need this gem for heroku
  gem 'mongrel', '1.2.0.pre2'
  
   
