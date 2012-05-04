@@ -188,7 +188,7 @@ put "______________     incoming reqyests __________________"
     
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
                                  #  "NOT tivit_user_statuses.status_id = 'Done'
-                                    "NOT activities.status = 'Completed'
+                                    "   NOT activities.status             = 'Completed'
                                     AND NOT tivit_user_statuses.status_id = 'Declined'
                                     AND tivit_user_statuses.user_id       = activities.owner_id 
                                     AND activities.owner_id               = ? ",user.get_id).order(:due).reverse_order
