@@ -68,10 +68,10 @@ def home
           @filter_id = "1"    
         end
   # Filter only product On Deck (for now)
-      #@completed_activities          = get_activities_completed_or_with_completed_tivits(current_user_id)
+      @completed_activities          = get_activities_completed_or_with_completed_tivits(current_user_id)
       @incoming_activities           = get_activities_with_new_tivit_requests(current_user_id)
       
-      @completed_activities       = []
+     # @completed_activities       = []
     #  @incoming_activities        = []
    
       
