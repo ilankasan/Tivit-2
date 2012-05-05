@@ -735,7 +735,10 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     color: black;
     text-decoration:none;
 }
-.tvit-list .tivit-name-line-through h3{ text-decoration:line-through;}
+
+/*.tvit-list .completed { opacity: 0.6;}*/
+
+.tvit-list .tivit-name-line-through h3{ text-decoration:line-through; opacity: 0.4;}
 
 .tvit-list .record-hovered{
 	background: #ccecff;
@@ -914,6 +917,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     left:-5px;
     top:40px;
     display: none;
+    opacity: 1;
 }
 .status-list-dialog .status-list li{
     list-style-type:none;

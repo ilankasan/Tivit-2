@@ -180,8 +180,7 @@
 	</div>
 
 <!-- if the status is new, that means the owner didn't read it yet, dim avatar and put the remind link -->
-<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
-
+<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Done" %>
 	<div class="avatar unread">
 <% else %>
 	<div class="avatar">
