@@ -578,11 +578,7 @@ return results
      tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
      if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
    # puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
-     size = self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id).count
-     #size = 1
-     #if(size > 0)
-     #     puts "number of unread comment "+size.to_s
-     #end
+       size = self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id).count
        return size
      else
      #puts "tivit_user_status.last_reviewed = nill"

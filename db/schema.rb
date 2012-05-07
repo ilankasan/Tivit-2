@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504064159) do
+ActiveRecord::Schema.define(:version => 20120507025341) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20120504064159) do
   end
 
   add_index "tivitcomments", ["activity_id"], :name => "index_tivitcomments_on_activity_id"
+  add_index "tivitcomments", ["created_at"], :name => "index_tivitcomments_on_created_at"
 
   create_table "user_preferences", :id => false, :force => true do |t|
     t.integer  "user_id"

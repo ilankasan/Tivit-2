@@ -214,7 +214,7 @@ rails -d mysql my_rails_app
  rails generate migration add_index_to_user_id_column_in_tivit_user_statuses
  rails generate migration add_index_to_status_id_column_in_tivit_user_statuses
  
- rails generate migration add_index_to_activity_id_column_in_tivitcomments
+ rails generate migration add_index_to_created_at_column_in_tivitcomments
  
  othercomments.activity_id  
  
