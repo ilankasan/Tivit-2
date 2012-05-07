@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507040003) do
+ActiveRecord::Schema.define(:version => 20120507040800) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20120507040003) do
   end
 
   add_index "activities", ["due"], :name => "index_activities_on_due"
+  add_index "activities", ["invited_by"], :name => "index_activities_on_invited_by"
   add_index "activities", ["owner_id"], :name => "index_activities_on_owner_id"
   add_index "activities", ["parent_id"], :name => "index_activities_on_parent_id"
   add_index "activities", ["status"], :name => "index_activities_on_status"
@@ -130,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20120507040003) do
     t.datetime "updated_at"
   end
 
+  add_index "tivit_user_statuses", ["status_id"], :name => "index_tivit_user_statuses_on_status_id"
   add_index "tivit_user_statuses", ["user_id"], :name => "index_tivit_user_statuses_on_user_id"
 
   create_table "tivitcomments", :force => true do |t|
