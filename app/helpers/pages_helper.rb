@@ -109,7 +109,6 @@ def Order_according_to_tivit_get_activities_i_participate (user_id)
     puts "_______________________________________________"
     puts "get_activities_i_participate "
     puts "_______________________________________________"
-    puts "_________________^^^^^^^^__________________________________"
     
      #sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.*FROM activities, ac#tivities as tivits, tivit_user_statuses 
      
@@ -204,7 +203,6 @@ def Order_according_to_tivit_get_activities_i_participate (user_id)
   
   def get_activities_i_have_open_tivits(user_id)
     puts "get_activities_i_have_open_tivits"
-    puts "______________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^_________"
     
       sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.*, ISNULL(tivits.due) AS 'isnull' FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status           = 'Completed'  

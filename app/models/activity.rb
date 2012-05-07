@@ -697,18 +697,15 @@ return results
   def get_number_of_completed_tivits
    #puts "get_number_of_completed_tivits" 
    return 0 if (self.tivits == nil || self.tivits.size == 0)
-  puts "______________________________________________________" 
-   puts "^^^^^^^^^^^^^^^^^^^^^  Activity = "+self.name
-   puts "______________________________________________________" 
   #puts "______________________________________________________" 
-  
+   #puts "^^^^^^^^^^^^^^^^^^^^^  Activity = "+self.name
+   
    #count = 0
    #self.tivits.each do |tivit|
    #  status = tivit.get_user_status(tivit.get_owner)
    #  if (status == "Done")
    #   count = count+1
    #   if(tivit.status == "Completed")
-   #     puts "____________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ _______________"
    #   else
    #     puts "Completed!!!!!!!"
    #   end
