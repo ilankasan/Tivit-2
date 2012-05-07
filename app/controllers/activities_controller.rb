@@ -214,7 +214,7 @@ class ActivitiesController < ApplicationController
   if (@activity != nil && @activity.update_attributes(params))
    
       comment = @activity.tivitcomments.order(:created_at).first
-      puts "comment ----=====>>>>>>>>    "+comment.inspect
+   #   puts "comment ----=====>>>>>>>>    "+comment.inspect
       if(comment != nil)
         comment.update_comment(params[:description])
         comment.save
@@ -370,7 +370,7 @@ class ActivitiesController < ApplicationController
 	  params["owner_id"] =  @invited_user.get_id
 	  params["activity_type"] = "tivit"
 	
-	  puts "Inspect Params " +params.inspect
+	  #puts "Inspect Params " +params.inspect
 	  
    	
 	  current_account.user.addTwoWayContact(@invited_user)
@@ -440,11 +440,11 @@ class ActivitiesController < ApplicationController
   def propose_date
     puts "-----------    propose date ---------------" + params["propose_date"]
     
-    puts params.inspect  
+    #puts params.inspect  
   	unless (params["propose_date"] == nil)
     	@activity = Activity.find(params[:id])
-    	puts "old date = "+@activity.due.inspect
-    	puts "new date = "+ params["propose_date"]
+    #	puts "old date = "+@activity.due.inspect
+    #	puts "new date = "+ params["propose_date"]
     	proposed_date = adjust_date_to_end_of_day(parse_date(params,"propose_date"))
     	@activity.update_tivit_user_propose_date(current_account.user,params["comment"], proposed_date)
     	@lastcomment = log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)

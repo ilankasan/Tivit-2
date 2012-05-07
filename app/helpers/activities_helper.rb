@@ -130,9 +130,9 @@ end
   	invitees = emails.split(/;|,/)
   	
   	
-  	puts "#######################################################"
-  	puts invitees.inspect
-  	puts "######################################################"
+  	#puts "#######################################################"
+  	#puts invitees.inspect
+  	#puts "######################################################"
   	
   	invitees.each do |email_address|
   	
@@ -188,7 +188,7 @@ def  add_tivit_to_user(emails, activity)
    				return ""
    			end
    			date = params[parameter_name].split('-')
-   			puts date.inspect
+   	#		puts date.inspect
    			params[parameter_name]= {"year"  => date[2],
    									 "month" => date[0],
    									 "day"	 => date[1]}
