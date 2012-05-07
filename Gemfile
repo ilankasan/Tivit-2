@@ -15,7 +15,8 @@ gem 'gravatar_image_tag', '1.0.0.pre2'
 #changed for rake
 gem "rake", "0.9.2.2"
 
-#gem "rake", "0.9.2"  
+#gem "rake", "0.9.2"
+  
   
 
 
