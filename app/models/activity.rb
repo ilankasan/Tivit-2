@@ -719,7 +719,7 @@ return results
    #   tivit.status = "Completed"
    #   tivit.save()
    #  end
-   end
+   #end
                                          
    count1 = self.tivits.where(:status=>["Completed", "Done"]).count
  #  puts "count 1 = "+count1.to_s
