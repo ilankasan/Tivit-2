@@ -12,7 +12,7 @@ gem 'fog', '0.5.2'
 gem 'gravatar_image_tag', '1.0.0.pre2'
 #gem 'rake', '0.8.7'
 
-#changed for rake
+#changed for rake, not sure this is right
 gem "rake", "0.9.2.2"
 
 #gem "rake", "0.9.2"
