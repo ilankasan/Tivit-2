@@ -1,5 +1,6 @@
 source :gemcutter
-  
+
+ 
 gem 'rails', '3.0.3'
 gem 'faker', '0.3.1'
 gem 'excon', '0.5.6'
