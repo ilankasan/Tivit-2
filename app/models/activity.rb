@@ -267,7 +267,7 @@ put "______________     incoming reqyests __________________"
   
   def self.get_num_of_requests_tivits(currentuser)
     puts "______>>>>>  get_num_of_requests_tivits   <<<<_____"
-    puts "______>>>>>  get_num_of_requests_tivits   <<<<_____"
+    #puts "______>>>>>  get_num_of_requests_tivits   <<<<_____"
     
     current_user_id = currentuser.get_id.to_s
     sql_activities_with_my_tivits = "SELECT DISTINCT tivits.id FROM activities, activities as tivits, tivit_user_statuses
@@ -300,12 +300,6 @@ put "______________     incoming reqyests __________________"
                    AND  NOT tivits.status                = 'Completed'
                  
                    ORDER BY activities.due"
-    
-    
-    #AND     activities.owner_id           = "+current_user_id+"
-    
-    
-                   
                  
       results2  =  Activity.find_by_sql(sql_activities_i_assigned_with_tivit_requests).count
       puts " number of my other requests "+results2.to_s
@@ -682,14 +676,11 @@ return results
 
  
  def get_number_of_tivits
-#returns number of tivits
-#puts "get_number_of_tivits" 
-   
-  if(self.tivits == nil || self.tivits.size == 0)
-    return 0
-  else
-    return self.tivits.size
- end
+    if(self.tivits == nil || self.tivits.size == 0)
+      return 0
+    else
+      return self.tivits.size
+    end
  end
   
 

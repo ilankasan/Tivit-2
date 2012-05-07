@@ -291,7 +291,7 @@ def Order_according_to_tivit_get_activities_i_participate (user_id)
 def get_activities_completed_or_with_completed_tivits(user_id)
     #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
     
-    sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
+    temp_sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE 
                       activities.activity_type   = 'activity' 
                  AND  activities.status          = 'Completed'  
@@ -299,20 +299,28 @@ def get_activities_completed_or_with_completed_tivits(user_id)
                  ORDER BY tivits.completed_at DESC"
         
     
-    old_sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
+    sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE 
                  activities.activity_type   = 'activity' 
-                 AND ((  
-                     activities.status          = 'Completed'  
-                 AND activities.owner_id       = "+user_id+")
-                 OR ( 
-                 NOT activities.status          = 'Completed'
-                 AND tivits.parent_id   = activities.id
-                 AND tivits.owner_id    = "+user_id+" 
-                 AND tivits.status      = 'Completed')
+                 AND (
+                          (activities.status = 'Completed' AND activities.owner_id = "+user_id+")
+                    OR ( 
+                             tivits.parent_id       = activities.id 
+                             AND tivits.owner_id    = "+user_id+"  
+                             AND tivits.status      = 'Completed')
+                      )
                  ORDER BY tivits.completed_at DESC"
                 
-     @completed_activities = Activity.find_by_sql(sql_completed_activities_or_with_completed_tivits).paginate(:page => params[:page], :per_page => 60)
+     @completed_activities = Activity.find_by_sql(sql_completed_activities_or_with_completed_tivits).paginate(:page => params[:page], :per_page => 5)
+    
+    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
+    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
+    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
+    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
+    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
+    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
+    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
+    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
     puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
     
     puts " size = "+@completed_activities.size.to_s
