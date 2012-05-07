@@ -220,8 +220,8 @@ rails -d mysql my_rails_app
  rails generate migration add_index_to_owner_id_and_parent_id_columns_in_activities
  rails generate migration add_index_to_completed_at_column_in_activities
  
+ rails generate migration add_index_to_user_id_column_in_tivitcomments
  
- othercomments.activity_id  
  
  
  

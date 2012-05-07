@@ -160,9 +160,9 @@ def Order_according_to_tivit_get_activities_i_participate (user_id)
                  ORDER BY activities.due"
                             
         activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
-        puts "with date = "+activities_i_participate_with_due_date.inspect
+     #   puts "with date = "+activities_i_participate_with_due_date.inspect
         activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_no_due_date)
-        puts "without date = "+activities_i_participate_without_due_date.inspect
+    #    puts "without date = "+activities_i_participate_without_due_date.inspect
         
         return activities_i_participate_with_due_date + activities_i_participate_without_due_date
         
@@ -313,17 +313,8 @@ def get_activities_completed_or_with_completed_tivits(user_id)
                 
      @completed_activities = Activity.find_by_sql(sql_completed_activities_or_with_completed_tivits).paginate(:page => params[:page], :per_page => 5)
     
-    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
-    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
-    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
-    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
-    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
-    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
-    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
-    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
-    puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
     
-    puts " size = "+@completed_activities.size.to_s
+    puts ">>  get_activities_completed_or_with_completed_tivits << size = "+@completed_activities.size.to_s
      
       return @completed_activities
   end
@@ -397,7 +388,7 @@ def get_user_stats
      avg_t_per_a        = Integer(tmp * 100) / Float(100)
      
      @tivits_stats = {"activities" => activities.to_s, "tivits" => tivits.to_s,  "avg_t_per_a" => avg_t_per_a.to_s}
-     puts @tivits_stats .inspect 
+  #   puts @tivits_stats .inspect 
 
      return @tivits_stats
     
