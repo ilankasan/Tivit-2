@@ -26,7 +26,6 @@ class UserMailer < ActionMailer::Base
    
    
    
-  # def tivit_accept_new_date_email(assignee, assigner, tivit,comment )
    def tivit_accept_new_date_email(params)
      
 

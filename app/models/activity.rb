@@ -205,12 +205,14 @@ put "______________     incoming reqyests __________________"
       return (my_open_tivits + other_open_tivits + tivits_i_commented_with_new_comments).uniq
    
     else
-# Not my activity - show
+  
+# Not my activity - i am not the owner
 # my open tivits
 # tivits i commented and have a comment
       #puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is NOT the owner of activity"
       
 # Get only my open tivits and tivits i am the invitee (asignee)
+
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
                 # "NOT tivit_user_statuses.status_id = 'Done'
                  "NOT activities.status = 'Completed'
@@ -219,12 +221,18 @@ put "______________     incoming reqyests __________________"
        
       #puts "My open tivit "+my_open_tivits.size.to_s
      
-      open_tivits_im_asignee = self.tivits.joins(:tivit_user_statuses).where(
+      old_open_tivits_im_asignee = self.tivits.joins(:tivit_user_statuses).where(
                     #"NOT tivit_user_statuses.status_id = 'Done'
                     "NOT activities.status = 'Completed'
                               
                      AND activities.invited_by = ? 
                      AND tivit_user_statuses.user_id = activities.owner_id",user.get_id)
+      
+ #(recently ilan kasan)
+      open_tivits_im_asignee = self.tivits.where(
+                    #"NOT tivit_user_statuses.status_id = 'Done'
+                    "NOT activities.status = 'Completed' AND activities.invited_by = ?",user.get_id)
+      
                       
    #   puts "Open tivits in other activity i invited "+open_tivits_im_asignee.size.to_s
       
