@@ -699,28 +699,31 @@ return results
 
   
   def get_number_of_completed_tivits
-   puts "get_number_of_completed_tivits" 
+   #puts "get_number_of_completed_tivits" 
    return 0 if (self.tivits == nil || self.tivits.size == 0)
-   
-  # puts "^^^^^^^^^^^^^^^^^^^^^  Activity = "+self.name
-   count = 0
-   self.tivits.each do |tivit|
-     status = tivit.get_user_status(tivit.get_owner)
-     if (status == "Done")
-      count = count+1
-      if(tivit.status == "Completed")
+  puts "______________________________________________________" 
+   puts "^^^^^^^^^^^^^^^^^^^^^  Activity = "+self.name
+   puts "______________________________________________________" 
+  #puts "______________________________________________________" 
+  
+   #count = 0
+   #self.tivits.each do |tivit|
+   #  status = tivit.get_user_status(tivit.get_owner)
+   #  if (status == "Done")
+   #   count = count+1
+   #   if(tivit.status == "Completed")
    #     puts "____________________________^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ _______________"
-      else
-        puts "Completed!!!!!!!"
-      end
-      tivit.status = "Completed"
-      tivit.save()
-     end
+   #   else
+   #     puts "Completed!!!!!!!"
+   #   end
+   #   tivit.status = "Completed"
+   #   tivit.save()
+   #  end
    end
                                          
    count1 = self.tivits.where(:status=>["Completed", "Done"]).count
  #  puts "count 1 = "+count1.to_s
-  # puts "count  = "+count.to_s
+ #  puts "count  = "+count.to_s
    
    #puts "************* end **************************************************"
      
