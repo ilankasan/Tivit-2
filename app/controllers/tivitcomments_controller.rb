@@ -2,7 +2,7 @@ class TivitcommentsController < ApplicationController
   before_filter :authenticate_account!
   
   def create
-  	puts ">>>>>>>>>---------    create comment ------------------<<<<<<<<"
+ # 	puts ">>>>>>>>>---------    create comment ------------------<<<<<<<<"
   #	puts "param - " +params.inspect
   	comment = params["tivitcomment"][:comment]
   	
@@ -33,7 +33,7 @@ class TivitcommentsController < ApplicationController
       @comment = @activity.tivitcomments.create(params["tivitcomment"])
       
       puts "sending notification "
-    if(@activity.get_owner.id != current_account.user.id || @activity.get_parent.get_owner != current_account.user.id )
+    if(@activity.get_owner.id != current_account.user.id || @activity.get_parent.get_owner != current_account.user )
       send_to = Array.new
       send_to << @activity.get_owner            if @activity.get_owner.id               != current_account.user.id
       send_to << @activity.get_parent.get_owner if @activity.get_parent.get_owner.id    != current_account.user.id

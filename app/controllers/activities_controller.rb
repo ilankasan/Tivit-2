@@ -467,18 +467,14 @@ class ActivitiesController < ApplicationController
 
  
   def accept_date
-    puts "-----------    Accept Date ---------------"
-        puts "-----------    Accept Date ---------------"
-    puts "-----------    Accept Date ---------------"
-    puts "-----------    Accept Date ---------------"
-    puts "-----------    Accept Date ---------------"
-
+    #puts "-----------    Accept Date ---------------"
+    
     @activity = Activity.find(params[:id])
   #  puts    params.inspect
     
     log_action_as_comment(@activity,params["comment"],"Accepted",current_account.user)
     
-    puts "Old date = "+ @activity.due.inspect + "   accepted new date  = "+ @activity.get_owner_proposed_date.inspect 
+   # puts "Old date = "+ @activity.due.inspect + "   accepted new date  = "+ @activity.get_owner_proposed_date.inspect 
     
     @activity.due = @activity.get_owner_proposed_date+(23.hours+59.minutes)
     @activity.save

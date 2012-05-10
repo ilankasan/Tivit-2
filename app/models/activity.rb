@@ -562,7 +562,7 @@ return results
  
  
  def get_owner_last_status_change
-   puts ")()()()()()()()))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))"
+  # puts ")()()()()()()()))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))"
   return self.tivit_user_statuses.find_by_user_id(self.owner_id).last_status_change
  end
  
