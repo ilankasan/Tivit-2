@@ -468,6 +468,11 @@ class ActivitiesController < ApplicationController
  
   def accept_date
     puts "-----------    Accept Date ---------------"
+        puts "-----------    Accept Date ---------------"
+    puts "-----------    Accept Date ---------------"
+    puts "-----------    Accept Date ---------------"
+    puts "-----------    Accept Date ---------------"
+
     @activity = Activity.find(params[:id])
   #  puts    params.inspect
     
