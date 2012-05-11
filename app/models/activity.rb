@@ -708,7 +708,7 @@ return results
       #else
       #  puts "Completed!!!!!!!"
       #end
-      puts "updating status to Completed for tivit = "+tivit.get_name
+   #   puts "updating status to Completed for tivit = "+tivit.get_name
       tivit.status = "Completed"
       tivit.save()
      end
