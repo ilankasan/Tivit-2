@@ -699,19 +699,20 @@ return results
   #puts "______________________________________________________" 
    #puts "^^^^^^^^^^^^^^^^^^^^^  Activity = "+self.name
    
-   #count = 0
-   #self.tivits.each do |tivit|
-   #  status = tivit.get_user_status(tivit.get_owner)
-   #  if (status == "Done")
-   #   count = count+1
-   #   if(tivit.status == "Completed")
-   #   else
-   #     puts "Completed!!!!!!!"
-   #   end
-   #   tivit.status = "Completed"
-   #   tivit.save()
-   #  end
-   #end
+   count = 0
+   self.tivits.each do |tivit|
+     status = tivit.get_user_status(tivit.get_owner)
+     if (status == "Done")
+      count = count+1
+      #if(tivit.status == "Completed")
+      #else
+      #  puts "Completed!!!!!!!"
+      #end
+      puts "updating status to Completed for tivit = "+tivit.get_name
+      tivit.status = "Completed"
+      tivit.save()
+     end
+   end
                                          
    count1 = self.tivits.where(:status=>["Completed", "Done"]).count
  #  puts "count 1 = "+count1.to_s
@@ -752,7 +753,7 @@ return count.inspect + "/" + self.tivits.size.inspect+" tivits have been complet
 
 # Checking to see if the task was previously closed. This will be used before the email is sent out below
 
-  def update_activity_status (summary)
+  def old_update_activity_status (summary)
    #puts "Changng status from " +self.status+" to = " +status
    
    #if(self.status == status)

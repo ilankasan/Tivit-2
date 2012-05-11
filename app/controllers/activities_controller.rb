@@ -98,7 +98,9 @@ class ActivitiesController < ApplicationController
   
   
   def edit
-    puts "edit activit"
+  #  puts "edit activit"
+  
+    
     @activity = Activity.find(params[:id])
     @title = "Edit tivit: " +@activity.name
     
@@ -237,6 +239,14 @@ class ActivitiesController < ApplicationController
   def update
    
     puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
+    puts "-----------    UPDATE ------llllllllll---------"  
     
     @activity = Activity.find(params[:id])   
     
@@ -257,7 +267,7 @@ class ActivitiesController < ApplicationController
   was_completed = @activity.status
   if (@activity != nil && @activity.update_attributes(params))
       
-    @activity.update_activity_status(params["activity_status"]) 
+   # @activity.update_activity_status(params["activity_status"]) 
  
       invitee_emails = params["invitees"] 
       
