@@ -98,7 +98,13 @@ class ActivitiesController < ApplicationController
   
   
   def edit
-  #  puts "edit activit"
+    puts "edit activit"
+    puts "edit activit"
+    puts "edit activit"
+    puts "edit activit"
+    puts "edit activit"
+    puts "edit activit"
+    puts "edit activit"
   
     
     @activity = Activity.find(params[:id])
