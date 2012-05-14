@@ -101,8 +101,10 @@ class ActivitiesController < ApplicationController
     puts "edit activit"
       
     @activity = Activity.find(params[:id])
+# this is temporqry fix - remove in June
     @activity.description = clean_comment(@activity.description)
     @activity.save
+# end of temporqry fix - remove in June
     
     puts "Saving new description"
     
