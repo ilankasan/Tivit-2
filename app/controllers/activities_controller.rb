@@ -50,8 +50,8 @@ class ActivitiesController < ApplicationController
       return
     end
   	params["due"] = adjust_date_to_end_of_day(parse_date(params,"due"))
-   		
-   @activity = current_account.user.add_my_ativity(params)    
+   	params["description"] = clean_comment(params["description"]) 	
+    @activity = current_account.user.add_my_ativity(params)    
 	# Adding activity to current user	
         
     if (@activity != nil)
@@ -99,15 +99,13 @@ class ActivitiesController < ApplicationController
   
   def edit
     puts "edit activit"
-    puts "edit activit"
-    puts "edit activit"
-    puts "edit activit"
-    puts "edit activit"
-    puts "edit activit"
-    puts "edit activit"
-  
-    
+      
     @activity = Activity.find(params[:id])
+    @activity.description = clean_comment(@activity.description)
+    @activity.save
+    
+    puts "Saving new description"
+    
     @title = "Edit tivit: " +@activity.name
     
     respond_to do |format|
@@ -215,8 +213,7 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:id])   
     
     params["due"] = adjust_date_to_end_of_day(parse_date(params, "due"))
-   # params[:name]        = params[:name].gsub("'", "\\'")
-   # params[:description] = params[:description].gsub("'", "\\'")
+    params["description"] = clean_comment(params["description"]) 
     
 # checking to see if the tivit was previously closed. This will be used before the email is sent out below
   if (@activity != nil && @activity.update_attributes(params))
@@ -245,20 +242,12 @@ class ActivitiesController < ApplicationController
   def update
    
     puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
-    puts "-----------    UPDATE ------llllllllll---------"  
     
     @activity = Activity.find(params[:id])   
     
   #  puts params.inspect
     params["due"] = adjust_date_to_end_of_day(parse_date(params, "due"))
-   
+    params["description"] = clean_comment(params["description"]) 
     
 # update activity status to completed if check box was checked 
   
