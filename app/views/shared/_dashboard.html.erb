@@ -33,18 +33,12 @@
             <dt><h2>Filter dashboard:</h2></dt>
             <dd>
 	            <% form_tag(:controller => "pages", :action => "home", :method => "put") do %>
-	            	<%= select_tag(:filter_id, options_for_select([['On Deck', 1],['My Open tivits', 2], ['No Response', 3],['All Open tivits', 4]],account_session[:filter_id])),:onchange => "this.form.submit() %>
+	            	<%= select_tag(:filter_id, options_for_select([['On Deck', 1],['My Open tivits', 2], ['No Response', 3],['All Open tivits', 4]],account_session[:filter_id]),:onchange => "this.form.submit()") %>
 	            	<!-- %= select_tag(:filter_id, options_for_select([['My Priorities', 1],['Just My Tivits', 3], ['My Activities', 2],['All My tivits', 4],['All tivits', 5]],account_session[:filter_id])) %-->
 					
-					<%= submit_tag("Show me") %>
-	            	
 	           	<% end %>
-	           	
             </dd>
-            
-            
         </dl>
-        
     </div>
 	
 	
@@ -72,11 +66,11 @@
 	                <a href="#completed-items">Completed</a>
 	            </li>
 	            
-             <li class="tab">
+             <!--li class="tab">
 	                <a href="#test-items">test</a>
 	                <li><%= link_to "Test1" , test1_path %></li>
 
-			</li>
+			</li-->
 	           
             	
             </ul>

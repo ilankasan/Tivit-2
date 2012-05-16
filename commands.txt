@@ -138,7 +138,7 @@ You will receive an email with instructions about how to reset your password in 
 
 $ git add .
 git commit -am "4-28-12 fix activity sorting"
-git commit -am "5-12-12 edit bug"
+git commit -am "5-15-12 bugs"
 git commit -am "1-29-12 yanivs bug fixes stg 1"
 git commit -am "1-31-12 autocomplete"
 git commit -am "4-1-12 get rid of the create activity in ADP"
@@ -287,15 +287,4 @@ You have already activated daemons 1.1.0, but your Gemfile requires daemons 1.0.
 
 
 
-#<Account id: 19, email: "ilan.kasan@gmail.com", encrypted_password: "$2a$10$2qxexhSFyCkbyj2qXqzo/ecujw0JYWbB237blwJ8d.ds...", reset_passwo
-rd_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, curr
-ent_sign_in_ip: nil, last_sign_in_ip: nil, password_salt: nil, confirmation_token: "RYeymCppqnpdgsZGSMay", confirmed_at: nil, confirmation_
-sent_at: "2011-12-25 02:56:48", failed_attempts: 0, unlock_token: nil, locked_at: nil, authentication_token: nil, created_at: "2011-12-25 0
-2:56:48", updated_at: "2011-12-25 02:56:48">
-#<Account id: 19, email: "ilan.kasan@gmail.com", encrypted_password: "$2a$10$2qxexhSFyCkbyj2qXqzo/ecujw0JYWbB237blwJ8d.ds...", reset_passwo
-rd_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, curr
-ent_sign_in_ip: nil, last_sign_in_ip: nil, password_salt: nil, confirmation_token: "RYeymCppqnpdgsZGSMay", confirmed_at: nil, confirmation_
-sent_at: "2011-12-25 02:56:48", failed_attempts: 0, unlock_token: nil, locked_at: nil, authentication_token: nil, created_at: "2011-12-25 0
-2:56:48", updated_at: "2011-12-25 02:56:48">
-email = ilan.kasan@gmail.com
-user = nil
+Activity.erb
