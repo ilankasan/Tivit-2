@@ -291,13 +291,7 @@ def Order_according_to_tivit_get_activities_i_participate (user_id)
 def get_activities_completed_or_with_completed_tivits(user_id)
     #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
     
-    temp_sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
-                 WHERE 
-                      activities.activity_type   = 'activity' 
-                 AND  activities.status          = 'Completed'  
-                 
-                 ORDER BY tivits.completed_at DESC"
-        
+          
     
     sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE 

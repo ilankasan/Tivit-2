@@ -106,7 +106,9 @@ resources :pages
   match '/help',      :to => 'pages#help'
   match '/contact',   :to => 'pages#contact'
   match '/myaccount', :to => 'pages#myaccount'
-  match '/filter',     :to => 'pages#filter'
+  match '/filter',    :to => 'pages#filter'
+  match '/test1',     :to => 'pages#test'
+  
   #match '/awaiting_confirmation',      :to => 'pages#awaiting_confirmation'
   
   
