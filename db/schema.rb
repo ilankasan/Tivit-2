@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507053650) do
+ActiveRecord::Schema.define(:version => 20120520001957) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(:version => 20120507053650) do
   create_table "activities", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.string   "status"
     t.datetime "due"
     t.datetime "completed_at"
     t.integer  "owner_id"
@@ -54,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20120507053650) do
     t.text     "summary"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status_id"
   end
 
   add_index "activities", ["completed_at"], :name => "index_activities_on_completed_at"
@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(:version => 20120507053650) do
   add_index "activities", ["invited_by"], :name => "index_activities_on_invited_by"
   add_index "activities", ["owner_id"], :name => "index_activities_on_owner_id"
   add_index "activities", ["parent_id"], :name => "index_activities_on_parent_id"
-  add_index "activities", ["status"], :name => "index_activities_on_status"
 
   create_table "activities_documents", :id => false, :force => true do |t|
     t.integer  "activity_id"

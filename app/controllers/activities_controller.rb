@@ -254,14 +254,12 @@ class ActivitiesController < ApplicationController
 # update activity status to completed if check box was checked 
   
   if(params["activity_status"] == "true")
-    params["activity_status"] = "Completed"
+    params["activity_status_id"] = TivitStatus.get_completed_id
   else
-    params["activity_status"] = "in-progress"
+    params["activity_status_id"] = TivitStatus.get_in_progress_id
   end
 
     
-# vhecking to see if tthe task was previously closed. This will be used before the email is sent out below
-  was_completed = @activity.status
   if (@activity != nil && @activity.update_attributes(params))
       
    # @activity.update_activity_status(params["activity_status"]) 
@@ -275,8 +273,7 @@ class ActivitiesController < ApplicationController
       @activity.save
       
 #send email to all parcicipants that tivit was completed (not including owner):
-     #if(was_completed != "Completed" && @activity.status == "Completed" )
-     if(@activity.status == "Completed" )
+     if(@activity.isCompleted?)
      
         notify_users_activity_is_closed(@activity,params["summary"])
      end
@@ -353,7 +350,7 @@ class ActivitiesController < ApplicationController
   	puts " adujested due date "+params["due"]
   	params["parent_id"]  = params[:id] 						#   adding Parent ID
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
-	  params["status"]     = "in-progress"
+	  params["status_id"]     = TivitStatus.get_in_progress_id
 	  
     invitees = params["invitees"]
     puts "______________________________________________y__"

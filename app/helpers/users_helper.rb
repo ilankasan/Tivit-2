@@ -15,13 +15,9 @@ module UsersHelper
     
     
     puts "----------    New  usrs -----------    Get user --------"
-    puts "----------    New  usrs -----------    Get user --------"
  	
  	puts params.inspect
     
-    puts "----------    New  usrs -----------    Get user --------"
- 	puts "----------    New  usrs -----------    Get user --------"
- 	
         
     @user = User.find_by_email( params[:user]["email"])
 	if (@user == nil)

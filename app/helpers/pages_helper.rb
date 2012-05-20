@@ -1,11 +1,11 @@
 module PagesHelper
 
   
-  def get_my_activities(user_id)
+  def delete_get_my_activities(user_id)
     
       sql_my_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE 
-                 NOT activities.status          = 'Completed'  
+                 NOT activities.status_id       = ?  
                  AND activities.activity_type   = 'activity' 
                  AND activities.owner_id        = "+user_id+"
                  ORDER BY activities.due"
@@ -13,11 +13,12 @@ module PagesHelper
         return Activity.find_by_sql(sql_my_activities)
         
   end
-  
-  
-  def get_need_attention (user_id)
+    
+    
+    
+  def delete_get_need_attention (user_id)
       sql_need_attention_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses
-                 WHERE NOT activities.status          = 'Completed'  
+                 WHERE NOT activities.status_id          = ?  
                  AND activities.activity_type       = 'activity' 
                  AND 
                  (
@@ -43,7 +44,7 @@ module PagesHelper
                )))
                  ORDER BY activities.due"
       
-      return Activity.find_by_sql(sql_need_attention_activities)
+      return Activity.find_by_sql(sql_need_attention_activities,TivitStatus.get_completed_id)
 
   end
 #  Other's activity:
@@ -63,17 +64,17 @@ module PagesHelper
 
 
   def get_activities_with_new_tivit_requests(current_user_id)
-  # get activities with New and unread tivits       
+  # get activities with New and unread tivits  
+  completed = TivitStatus.get_completed_id.to_s     
      sql_activities_with_my_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
-                   WHERE NOT activities.status        = 'Completed'  
-                   AND  activities.activity_type      = 'activity' 
-                   AND  tivits.owner_id               = "+current_user_id+"  
-                   AND  tivits.parent_id              = activities.id  
-                   AND  tivits.owner_id               = tivit_user_statuses.user_id 
-                   AND  tivits.id                     = tivit_user_statuses.activity_id 
+                   WHERE NOT activities.status_id      = "+completed+"  
+                   AND  activities.activity_type       = 'activity' 
+                   AND  tivits.owner_id                = "+current_user_id+"  
+                   AND  tivits.parent_id               = activities.id  
+                   AND  tivits.owner_id                = tivit_user_statuses.user_id 
+                   AND  tivits.id                      = tivit_user_statuses.activity_id 
                    AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
-                   AND  NOT tivits.status                = 'Completed'
-                 
+                   AND  NOT tivits.status_id           = "+completed+"
                    ORDER BY activities.due"
     
       results1  =  Activity.find_by_sql(sql_activities_with_my_tivits)
@@ -81,7 +82,7 @@ module PagesHelper
       
       
       sql_activities_i_assigned_with_tivit_requests = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
-                   WHERE NOT activities.status           = 'Completed'  
+                   WHERE NOT activities.status_id        = "+completed+"  
                    AND     activities.activity_type      = 'activity'
                    AND     tivits.invited_by             = "+current_user_id+" 
                    AND NOT tivits.owner_id               = "+current_user_id+"  
@@ -89,7 +90,7 @@ module PagesHelper
                    AND     tivits.owner_id               = tivit_user_statuses.user_id 
                    AND     tivits.id                     = tivit_user_statuses.activity_id 
                    AND  ( tivit_user_statuses.status_id  = 'Declined' OR tivit_user_statuses.status_id  = 'Proposed')
-                   AND  NOT tivits.status                = 'Completed'
+                   AND  NOT tivits.status_id             = "+completed+"
                  
                    ORDER BY activities.due"
     
@@ -104,45 +105,21 @@ module PagesHelper
       #puts "number of activities with incoming tivits = "+results.size.to_s
   end
 
-
-def Order_according_to_tivit_get_activities_i_participate (user_id)
-    puts "_______________________________________________"
-    puts "get_activities_i_participate "
-    puts "_______________________________________________"
-    
-     #sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.*FROM activities, ac#tivities as tivits, tivit_user_statuses 
-     
-      sql_activities_i_participate = "SELECT DISTINCT activities.*, ISNULL(tivits.due) AS 'isnull'  FROM activities, activities as tivits 
-                 WHERE NOT activities.status      = 'Completed'
-                 AND activities.activity_type     = 'activity' 
-                 AND (activities.owner_id         = "+user_id+"
-                 OR (
-                 tivits.owner_id        = "+user_id+" 
-                 AND tivits.parent_id   = activities.id))
-                 ORDER BY  isnull ASC, tivits.due ASC "
-     #            ORDER BY activities.due"
-                            
-        activities_i_participate    = Activity.find_by_sql(sql_activities_i_participate)
-        puts "activities = "+activities_i_participate.inspect
-      #  activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_no_due_date)
-       # puts "without date = "+activities_i_participate_without_due_date.inspect
-        
-        return activities_i_participate.uniq
-        
-  end
-  
-
-
-  
   
   def get_activities_i_participate (user_id)
     puts "_______________________________________________"
     puts "get_activities_i_participate "
     puts "_______________________________________________"
+    puts "_______________________________________________"
+    puts "_______________________________________________"
+    puts "_______________________________________________"
+    puts "_______________________________________________"
+    puts "_______________________________________________"
+    
     
       sql_activities_i_participate_no_due_date = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
-                 WHERE NOT activities.status      = 'Completed'
-                 AND activities.due IS              NULL    
+                 WHERE NOT activities.status_id   = "+TivitStatus.get_completed_id.to_s+"
+                 AND activities.due               IS NULL    
                  AND activities.activity_type     = 'activity' 
                  AND (activities.owner_id         = "+user_id+"
                  OR (
@@ -150,7 +127,7 @@ def Order_according_to_tivit_get_activities_i_participate (user_id)
                  AND tivits.parent_id   = activities.id))"
                  
       sql_activities_i_participate_with_due_date = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
-                 WHERE NOT activities.status      = 'Completed'  
+                 WHERE NOT activities.status_id   = "+TivitStatus.get_completed_id.to_s+"  
                  AND activities.activity_type     = 'activity' 
                  AND activities.due IS NOT           NULL
                  AND (activities.owner_id         = "+user_id+"
@@ -158,6 +135,9 @@ def Order_according_to_tivit_get_activities_i_participate (user_id)
                  tivits.owner_id        = "+user_id+" 
                  AND tivits.parent_id   = activities.id))
                  ORDER BY activities.due"
+      
+                          
+      
                             
         activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
      #   puts "with date = "+activities_i_participate_with_due_date.inspect
@@ -169,52 +149,20 @@ def Order_according_to_tivit_get_activities_i_participate (user_id)
   end
   
   
-  def delete_old_get_activities_i_have_open_tivits(user_id)
-    
-      sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
-                 WHERE NOT activities.status           = 'Completed'  
-                 AND activities.activity_type          = 'activity' 
-                 AND activities.due IS NOT               NULL
-                 AND tivits.owner_id                   = "+user_id+"
-                 AND tivits.parent_id                  = activities.id
-                 AND tivit_user_statuses.activity_id   = tivits.id 
-                 AND NOT tivit_user_statuses.status_id = 'Done' 
-                 AND tivit_user_statuses.user_id       = "+user_id+"
-                 ORDER BY tivits.due"
-                 
-      sql_activities_i_participate_without_due_date  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
-                 WHERE NOT activities.status           = 'Completed'  
-                 AND activities.activity_type          = 'activity'
-                 AND activities.due IS                   NULL   
-                 AND tivits.owner_id                   = "+user_id+"
-                 AND tivits.parent_id                  = activities.id
-                 AND tivit_user_statuses.activity_id   = tivits.id 
-                 AND NOT tivit_user_statuses.status_id = 'Done' 
-                 AND tivit_user_statuses.user_id       = "+user_id
-                         
-        activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
-        activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_without_due_date)
-        
-        return activities_i_participate_with_due_date + activities_i_participate_without_due_date
-  end
-  
-  
-  
   
   def get_activities_i_have_open_tivits(user_id)
     puts "get_activities_i_have_open_tivits"
     
       sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.*, ISNULL(tivits.due) AS 'isnull' FROM activities, activities as tivits, tivit_user_statuses 
-                 WHERE NOT activities.status           = 'Completed'  
+                 WHERE NOT activities.status_id           = "+TivitStatus.get_completed_id.to_s+"  
                  AND activities.activity_type          = 'activity' 
                  AND tivits.owner_id                   = "+user_id+"
                  AND tivits.parent_id                  = activities.id
                  AND tivit_user_statuses.activity_id   = tivits.id 
-                 AND NOT tivits.status                 = 'Completed' 
+                 AND NOT tivits.status_id                 = "+TivitStatus.get_completed_id.to_s+" 
                
                  AND tivit_user_statuses.user_id       = "+user_id+"
                  ORDER BY  isnull ASC, tivits.due ASC "
-               #  AND NOT tivit_user_statuses.status_id = 'Done'
                           
         activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
         
@@ -222,57 +170,35 @@ def Order_according_to_tivit_get_activities_i_participate (user_id)
   end
   
   def get_activities_i_have_unresponed_tivits(user_id)
+    puts "get_activities_i_have_unresponed_tivits(user_id)"
+    puts "get_activities_i_have_unresponed_tivits(user_id)"
+    puts "get_activities_i_have_unresponed_tivits(user_id)"
+    puts "get_activities_i_have_unresponed_tivits(user_id)"
+    puts "get_activities_i_have_unresponed_tivits(user_id)"
     
       sql_activities_i_participate = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
-                 WHERE NOT activities.status           = 'Completed'  
+                 WHERE NOT activities.status_id        = "+TivitStatus.get_completed_id+"
                  AND activities.activity_type          = 'activity' 
                  AND tivits.owner_id                   = "+user_id+"
                  AND tivits.parent_id                  = activities.id
                  AND tivit_user_statuses.activity_id   = tivits.id 
-                 AND NOT tivits.status                 = 'Completed' 
+                 AND NOT tivits.status_id              = ? 
                 
                  AND tivit_user_statuses.user_id       = "+user_id+"
                  ORDER BY activities.due"
                #  AND NOT tivit_user_statuses.status_id = 'Done'
                          
-        return Activity.find_by_sql(sql_activities_i_participate)
+        return Activity.find_by_sql(sql_activities_i_participate,TivitStatus.get_completed_id)
         
   end
   
   def get_new_activities      
-        sql_new_tivits_old = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
-                 WHERE NOT activities.status         = 'Completed' 
-                 AND activities.activity_type      = 'activity' 
-                 AND   NOT activities.owner_id       = "+current_user_id+" 
-                 AND tivit_user_statuses.activity_id = activities.id 
-                 AND tivit_user_statuses.status_id   = 'New' 
-                 AND tivit_user_statuses.user_id     = "+current_user_id+"
-                 ORDER BY activities.due"
                  
-                 
-      sql_new_tivits_old2 = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses
-                 WHERE NOT activities.status      = 'Completed'  
-                 AND activities.activity_type   = 'activity' 
-                 AND 
-                 (    activities.owner_id       = "+current_user_id+"
-                  AND tivit_user_statuses.activity_id = activity.id 
-                  AND tivit_user_statuses.status_id   = 'New' 
-                  AND tivit_user_statuses.user_id     = "+current_user_id+"
-                 
-                    OR 
-                    (    tivits.owner_id  = "+current_user_id+" 
-                     AND tivits.parent_id   = activities.id
-                     AND tivit_user_statuses.activity_id = tivits.id 
-                     AND tivit_user_statuses.status_id   = 'New' 
-                     AND tivit_user_statuses.user_id     = "+current_user_id+"
-                     )
-                 )
-                 ORDER BY activities.due"
                 
 ################################# NEW ACTITVITIES #######################################################################################
     
     sql_new_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses
-                 WHERE NOT activities.status         = 'Completed'  
+                 WHERE NOT activities.status_id         = "+TivitStatus.get_completed_id.to_s+"  
                  AND activities.activity_type      = 'activity' 
                  AND tivits.owner_id           = "+current_user_id+" 
                  AND tivits.parent_id          = activities.id
@@ -297,11 +223,11 @@ def get_activities_completed_or_with_completed_tivits(user_id)
                  WHERE 
                  activities.activity_type   = 'activity' 
                  AND (
-                          (activities.status = 'Completed' AND activities.owner_id = "+user_id+")
+                          (activities.status_id = "+TivitStatus.get_completed_id.to_s+" AND activities.owner_id = "+user_id+")
                     OR ( 
                              tivits.parent_id       = activities.id 
                              AND tivits.owner_id    = "+user_id+"  
-                             AND tivits.status      = 'Completed')
+                             AND tivits.status_id      = "+TivitStatus.get_completed_id.to_s+")
                       )
                  ORDER BY tivits.completed_at DESC"
                 
@@ -317,14 +243,14 @@ def get_activities_completed_or_with_completed_tivits(user_id)
 def old_get_activities_completed_or_with_completed_tivits(user_id)
     #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
     sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
-                 WHERE (activities.status       = 'Completed'  
+                 WHERE (activities.status_id       = "+TivitStatus.get_completed_id.to_s+"  
                  AND activities.activity_type   = 'activity' 
                  AND (activities.owner_id       = "+user_id+"
                  OR ( 
                  tivits.owner_id      = "+user_id+" 
                  AND tivits.parent_id   = activities.id)))
                  OR
-                 (NOT activities.status      = 'Completed'  
+                 (NOT activities.status_id      = "+TivitStatus.get_completed_id.to_s+"  
                  AND activities.activity_type   = 'activity' 
                  AND ((activities.owner_id       = "+user_id+")
                  OR (tivits.owner_id      = "+user_id+" AND tivits.parent_id   = activities.id)))
@@ -335,33 +261,9 @@ def old_get_activities_completed_or_with_completed_tivits(user_id)
      #puts "1. ------>>>>  "+completed_activities.inspect
       return @completed_activities
   end
-  def very_old_get_activities_completed_or_with_completed_tivits(user_id)
-    #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
-    sql_completed_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
-                 WHERE activities.status      = 'Completed'  
-                 AND activities.activity_type   = 'activity' 
-                 AND (activities.owner_id       = "+user_id+"
-                 OR ( 
-                 tivits.owner_id      = "+user_id+" 
-                 AND tivits.parent_id   = activities.id))
-                 ORDER BY activities.due DESC"
-     completed_activities = Activity.find_by_sql(sql_completed_activities)
-     #puts "1. ------>>>>  "+completed_activities.inspect
-    sql_activities_with_closed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
-                 WHERE NOT activities.status      = 'Completed'  
-                 AND activities.activity_type   = 'activity' 
-                 AND ((activities.owner_id       = "+user_id+")
-                 OR (tivits.owner_id      = "+user_id+" AND tivits.parent_id   = activities.id))
-                 ORDER BY activities.due DESC"
-     activities_with_closed_tivits  = Activity.find_by_sql(sql_activities_with_closed_tivits)
-    # puts "2. ------>>>>  "+activities_with_closed_tivits.inspect
-    # puts "_________________________________________________"
-                          
-     return (completed_activities + activities_with_closed_tivits).uniq
-  end               
          
 
-def get_user_stats  
+  def get_user_stats  
      activated         = User.where("is_active = ?", '1').count
      total_users       = User.count
      non_activated     = total_users - activated

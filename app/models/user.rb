@@ -139,10 +139,15 @@ class User < ActiveRecord::Base
 def add_my_ativity (params)
  # settign owner Id to be rqual to the current user
  puts "---------------- add_my_ativity  ----------------------" 
+ puts "---------------- add_my_ativity  ----------------------" 
+ puts "---------------- add_my_ativity  ----------------------" 
+ puts "---------------- add_my_ativity  ----------------------" 
+ puts "---------------- add_my_ativity  ----------------------" 
+ puts "---------------- add_my_ativity  ----------------------" 
  
    
    	params["owner_id"] = self.id
-   	params["status"]   = "in-progress"
+   	params["status_id"]   = TivitStatus.get_in_progress_id
    	params["activity_type"]     = "activity"
  	
  	puts params.inspect	
