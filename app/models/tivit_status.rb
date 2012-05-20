@@ -15,7 +15,7 @@ class TivitStatus < ActiveRecord::Base
     return @in_progress
   end
   
-  def self.is_in_progress_is?(id)
+  def self.is_in_progress_id?(id)
     return (id==@in_progress)
   end
   

@@ -36,7 +36,7 @@ heroku--remote staging
 
 heroku stack:migrate bamboo-mri-1.9.2 --remote staging2
 
-heroku rake db:migrate --remote staging2
+heroku rake db:migrate --remote staging
 heroku rake db:schema:load
 heroku restart --remote staging
 git push staging master
