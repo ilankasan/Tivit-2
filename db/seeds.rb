@@ -29,7 +29,7 @@ puts "geting activities"
   Activity.all.each do |activity|
     
       if(activity.status == "in-progress")
-         if(TivitStatus.is_ is_in_progress_id?(activity.status_id))
+         if(TivitStatus.is_in_progress_id?(activity.status_id))
             puts "Check ok!!!"
          else
            puts "-------------------------->>>>>>>>>>>>  ERRORORORORORORORORO  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! in progress"
