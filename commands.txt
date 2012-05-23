@@ -138,7 +138,7 @@ You will receive an email with instructions about how to reset your password in 
 
 $ git add .
 git commit -am "4-28-12 fix activity sorting"
-git commit -am "5-22-12 status id fix"
+git commit -am "5-22-12 status id fix s index"
 git commit -am "1-29-12 yanivs bug fixes stg 1"
 git commit -am "1-31-12 autocomplete"
 git commit -am "4-1-12 get rid of the create activity in ADP"
@@ -149,7 +149,7 @@ git merge yaniv-new_ui_1
 git merge 1-19-12_tabfilters
 
 $ 
-heroku rake db:migrate
+heroku rake db:migrate --app staging
 heroku rake db:seed
 
 
@@ -163,7 +163,7 @@ rails generate uploader TivitDoc
 rails generate model Document name:string description:string
 
 rails generate scaffold Activity name:string description:string status:string due:datetime owner:integer who:string
-rake db:migrate
+
 
 rename_column :products, :upccode, :upc_code
 
