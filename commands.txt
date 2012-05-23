@@ -138,7 +138,7 @@ You will receive an email with instructions about how to reset your password in 
 
 $ git add .
 git commit -am "4-28-12 fix activity sorting"
-git commit -am "5-19-12 status id fix"
+git commit -am "5-22-12 status id fix"
 git commit -am "1-29-12 yanivs bug fixes stg 1"
 git commit -am "1-31-12 autocomplete"
 git commit -am "4-1-12 get rid of the create activity in ADP"
@@ -150,7 +150,7 @@ git merge 1-19-12_tabfilters
 
 $ 
 heroku rake db:migrate
-heroku rake db:migrate
+heroku rake db:seed
 
 
  rename_column(:activities, :owner_id, :user_id)
