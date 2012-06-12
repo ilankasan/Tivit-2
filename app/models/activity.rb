@@ -185,7 +185,7 @@ put "______________     incoming reqyests __________________"
 #Only when they are in my activity and have a new status or comment since last view
 # added remove tivits i declined
 
-  puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is  the OWNER of activity"
+#  puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is  the OWNER of activity"
     
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
                                     "   NOT activities.status_id          = ?
@@ -417,13 +417,13 @@ return results
   
   def get_team_tivits (user)
     
-  #  puts "----------------->>>> in team_my tivits"
+    puts "----------------->>>> in team_my tivits"
     #team_done_tivits = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.status_id = 'Done'
     #  AND NOT activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id ",user.get_id)
     
     team_done_tivits = self.tivits.where("NOT owner_id = ? AND (status_id = ? )",user.get_id, TivitStatus.get_completed_id)
     
-   # puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_done_tivits "+team_done_tivits.count.to_s
+    puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_done_tivits "+team_done_tivits.count.to_s
     
 
     #team_open_tivits_no_due = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
@@ -431,7 +431,7 @@ return results
     
     team_open_tivits_no_due  = self.tivits.where("NOT owner_id = ? AND NOT (status_id = ?) AND due IS NULL",user.get_id, TivitStatus.get_completed_id)
     
-    #puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_open_tivits_no_due "+team_open_tivits_no_due.count.to_s
+    puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_open_tivits_no_due "+team_open_tivits_no_due.count.to_s
     
       
     #team_open_tivits_due = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
@@ -440,7 +440,7 @@ return results
      
   # puts "my_open_activities = "+my_open_activities.size.to_s
  #  puts "my_done_activities = "+my_done_activities.size.to_send
-    return team_open_tivits_due + team_open_tivits_no_due + team_done_tivits
+    return (team_open_tivits_due + team_open_tivits_no_due + team_done_tivits).uniq
   end
 
   def update_user_tivit_status_new(user)
