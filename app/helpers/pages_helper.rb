@@ -14,39 +14,7 @@ module PagesHelper
         
   end
     
-    
-    
-  def delete_get_need_attention (user_id)
-      sql_need_attention_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses
-                 WHERE NOT activities.status_id          = ?  
-                 AND activities.activity_type       = 'activity' 
-                 AND 
-                 (
-                  (   tivits.owner_id                 = "+user_id+" 
-                  AND tivits.parent_id                = activities.id
-                  AND tivit_user_statuses.activity_id = tivits.id 
-                  AND 
-                  (   tivit_user_statuses.status_id  = 'New'
-                 OR tivit_user_statuses.status_id  = 'Proposed'
-                 OR tivit_user_statuses.status_id  = 'Reviewed'
-                 OR tivit_user_statuses.status_id  = 'Reminded'
-                )
-                 AND tivit_user_statuses.user_id   = "+user_id+")
-               OR 
-               (
-                ( NOT tivits.owner_id                   = "+user_id+"
-                    AND activities.owner_id             = "+user_id+"
-                    AND tivits.parent_id                = activities.id
-                    AND tivit_user_statuses.activity_id = tivits.id 
-                    AND 
-                  ( tivit_user_statuses.status_id  = 'Declined' OR tivit_user_statuses.status_id  = 'Proposed')
-                 
-               )))
-                 ORDER BY activities.due"
-      
-      return Activity.find_by_sql(sql_need_attention_activities,TivitStatus.get_completed_id)
 
-  end
 #  Other's activity:
 #Only show the activity if I have a tivit there and it's not completed yet. 
 #If I completed all my tivits in others activity, 
@@ -65,7 +33,13 @@ module PagesHelper
 
   def get_activities_with_new_tivit_requests(current_user_id)
   # get activities with New and unread tivits  
-  completed = TivitStatus.get_completed_id.to_s     
+  completed   = TivitStatus.get_completed_id.to_s
+  new_id      = TivitStatus.get_new_id.to_s
+  reviewed_id = TivitStatus.get_reviewed_id.to_s
+  declined_id = TivitStatus.get_declined_id.to_s
+  proposed_id = TivitStatus.get_proposed_id.to_s
+  
+        
      sql_activities_with_my_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
                    WHERE NOT activities.status_id      = "+completed+"  
                    AND  activities.activity_type       = 'activity' 
@@ -73,7 +47,7 @@ module PagesHelper
                    AND  tivits.parent_id               = activities.id  
                    AND  tivits.owner_id                = tivit_user_statuses.user_id 
                    AND  tivits.id                      = tivit_user_statuses.activity_id 
-                   AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
+                   AND  (tivit_user_statuses.status_id = "+new_id+" OR tivit_user_statuses.status_id = "+reviewed_id+")
                    AND  NOT tivits.status_id           = "+completed+"
                    ORDER BY activities.due"
     
@@ -89,7 +63,7 @@ module PagesHelper
                    AND     tivits.parent_id              = activities.id  
                    AND     tivits.owner_id               = tivit_user_statuses.user_id 
                    AND     tivits.id                     = tivit_user_statuses.activity_id 
-                   AND  ( tivit_user_statuses.status_id  = 'Declined' OR tivit_user_statuses.status_id  = 'Proposed')
+                   AND  ( tivit_user_statuses.status_id  = "+declined_id+" OR tivit_user_statuses.status_id  = "+proposed_id+")
                    AND  NOT tivits.status_id             = "+completed+"
                  
                    ORDER BY activities.due"
@@ -100,8 +74,7 @@ module PagesHelper
       
       
       return (results2 + results1).uniq 
-  #    AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
-                   
+  
       #puts "number of activities with incoming tivits = "+results.size.to_s
   end
 
@@ -111,11 +84,6 @@ module PagesHelper
     puts "get_activities_i_participate "
     puts "_______________________________________________"
     puts "_______________________________________________"
-    puts "_______________________________________________"
-    puts "_______________________________________________"
-    puts "_______________________________________________"
-    puts "_______________________________________________"
-    
     
       sql_activities_i_participate_no_due_date = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE NOT activities.status_id   = "+TivitStatus.get_completed_id.to_s+"
@@ -169,9 +137,7 @@ module PagesHelper
         return activities_i_participate_with_due_date.uniq 
   end
   
-  def get_activities_i_have_unresponed_tivits(user_id)
-    puts "get_activities_i_have_unresponed_tivits(user_id)"
-    puts "get_activities_i_have_unresponed_tivits(user_id)"
+  def deleted_get_activities_i_have_unresponed_tivits(user_id)
     puts "get_activities_i_have_unresponed_tivits(user_id)"
     puts "get_activities_i_have_unresponed_tivits(user_id)"
     puts "get_activities_i_have_unresponed_tivits(user_id)"
@@ -186,7 +152,7 @@ module PagesHelper
                 
                  AND tivit_user_statuses.user_id       = "+user_id+"
                  ORDER BY activities.due"
-               #  AND NOT tivit_user_statuses.status_id = 'Done'
+               #  AND NOT tivit_user_statuses.status_id = TivitStatus.get_completed_id
                          
         return Activity.find_by_sql(sql_activities_i_participate,TivitStatus.get_completed_id)
         
@@ -203,7 +169,7 @@ module PagesHelper
                  AND tivits.owner_id           = "+current_user_id+" 
                  AND tivits.parent_id          = activities.id
                  AND tivit_user_statuses.activity_id = tivits.id 
-                 AND tivit_user_statuses.status_id   = 'New' 
+                 AND tivit_user_statuses.status_id   = "+TivitStatus.get_new_id.to_s+" 
                  AND tivit_user_statuses.user_id     = "+current_user_id+"
                  ORDER BY activities.due"
    return Activity.find_by_sql(sql_new_tivits)

@@ -68,10 +68,10 @@ class User < ActiveRecord::Base
     email = self.account.email
     puts "Email is ---->>>>>> "+email
     if(email =="ilan.kasan@gmail.com"  || email =="yanivlevi1@gmail.com" || email =="jon.nakasone@gmail.com")
-      puts "return true"
+     # puts "return true"
       return true
     else
-      puts "return false"
+      #puts "return false"
       
       return false
     end

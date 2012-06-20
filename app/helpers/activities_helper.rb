@@ -3,7 +3,8 @@ module ActivitiesHelper
 
   def owner_need_to_respond? (activity, user)
     
-    if ((activity.get_owner.id == current_account.user.id) && (activity.get_owner_status == "New" || activity.get_owner_status == "Reminded" || activity.get_owner_status == "Reviewed"))
+    if ((activity.get_owner.id == current_account.user.id) && 
+        (    activity.get_owner_status == TivitStatus.get_new_id || activity.get_owner_status == TivitStatus.get_reminded_id || activity.get_owner_status == TivitStatus.get_reviewed_id))
       return true
     else
       return false    

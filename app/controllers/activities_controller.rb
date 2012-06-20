@@ -288,7 +288,7 @@ class ActivitiesController < ApplicationController
     end  
   end
   
-  def change_tivit_status
+  def delete_change_tivit_status
     
     #puts "<<<<<<<<<<<<----------->>>>>>>>>>>"  
    # puts params.inspect  
@@ -341,7 +341,10 @@ class ActivitiesController < ApplicationController
   
   def create_tivit
   	puts "--------------->> create Tvit"
-  	  
+  	puts "--------------->> create Tvit"
+    puts "--------------->> create Tvit"
+    puts "--------------->> create Tvit"
+      
   	due = parse_date(params,"due")
   	
   	puts "due date = "+due.to_s
@@ -575,7 +578,6 @@ class ActivitiesController < ApplicationController
       @tivit.update_tivit_status_reassiged(current_account.user,params["comment"],@assigned_user)
       
     
-      #log_action_as_comment(@tivit,"Re-assigned to "+@assined_user.get_name+": " + params["comment"],"Reassign",current_account.user)
       log_action_as_comment(@tivit,params["comment"],"Reassigned",current_account.user)
       
       puts "sending email"

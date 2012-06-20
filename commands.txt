@@ -138,7 +138,7 @@ You will receive an email with instructions about how to reset your password in 
 
 $ git add .
 git commit -am "4-28-12 fix activity sorting"
-git commit -am "6-11-12 fic dumplicate issues"
+git commit -am "6-19-12 fix status_id table"
 git commit -am "1-29-12 yanivs bug fixes stg 1"
 git commit -am "1-31-12 autocomplete"
 git commit -am "4-1-12 get rid of the create activity in ADP"
@@ -197,12 +197,15 @@ rails -d mysql my_rails_app
 
  rails generate change_column_tivitcomments  comment:VARCHAR(1024) 
  
+ rails generate migration rename_column_status_id 
  rails generate migration add_profile_image_to_users profile_image:integer
  rails generate migration add_type_to_activities type:string
  rails generate migration add_activity_type_to_activities activity_type:string
  rails generate migration add_parent_id_to_activities parent_id:integer
+ rails generate migration add_status_id_to_tivit_user_statuses status_id:integer
  
  rails generate migration add_index_to_status_id_column_in_activities 
+ rails generate migration add_index_to_status_id_column_in_tivit_user_statuses 
  
  rails generate migration remove_avatar_columns_from_users avatar_file_name:string avatar_content_type:string avatar_file_size:integer avatar_updated_at:datetime
  

@@ -96,7 +96,8 @@ put "______________     incoming reqyests __________________"
                   AND     tivit_user_statuses.user_id = activities.owner_id
                   AND NOT activities.activity_type    = 'activity' 
                   AND     activities.id               = tivit_user_statuses.activity_id 
-                  AND     (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id).count
+                  AND     (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)",
+                  currentuser.id,TivitStatus.get_new_id,TivitStatus.get_reviewed_id).count
  
    return results
 
@@ -110,16 +111,13 @@ put "______________     incoming reqyests __________________"
 # Ilan: This code can be improved by using a distinct SQL command
 #return array of users excluding user
      users = User.joins(:tivitcomments).where("tivitcomments.activity_id = ? AND users.id = tivitcomments.user_id AND NOT tivitcomments.user_id = ? ",self.id, user.get_id)
-   #  puts "users = "+users.inspect
+  
      users = users.uniq
      return users
    end
    
  def get_closed_tivits
-       #   puts "in get_closed_tivits ----->>>>>  "+self.get_name
-     
-     #array = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id
-     #       AND tivit_user_statuses.status_id = 'Done'").order(:completed_at).reverse_order
+
             
      array= self.tivits.where(:status_id=>TivitStatus.get_completed_id)
             
@@ -129,8 +127,8 @@ put "______________     incoming reqyests __________________"
   
   def get_open_or_recently_done_tivits
       self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id
-            AND ((NOT tivit_user_statuses.status_id = 'Done')
-            OR ((tivit_user_statuses.status_id = 'Done' AND tivit_user_statuses.last_status_change > ?)))",Time.now-1.day)
+            AND ((NOT tivit_user_statuses.status_id = ?)
+            OR ((tivit_user_statuses.status_id = ? AND tivit_user_statuses.last_status_change > ?)))",TivitStatus.get_completed_id,TivitStatus.get_completed_id,Time.now-1.day)
   end
   
   
@@ -195,7 +193,7 @@ put "______________     incoming reqyests __________________"
                                     
      
       other_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
-                                   #"NOT tivit_user_statuses.status_id = 'Done'
+                                   #"NOT tivit_user_statuses.status_id = TivitStatus.get_completed_id
                                     "NOT activities.status_id       = ?
                                     AND tivit_user_statuses.user_id = activities.owner_id 
                                     AND NOT activities.owner_id     = ? ",TivitStatus.get_completed_id,user.get_id).order(:due).reverse_order
@@ -214,10 +212,9 @@ put "______________     incoming reqyests __________________"
 # Get only my open tivits and tivits i am the invitee (asignee)
 
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
-                # "NOT tivit_user_statuses.status_id = 'Done'
                  "NOT activities.status_id              = ?
-                  AND NOT tivit_user_statuses.status_id = 'Declined'
-                  AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id, user.get_id).order(:due).reverse_order
+                  AND NOT tivit_user_statuses.status_id = ?
+                  AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id,TivitStatus.get_declined_id, user.get_id).order(:due).reverse_order
        
       #puts "My open tivit "+my_open_tivits.size.to_s
      
@@ -228,7 +225,6 @@ put "______________     incoming reqyests __________________"
       
  #(recently ilan kasan)
       open_tivits_im_asignee = self.tivits.where(
-                    #"NOT tivit_user_statuses.status_id = 'Done'
                     "NOT activities.status_id = ? AND activities.invited_by = ?",TivitStatus.get_completed_id,user.get_id)
       
                       
@@ -247,7 +243,7 @@ put "______________     incoming reqyests __________________"
   
    def get_requests_tivits(currentuser)
 # retuen my new requests
-    puts "-------------<<<<<<<<<<<<<<  get_requests_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+ #   puts "-------------<<<<<<<<<<<<<<  get_requests_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
   
   
    my_tivits    = self.tivits.joins(:tivit_user_statuses).where(
@@ -255,7 +251,8 @@ put "______________     incoming reqyests __________________"
        AND     activities.owner_id           = ?
        AND NOT activities.status_id          = ?
        AND NOT activities.invited_by         = ? 
-       AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id,TivitStatus.get_completed_id,currentuser.id)
+       AND  (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)",
+       currentuser.id,TivitStatus.get_completed_id,currentuser.id,TivitStatus.get_new_id,TivitStatus.get_reviewed_id)
        
    puts " number of my new requests "+my_tivits.length.to_s
              
@@ -264,7 +261,8 @@ put "______________     incoming reqyests __________________"
        AND activities.invited_by               = ?
        AND   NOT activities.status_id          = ?
         
-       AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",currentuser.id,currentuser.id,TivitStatus.get_completed_id)
+       AND (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)",
+        currentuser.id,currentuser.id,TivitStatus.get_completed_id,TivitStatus.get_proposed_id,TivitStatus.get_declined_id)
        
     puts " number of  requests new  new requests"+other_tivits.length.to_s          
    
@@ -287,7 +285,7 @@ put "______________     incoming reqyests __________________"
                    AND  tivits.parent_id               = activities.id  
                    AND  tivits.owner_id                = tivit_user_statuses.user_id 
                    AND  tivits.id                      = tivit_user_statuses.activity_id 
-                   AND  (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
+                   AND  (tivit_user_statuses.status_id = "+TivitStatus.get_new_id.to_s+" OR tivit_user_statuses.status_id = "+TivitStatus.get_reviewed_id.to_s+")
                    AND  NOT tivits.status_id               = "+TivitStatus.get_completed_id.to_s+"
                    ORDER BY activities.due"
     
@@ -304,7 +302,7 @@ put "______________     incoming reqyests __________________"
                    AND     tivits.parent_id              = activities.id  
                    AND     tivits.owner_id               = tivit_user_statuses.user_id 
                    AND     tivits.id                     = tivit_user_statuses.activity_id 
-                   AND  ( tivit_user_statuses.status_id  = 'Declined' OR tivit_user_statuses.status_id  = 'Proposed' )
+                   AND  ( tivit_user_statuses.status_id  = "+TivitStatus.get_declined_id.to_s+" OR tivit_user_statuses.status_id  = "+TivitStatus.get_proposed_id.to_s+" )
                    AND  NOT tivits.status_id                = "+TivitStatus.get_completed_id.to_s+"
                  
                    ORDER BY activities.due"
@@ -315,11 +313,11 @@ put "______________     incoming reqyests __________________"
       return results1+results2
   end
   
-  def get_incoming_tivits (currentuser)
+  def old_get_incoming_tivits (currentuser)
   
 # Returns tivits i own and required my response or in play (awaiting the assiger to response with my proposal).
    results = self.tivits.joins(:tivit_user_statuses).where("activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id
-             AND     (tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')",currentuser.id)
+             AND     (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)",currentuser.id,TivitStatus.get_new_id,TivitStatus.get_reviewed_id)
              
              
 
@@ -334,12 +332,12 @@ put "______________     incoming reqyests __________________"
     if(self.get_owner == user)
 #User is the owner of the activity
      #   puts "---->>>>>>>>>>>>>> get_unresponded_tivits"
-        unresponded_tivits = self.tivits.joins(:tivit_user_statuses).where("(tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
-            AND tivit_user_statuses.user_id = activities.owner_id")
+        unresponded_tivits = self.tivits.joins(:tivit_user_statuses).where("(tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)
+            AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_new_id,TivitStatus.get_reviewed_id)
     else
 #User is NOT the owner of the activity
-        unresponded_tivits = self.tivits.joins(:tivit_user_statuses).where("(tivit_user_statuses.status_id = 'New' OR tivit_user_statuses.status_id = 'Reviewed')
-            AND (activities.owner_id = ? OR activities.invited_by = ? ) AND tivit_user_statuses.user_id = activities.owner_id",user.get_id, user.get_id)    
+        unresponded_tivits = self.tivits.joins(:tivit_user_statuses).where("(tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)
+            AND (activities.owner_id = ? OR activities.invited_by = ? ) AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_new_id,TivitStatus.get_reviewed_id,user.get_id, user.get_id)    
     end
     puts "unresponded_tivits = "+ unresponded_tivits.size.to_s
     return unresponded_tivits 
@@ -347,19 +345,19 @@ put "______________     incoming reqyests __________________"
   
   def get_all_my_open_tivits (user)
     
-    tivit_with_due = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NOT NULL",user.get_id).order(:due).reverse_order
+    tivit_with_due = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = ?
+AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NOT NULL",TivitStatus.get_completed_id,user.get_id).order(:due).reverse_order
 
-    tivit_due_null = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NULL",user.get_id)
+    tivit_due_null = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = ?
+AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NULL",TivitStatus.get_completed_id,user.get_id)
 
   return (tivit_with_due + tivit_due_null)
     
   end
   
   def get_open_tivits 
-    self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-                     AND tivit_user_statuses.user_id = activities.owner_id").order(:due).reverse_order
+    self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = ?
+                     AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id).order(:due).reverse_order
     
   end
   
@@ -368,17 +366,17 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
    #puts " current user = "+ currentuser.id.to_s
 # Returns tivits i own and required my response or in play (awaiting the assiger to response with my proposal).
    results1 = self.tivits.joins(:tivit_user_statuses).where("activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id
-AND ((NOT tivit_user_statuses.status_id = 'Done') AND (NOT tivit_user_statuses.status_id = 'OnIt' )) ",currentuser.id)
+AND ((NOT tivit_user_statuses.status_id = ?) AND (NOT tivit_user_statuses.status_id = ? )) ",currentuser.id,TivitStatus.get_completed_id,TivitStatus.get_onit_id)
 
 
 # Returns tivits that belong to my activity but are not mine and need my attention or awaiting response from the assignee
   if(currentuser.id == self.owner_id)
 
 results2 = self.tivits.joins(:tivit_user_statuses).where("not activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id
-AND (tivit_user_statuses.status_id = 'Proposed' OR tivit_user_statuses.status_id = 'Declined')",currentuser.id)
+AND (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)",currentuser.id,TivitStatus.get_proposed_id,TivitStatus.get_declined_id)
 
 results3 = self.tivits.joins(:tivit_user_statuses).where("activities.due > ? and tivit_user_statuses.user_id = activities.owner_id
-AND NOT tivit_user_statuses.status_id = 'Done' ", Time.now)
+AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_id)
   
   else
     results2 = []
@@ -392,21 +390,15 @@ return results
 
   def get_my_tivits (user)
   #   puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
-    #my_done_tivits = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.status_id = 'Done'
-    #  AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id ",user.get_id)
-
+    
     my_done_tivits = self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_completed_id])
    # puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
     
   
-    #my_open_tivits_no_due = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-    #AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NULL",user.get_id)
     my_open_tivits_no_due = self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_in_progress_id],:due => nil)
     #puts "--------^^^^^^^ my_open_tivits_no_due ^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> "+my_open_tivits_no_due.count.to_s
    
    
-   # my_open_tivits_due = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-    #  AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NOT NULL",user.get_id).order(:due).reverse_order
      my_open_tivits_due = self.tivits.where("owner_id = ? AND NOT status_id = ? AND due IS NOT NULL",user.get_id,TivitStatus.get_completed_id).order(:due).reverse_order
    
      
@@ -418,24 +410,18 @@ return results
   def get_team_tivits (user)
     
     puts "----------------->>>> in team_my tivits"
-    #team_done_tivits = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.status_id = 'Done'
-    #  AND NOT activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id ",user.get_id)
     
     team_done_tivits = self.tivits.where("NOT owner_id = ? AND (status_id = ? )",user.get_id, TivitStatus.get_completed_id)
     
     puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_done_tivits "+team_done_tivits.count.to_s
     
 
-    #team_open_tivits_no_due = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-     # AND NOT activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NULL",user.get_id)
     
     team_open_tivits_no_due  = self.tivits.where("NOT owner_id = ? AND NOT (status_id = ?) AND due IS NULL",user.get_id, TivitStatus.get_completed_id)
     
     puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_open_tivits_no_due "+team_open_tivits_no_due.count.to_s
     
       
-    #team_open_tivits_due = self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = 'Done'
-    #  AND NOT activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id AND activities.due IS NOT NULL",user.get_id).order(:due).reverse_order
     team_open_tivits_due  = self.tivits.where("NOT owner_id = ? AND NOT (status_id = ?) AND due IS NOT NULL",user.get_id,TivitStatus.get_completed_id)
      
   # puts "my_open_activities = "+my_open_activities.size.to_s
@@ -455,9 +441,9 @@ return results
  # puts "AFTER show attempting to change status for activity "+self.id.to_s+ " "+self.activity_name
  #puts "------------------------------------------------------------"
     status = self.get_user_status(user)
-    if(status == "New")
-       change_status(user,"Reviewed","")
-       puts "chaging status from new to Review"
+    if(status == TivitStatus.get_new_id)
+       change_status(user,TivitStatus.get_reviewed_id,"")
+       puts "------>>>>> chaging status from new to Review"
     end
 # puts "Changing the date of last review og the comments"
 #updating the date/time a user reviewed this activity/tivit
@@ -473,44 +459,41 @@ return results
  
  
  def update_tivit_user_status_reminded(user,comment)
-  change_status(user,"Reminded",comment)
+  change_status(user,TivitStatus.get_reminded_id,comment)
  end
  
  def update_tivit_user_status_onit(user,comment)
   # puts "update_tivit_user_status_onit   <<<<_________________ is done? "+self.isDone?
-  change_status(user,"OnIt",comment)
+  change_status(user,TivitStatus.get_onit_id,comment)
   self.change_status_to_in_progress if self.isCompleted?
   
  end
  
  def update_tivit_user_status_reviewed(user,comment)
-  change_user_status(user,"Reviewed",comment,nil,Time.now().utc,nil)
+  change_user_status(user,TivitStatus.get_reviewed_id,comment,nil,Time.now().utc,nil)
  
  end
  
  def update_tivit_user_status_decline(user,comment)
-  change_status(user,"Declined",comment)
+  change_status(user,TivitStatus.get_declined_id,comment)
   self.change_status_to_in_progress if self.isCompleted?
   
  end
  
  def update_tivit_user_status_i_am_done(user,comment)
   
-  change_status(user,"Done",comment)
- # self.change_status_to_done
- # puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
- # puts self.inspect
- # puts "gggggggggggggggggggggggggggggggggggggggggggggggggg"
+  change_status(user,TivitStatus.get_completed_id,comment)
+ 
  end
  
  def update_tivit_user_propose_date(user,comment,date)
-  change_user_status(user,"Proposed",comment,date,Time.now().utc,nil)
+  change_user_status(user,TivitStatus.get_proposed_id,comment,date,Time.now().utc,nil)
   self.change_status_to_in_progress if self.isCompleted?
  end
  
  
  def update_tivit_status_reassiged(user,comment,assined_user)
-  change_user_status(user,"Reassigned",comment,nil,Time.now().utc,assined_user)
+  change_user_status(user,TivitStatus.get_reassigned_id,comment,nil,Time.now().utc,assined_user)
      
  end
       
@@ -529,7 +512,7 @@ return results
  
  
  def get_owner_status
-    return "Done" if (self.isCompleted?)
+    #return "Done" if (self.isCompleted?) #ilan: rvisit this line
     tivit_user_status = self.tivit_user_statuses.find_by_user_id(self.get_owner)
     if(tivit_user_status == nil)
       tivit_user_status = create_status_new(self.get_owner)
@@ -694,19 +677,19 @@ return results
   #puts "______________________________________________________" 
    #puts "^^^^^^^^^^^^^^^^^^^^^  Activity = "+self.name
    
-   count = 0
-   self.tivits.each do |tivit|
-     status = tivit.get_user_status(tivit.get_owner)
-     if (status == "Done")
-      count = count+1
-      tivit.status_id = TivitStatus.get_completed_id
-      tivit.save()
-     end
-   end
+   #count = 0
+   #self.tivits.each do |tivit|
+   #  status = tivit.get_user_status(tivit.get_owner)
+   #  if (status == "Done")
+   #   count = count+1
+   #   tivit.status_id = TivitStatus.get_completed_id
+   #   tivit.save()
+   #  end
+   #end
                                          
    count1 = self.tivits.where(:status_id=>[TivitStatus.get_completed_id, "Done"]).count
- #  puts "count 1 = "+count1.to_s
- #  puts "count  = "+count.to_s
+  # puts "count 1 = "+count1.to_s
+  # puts "count  = "+count.to_s
    
    #puts "************* end **************************************************"
      
@@ -720,25 +703,26 @@ return self.tivits.size
   
   end
   
-  def get_activity_tivit_status
+  def DELETE_get_activity_tivit_status
 #returns a string of how many tivits have been completed
 # need to remove business logic from model
-if(self.tivits == nil || self.tivits.size == 0)
-return "no tivits"
-else
-count = 0
+    if(self.tivits == nil || self.tivits.size == 0)
+      return "no tivits"
+    else
+      count = 0
 # puts "get_activity_tivit_status = " +self.tivits.size.inspect
 
-self.tivits.each do |tivit|
-status = tivit.get_user_status(tivit.get_owner)
+      self.tivits.each do |tivit|
+      status = tivit.get_user_status(tivit.get_owner)
 #puts "status = "+ status
-if (status == "Done")
-count = count+1
-end
-end
-end
-return count.inspect + "/" + self.tivits.size.inspect+" tivits have been completed"
-
+      if (status == "Done")
+          count = count+1
+      end
+    end
+  end
+  #get_number_of_completed_tivits
+  return count.inspect + "/" + self.tivits.size.inspect+" tivits have been completed"
+  
   end
 
 # Checking to see if the task was previously closed. This will be used before the email is sent out below
@@ -802,25 +786,18 @@ end
 private
 
  def create_status_new(user)
-  return create_status(user,"New")
+  return create_status(user,TivitStatus.get_new_id)
  end
  
  
  def create_status(user, status)
+  puts "^^^^^^^^^^^^^^   creating status " + status.to_s
   tivit_status = user.tivit_user_statuses.new()
-  if(false)
-    puts " ---------------- Changing status ------------------------- "
-    if(tivit_status.status_id == nil)
-      puts " nil -->>> " + status
-    else
-      puts tivit_status.status_id + "-->>> " + status
-    end
-  end
- 
-    tivit_status.status_id = status
-    tivit_status.activity_id = self.id
-    tivit_status.save()
-    return tivit_status
+  
+  tivit_status.status_id = status
+  tivit_status.activity_id = self.id
+  tivit_status.save()
+  return tivit_status
     
  end
  

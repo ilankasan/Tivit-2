@@ -6,9 +6,68 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-puts "starting seed....."
-puts "geting activities"
 
+puts "starting seed....."
+puts "Migrating tivit_user_statuses...."
+
+
+  count  = 0
+  issues = 0
+  totalrecords = TivitUserStatus.all.count
+  TivitUserStatus.all.each do |userstatus|
+    
+      count = count +1
+      case userstatus.status_id_str
+        when ("New") 
+          userstatus.status_id = TivitStatus.get_new_id
+          puts count.to_s+ " New"          
+                
+        when ("OnIt") 
+        
+          userstatus.status_id = TivitStatus.get_onit_id
+          puts count.to_s+ " On it"          
+          
+         
+        when ("Proposed") 
+          userstatus.status_id = TivitStatus.get_proposed_id
+          puts count.to_s+ " Proposed"          
+           
+        when ("Reviewed") 
+          userstatus.status_id = TivitStatus.get_reviewed_id
+          puts count.to_s+ " Reviewed"
+                    
+        when ("Reassigned")
+          userstatus.status_id = TivitStatus.get_reassigned_id
+          puts count.to_s+ " Reasigned"          
+        
+        when ("Done") 
+          userstatus.status_id = TivitStatus.get_completed_id
+          puts count.to_s+ " Done"
+          
+        when ("Reminded") 
+          userstatus.status_id = TivitStatus.get_reminded_id
+          puts count.to_s+ " Reminded"
+          
+        when ("Declined") 
+          userstatus.status_id = TivitStatus.get_declined_id
+          puts count.to_s+ " Declined"
+          
+          
+        else
+          puts "----------------------> un identified status --->>. "+userstatus.status_id_str
+        end
+        userstatus.save
+      
+  end
+  puts "total records "+totalrecords.to_s
+  puts "modified "+count.to_s+" records"
+  puts "found "+issues.to_s + " issues"
+
+
+
+if(false)
+  puts "starting seed....."
+puts "geting activities"
 
  Activity.all.each do |activity|
       if(activity.status == "in-progress")
@@ -44,6 +103,7 @@ puts "geting activities"
     
         puts "Replacing in progress"
       end
+end
   end
  
       

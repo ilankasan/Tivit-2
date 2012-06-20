@@ -70,7 +70,7 @@
 		<!-- *** 3 *** the middle text in status line varies dpending on the status of each tivit, let's set it up based on the status -->
 		<% status_line_middle = "" %>
 
-		<% if owner_tivit_status == "Done" %>
+		<% if owner_tivit_status == TivitStatus.get_completed_id %>
 			<% status_line_middle = " finished this " +  (time_ago_in_words (tivit_adp.completed_at)) + " ago." %>
 			<% status_line_window = "" %>
 		
@@ -78,7 +78,7 @@
 		<li class="record complete tivit-name-line-through">
 		<% respondbutton = "I'm done!" %>
 		
-		<% elsif owner_tivit_status == "Proposed" %>
+		<% elsif TivitStatus.is_proposed_id?(owner_tivit_status)%>
 	
 		<li class="record attention">
 		<% respondbutton = "new date?" %>
@@ -97,17 +97,17 @@
       
      	<li class="record busy">
 		
-			<% if (owner_tivit_status == "New" || owner_tivit_status == "Reminded") %>
+			<% if (owner_tivit_status == TivitStatus.get_new_id || owner_tivit_status == TivitStatus.get_reminded_id) %>
 				<% if tivit_owner_name == "You" %>
 					<% status_line_middle = " haven't read this." %>
 				<% else %>
 					<% status_line_middle = " hasn't read this." %>
 				<% end %>
 			
-			<% elsif (owner_tivit_status == "OnIt" || owner_tivit_status == "Accepted") %>
+			<% elsif (TivitStatus.is_onit_id?(owner_tivit_status) || TivitStatus.is_accepted_id?(owner_tivit_status)) %>
 				<% status_line_middle = " agreed to help by" %>
 				
-			<% elsif owner_tivit_status == "Reviewed"%>
+			<% elsif owner_tivit_status == TivitStatus.get_reviewed_id%>
 				<% if tivit_owner_name == "You" %>
 					<% status_line_middle = " haven't responded." %>
 				<% else %>
@@ -118,7 +118,7 @@
 				<% status_line_middle = "un-handled status...if you see this let yaniv know" %>
 	  	 	<% end %>	
    	
-		<% elsif (owner_tivit_status == "OnIt" || owner_tivit_status == "Accepted")%>
+		<% elsif (TivitStatus.is_onit_id?(owner_tivit_status) || owner_tivit_status == TivitStatus.get_accepted_id)%>
 		
 		<li class="record inprog">
 		<% respondbutton = "I'm on it" %>
@@ -129,7 +129,7 @@
 				<% status_line_middle = " agreed to help." %>
 			<% end %>
 	    
-		<% elsif owner_tivit_status == "New" || owner_tivit_status == "Reminded" %>
+		<% elsif owner_tivit_status == TivitStatus.get_new_id || owner_tivit_status == TivitStatus.get_reminded_id %>
 		
 		<li class="record unread">
 			<% if tivit_owner_name == "You" %>
@@ -144,7 +144,7 @@
 				<% status_line_window = "" %>
 			<% end %>
 	                		                            
-		<% elsif owner_tivit_status == "Reviewed"%>
+		<% elsif owner_tivit_status == TivitStatus.get_reviewed_id%>
 			<li class="record unread">
 			<% if tivit_owner_name == "You" %>
 				<% status_line_middle = " haven't responded." %>
@@ -158,7 +158,7 @@
 				<% status_line_window = "" %>
 			<% end %>
 	
-		<% elsif owner_tivit_status == "Reassigned"%>
+		<% elsif owner_tivit_status == TivitStatus.get_reassigned_id%>
 			<li class="record re-assign">
 			
 			<% if tivit_adp.get_invited_by.id == current_account.user.id %>
@@ -229,7 +229,7 @@
 		
 				<!-- Render User Avatar -->
 				<!-- if the status is new, that means the owner didn't read it yet, dim avatar and put the remind link -->
-				<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Done" %>
+				<% if owner_tivit_status == TivitStatus.get_new_id || owner_tivit_status == TivitStatus.get_reminded_id || owner_tivit_status == TivitStatus.get_completed_id %>
 				<div class="avatar unread">
 				<% else %>
 				<div class="avatar read">
@@ -242,7 +242,7 @@
 							
 							<!-- comments icon -->
 							<!-- don't show comments icon for owner if status is not responded yet -->
-							<%# if tivit_adp.get_owner.id != current_account.user.id && (owner_tivit_status != "New" && owner_tivit_status != "Reminded" && owner_tivit_status != "Reviewed") %>
+							<%# if tivit_adp.get_owner.id != current_account.user.id && (owner_tivit_status != TivitStatus.get_new_id && owner_tivit_status != "Reminded" && owner_tivit_status != "Reviewed") %>
 								
 							<div class="comments">
 						   		<% if unread_comments > 0 %>
@@ -256,7 +256,7 @@
 							
 							<% due_time_window = tivit_adp.get_due_window_from_now %>
 							
-							<% if owner_tivit_status != "Done" %>
+							<% if owner_tivit_status != TivitStatus.get_completed_id %>
 									<% if tivit_adp.due == nil %>
 									<!-- no date specified -->
 										<div class="calendar">
@@ -304,7 +304,7 @@
 					<% status_line = tivit_owner_name + status_line_middle + status_line_window %>
 					<span class="grey">
 	              		
-	              		<% if owner_tivit_status == "Proposed" %>
+	              		<% if TivitStatus.is_proposed_id?(owner_tivit_status) %>
 		              		<%= tivit_owner_name %> 
 							<font color="red"><%= status_line_middle %></font>
 							<!-- only tivit creator and activity owner can accept new time proposed. The only exception is when activity owner request a new time for a tivit s/he got assigned -->
@@ -316,7 +316,7 @@
 					    <!-- overdue -->
 					    <% elsif tivit_adp.due != nil && tivit_adp.due.localtime.end_of_day < Time.now.end_of_day %>
 					    	<%= tivit_owner_name + status_line_middle %> 
-					    	<% if ((owner_tivit_status != "New" && owner_tivit_status != "Reminded" && owner_tivit_status != "Reviewed" && owner_tivit_status != "Done" )) %>
+					    	<% if ((owner_tivit_status != TivitStatus.get_new_id && owner_tivit_status != TivitStatus.get_reminded_id && owner_tivit_status != TivitStatus.get_reviewed_id && owner_tivit_status != TivitStatus.get_completed_id )) %>
 					    		<font color="red"><%= status_line_window %></font> 
 					    	<% end %>
 					    <% elsif status_line_middle == " declined" %>
@@ -331,7 +331,7 @@
 	              		<% end %>
 	              		
 	              		<!-- add remind if user didn't read or did respond yet -->
-	              		<% if owner_tivit_status == "New" || owner_tivit_status == "Reminded"%>
+	              		<% if owner_tivit_status == TivitStatus.get_new_id || owner_tivit_status == TivitStatus.get_reminded_id%>
 		              		<%if((current_account.user.get_id == tivit_adp.get_parent.get_owner.get_id && current_account.user.get_id != tivit_adp.get_owner.get_id)|| (current_account.user.get_id == tivit_adp.get_invited_by.id) )%>	              	
 			              			<span class="send-reminder">Remind</span>
 			              			<!-- 
@@ -346,10 +346,10 @@
 							<%end%>
 	              		<% end %>
 	              		
-		              	<% #if (tivit_adp.get_invited_by.get_id != current_account.user.get_id && (owner_tivit_status == "New" || owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed") ) %>
+		              	<% #if (tivit_adp.get_invited_by.get_id != current_account.user.get_id && (owner_tivit_status == TivitStatus.get_new_id|| owner_tivit_status == "Reminded" || owner_tivit_status == "Reviewed") ) %>
 		              	<% if (tivit_adp.get_invited_by.get_id != current_account.user.get_id ) %>
 		              		
-		              		<% if owner_tivit_status == "Reviewed" %>
+		              		<% if owner_tivit_status == TivitStatus.get_reviewed_id %>
 		              			[invited by <%=tivit_adp.get_invited_by.get_name%>,  <%= time_ago_in_words(tivit_adp.created_at)%> ago]
 		              		<% else %>
 		              			[invited by <%=tivit_adp.get_invited_by.get_name%>]
