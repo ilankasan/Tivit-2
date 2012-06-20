@@ -15,7 +15,7 @@ puts "Migrating tivit_user_statuses...."
   issues = 0
   totalrecords = TivitUserStatus.all.count
   TivitUserStatus.all.each do |userstatus|
-    
+  puts "Total record "+ totalrecords.to_s  
       count = count +1
       case userstatus.status_id_str
         when ("New") 
@@ -52,9 +52,13 @@ puts "Migrating tivit_user_statuses...."
           userstatus.status_id = TivitStatus.get_declined_id
           puts count.to_s+ " Declined"
           
+        when ("Accepted") 
+          userstatus.status_id = TivitStatus.get_accepted_id
+          puts count.to_s+ " Accepted"
           
         else
-          puts "----------------------> un identified status --->>. "+userstatus.status_id_str
+          puts "----------------------> un identified status --->>. "+userstatus.status_id_str.to_s
+          issues = issues + 1
         end
         userstatus.save
       

@@ -143,12 +143,12 @@ class ActivitiesController < ApplicationController
   
   def show
     
-    puts "----------->>>>>>>>>>> show activity detailed page"
+   # puts "----------->>>>>>>>>>> show activity detailed page"
     #puts "params = "+params.inspect
     @activity_temp = Activity.find(params[:id])
     if(!@activity_temp.isActivity?)
 #this is a tivit
-      puts ">>>>>>>>>>>>>>>>>>    this is a tivit <<<<<<<<<<<<<<<<<<<<<<"
+  #    puts ">>>>>>>>>>>>>>>>>>    this is a tivit <<<<<<<<<<<<<<<<<<<<<<"
       @tivit_id = @activity_temp.id
       @activity = @activity_temp.get_parent
     else
@@ -158,7 +158,7 @@ class ActivitiesController < ApplicationController
    # @activity.update_status_after_show(current_account.user)
     
   	@title = "Activity Details - "+@activity.name
-  	puts "<<<<<<<<<<<<<<-----------show activity detailed page"  
+  	#puts "<<<<<<<<<<<<<<-----------show activity detailed page"  
    
   end
   
@@ -290,7 +290,6 @@ class ActivitiesController < ApplicationController
   
   def delete_change_tivit_status
     
-    #puts "<<<<<<<<<<<<----------->>>>>>>>>>>"  
    # puts params.inspect  
  #ilan: the below can be optimized   
     @activity = Activity.find(params[:id])
