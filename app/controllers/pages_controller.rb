@@ -105,7 +105,7 @@ def home
      @active_users = User.joins(:account,:tivitcomments).where(:is_active => true).order("tivitcomments.updated_at").reverse_order.uniq
      #    users = User.joins(:tivitcomments).where("tivitcomments.activity_id = ? AND users.id = tivitcomments.user_id AND NOT tivitcomments.user_id = ? ",self.id, user.get_id)
  
-     puts "Number of active user is = "+@active_users.size.to_s
+#     puts "Number of active user is = "+@active_users.size.to_s
 
   #<%if user.tivitcomments != nil && user.tivitcomments.size > 0 %>
    # <%=time_ago_in_words(user.tivitcomments.last.updated_at)

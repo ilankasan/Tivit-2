@@ -254,7 +254,7 @@ put "______________     incoming reqyests __________________"
        AND  (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)",
        currentuser.id,TivitStatus.get_completed_id,currentuser.id,TivitStatus.get_new_id,TivitStatus.get_reviewed_id)
        
-   puts " number of my new requests "+my_tivits.length.to_s
+ #  puts " number of my new requests "+my_tivits.length.to_s
              
    other_tivits = self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id 
        AND   NOT activities.owner_id           = ? 
@@ -264,7 +264,7 @@ put "______________     incoming reqyests __________________"
        AND (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)",
         currentuser.id,currentuser.id,TivitStatus.get_completed_id,TivitStatus.get_proposed_id,TivitStatus.get_declined_id)
        
-    puts " number of  requests new  new requests"+other_tivits.length.to_s          
+   # puts " number of  requests new  new requests"+other_tivits.length.to_s          
    
     return my_tivits + other_tivits
   end
@@ -290,7 +290,7 @@ put "______________     incoming reqyests __________________"
                    ORDER BY activities.due"
     
      results1  =  Activity.find_by_sql(sql_activities_with_my_tivits).count
-     puts " number of my new requests "+results1.to_s
+    # puts " number of my new requests "+results1.to_s
              
    
       
@@ -308,7 +308,7 @@ put "______________     incoming reqyests __________________"
                    ORDER BY activities.due"
                  
       results2  =  Activity.find_by_sql(sql_activities_i_assigned_with_tivit_requests).count
-      puts " number of my other requests "+results2.to_s
+   #   puts " number of my other requests "+results2.to_s
      
       return results1+results2
   end
