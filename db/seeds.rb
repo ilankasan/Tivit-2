@@ -14,8 +14,9 @@ puts "Migrating tivit_user_statuses...."
   count  = 0
   issues = 0
   totalrecords = TivitUserStatus.all.count
-  TivitUserStatus.all.each do |userstatus|
   puts "Total record "+ totalrecords.to_s  
+  
+  TivitUserStatus.all.each do |userstatus|
       count = count +1
       case userstatus.status_id_str
         when ("New") 

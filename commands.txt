@@ -150,13 +150,13 @@ git merge 1-19-12_tabfilters
 
 $ 
 heroku rake db:migrate --app staging
-heroku rake db:seed
+heroku rake db:migrate --app tiviti-staging
+heroku rake db:seed --remote staging
 
 
  rename_column(:activities, :owner_id, :user_id)
 
 rails generate scaffold Activity name:string description:string status:string due:datetime owner:integer who:string
-rails generate model Activity name:string description:string status:string due:datetime owner_id:integer who:string
 rails generate model Activity name:string description:string status:string due:datetime owner_id:integer who:string
 
 rails generate uploader TivitDoc
