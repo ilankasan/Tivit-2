@@ -10,13 +10,21 @@ html, body {
 	background: white;
 }
 .bk2 {
-	background: #333333;	
+	/*background: #333333;*/
+}
+.fullscreen {
+	/*background: #333333;	*/
+	background-image: url("../images/bkg.jpg");
+	/*max-width: 1314px;*/
+    /*min-width: 0;
+    width: auto;   */
 }
 body {
 	font-family: Arial, 'Liberation Sans', FreeSans, sans-serif; /*Arial, Helvetica, Verdana, Sans-serif;*/
 	font-size: 12px;
 	color: #666666;
 	background:#fff; /*orange;*//*#EEEEEE;/*#e3edef;*/
+	overflow-y: scroll;
 }
 .hidden {
 	display: none;
@@ -1398,7 +1406,8 @@ small.less{display:block;padding:0;}
     width: 125px;
 }
 #sign-in-up-form {
-	background: none repeat scroll 0 0 #FFFFFF;
+	/*background: none repeat scroll 0 0 #FFFFFF;*/
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.75);
     border-radius: 5px 5px 5px 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
     margin: 0 auto 15px;
@@ -1407,6 +1416,7 @@ small.less{display:block;padding:0;}
     position: relative;
     text-align: left;
     width: 306px;
+    color: #DDDDDD;
     
 }
 #sign-in-up-form .legend	{ display: none; }
@@ -1414,9 +1424,9 @@ small.less{display:block;padding:0;}
 
 
 #sign-in-up-form .label {
-	color: #525252;
+	color: #DDDDDD;
     display: block;
-    font-weight: bold;
+    font-weight: normal;
     margin-bottom: 2px;
     margin-top: 6px;
 }
@@ -1482,5 +1492,5 @@ small.less{display:block;padding:0;}
 	cursor: pointer;
 }
 
-#sign-in-up-form a { font-size: 12px; width: 200px; padding: 16px; }
+#sign-in-up-form a { font-size: 12px; width: 200px; padding: 16px; color: #DDDDDD; }
 
