@@ -215,6 +215,7 @@ rails -d mysql my_rails_app
  rails generate migration add_status_id_to_activities status_id:integer
  
  rails generate migration remove_status_column_from_activities
+ rails generate migration remove_status_id_str_column_from_tivit_user_statuses
  
  
  rails generate migration add_index_to_invited_by_column_in_activities
