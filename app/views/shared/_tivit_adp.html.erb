@@ -70,7 +70,7 @@
 		<!-- *** 3 *** the middle text in status line varies dpending on the status of each tivit, let's set it up based on the status -->
 		<% status_line_middle = "" %>
 
-		<% if owner_tivit_status == TivitStatus.get_completed_id %>
+		<% if tivit_adp.isCompleted? %>
 			<% status_line_middle = " finished this " +  (time_ago_in_words (tivit_adp.completed_at)) + " ago." %>
 			<% status_line_window = "" %>
 		
@@ -256,7 +256,7 @@
 							
 							<% due_time_window = tivit_adp.get_due_window_from_now %>
 							
-							<% if owner_tivit_status != TivitStatus.get_completed_id %>
+							<% if !tivit_adp.isCompleted? %>
 									<% if tivit_adp.due == nil %>
 									<!-- no date specified -->
 										<div class="calendar">
@@ -301,7 +301,15 @@
 							<!-- ********* -->
 					 
 					<!-- all gray status lines -->
-					<% status_line = tivit_owner_name + status_line_middle + status_line_window %>
+
+						<% if tivit_adp.isCompleted? %>
+		            		<% tivit_owner_name = tivit_adp.get_completed_user_name %>
+							
+					  	<% end %>
+											
+						<% status_line = tivit_owner_name + status_line_middle + status_line_window %>
+					
+						
 					<span class="grey">
 	              		
 	              		<% if TivitStatus.is_proposed_id?(owner_tivit_status) %>

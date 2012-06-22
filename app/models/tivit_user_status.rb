@@ -26,6 +26,11 @@ attr_accessible :status_id, :activity_id,:user_id,:comment,:last_reviewed
   		self.last_reviewed = time.utc
   		self.save
 	end
+	
+	def get_user
+	  return user
+	end
+	
 end
 
 	

@@ -47,7 +47,7 @@
 
 <!-- *** 3 *** the middle text in status line varies dpending on the status of each tivit, let's set it up based on the status -->
 <% status_line_middle = "" %>
-<% if owner_tivit_status == TivitStatus.get_completed_id %>
+<% if tivit.isCompleted? %>
 
 	<li class="record complete tivit-name-line-through">
 	
@@ -228,7 +228,10 @@
 	  									   :method => "get",
 	                                       :title  => tivit_parent_activity.name %>       	
 	              </h3>
-	              
+	              <% if tivit.isCompleted? %>
+		            		<% tivit_owner_name = tivit.get_completed_user_name %>
+							
+				  <% end %>
 	              <% status_line = tivit_owner_name + status_line_middle + status_line_window %>
 	             	             
 					<!-- all gray status lines -->

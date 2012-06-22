@@ -502,7 +502,7 @@ return results
   def get_user_status(user)
    tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
    if(tivit_user_status == nil)
-   tivit_user_status = create_status_new(user)
+    tivit_user_status = create_status_new(user)
    end
     #puts "******666666666666666666666666***************************  "+tivit_user_status.status_id+"********************"
     
@@ -762,6 +762,19 @@ end
   def isCompleted?
      return TivitStatus.is_completed_id?(self.status_id)
      
+  end
+  
+  
+  def get_completed_user_name
+    puts "in get_completed_user_name" 
+     users_status = self.tivit_user_statuses.where(:status_id => TivitStatus.get_completed_id).order(:last_status_change)
+    
+     if (!users_status.nil? && !users_status[0].nil? )
+       return users_status[0].get_user.get_name
+     else  
+       return "Error no user"
+     end
+        
   end
   
   # [Yaniv] Return status window for tivit or activity. This function is used in many places in the UI to determine 
