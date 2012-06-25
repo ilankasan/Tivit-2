@@ -36,7 +36,7 @@ class ActivitiesController < ApplicationController
         return
        end
      end
-     puts "++++++++++++++++++++++++++++++++++++++++++++++(((()()()())))"
+  #   puts "++++++++++++++++++++++++++++++++++++++++++++++(((()()()())))"
      authenticate_account!
    end # end def
   

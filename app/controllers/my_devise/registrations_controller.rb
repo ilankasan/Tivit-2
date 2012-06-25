@@ -6,17 +6,13 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  
   def new
   	puts " new ++++++++++++ registration ++++++++++++++++++++++++++++++++++++++"
-	#puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
 	
-  puts "NNNNEEEEEEEEEEEEEEEEWWWWWWWWWWWWWWWWWWWWW"
-	puts params.inspect
-	@email = params[:email]
-	if(@email != nil)
-	  flash[:warning] = "Sign up with email "+@email
-	end
-	@title = "Sign Up"
-    
-    super
+    @email = params[:email]
+	 if(@email != nil)
+	    flash[:warning] = "Sign up with email "+@email
+	 end
+	 @title = "Sign Up"
+   super
     
   end
 
@@ -30,7 +26,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  
  def create
  	puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------"
- #	puts " Params "+params.inspect
+ 	puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------"
  	@params = params
 	super
 #	puts "test  = "+test.inspect	
@@ -44,12 +40,12 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 	
 	#puts "user = "+@user.inspect
 	if(@user == nil)
-		#puts "user == nil"
+		puts "user == nil and email = "+email
+		params[:account][:user][:clone_email] = email 
 		@account.user = User.new(params[:account][:user])
-		@account.user.clone_email = email
 		
 	else
-	#	puts "user != nil"
+		puts "user != nil"
 		if(@account.user == nil)
 			puts " account.user == nil"
 			@user.activate_user
@@ -60,8 +56,8 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 			puts " account.user != nil"
 		end
 	end
-	   puts " saving account!!!!!!!!!!!!!!!!"
-    @account.save
+	puts " saving account!!!!!!!!!!!!!!!!"
+  @account.save
 
  end
  
@@ -76,8 +72,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  end
  protected
  def after_inactive_sign_up_path_for(resource)
-   puts "UUUUUUUUU kkk  UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"
-  # puts "resource " + resource.inspect
+  # puts "UUUUUUUUU kkk  UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"
   # @email = resource[:email]
   # @params[:email]= resource[:email]
     

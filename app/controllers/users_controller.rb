@@ -6,14 +6,15 @@ class UsersController < ApplicationController
  # :only => :show, :update,:edit,:create 
  
   
- autocomplete :user, :email, :extra_data => [:slogan], :display_value => :funky_method
+ # ilan delete autocomplete :user, :email, :extra_data => [:slogan], :display_value => :funky_method
   
  def autoname
 # auto completed to get list of users. Nee to expand it to seach name field and names in the user table
   puts "term = "+params[:term]
   #names = Account.all
  
-puts "_________________________________________"
+puts "_____________    autoname ____________________________"
+puts "_____________    autoname ____________________________"
   if (params[:term] && !current_account.user.mycontacts.nil?)
     like= "%".concat(params[:term].concat("%"))
     clone_emails  = current_account.user.mycontacts.where("clone_email LIKE ? OR name LIKE ? ", like, like)
@@ -48,12 +49,6 @@ end
     
   end
 
-  def delete_get_autocomplete_items(parameters)
-  	puts "%%%%%%%%%%%&&&&&&&&&&&&*&(&"
-  	
-    items = super(parameters)
-    items = items.where(:user_id => current_account.user.id)
-  end
   
   def show
     @user = User.find(params[:id])
