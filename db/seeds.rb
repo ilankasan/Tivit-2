@@ -8,8 +8,26 @@
 
 
 puts "starting seed....."
-puts "Migrating tivit_user_statuses...."
+  i = 1
+  User.all.each do |user|
+      clone = "nil" if user.clone_email == nil  
+      clone = user.clone_email  if user.clone_email != nil
+      
+      if(user.account != nil)
+        user.clone_email = user.account.email
+        puts i.to_s+" saving "+user.account.email+ " in to "+ clone.to_s
+        user.save
+      else
+        puts i.to_s+" no account to email "+ clone.to_s
+      
+      end
+       
+      i = i + 1 
+  end
+  
 
+if(false)
+  puts "Migrating tivit_user_statuses...."
 
   count  = 0
   issues = 0
@@ -69,7 +87,7 @@ puts "Migrating tivit_user_statuses...."
   puts "found "+issues.to_s + " issues"
 
 
-
+end
 if(false)
   puts "starting seed....."
 puts "geting activities"
