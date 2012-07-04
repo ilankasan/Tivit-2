@@ -42,7 +42,7 @@ module PagesHelper
       results1 = Activity.where("status_id     = ?  
                     AND activity_type = 'tivit'
                     AND owner_id      = ?
-                    ",TivitStatus.get_in_progress_id.to_s,current_user_id).order(:due)
+                    ",TivitStatus.get_in_progress_id.to_s,current_user_id).order(" due, created_at DESC")
                     
      
          
@@ -206,7 +206,7 @@ module PagesHelper
                          (    tivits.owner_id                   = "+user_id+"
                          AND  tivits.parent_id                  = activities.id
                          AND  tivit_user_statuses.activity_id   = tivits.id 
-                         AND NOT ( tivits.status_id             = "+TivitStatus.get_new_id.to_s + "  
+                         AND NOT (    tivits.status_id             = "+TivitStatus.get_new_id.to_s + "  
                                    OR tivits.status_id          = "+TivitStatus.get_declined_id.to_s + " 
                                    OR tivits.status_id          = "+TivitStatus.get_completed_id.to_s + ") 
                         
