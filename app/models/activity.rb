@@ -408,7 +408,7 @@ return results
  
     return  self.tivits.joins(:tivit_user_statuses).where(
                          "activities.owner_id         = ? 
-                  AND     activities.activity_type    = 'tivit' 
+                  AND     NOT activities.activity_type    = 'activity' 
                   AND     activities.id               = tivit_user_statuses.activity_id 
                   AND     activities.owner_id         = tivit_user_statuses.user_id
                   AND     activities.status_id        = ?
