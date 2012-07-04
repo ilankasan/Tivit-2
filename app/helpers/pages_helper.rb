@@ -238,7 +238,7 @@ module PagesHelper
   
   
   def get_activities_i_have_open_tivits(user_id)
-    puts "get_activities_i_have_open_tivits"
+    #puts "get_activities_i_have_open_tivits"
     
       sql_activities_i_participate_with_due_date  = "SELECT DISTINCT activities.*, ISNULL(tivits.due) AS 'isnull' FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status_id           = "+TivitStatus.get_completed_id.to_s+"  
@@ -300,14 +300,9 @@ module PagesHelper
 ################################# Completed ACTITVITIES #######################################################################################
 
   def get_completed_tivits(user)
-    puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    
-    return user.activities.where(:status_id => TivitStatus.get_completed_id,:activity_type => 'tivit' ).uniq
+  #  puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+  
+    return user.activities.where(:status_id => TivitStatus.get_completed_id,:activity_type => 'tivit' )
   end
 
 
