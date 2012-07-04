@@ -76,7 +76,7 @@ def home
       @new_tivit_requests            = get_new_tivit_requests(current_user_id)
       @my_open_tasks                 = get_my_open_tasks(current_user_id)
       
-      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    #  puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
     #  puts "My open tasks "+ @my_open_tasks.size.to_s
       
       account_session[:filter_id] = @filter_id
