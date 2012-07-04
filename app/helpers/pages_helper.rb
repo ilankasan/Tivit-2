@@ -297,7 +297,7 @@ module PagesHelper
 
   def get_completed_tivits(user)
     puts " --------->>>>>>>>>>>>>>> get_completed_tivits"
-    return user.activities.where(:status_id => TivitStatus.get_completed_id,:status_type => 'tivit' )
+    return user.activities.where(:status_id => TivitStatus.get_completed_id,:activity_type => 'tivit' )
   end
 
 
