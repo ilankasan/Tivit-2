@@ -2,18 +2,13 @@
 
 <!-- Create new activity form only for logged in users The second condition is to make sure not to display new activity when creating a new tivit -->  
 <% if signed_in? && !(controller.controller_name=="activities" && controller.action_name == "new_tivit")%>
-	
 		
 	<div id="new-activity-background">
 		
 		<div id="new-activity">
 			<%= render 'activities/activity_form',:collection =>  [Activity.new], :as => @activity, :locals => {:activity => @activity} %>
 		</div>
-		
-		
-		
 	</div>
-	
 	
 <% end %>
 
@@ -21,7 +16,7 @@
 <div id="homepage-tivit-list-container">
 	
 	
-	<% if @activities_summary.count == 0 && @incoming_activities.count == 0 && @completed_activities.count == 0 %>
+	<% if @activities_summary.count == 0 &&  @completed_activities.count == 0 %>
 	
 		<div id="dashboardFTE">
 		</div>
@@ -30,7 +25,7 @@
 	
     <div class="filter">
         <dl>
-            <dt><h3>Filter Dashboard:</h3></dt>
+            <dt><h2>Filter on deck:</h2></dt>
             <dd>
 	            <% form_tag(:controller => "pages", :action => "home", :method => "put") do %>
 	            	<%= select_tag(:filter_id, options_for_select([['On Deck', 1],['My Open tivits', 2], ['No Response', 3],['All Open tivits', 4]],account_session[:filter_id]),:onchange => "this.form.submit()") %>
@@ -40,38 +35,50 @@
             </dd>
         </dl>
     </div>
-	
-	
-	
+			
 	<div id="tivit-container" class="tab-content">
+		
+		<!-- New tasks requests -->
+		<% unless @new_tivit_requests == nil || @new_tivit_requests.count == 0 %>
+			
+			<div id="new-tivits" class="newtivits tivits">
+				<div id="newtivits" class="tvit-list">
+					<div class="tivits">
+						<div class="new-tivits-toggle">You have <strong><span class="qty"><%= @new_tivit_requests.size %></span> new requests</strong> for help</div>
+						<div class="tvit-list">
+							<ul class="list">
+								<%= render :partial => 'shared/new_tivit_requests_db', :collection =>  @new_tivit_requests, :as => :new_tivit_request %>	
+							</ul>
+						</div>
+					</div>
+				</div>	
+			</div>
+		<% end %>	 
+		<!-- END - New tasks requests -->
+
 
 		<div class="tabs">
              <!-- <div class="status">You have <%#= @tivits_ondeck.count%> activities / tivits </div> -->
 
 			<ul id="tabs-nav">
 				<li class="tab open">
-	                <a href="#tivit-desk">Summary</a>
+	                <a href="#tivit-desk">Tasks</a>
 	            </li>
 	    		<li class="tab">
-	                <a href="#tivit-incoming">Requests</a>
-	                <% count = Activity.get_num_of_requests_tivits(current_account.user)%>
+	                <a href="#tivit-incoming">Activities</a>
+	                
+	                <%# count = Activity.get_num_of_requests_tivits(current_account.user)%>
 	                	
-	      			<%if count > 0%>
-	                	<i><%=count%></i>
-	                <%end%>
+	      			<%#if count > 0%>
+	                	<!-- <i><%#=count%></i> -->
+	                <%#end%>
           
 	            </li>
 	    
 	            <li class="tab">
 	                <a href="#completed-items">Completed</a>
 	            </li>
-	            
-             <!--li class="tab">
-	                <a href="#test-items">test</a>
-	                <li><%= link_to "Test1" , test1_path %></li>
-
-			</li-->
-	           
+	                 	           
             	
             </ul>
             
@@ -85,39 +92,77 @@
     
    		<!-- This is the div that holds the On Deck/All Updates/New Requests tab Content -->    
 		<div class="tabContent">
-					
+			
+			<!-- ______________________________________ Tasks ___________________________________________________ -->		
 	        <div id="tivit-desk" class="tivit-desk tabInfo"> 
 
-			<% unless @activities_summary == nil %>
-			 
-			     <%= render :partial => 'shared/activity_db', :collection =>  @activities_summary, :locals => {:tabview => "Summary"} %>
-		     
+			<% unless @my_open_tasks == nil %>
+			 	
+			 	<div id="alltivits" class="main-tivit">
+					<div id="mytivits" class="tvit-list">	
+						
+						<div class="team tivits">
+							<div class="tvit-list">
+								<ul class="list">
+						
+									<%#= render :partial => 'shared/activity_db', :collection =>  @activities_summary, :locals => {:tabview => "Summary"} %>
+					     			<%= render :partial => 'shared/task_db', :collection =>  @my_open_tasks, :as => :my_task, :locals => {:activitiesview => 'no'} %>
+					     
+					     		</ul>
+					     	</div>
+					     </div>
+		     		</div>
+		     	</div>
 			<% end %>
 
 			</div>
 
    		<div id="tivit-incoming" class="tivit-incoming tabInfo"> 
 
-			<% unless @incoming_activities == nil %>
-			<!--% puts "______________________________________ incoming ___________________________________________________"%-->
-			<% puts @incoming_activities.inspect%>
+<!-- ILAN: need here a list of all the activites the user either own OR participating in, ordered by date, closest one first, do not show the actity i have not accepted any tivit  -->
+			<% unless @activities_i_participate == nil %>
+			<!-- ______________________________________ Activities ___________________________________________________ -->	
 			
-						 
-			     <%= render :partial => 'shared/activity_db', :collection =>  @incoming_activities, :locals => {:tabview => "Requests"} %>
-		     
-			<% end %>
-
-			</div>
-
-
-			<div id="completed-items" class="completed-items tabInfo">
-				<% unless @completed_activities == nil || @completed_activities.size == 0 %>
-					<%= render :partial => 'shared/activity_db', :collection =>  @completed_activities,:locals => {:tabview => "Completed"} %>
-					<%= will_paginate @completed_activities %>
+			
+			<div id="alltivits" class="main-tivit">
 				
-				<% end %>
+				<div id="mytivits" class="tvit-list">	
+					<div class="tivit-activities">		
+														 
+			 		 	<!-- ILAN: need here a list of all the activites the user either own OR participating in, ordered by date, closest one first -->
+			     		<%= render :partial => 'shared/activity_db_new', :collection =>  @activities_i_participate, :as => :activity_db, :locals => {:activitiesview => 'yes'} %>
+		     
+		    		</div> 
+				</div>
 			</div>
-		
+			<% end %>
+			
+			</div>
+
+			<!-- ______________________________________ Completed ___________________________________________________ -->	
+				
+				<!-- ILAN-done: need here an arraw of completed tasks, that should be sorted most recent completed first - so it'll show at the top -->
+				<% unless @completed_tasks == nil %>
+				
+					<div id="completed-items" class="completed-items tabInfo">
+						<div id="alltivits" class="main-tivit">
+							<div id="mytivits" class="tvit-list">				
+								<div class="team tivits">
+									<div class="tvit-list">
+										<ul class="list">
+											
+											<!-- ILAN: need here an arraw of completed tasks, that should be sorted most recent completed first - so it'll show at the top -->
+											<%= render :partial => 'shared/task_db', :collection =>  @completed_tasks, :as => :my_task, :locals => {:activitiesview => 'no'} %>
+											
+				
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+				<% end %>		
 		
 			<div id="test-items" class="test-items tabInfo">
 				

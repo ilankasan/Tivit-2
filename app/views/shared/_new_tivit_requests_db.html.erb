@@ -1,0 +1,56 @@
+
+
+<li class="record">
+	<input type="hidden" tivitid="<%= new_tivit_request.id %>"</input>
+	<div class="conteiner no-hover">	
+		<div class="avatar read">
+			<%= render :partial => 'profile_images/profile_image', :collection =>  [new_tivit_request.get_parent_owner], :as => :user %> 
+		</div>
+		
+		<!-- 
+		<div class="avatar read">
+			<img width="40" height="40" src="5581_files/don-profile.png" alt="Don-profile"/>
+		</div>
+		-->								
+		
+		<%= render :partial => 'shared/tivit_date', :collection =>  [new_tivit_request], :as => :tivit, :locals => {:datestyle => ''} %> 
+		<!-- 
+		<div class="calendar date beyondaweek">
+			<div class="w-day">TUE</div>
+			<div class="text">23</div>
+		</div>
+		-->
+		<div class="text">
+			<div class="activity" style="width:195px;">
+				<div class="on-it"></div>
+				<!-- <a href="#" class="details-link">details &gt;</a>-->
+				<span class="btn-sorry">sorry...</span>
+				
+				<%= link_to "details >", new_tivit_request, :action => "show",
+	  									   :method => "get",
+	                                       :title  => new_tivit_request.get_parent.name,
+	                                       :class => "activity-name" %>
+	                                       
+			</div>
+			<div class="text-conteiner" style="cursor: pointer;">
+				<div class="want-help"><strong><%= new_tivit_request.get_parent_owner.name %></strong> needs your help to</div>
+				<h3>
+					<%= link_to new_tivit_request.name, new_tivit_request, :action => "show",
+	  									   :method => "get",
+	                                       :title  => new_tivit_request.get_parent.name,
+	                                       :class => "activity-name" %>
+	                                       
+					
+					
+					</h3>
+				<span class="grey">for 
+					 <%= link_to new_tivit_request.get_parent.name, new_tivit_request.get_parent, :action => "show",
+	  									   :method => "get",
+	                                       :title  => new_tivit_request.get_parent.name,
+	                                       :class => "activity-name" %> (asked <%= time_ago_in_words(new_tivit_request.created_at) %> ago)</span>
+			</div> <!-- text-container -->
+		</div> 
+		<!-- text -->
+		<div class="clear"></div>
+	</div><!-- conteiner -->
+</li>

@@ -22,12 +22,12 @@ class PagesController < ApplicationController
  
 
 def home
-    puts "HHHHHHHHHHHHHHHHHHHHOOOOOOOOOOOOOOOOOOOOOOOOOMMMMMMMMMMMMMMMMMEEEEEEEEEEEEEEEEEEEE"
     @title = "Home"
     
     puts "Home"
        
     current_user_id = current_account.user.get_id.to_s
+ #ILAN - remove filter  
     puts "current_user_id = "+current_user_id
     puts "Sign in account = "+current_account.sign_in_count.to_s
     if(current_account.sign_in_count == 1 && !account_session[:show_help] == true )
@@ -68,27 +68,23 @@ def home
           @filter_id = "1"    
         end
   # Filter only product On Deck (for now)
-      @completed_activities          = get_activities_completed_or_with_completed_tivits(current_user_id)
-      @incoming_activities           = get_activities_with_new_tivit_requests(current_user_id)
+      @completed_activities          = nil
+      @completed_tasks          = get_completed_tivits(current_account.user)
       
+      @activities_i_participate      = get_activities_i_participate (current_user_id)
+     # @incoming_activities           = get_activities_with_new_tivit_requests(current_user_id)
+      @new_tivit_requests            = get_new_tivit_requests(current_user_id)
+      @my_open_tasks                 = get_my_open_tasks(current_user_id)
+      
+      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    #  puts "My open tasks "+ @my_open_tasks.size.to_s
       
       account_session[:filter_id] = @filter_id
      end
   end
 
 
-  def test1
-    puts "-----------------------------------------"
-    puts "-----------------------------------------"
-    puts "-----------------------------------------"
-    puts "------------   Test 1   -----------------------------"
-    
-    puts "-----------------------------------------"
-    puts "-----------------------------------------"
-    
-    @test = "test string"
-  end
-
+  
   def myteam
     @title = "My Team"
   end

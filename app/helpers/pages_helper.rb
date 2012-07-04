@@ -1,7 +1,7 @@
 module PagesHelper
 
   
-  def delete_get_my_activities(user_id)
+  def delete_this_get_my_activities(user_id)
     
       sql_my_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE 
@@ -30,7 +30,81 @@ module PagesHelper
 #Not completed (basically everything that is not yet completed - on it, in progress, late, etc.)
 #Completed that had new comments on it
 
+    def get_my_open_tasks(current_user_id)
+      puts "____________________________________________"
+      puts " ---->>>>> in get_my_open_tasks <<<<<<------"
+      puts "____________________________________________"
+      
+      completed   = TivitStatus.get_completed_id.to_s
+      new_id      = TivitStatus.get_new_id.to_s
+      reviewed_id = TivitStatus.get_reviewed_id.to_s
+      
+      results1 = Activity.where("status_id     = ?  
+                    AND activity_type = 'tivit'
+                    AND owner_id      = ?
+                    ",TivitStatus.get_in_progress_id.to_s,current_user_id).order(:due)
+                    
+     
+         
+      old2_sql_my_not_new_tasks = "SELECT DISTINCT tivits.* FROM  activities as tivits, tivit_user_statuses 
+                   WHERE NOT tivits.status_id              = "+completed+"  
+                   AND  tivits.activity_type               = 'tivit' 
+                   AND  tivits.owner_id                    = "+current_user_id+"  
+                   AND  tivits.owner_id                    = tivit_user_statuses.user_id 
+                   AND  tivits.id                          = tivit_user_statuses.activity_id 
+                   AND  NOT (tivit_user_statuses.status_id = "+new_id+" 
+                      OR tivit_user_statuses.status_id     = "+reviewed_id+")
+                   ORDER BY tivits.due ASC"
+                   
+                   
+                   old_sql_my_not_new_tasks = "SELECT DISTINCT tivits.*, ISNULL(tivits.due) AS 'isnull' FROM  activities as tivits, tivit_user_statuses 
+                   WHERE NOT tivits.status_id              = "+completed+"  
+                   AND  tivits.activity_type               = 'tivit' 
+                   AND  tivits.owner_id                    = "+current_user_id+"  
+                   AND  tivits.owner_id                    = tivit_user_statuses.user_id 
+                   AND  tivits.id                          = tivit_user_statuses.activity_id 
+                   AND  NOT (tivit_user_statuses.status_id = "+new_id+" 
+                      OR tivit_user_statuses.status_id     = "+reviewed_id+")
+                   ORDER BY isnull ASC,tivits.due ASC"
+    #OR tivit_user_statuses.status_id    = "+proposed_id+"
+      #results1  =  Activity.find_by_sql(sql_my_not_new_tasks)
+     
+     
+      puts "number of tasks is " + results1.size.to_s
+      return results1
+       
+    end
+    
+    def get_new_tivit_requests(current_user_id)
+  # get activities with New and unread tivits  
+      completed   = TivitStatus.get_completed_id.to_s
+      new_id      = TivitStatus.get_new_id.to_s
+      reviewed_id = TivitStatus.get_reviewed_id.to_s
+      declined_id = TivitStatus.get_declined_id.to_s
+      proposed_id = TivitStatus.get_proposed_id.to_s
+  
+        
+      sql_new_tivit_requests = "SELECT DISTINCT tivits.* FROM  activities as tivits, tivit_user_statuses 
+                   WHERE NOT tivits.status_id             = "+completed+"  
+                   AND  tivits.activity_type              = 'tivit' 
+                   AND  tivits.owner_id                   = "+current_user_id+"  
+                   AND  NOT tivits.invited_by             = "+current_user_id+"  
+                   AND  tivits.owner_id                   = tivit_user_statuses.user_id 
+                   AND  tivits.id                         = tivit_user_statuses.activity_id 
+                   AND  (tivit_user_statuses.status_id    = "+new_id+" 
+                      OR tivit_user_statuses.status_id    = "+reviewed_id+")
+                   ORDER BY tivits.due"
+    #OR tivit_user_statuses.status_id    = "+proposed_id+"
+      results1  =  Activity.find_by_sql(sql_new_tivit_requests)
+    
+    #  puts "^^^^^^^^^^^^^^^^^   -------->>>>>>>>>>>>>>> R1 = "+results1.size.to_s
+    #  puts results1.inspect
+      return results1 
+  end
 
+    
+    
+    
   def get_activities_with_new_tivit_requests(current_user_id)
   # get activities with New and unread tivits  
   completed   = TivitStatus.get_completed_id.to_s
@@ -78,8 +152,8 @@ module PagesHelper
       #puts "number of activities with incoming tivits = "+results.size.to_s
   end
 
-  
-  def get_activities_i_participate (user_id)
+  def old_get_activities_i_participate (user_id)
+#all the activites the user either own OR participating in, ordered by date, closest one first, do not show the activities i have not accepted any tivit
     puts "_______________________________________________"
     puts "get_activities_i_participate "
     puts "_______________________________________________"
@@ -104,7 +178,8 @@ module PagesHelper
                  ORDER BY activities.due"
       
                           
-      
+  
+                              
                             
         activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
      #   puts "with date = "+activities_i_participate_with_due_date.inspect
@@ -112,6 +187,47 @@ module PagesHelper
     #    puts "without date = "+activities_i_participate_without_due_date.inspect
         
         return activities_i_participate_with_due_date + activities_i_participate_without_due_date
+        
+  end
+
+  
+  def get_activities_i_participate (user_id)
+#all the activites the user either own OR participating in, ordered by date, closest one first, do not show the activities i have not accepted any tivit
+    puts "_______________________________________________"
+    puts "NEW get_activities_i_participate "
+    puts "_______________________________________________"
+    
+                          
+     sql_activities_i_participate  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
+                 WHERE NOT activities.status_id        = "+TivitStatus.get_completed_id.to_s+"  
+                 AND activities.activity_type          = 'activity' 
+                 AND tivits.owner_id                   = "+user_id+"
+                 AND tivits.parent_id                  = activities.id
+                 AND tivit_user_statuses.activity_id   = tivits.id 
+                 AND NOT (tivits.status_id             = "+TivitStatus.get_new_id.to_s+" OR 
+                          tivits.status_id             = "+TivitStatus.get_declined_id.to_s+") 
+                
+                 AND tivit_user_statuses.user_id       = "+user_id+"
+                 ORDER BY  activities.due ASC "
+                              
+     temp_delete_sql_activities_i_participate  = "SELECT DISTINCT activities.*, ISNULL(activities.due) AS 'isnull' FROM activities, activities as tivits, tivit_user_statuses 
+                 WHERE NOT activities.status_id        = "+TivitStatus.get_completed_id.to_s+"  
+                 AND activities.activity_type          = 'activity' 
+                 AND tivits.owner_id                   = "+user_id+"
+                 AND tivits.parent_id                  = activities.id
+                 AND tivit_user_statuses.activity_id   = tivits.id 
+                 AND NOT (tivits.status_id             = "+TivitStatus.get_new_id.to_s+" OR 
+                          tivits.status_id             = "+TivitStatus.get_declined_id.to_s+") 
+                
+                 AND tivit_user_statuses.user_id       = "+user_id+"
+                 ORDER BY  isnull ASC, activities.due ASC "
+                              
+                            
+                            
+        activities_i_participate      = Activity.find_by_sql(sql_activities_i_participate)
+        puts "activities_i_participate = "+activities_i_participate.size.to_s
+        
+        return activities_i_participate
         
   end
   
@@ -179,6 +295,13 @@ module PagesHelper
     
 ################################# Completed ACTITVITIES #######################################################################################
 
+  def get_completed_tivits(user)
+    puts " --------->>>>>>>>>>>>>>> get_completed_tivits"
+    return user.activities.where(:status_id => TivitStatus.get_completed_id)
+  end
+
+
+
 def get_activities_completed_or_with_completed_tivits(user_id)
     #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
     
@@ -205,7 +328,7 @@ def get_activities_completed_or_with_completed_tivits(user_id)
   end
 
 
-def old_get_activities_completed_or_with_completed_tivits(user_id)
+def delete_this_get_activities_completed_or_with_completed_tivits(user_id)
     #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
     sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE (activities.status_id       = "+TivitStatus.get_completed_id.to_s+"  

@@ -29,7 +29,7 @@
         					<td width="50" valign="top">&nbsp;</td>
 						
         				<td valign="top"><font size="2" face="Arial">
-        						<%if(!@comment.empty?)%>
+        						<%if(@comment != nil && !@comment.empty?)%>
              						"<%= @comment %>"
               				<%end%>
               			</td>

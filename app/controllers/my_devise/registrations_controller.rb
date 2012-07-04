@@ -26,7 +26,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  
  def create
  	puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------"
- 	puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------"
+ 	#puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------"
  	@params = params
 	super
 #	puts "test  = "+test.inspect	

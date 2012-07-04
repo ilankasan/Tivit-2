@@ -1,7 +1,7 @@
 <%= @assigner.get_name %>,
 <%= @assignee.get_name %> has agreed to help you with '<%=@tivit.name%>'
           	
-<%if(!@comment.empty?)%>
+<%if(@comment != nil && !@comment.empty?)%>
 	<%= @assignee.get_name %> says: "<%= @comment %>"
 <%end%>
 

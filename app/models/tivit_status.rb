@@ -17,7 +17,7 @@ class TivitStatus < ActiveRecord::Base
   @reassigned  = 7
   @proposed    = 8
   @reminded    = 9
-  @accepter    = 10
+  @accepted    = 10
   
   
 # in progress id = 1

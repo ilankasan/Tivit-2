@@ -1,0 +1,97 @@
+
+
+
+<% if my_task.get_parent.get_owner.id == current_account.user.get_id %>
+	<% activityOwner = "You" %>
+<% else %>
+	<% activityOwner = my_task.get_parent_owner.name %>
+<% end %>
+
+<% if my_task.get_owner.id == current_account.user.get_id %>
+	<% loggedInUserIsTheOwner = "yes" %>
+	<% tivit_owner_name = "You" %>
+<% else %>
+	<% loggedInUserIsTheOwner = "no" %>
+	<% tivit_owner_name = my_task.get_owner.name %>
+<% end %>
+	<!-- 		
+		<div class="team tivits">
+			<div class="tvit-list">
+				<ul class="list">
+	-->
+		
+		
+				<% if my_task.isCompleted? %>
+					<li class="record complete tivit-name-line-through">
+				<% else %>
+					<!-- all new tasks are hidden. This is needed so if the user click on it, we just redraw them -->
+					<% if my_task.get_owner_status == TivitStatus.get_new_id || my_task.get_owner_status == TivitStatus.get_reviewed_id %>
+						<li class="record unread hide">
+					<% else %>	
+						<li class="record unread">
+					<% end %>
+				<% end %>		
+						<div class="conteiner">	
+						
+						<% if activitiesview == 'no' %>
+							<%= render :partial => 'shared/tivit_date', :collection =>  [my_task], :as => :tivit, :locals => {:datestyle => ''} %> 
+						<% end %>
+						<!--
+							<div class="calendar date beyondaweek">
+								<div class="w-day">MON</div>
+								<div class="text">22</div>
+							</div>		
+						-->
+							<div class="status">
+								<div class="icon"></div>
+								<!-- if I'm the activity owner / tivit creator or assignee, use class="status"
+									so jQuery for dropdown list will work, otherwise use other status so it'll be ignored -->
+								<% if loggedInUserIsTheOwner == "yes" %>
+									<% mytivit = "yes"%>
+								<% else %>
+									<% mytivit = "no"%>
+								<% end %>
+								<% if my_task.isParentOwner? (current_account.user) %>
+									<% isActivityOwner = "yes"%>
+								<% end %>
+								<% if my_task.wasInvitedByUser? (current_account.user) %>
+										<% invitedByMe = "yes"%>
+								<% end %>
+											
+								<input type="hidden" tivitid="<%= my_task.id %>" mytivit= "<%=mytivit%>" activityOwner="<%=isActivityOwner%>" invitedByMe="<%=invitedByMe%>" >
+							</div>
+	
+							<div class="avatar read">
+								<%= render :partial => 'profile_images/profile_image', :collection =>  [my_task.get_owner], :as => :user %> 
+								<!-- <img width="40" height="44" src="5581_files/don-profile.png" alt="Don-profile"/> -->
+							</div>
+										 
+							<div class="text">
+								<div class="activity">
+									<div class="comments"></div>
+								</div>
+								<div class="text-conteiner" style="cursor: pointer;">
+									<h3><%= link_to my_task.name, my_task, :action => "show",
+	  									   :method => "get",
+	                                       :title  => my_task.get_parent.name %></h3>
+									<span class="grey">
+										<%= link_to my_task.get_parent.name, my_task.get_parent, :action => "show",
+	  									   :method => "get",
+	                                       :title  => my_task.get_parent.name %>
+	                                       
+										 for <strong><%= activityOwner %></strong></span>
+								</div> <!-- text-container -->
+							</div> 
+							<!-- text -->
+							<div class="clear"></div>
+						</div><!-- conteiner -->	
+					</li>
+	<!-- 
+				</ul>
+			</div>
+		</div>
+	-->
+		<!-- <div class="dott-delim">&nbsp;</div> -->
+		
+
+							

@@ -1,0 +1,53 @@
+<!-- calendar icon -->
+<!-- Yaniv to-do: change calendar rendering to be partial, adjust label from day/number to Month/number and different bacgkround icon as needed depending on when the tivit is due -->
+<!-- 
+<div class="calendar date beyondaweek">
+			<div class="w-day">TUE</div>
+			<div class="text">23</div>
+</div>
+-->
+<% owner_tivit_status = tivit.get_owner_status %>
+						
+<% due_time_window = tivit.get_due_window_from_now %>
+							
+<% if owner_tivit_status != TivitStatus.get_completed_id %>
+	<% if tivit.due == nil %>
+		<!-- no date specified -->
+		<!-- the datestyle variable comes from the partial call as local variable since the date need to float on the right for activites tab on dashboard -->
+		<div class="calendar" style="<%= datestyle %>">
+				<% elsif due_time_window == "overdue" %>
+		<!-- activity is overdue -->
+		<div class="calendar new" style="<%= datestyle %>">
+			<div class="week"><%= ((Time.now.end_of_day - tivit.due.localtime.end_of_day)/(3600*24)).to_i %></div>
+			<div class="text">days ago</div>
+											
+	<% elsif due_time_window == "today" %>
+		<!-- activity due today -->
+	 	<div class="calendar today" style="<%= datestyle %>">
+			<div class="text">Today</div>
+										 		
+	<% elsif due_time_window == "tomorrow" %>
+		<!-- activity due tomorrow -->
+		<div class="calendar tomorrow" style="<%= datestyle %>">
+			<div class="text">Tomorrow</div>
+										 		 		
+	<% elsif due_time_window == "withinaweek" %>
+		<!-- activity due within a week -->
+		<div class="calendar past" style="<%= datestyle %>">
+			<div class="week"><%= (tivit.due.localtime.strftime ("%a")).upcase %></div>
+		    <div class="text"><%= tivit.due.localtime.strftime ("%-d") %></div>
+												
+	<% else %>
+	<!-- activity due within more than a week -->
+		<div class="calendar past" style="<%= datestyle %>">
+			<div class="week"><%= tivit.due.localtime.strftime ("%^b") %></div>
+		    <div class="text"><%= tivit.due.localtime.strftime ("%-d") %></div>  						
+	<%end%>
+	</div>
+<% end %>		
+<!-- 
+<div class="calendar date beyondaweek">
+			<div class="w-day">TUE</div>
+			<div class="text">23</div>
+</div>
+-->

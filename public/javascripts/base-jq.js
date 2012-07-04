@@ -90,6 +90,10 @@ jQuery(document).ready(function($){
 	    hashchange: false
 	});
 	
+	
+	
+	
+	
 	   
 	var inputEl = jQuery('#new-activity input#name');
     inputEl.live('focus',function(){
@@ -153,6 +157,101 @@ jQuery(document).ready(function($){
 	   }
 	);
 	*/
+	//add from Irina Sorokina
+	$('.conteiner').not('.no-hover').hover(
+	   function() {
+	      $(this).addClass('record-hovered');
+	   },
+	   function() {
+	      $(this).removeClass('record-hovered');
+	   }
+	);
+	
+	$('.show-other-tasks').click(function(){
+		var that = $(this);
+		var thatText = that.text();
+		var additionalLIst = that.parent().find('.additional-tivits');
+		var thatDataTitle = that.data('title');
+
+		if(!thatDataTitle){
+			that.data('title',thatText);
+			that.text('Show less');
+		}else{
+			that.text(thatDataTitle);
+			that.data('title','');
+		}
+
+		additionalLIst.slideToggle();
+
+	});
+	// New Requests - user click I'm on it button
+	$('.newtivits .on-it').live('click', function(){
+		
+		 // find out the tivit id that was clicked on
+	    var record = jQuery(this).parents('.record');
+	    var tivitID = $(record).find("input").attr("tivitid");
+	    console.log ("[Yaniv] on-it tivitid=", tivitID);
+	    		
+		var record = $(this).parents('li.record:first')
+		var recordHTML = record.html();
+		//var appendHTML = "<div class='team tivits fresh-tivits' style='display:none'><div class='tvit-list'><ul class='list'><li class='record unread'>"
+		//					+ recordHTML +
+		//				 "</li></ul></div></div>";
+
+		// Now we need to tuggle the hidden I'm on it tivit and tell it to show up 
+		
+		// This will bring the tivit record based on all the input elements that has the tivitid attrivute equal to the tivit id in hand. Good examples here: http://www.mkyong.com/jquery/jquery-attribute-selector-examples/
+		var tivitRecord = $("input[tivitid='" + tivitID + "']").parents('.record');
+		// Just testing we found the right one
+		var foundtivitID = $(tivitRecord).find("input").attr("tivitid");
+		console.log ("[Yaniv] on-it foundtivitID=", foundtivitID);
+		
+		// add the yellow background to show newly added
+		tivitRecord.find('.conteiner').addClass('yell-bg').removeClass('record-hovered').removeClass('no-hover');
+		
+		// Make an Ajax call to update the status of the tivit to on-it!
+		var action = '/onit?id=' + tivitID + '&method=post';
+		
+		console.log ("[Yaniv] action=", action);
+		
+		// Actual Ajax call to the controller
+		$.post(action, $(this).serialize(), null, "script");	
+		console.log ("[Yaniv] after Ajax call");
+		
+		// Original jQuery from Artem
+		//$('#tivit-desk .team:last').after($(appendHTML));
+		//$('.fresh-tivits .want-help').remove();
+		//$('.fresh-tivits .calendar').remove();
+		//$('.fresh-tivits .activity').html("<div class='comments'></div>").removeAttr('style');
+		//$('.fresh-tivits .conteiner').addClass('yell-bg').removeClass('record-hovered').removeClass('no-hover');
+
+		$(record).slideUp(function(){
+			$(this).remove();
+			$('.fresh-tivits').slideDown();
+			recalculateNewRequests();
+		});
+		
+		
+		
+		// The new and reviewed tivits were already rendered in the right place in the HTML but hidden. Now that the user said on-it, let's just show it 
+		tivitRecord.show();
+		
+		function recalculateNewRequests(){
+			var newtivitQty = $('.newtivits .record').length;
+	
+			if(newtivitQty == 0){
+				$('.newtivits').slideUp(function(){
+					$(this).remove();
+				});
+			}else{
+				$('.newtivits .qty').text(newtivitQty);
+		}
+	}
+	
+	
+	});
+	
+	/*
 	$('.conteiner').live('mouseover mouseout', function(event) {
 	  if (event.type == 'mouseover') {
 	    // do something on mouseover
@@ -167,7 +266,7 @@ jQuery(document).ready(function($){
 	    //$(this).children('.menu-dialog').toggle();
 	  }
 	});
-	  	
+	*/ 	
 	/***********************************************************************************************/
 	// tivit status checkbox
     //var statusIcon = jQuery('.status .icon');
@@ -1303,6 +1402,17 @@ jQuery(document).ready(function($){
 			}
 		}
 	}	
+		
+	function toggleNewTivits(el){
+		console.log(el);
+		$(el).toggleClass('open').parent().find('.tvit-list').slideToggle();
+	}
+
+	$('.new-tivits-toggle').bind('click', function(){
+		toggleNewTivits(this);
+	});
+	
+	
 });
 
 /*

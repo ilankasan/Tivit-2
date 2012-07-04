@@ -25,17 +25,18 @@ body {
 	color: #666666;
 	background:#fff; /*orange;*//*#EEEEEE;/*#e3edef;*/
 	overflow-y: scroll;
+	
 }
 .hidden {
 	display: none;
 }
 a {
-  color: #09c;
+  color: #3265FF;
   text-decoration: none;
 }
 
 a:hover {
-  color: #069;
+  color: #3265FF;
   text-decoration: underline;
 }
 
@@ -551,7 +552,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 .tabs{
     overflow:hidden;
     clear:both;
-    padding:10px 0;
+    padding:8px 0 0;
     }
     .tabs .status{
         float:right;
@@ -648,6 +649,12 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
         line-height:14px;
         margin: 2px 0 -2px 0px;
     }
+    .calendar .w-day{
+        padding: 4px 0px 0px;
+        font-size:12px;
+        color:#000;
+        font-weight:normal;
+    }
     /*
     .tvit-day .date .text,.tivits .calendar .text{
         color:#969696;
@@ -743,6 +750,10 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     color: black;
     text-decoration:none;
 }
+.tvit-list .record .conteiner{
+    margin-left:54px;
+    padding:2px 0 2px 4px;
+}
 
 /*.tvit-list .completed { opacity: 0.6;}*/
 
@@ -750,6 +761,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 
 .tvit-list .record-hovered{
 	background: #ccecff;
+    border-radius:5px;
 }
 .tvit-list .record .status{
     width:27px;
@@ -826,7 +838,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 .tvit-list .record .text{
     overflow:hidden;
     padding: 0 0 0 15px;
-    min-height:44px;
+    /*min-height:44px;*/
     position:relative;
     }
     .tvit-list .record .text .wrapp{
@@ -848,6 +860,11 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
         color:#888;
         font-size:11px;
         margin:0;
+    }
+    .tvit-list .record .text .want-help{
+        color:#888;
+        font-size:11px;
+        margin:0 0 -7px;
     }
     /* used for accept link on _tivit_db style */
      .tvit-list .record .text .accept-proposed {
@@ -882,6 +899,26 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     position:relative;
     display:inline-block;
     background:url("../images/ico_comment.png") 0 0 no-repeat;
+}
+.tvit-list .record .on-it{
+    width:75px;
+    height:42px;
+    position:relative;
+    display:inline-block;
+    background:url("../images/ico_on_it.png") 0 0 no-repeat;
+    float: left;
+}
+.tvit-list .record .do-it{
+    width:75px;
+    height:42px;
+    position:relative;
+    display:inline-block;
+    background:url("../images/ico_do_it.png") 0 0 no-repeat;
+    float: left;
+}
+#unassign-tivits .on-it,
+#unassign-tivits .do-it{
+    margin-left:-90px;
 }
 .tvit-list .record .attach{
     width:21px;
@@ -1077,7 +1114,7 @@ a img{border:none;}
 .activities{font-size:13px;}
 .activities p, .activities h1, .activities h2{margin:0;padding:0;}
 .activities h1{font-size:24px;font-weight:bold;color:#000;margin:9px 0 2px;}
-.activities h2{font-size:18px;color:#333;font-weight:normal;border-bottom:1px dotted #eaeaea;}
+.activities h2{font-size:18px;color:#333;font-weight:normal;padding:3px 0 0 13px;}
 .activities h2 span{color:#969696;}
 
 /* This line controls the tivit titles style on both dashboard AND ADP */
@@ -1194,15 +1231,17 @@ a img{border:none;}
 	.tivits li ul.list li.active{background:none !important;}
 	.tivits li ul.list .active .record-conteiner{background:#ffffcc;}
 		.record-conteiner{width:461px;padding:5px;}
-	.tivits.main-tivit{margin:50px 0;}
-.tivits .form-button{width:auto;padding:8px 10px 8px 40px;text-align:right;font-size:15px;position:absolute;top:-20px;right:0;
+	.tivits.main-tivit{margin:20px 0;}
+.tivits .form-button{width:auto;padding:8px 10px 8px 40px;text-align:right;font-size:15px;position:absolute;top:-43px;right:0;
 	background:#61B010 url(../images/icon_add_tivit.png) 6px center no-repeat}
+.add-tivit-button{width:auto;padding:8px 10px 8px 40px;text-align:right;font-size:15px;background:#61B010 url(../images/icon_add_tivit.png) 6px center no-repeat; 
+    margin-top:10px; border: 1px solid #C0C0C0; border-radius: 4px; font-weight:bold; color:#fff;float:right;}
 .tivits .tvit-list .record .status{width:33px;}
-.tivits .calendar{display:inline-block;width:46px;height:38px;overflow:hidden;
-	background:url(../images/cal-3a.png) no-repeat;}
-	.tivits .calendar.past{background:url(../images/cal-2a.png) no-repeat;}
+.tivits .calendar{display:inline-block;width:53px;height:44px;overflow:hidden;
+	background:url(../images/cal-3a.png) no-repeat;text-align:center;z-index:2;position:relative;}
+	.tivits .calendar.past{background:url(../images/cal-4a.png) no-repeat;}
 	.tivits .calendar.new{background:url(../images/cal-1a.png) no-repeat;}
-	.tivits .calendar.beyondaweek{background:url(../images/cal-2a.png) no-repeat;}
+	.tivits .calendar.beyondaweek{background:url(../images/cal-4a.png) no-repeat;}
 	.tivits .calendar.today{background:url(../images/cal-1a.png) no-repeat;}
 	.tivits .calendar.tomorrow{background:url(../images/cal-1a.png) no-repeat;}
 	
@@ -1217,8 +1256,8 @@ a img{border:none;}
 /* overdue tivits calendar on adp */
 .tivits .new .week{
 	color: red;
-	font-size:18px;
-	padding: 4px 2px 2px 0px;
+	font-size: 20px;
+	padding: 8px 0px 2px 0px;
 	line-height: 18px;
 	font-weight: bold;
 	margin: 0;	
@@ -1226,47 +1265,67 @@ a img{border:none;}
 .tivits .new .text{
 	color: #969696;
 	font-size: 8px;
-	padding: 3px 8px 2px 0px
+	padding: 1px 0px 2px 0px
 }
 .tivits .today .text{
 	color: #FEFE98;
 	font-size:11px;
-	padding: 12px 8px 2px 8px;
+	padding: 14px 8px 2px 8px;
 }
 .tivits .tomorrow .text{
 	color: #FEFFFE;
-	font-size:11px;
-	padding: 12px 8px 2px 8px;
+	font-size: 10px;
+	padding: 14px 0px 0px 0px;
 }
 
 /* tivits due within a week */
 .tivits .past .text{
 	color: #969696;
-	font-size:18px;padding-left:7px;
+	font-size: 20px;
+	padding-left: 7px;
 	font-weight: bold;
-	padding: 0px 18px 2px 0px;
+	padding: 0px 0px 2px 0px;
 }
 .tivits .past .week{
+	color: #969696;
+	font-size:12px;
+	padding: 2px 4px 0px 3px;
+	font-weight: normal;
+	
+	/*
 	color: #969696;
 	font-size:10px;
 	padding: 0px 12px 2px;
 	font-weight: normal;
+	*/
+	/*
+	color: #000;
+	font-size:20px;
+    padding-left:7px;
+	font-weight: bold;
+	padding: 0;
+    margin-top:-2px;
+	text-align: center;
+	*/
 }
 /* tivits due within future passed a week */
 .tivits .beyondaweek .text{
 	color: #969696;
-	font-size:13px;padding-left:7px;
-	font-weight: normal;
-	padding: 12px 0px 0 0;
+	font-size:15px;
+    /*padding-left:7px;*/
+	font-weight: bold;
+	padding: 14px 10px 10px 11px;
+    margin-top:-2px;
 	text-align: center;
 }
 .tivits .record{padding-right:0;}
 .tivits .record .text-conteiner{width:465px;cursor:hover;}
-.tivits .record .activity{position:relative;width:116px;padding:0;margin:2px 0 0;}
+.tivits .record .activity{position:relative;width:70px;padding:0;margin:2px 0 0;}
 .tivits .record .unreaded{position:absolute;top:9px;left:-105px;}
 .tivits .record .attach{position:absolute;top:9px;left:-40px;}
-.tivits .record .comments{position:absolute;top:9px;left:0;}
-.tivits .record .calendar{position:absolute;top:0;left:45px;}
+.tivits .record .comments{position:absolute;top:9px;left:42px;}
+.tivits .record .calendar{float:left; margin-left:-59px;}
+.newtivits .record .activity{width:140px; margin-top:5px !important;}
 /* Yaniv - changed position to relative and fixed top/right values to place the dropdown in the right place */
 .tivits .record .edit-menu{position:absolute;top:22px;right:8px;z-index:40;cursor:pointer;}
 /*.tivits .record .edit-menu{width:16px;height:17px;position:relative;top:-32px;right:-708px;z-index:40;cursor:pointer; display: inline-block;}*/
@@ -1316,8 +1375,8 @@ a img{border:none;}
 .respond .form-button.attention{background:#61B010 url(../images/status_attention.png) 4px center no-repeat;}
 
 .respond .status-list-dialog{top:27px;left:32px;width:131px;}
-.team h2{margin-top:-30px;}
-.team, .team .tvit-list .record,.team  ul ul .record{background:#f8f8f8;}
+.team h2{margin-top:0;}
+.team, .team .tvit-list .record,.team  ul ul .record{background:none; padding-left: 0;}
 
 .menu-dialog{position:absolute;color:#3a3a3a;background:#f8f8f8;padding:2px;border:1px solid #cfcfcf;display:none;}
 	.edit-menu .menu-dialog ul li{padding:2px 22px 2px 28px;}
@@ -1346,6 +1405,91 @@ a img{border:none;}
 small.less{display:block;padding:0;}
 .delete{width:18px;height:18px;display:none;position:absolute;top:8px;right:130px;z-index:10;background:url(../images/icon_delete.gif) no-repeat;}
 	.tivits ul.list ul.list li:hover .delete{display:block;}
+
+
+.newtivits{
+    margin: 0 0px 26px 0;
+    background:#fffee0;
+    border:2px solid #eee;
+}
+.newtivits .tivits,
+.newtivits .tvit-list .record{
+   background:#fffee0; 
+}
+.newtivits .tvit-list .record{
+    position: relative;
+}
+.newtivits .record  .calendar{
+    margin:3px 0 0 10px;
+    text-align:center;
+}
+.newtivits .record  .conteiner{
+    margin-left:0;
+}
+
+.newtivits .list .record{
+    border-bottom:1px dashed #cbcbcb;
+    margin-bottom:5px;
+    border-radius:0;
+    height:52px;
+}
+.newtivits .list .record:last-child{
+    border:none;
+}
+
+#newtivits .tvit-list{
+    display: none;
+}
+.new-tivits-toggle{
+    margin:0 0 5px 5px;
+    color:#941100;
+    cursor: pointer;
+    background:url(../images/arr_r_right.png) left center no-repeat;
+    padding-left:15px;
+}
+.newtivits .open{
+    background:url(../images/arr_r_down.png) left center no-repeat;  
+}
+.newtivits .tvit-list .activity{
+    width:195px;
+}
+.act-details .tvit-list .activity{
+    width:140px;
+}
+
+.btn-sorry{
+    display: inline-block;
+    color:#000;
+    padding:4px 12px;
+    border:1px solid #f1f1f1;
+    border-radius:5px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    margin-top:3px;
+    margin-right:2px;
+}
+
+.newtivits .details-link{
+    float:right;
+    color: #3265FF;
+    margin:9px 0 0 7px;
+}
+
+.newtivits .avatar {
+    padding:1px 0 0;
+}
+
+.newtivits .status{
+    display: none;
+}
+
+.dott-delim{
+    border-bottom:1px dashed #CBCBCB;
+    padding-top:5px;
+    margin:0 10px 0px 95px;
+    height:1px;
+}
+
 
 /* Styles for popup windows */
 .popup{position:absolute;top:70px;left:239px;z-index:100;width:480px;padding:10px;color:#000;display:none;
@@ -1386,6 +1530,19 @@ small.less{display:block;padding:0;}
 
 .popup .edittivitPopup .input-date .ico_calc{float:right;left: -26px; top:4px;}
 
+.popup .radb{width:auto; height:auto; margin:0 10px 0 0;border:none;}
+.popup .left-p{margin:12px 25px;}
+.popup .label-clear{width:auto;padding:0;line-height:12px;}
+.popup h2{margin-bottom:20px;}
+.popup .reasign-row{overflow: hidden;zoom:1;}
+.popup .reasign-row label{line-height:2.1;}
+.popup .reasign-row input{float:right;width:325px;}
+.sorry-form-btns{text-align:right;}
+.sorry-form-btns .form-button{display: inline-block;}
+.popup .reasign-row{display: none;}
+.popup .sorry-ok-btn{width:auto;padding:4px 15px;}
+.popup .sorry-cancel-btn{width:auto;padding:4px 20px; background-color: #ccc;}
+
 /******************************************************************************************************
 /* SIGN IN/UP PAGEs */
 
@@ -1406,8 +1563,7 @@ small.less{display:block;padding:0;}
     width: 125px;
 }
 #sign-in-up-form {
-	/*background: none repeat scroll 0 0 #FFFFFF;*/
-	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.75);
+	background: none repeat scroll 0 0 #FFFFFF;
     border-radius: 5px 5px 5px 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
     margin: 0 auto 15px;
@@ -1416,7 +1572,6 @@ small.less{display:block;padding:0;}
     position: relative;
     text-align: left;
     width: 306px;
-    color: #DDDDDD;
     
 }
 #sign-in-up-form .legend	{ display: none; }
@@ -1424,9 +1579,9 @@ small.less{display:block;padding:0;}
 
 
 #sign-in-up-form .label {
-	color: #DDDDDD;
+	color: #525252;
     display: block;
-    font-weight: normal;
+    font-weight: bold;
     margin-bottom: 2px;
     margin-top: 6px;
 }
@@ -1492,5 +1647,94 @@ small.less{display:block;padding:0;}
 	cursor: pointer;
 }
 
-#sign-in-up-form a { font-size: 12px; width: 200px; padding: 16px; color: #DDDDDD; }
+#sign-in-up-form a { font-size: 12px; width: 200px; padding: 16px; }
 
+.tivit-activities .tivits,
+.tivit-activities .record {
+    background:none;
+    padding: 2px 2px 2px 0px;
+}
+.tivit-activities .top-tivit .conteiner{
+    padding-left:0;
+    margin-left:5px;
+    background:#F8F8F8;
+    border-radius:5px;
+    position: relative;
+}
+.top-tivit .calendar{
+    margin:0 -3px 0 0;
+    float:right;
+}
+.top-tivit .avatar{
+    padding-left:2px;
+}
+
+.tivit-activities .sub-tivits .conteiner{
+    padding-left:5px;
+    margin-left:50px;
+}
+.tivit-activities .sub-tivits .record .activity{
+    width:35px;
+}
+
+.show-other-tasks{
+    color:#3265FF/*#7B7BD2*/;
+    padding:5px 0 5px 90px !important;
+    cursor: pointer;
+}
+
+.hide{
+    display: none;
+}
+
+
+.notify-wrapper{
+    padding: 0 0 20px 0;
+    text-align:center;
+}
+.top-notify{
+    display: inline-block;
+    background-color: #FFFEE0;
+    border:1px solid #ffd5a9;
+    padding:5px 30px;
+    border-radius:7px;
+}
+
+.perc-completed{
+    float:right;
+    padding:3px 5px 0 0;
+    color:#424242;
+}
+.perc-completed strong{
+    color:#941100;
+    font-size:18px;
+}
+
+.statistic{
+    height:54px;
+    background-color: #fff;
+    border:1px solid #ebebeb;
+    text-align:left;
+    position:absolute;
+    top:-5px;
+    right:-3px;
+    z-index:1;
+    padding:0 55px 0 7px;
+    font-size:10px;
+    color:#424242;
+}
+.statistic .perc{
+    color:#797ed6;
+    font-size:20px;
+    font-weight:bold;
+    text-align:center;
+    padding:4px 0 0;
+}
+
+#unassign-tivits{
+    margin-bottom:20px;
+}
+
+.yell-bg{
+    background:#fffee0;
+}
