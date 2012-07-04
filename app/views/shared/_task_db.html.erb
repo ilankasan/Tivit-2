@@ -1,7 +1,8 @@
 
 
-
-<% if my_task.get_parent != nil && my_task.get_parent.get_owner.id == current_account.user.get_id %>
+<% if my_task.get_parent == nil %>
+	<% activityOwner = "No parent !!!!" %>
+<% elsif my_task.get_parent != nil && my_task.get_parent.get_owner.id == current_account.user.get_id %>
 	<% activityOwner = "You" %>
 <% else %>
 	<% activityOwner = my_task.get_parent_owner.name %>
