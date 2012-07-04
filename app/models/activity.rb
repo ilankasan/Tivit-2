@@ -296,16 +296,7 @@ class Activity < ActiveRecord::Base
       return results1+results2
   end
   
-  def old_get_incoming_tivits (currentuser)
   
-# Returns tivits i own and required my response or in play (awaiting the assiger to response with my proposal).
-   results = self.tivits.joins(:tivit_user_statuses).where("activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_id
-             AND     (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)",currentuser.id,TivitStatus.get_new_id,TivitStatus.get_reviewed_id)
-             
-             
-
-    return results
-  end
 
  def get_unresponded_tivits (user)
 #1. show MY tivits that I have not read or not responded to
@@ -402,11 +393,11 @@ return results
   end
   
   def get_my_open_tivits_i_agreed_to_help_with (user)
-  # puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my_open_tivits"
+   puts "^^^^^^^^^^^^^^^--------->>>> get_my_open_tivits_i_agreed_to_help_with"
      
      
  
-    return  self.tivits.joins(:tivit_user_statuses).where(
+    result =   self.tivits.joins(:tivit_user_statuses).where(
                          "activities.owner_id         = ? 
                   AND     activities.activity_type    = 'tivit' 
                   AND     activities.id               = tivit_user_statuses.activity_id 
@@ -414,6 +405,9 @@ return results
                   AND     activities.status_id        = ?
                   AND     NOT (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)", 
                   user.get_id, TivitStatus.get_in_progress_id,TivitStatus.get_new_id,TivitStatus.get_reviewed_id)
+                  
+    puts "my tivits in the activity are "+result.size.to_s
+    return result
   end
   
   
