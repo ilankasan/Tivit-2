@@ -13,6 +13,8 @@ puts "starting seed....."
 puts "starting seed close status..."
   i = 1
   changed = 0
+  count = Activity.all.count
+  puts "total tivits is "+count.to_s
   Activity.all.each do |tivit|
       
       if(tivit.get_parent != nil)
@@ -28,8 +30,9 @@ puts "starting seed close status..."
               puts i.to_s+" tivit " +tivit.id.to_s+" stays completed"
           end
            
+        else 
+          puts  i.to_s+" tivit " +tivit.id.to_s+ " parent is in progress"
         end
-        puts  i.to_s+" tivit " +tivit.id.to_s+ " parent is in progress"
        
       else
         puts  i.to_s+" Parent for " +tivit.id.to_s+" is nil"
