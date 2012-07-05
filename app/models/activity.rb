@@ -374,7 +374,7 @@ return results
    # puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
     
   
-    my_open_tivits_no_due = self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_in_progress_id],:due => nil)
+    my_open_tivits_no_due = self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_in_progress_id, TivitStatus.get_closed_id ],:due => nil)
     #puts "--------^^^^^^^ my_open_tivits_no_due ^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> "+my_open_tivits_no_due.count.to_s
    
    
@@ -741,7 +741,10 @@ return self.tivits.size
    
    if(self.tivits != nil || self.tivits.size > 0)
       self.tivits.each do |tivit|
-        tivit.change_status_to_closed
+# change status to closed only if current status in progress
+        if(TivitStatus.is_in_progress_id(tivit.status_id))
+          tivit.change_status_to_closed
+        end
      end
    end 
     return false if !self.save

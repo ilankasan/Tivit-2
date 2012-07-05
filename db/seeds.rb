@@ -18,9 +18,16 @@ puts "starting seed close status..."
       if(tivit.get_parent != nil)
         
         if(TivitStatus.is_completed_id?(tivit.get_parent.status_id))
-          puts i.to_s+" tivit " +tivit.id.to_s+" closed!"
-          tivit.change_status_to_closed
-          changed = changed +1 
+          
+          if(TivitStatus.is_in_progress_id?(tivit.status_id))
+          
+              tivit.change_status_to_closed
+              changed = changed +1
+              puts i.to_s+" tivit " +tivit.id.to_s+" closed!"
+          else
+              puts i.to_s+" tivit " +tivit.id.to_s+" stays completed"
+          end
+           
         end
         puts  i.to_s+" tivit " +tivit.id.to_s+ " parent is in progress"
        
