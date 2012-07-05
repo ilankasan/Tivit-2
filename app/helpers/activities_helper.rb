@@ -36,7 +36,7 @@ module ActivitiesHelper
 
 
   def validate_user_access_to_activity (activity, user)
-    puts "validating that user "+user.get_name+" can access activity "+activity.get_name
+    puts "validating that user "+user.get_name+" with id "+ user.get_id.to_s+"can access activity "+activity.get_name
     #if(user.get_if== activity.get_owner_id || activity.tivits.where(:owner_id => user.get_id).count > 0)
     return true if(user == activity.get_owner)
     parent = activity.get_parent  

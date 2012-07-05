@@ -544,7 +544,6 @@ return results
  
  
  def get_owner_last_status_change
-  # puts ")()()()()()()()))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))"
   return self.tivit_user_statuses.find_by_user_id(self.owner_id).last_status_change
  end
  
@@ -742,7 +741,7 @@ return self.tivits.size
    if(self.tivits != nil || self.tivits.size > 0)
       self.tivits.each do |tivit|
 # change status to closed only if current status in progress
-        if(TivitStatus.is_in_progress_id(tivit.status_id))
+        if(TivitStatus.is_in_progress_id?(tivit.status_id))
           tivit.change_status_to_closed
         end
      end
