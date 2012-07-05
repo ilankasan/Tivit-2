@@ -70,7 +70,7 @@ module PagesHelper
       #results1  =  Activity.find_by_sql(sql_my_not_new_tasks)
      
      
-      puts "number of tasks is " + results1.size.to_s
+    #  puts "number of tasks is " + results1.size.to_s
       return results1
        
     end
@@ -193,7 +193,7 @@ module PagesHelper
   
   def get_activities_i_participate (user_id)
 #all the activites the user either own OR participating in, ordered by date, closest one first, do not show the activities i have not accepted any tivit
-    puts "_______________________________________________"
+  #  puts "_______________________________________________"
     puts "NEW get_activities_i_participate "
     puts "_______________________________________________"
     
@@ -213,7 +213,7 @@ module PagesHelper
                          AND tivit_user_statuses.user_id       = "+user_id+"))
                  ORDER BY  activities.due ASC "
                  
-     puts sql_activities_i_participate
+   #  puts sql_activities_i_participate
                               
      temp_delete_sql_activities_i_participate  = "SELECT DISTINCT activities.*, ISNULL(activities.due) AS 'isnull' FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status_id        = "+TivitStatus.get_completed_id.to_s+"  

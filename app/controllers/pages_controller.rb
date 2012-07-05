@@ -25,6 +25,7 @@ def home
     @title = "Home"
     
     puts "Home"
+      @activities_summary =[]
        
     current_user_id = current_account.user.get_id.to_s
  #ILAN - remove filter  
@@ -46,7 +47,7 @@ def home
         @filter_id = account_session[:filter_id]
       end
         
-      
+      @activities_summary =[]
       case @filter_id
       when ("1") # On Deck
           @activities_summary             = get_activities_i_participate(current_user_id)
@@ -64,14 +65,14 @@ def home
           @activities_summary             = get_activities_i_participate (current_user_id)
           
         else
-          @activities_summary             = get_activities_i_participate (current_user_id)
+         # @activities_summary             = get_activities_i_participate (current_user_id)
           @filter_id = "1"    
         end
   # Filter only product On Deck (for now)
       @completed_activities          = nil
       @completed_tasks          = get_completed_tivits(current_account.user)
       
-      @activities_i_participate      = get_activities_i_participate (current_user_id)
+      @activities_i_participate      = @activities_summary
      # @incoming_activities           = get_activities_with_new_tivit_requests(current_user_id)
       @new_tivit_requests            = get_new_tivit_requests(current_user_id)
       @my_open_tasks                 = get_my_open_tasks(current_user_id)

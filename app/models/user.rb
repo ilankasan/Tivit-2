@@ -66,8 +66,8 @@ class User < ActiveRecord::Base
   def isAdmin?
  # ilan need to rewrite
     email = self.account.email
-    puts "Email is ---->>>>>> "+email
-    if(email =="ilan.kasan@gmail.com"  || email =="yanivlevi1@gmail.com" || email =="jon.nakasone@gmail.com")
+   #puts "Email is ---->>>>>> "+email
+    if(email =="ilan.kasan@gmail.com"  || email =="yanivlevi1@gmail.com" )
      # puts "return true"
       return true
     else

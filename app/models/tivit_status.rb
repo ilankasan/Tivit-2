@@ -18,6 +18,8 @@ class TivitStatus < ActiveRecord::Base
   @proposed    = 8
   @reminded    = 9
   @accepted    = 10
+  @closed      = 11 # closed are open tasks that their activity has been marked as completed
+  
   
   
 # in progress id = 1
@@ -116,6 +118,15 @@ class TivitStatus < ActiveRecord::Base
     return  (id==@accepted)
   end
   
+# closed id = 11
+  def self.get_closed_id
+    return @closed
+  end
+  
+  def self.is_closed_id?(id)
+    return (id==@closed)
+  end
+
   
   
 end

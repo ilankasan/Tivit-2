@@ -330,7 +330,7 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
   end
   
   def get_open_tivits 
-    puts "------------->>>>>>>>>>>>>>>>   in get_open_tivits"
+  #  puts "------------->>>>>>>>>>>>>>>>   in get_open_tivits"
     #self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = ?
      #                AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id).order(:due).reverse_order
      return self.tivits.where(:status_id => TivitStatus.get_in_progress_id).order(:due).reverse_order
@@ -393,7 +393,7 @@ return results
   end
   
   def get_my_open_tivits_i_agreed_to_help_with (user)
-   puts "^^^^^^^^^^^^^^^--------->>>> get_my_open_tivits_i_agreed_to_help_with"
+  # puts "^^^^^^^^^^^^^^^--------->>>> get_my_open_tivits_i_agreed_to_help_with"
      
      
  
@@ -406,7 +406,7 @@ return results
                   AND     NOT (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)", 
                   user.get_id, TivitStatus.get_in_progress_id,TivitStatus.get_new_id,TivitStatus.get_reviewed_id)
                   
-    puts "my tivits in the activity are "+result.size.to_s
+  #  puts "my tivits in the activity are "+result.size.to_s
     return result
   end
   
@@ -417,13 +417,13 @@ return results
     
     team_done_tivits = self.tivits.where("NOT owner_id = ? AND (status_id = ? )",user.get_id, TivitStatus.get_completed_id)
     
-    puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_done_tivits "+team_done_tivits.count.to_s
+    #puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_done_tivits "+team_done_tivits.count.to_s
     
 
     
     team_open_tivits_no_due  = self.tivits.where("NOT owner_id = ? AND NOT (status_id = ?) AND due IS NULL",user.get_id, TivitStatus.get_completed_id)
     
-    puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_open_tivits_no_due "+team_open_tivits_no_due.count.to_s
+    #puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_open_tivits_no_due "+team_open_tivits_no_due.count.to_s
     
       
     team_open_tivits_due  = self.tivits.where("NOT owner_id = ? AND NOT (status_id = ?) AND due IS NOT NULL",user.get_id,TivitStatus.get_completed_id)
@@ -734,27 +734,39 @@ return self.tivits.size
   
   def change_status_to_completed (summary)
    puts "------------->>>>. change_status_to_completed"
-  
-  
    
    self.completed_at = Time.now()
    self.status_id = TivitStatus.get_completed_id
    self.summary = summary if(summary != nil)
-    if(!self.save)
-      return false
-    end
+   
+   if(self.tivits != nil || self.tivits.size > 0)
+      self.tivits.each do |tivit|
+        tivit.change_status_to_closed
+     end
+   end 
+    return false if !self.save
+     
     return true
   end
-
+  
   def change_status_to_in_progress
     puts "change_status_to_in_progress"
     self.status_id = TivitStatus.get_in_progress_id
     self.save
-   if(self.tivits != nil || self.tivits.size > 0)
+    if(self.tivits != nil || self.tivits.size > 0)
       self.tivits.each do |tivit|
-      tivit.change_status_to_in_progress
+        tivit.change_status_to_in_progress
+      end
     end
-end
+  end
+  
+  
+  def change_status_to_closed
+
+    #puts "change_status_to_closed for tivit "+self.id.to_s
+    self.status_id = TivitStatus.get_closed_id
+    self.save
+  
   end
   
   def change_status_to_done

@@ -272,10 +272,10 @@ class ActivitiesController < ApplicationController
       end 
       @activity.save
       
-#send email to all parcicipants that tivit was completed (not including owner):
+#ILAN - Check if this code is relevantsend email to all parcicipants that tivit was completed (not including owner):
      if(@activity.isCompleted?)
      
-        notify_users_activity_is_closed(@activity,params["summary"])
+        notify_users_activity_is_closed(@activity,params["summary"],@activity.get_owner)
      end
 
     flash[:success] = "tivit " + @activity.name + " updated"

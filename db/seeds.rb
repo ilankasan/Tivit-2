@@ -8,6 +8,32 @@
 
 
 puts "starting seed....."
+
+
+puts "starting seed close status..."
+  i = 1
+  changed = 0
+  Activity.all.each do |tivit|
+      
+      if(tivit.get_parent != nil)
+        
+        if(TivitStatus.is_completed_id?(tivit.get_parent.status_id))
+          puts i.to_s+" tivit " +tivit.id.to_s+" closed!"
+          tivit.change_status_to_closed
+          changed = changed +1 
+        end
+        puts  i.to_s+" tivit " +tivit.id.to_s+ " parent is in progress"
+       
+      else
+        puts  i.to_s+" Parent for " +tivit.id.to_s+" is nil"
+      end
+      i = i + 1 
+  end # end each
+  puts "Total tivits changed "+changed.to_s
+  
+
+
+if(false)
   i = 1
   User.all.each do |user|
       clone = "nil" if user.clone_email == nil  
@@ -24,7 +50,7 @@ puts "starting seed....."
        
       i = i + 1 
   end
-  
+end
 
 if(false)
   puts "Migrating tivit_user_statuses...."

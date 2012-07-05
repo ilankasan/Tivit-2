@@ -207,7 +207,7 @@ def  add_tivit_to_user(emails, activity)
    end
    
 # get a colleciton of users that participated in an activity (stakeholders and tivit owners)
-   def get_acrivity_users(activity)
+   def get_activity_users(activity)
      puts "get activity users"
      
      sql = "SELECT DISTINCT users.* FROM users, activities, activities_users 
@@ -222,7 +222,7 @@ def  add_tivit_to_user(emails, activity)
    
    def notify_users_activity_is_closed(activity,summery,activity_owner)
      puts "in notify users"
-     users = get_acrivity_users(activity)
+     users = get_activity_users(activity)
      users.each do |user|
        
 #202 Activity - Closed. When Owner closes activity, Who: All Assignees
