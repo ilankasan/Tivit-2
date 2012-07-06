@@ -13,6 +13,7 @@ puts "starting seed....."
 puts "starting seed close status..."
   i = 1
   changed = 0
+  strange = 0
   count = Activity.all.count
   puts "total tivits with activities is"+count.to_s
   
@@ -38,8 +39,9 @@ puts "starting seed close status..."
         else 
           if(tivit.get_parent.status_id == TivitStatus.is_closed_id)
             puts  i.to_s+" activity is closed !!!!!!!!!!!!!!!!!!!!!!"
-            tivit.get_parent.status_id =  TivitStatus.is_completed_id
+            tivit.get_parent.status_id =  TivitStatus.get_completed_id
             tivit.get_parent.save
+            strange = strange +1
             
           else
             puts  i.to_s+" tivit " +tivit.id.to_s+ " parent is in progress"
@@ -52,6 +54,7 @@ puts "starting seed close status..."
       i = i + 1 
   end # end each
   puts "Total tivits changed "+changed.to_s
+  puts "Total strange " +strange.to_s
   
 
 
