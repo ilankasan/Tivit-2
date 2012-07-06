@@ -30,6 +30,29 @@ module PagesHelper
 #Not completed (basically everything that is not yet completed - on it, in progress, late, etc.)
 #Completed that had new comments on it
 
+
+
+def get_tasks_for_other(current_user_id)
+      puts "____________________________________________"
+      puts " ---->>>>> in get_tasks for others <<<<<<------"
+      puts "____________________________________________"
+      
+      in_progress_id = TivitStatus.get_in_progress_id.to_s
+      
+      results1 = Activity.where("status_id        = ?  
+                             AND activity_type    = 'tivit'
+                         AND NOT owner_id         = ?
+                             AND invited_by       = ?
+                    ",in_progress_id,current_user_id,current_user_id).order(" due, created_at DESC")
+      
+      puts "number of tasks is = "+results1.size.to_s
+      return results1  
+    end
+    
+
+
+
+###################
     def get_my_open_tasks(current_user_id)
       puts "____________________________________________"
       puts " ---->>>>> in get_my_open_tasks <<<<<<------"

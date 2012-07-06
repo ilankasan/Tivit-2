@@ -414,18 +414,12 @@ return results
   def get_team_tivits (user)
     
    # puts "----------------->>>> in team_my tivits"
-    
     team_done_tivits = self.tivits.where("NOT owner_id = ? AND (status_id = ? )",user.get_id, TivitStatus.get_completed_id)
     
     #puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_done_tivits "+team_done_tivits.count.to_s
-    
-
-    
     team_open_tivits_no_due  = self.tivits.where("NOT owner_id = ? AND NOT (status_id = ?) AND due IS NULL",user.get_id, TivitStatus.get_completed_id)
     
     #puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_open_tivits_no_due "+team_open_tivits_no_due.count.to_s
-    
-      
     team_open_tivits_due  = self.tivits.where("NOT owner_id = ? AND NOT (status_id = ?) AND due IS NOT NULL",user.get_id,TivitStatus.get_completed_id)
      
   # puts "my_open_activities = "+my_open_activities.size.to_s

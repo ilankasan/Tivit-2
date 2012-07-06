@@ -14,8 +14,13 @@ puts "starting seed close status..."
   i = 1
   changed = 0
   count = Activity.all.count
+  puts "total tivits with activities is"+count.to_s
+  
+  
+  count = Activity.where(:activity_type => 'tivit').count
   puts "total tivits is "+count.to_s
-  Activity.all.each do |tivit|
+  
+  Activity.where(:activity_type => 'tivit').each do |tivit|
       
       if(tivit.get_parent != nil)
         

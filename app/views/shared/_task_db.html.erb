@@ -26,7 +26,7 @@
 					<li class="record complete tivit-name-line-through">
 				<% else %>
 					<!-- all new tasks are hidden. This is needed so if the user click on it, we just redraw them -->
-					<% if my_task.get_owner_status == TivitStatus.get_new_id || my_task.get_owner_status == TivitStatus.get_reviewed_id %>
+					<% if ((my_task.invited_by != current_account.user.get_id || my_task.invited_by == my_task.owner_id ) && (my_task.get_owner_status == TivitStatus.get_new_id || my_task.get_owner_status == TivitStatus.get_reviewed_id)) %>
 						<li class="record unread hide">
 					<% else %>	
 						<li class="record unread">

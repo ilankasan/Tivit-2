@@ -58,12 +58,17 @@
 
 
 		<div class="tabs">
-             <!-- <div class="status">You have <%#= @tivits_ondeck.count%> activities / tivits </div> -->
+             
 
 			<ul id="tabs-nav">
 				<li class="tab open">
-	                <a href="#tivit-desk">Tasks</a>
+	                <a href="#tivit-desk">My Tasks </a>
 	            </li>
+	            
+	          	<li class="tab">
+	                <a href="#tasks-i-asked">Tasks I Assigned</a>
+	            </li>
+	    	
 	    		<li class="tab">
 	                <a href="#tivit-incoming">Activities</a>
 	                
@@ -116,6 +121,34 @@
 			<% end %>
 
 			</div>
+
+
+
+	        <div id="tasks-i-asked" class="tasks-i-asked tabInfo"> 
+
+			<% unless @tasks_for_others == nil %>
+			 	
+			 	<div id="alltivits" class="main-tivit">
+					<div id="mytivits" class="tvit-list">	
+						
+						<div class="team tivits">
+							<div class="tvit-list">
+								<ul class="list">
+						
+									<%#= render :partial => 'shared/activity_db', :collection =>  @activities_summary, :locals => {:tabview => "Summary"} %>
+					     			<%= render :partial => 'shared/task_db', :collection =>  @tasks_for_others, :as => :my_task, :locals => {:activitiesview => 'no'} %>
+					     
+					     		</ul>
+					     	</div>
+					     </div>
+		     		</div>
+		     	</div>
+			<% end %>
+
+			</div>
+
+
+
 
    		<div id="tivit-incoming" class="tivit-incoming tabInfo"> 
 
