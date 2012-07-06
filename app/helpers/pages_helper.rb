@@ -47,7 +47,7 @@ def get_tasks_for_other(current_user_id)
       
       puts "number of tasks is = "+results1.size.to_s
       results1.each do |tivit|
-        puts "parent status id is "+ tivit.get_parent.status_id.to_s
+        puts "parent status id = "+ tivit.get_parent.status_id.to_s+ " tivit status = "+tivit.status_id.to_s
       end
       return results1  
     end
