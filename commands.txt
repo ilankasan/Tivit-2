@@ -137,8 +137,7 @@ git push heroku -app staging
 You will receive an email with instructions about how to reset your password in a few minutes.
 
 $ git add .
-git commit -am "7-05-12 tasks for others"
-
+seed
 git commit -am "1-29-12 yanivs bug fixes stg 1"
 git commit -am "1-31-12 autocomplete"
 git commit -am "4-1-12 get rid of the create activity in ADP"
