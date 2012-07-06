@@ -37,7 +37,7 @@ puts "starting seed close status..."
           end
            
         else 
-          if(tivit.get_parent.status_id == TivitStatus.is_closed_id)
+          if(tivit.get_parent.status_id == TivitStatus.get_closed_id)
             puts  i.to_s+" activity is closed !!!!!!!!!!!!!!!!!!!!!!"
             tivit.get_parent.status_id =  TivitStatus.get_completed_id
             tivit.get_parent.save
