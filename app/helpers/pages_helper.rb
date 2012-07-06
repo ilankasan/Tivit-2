@@ -46,7 +46,9 @@ def get_tasks_for_other(current_user_id)
                     ",in_progress_id,current_user_id,current_user_id).order(" due, created_at DESC")
       
       puts "number of tasks is = "+results1.size.to_s
-      puts results1.inspect
+      results1.each do |tivit|
+        puts "parent status id is "+ tivit.get_parent.status_id.to_s
+      end
       return results1  
     end
     
