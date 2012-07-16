@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120716045842) do
+ActiveRecord::Schema.define(:version => 20120716054526) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -76,6 +76,9 @@ ActiveRecord::Schema.define(:version => 20120716045842) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "activities_users", ["activity_id"], :name => "index_activities_users_on_activity_id"
+  add_index "activities_users", ["user_id"], :name => "index_activities_users_on_user_id"
 
   create_table "authentication_services", :force => true do |t|
     t.integer  "account_id"

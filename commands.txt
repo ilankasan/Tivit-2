@@ -208,6 +208,9 @@ rails -d mysql my_rails_app
  
  rails generate migration remove_avatar_columns_from_users avatar_file_name:string avatar_content_type:string avatar_file_size:integer avatar_updated_at:datetime
  
+ rails generate migration add_index_to_user_id_column_in_activities_users 
+ rails generate migration add_index_to_activity_id_column_in_activities_users 
+ 
  rails generate migration add_file_name_to_document file_name:string
  
  rails generate migration add_user_id_to_documents user_id:integer
