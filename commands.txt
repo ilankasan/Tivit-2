@@ -204,6 +204,7 @@ rails -d mysql my_rails_app
  
  rails generate migration add_index_to_status_id_column_in_activities 
  rails generate migration add_index_to_status_id_column_in_tivit_user_statuses 
+ rails generate migration add_index_to_activity_id_column_in_tivit_user_statuses 
  
  rails generate migration remove_avatar_columns_from_users avatar_file_name:string avatar_content_type:string avatar_file_size:integer avatar_updated_at:datetime
  

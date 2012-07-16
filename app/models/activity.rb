@@ -366,10 +366,11 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
     results3 = []
   end
  
-results =(results1 + results2) | results3
+      results =(results1 + results2) | results3
 #puts " restuns size "+results.size.to_s
-return results
+      return results
   end
+
 
   def get_my_tivits (user)
      puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
