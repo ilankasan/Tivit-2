@@ -1,8 +1,6 @@
 <!-- Answer (second) tivit -->
 <%if   tivit_adp_comment.comment != nil && tivit_adp_comment.user != nil && tivit_adp_comment.created_at != nil %>
 
-<% #puts "[YANIV] ================= RENDERING COMMENT: "  + tivit_adp_comment.comment %>
-
 <!-- if new comment for this user, paint background yellow -->
 <% if tivit_adp_comment.wasReviewed? (current_account.user) %>
 	<!-- use class="record invisible" for comments you want to show in "view more comments" (when there's more that 2). Also, class="record active" will paint the background yellow. Use this for new comments -->
@@ -15,7 +13,7 @@
 	<div class="record-conteiner">
 		
 		<!-- Delete button -->
-		<a href="#" class="delete"></a>
+		<!-- <a href="#" class="delete"></a> -->
 		
 		<!-- comment user avatar -->
 		<div class="avatar">
@@ -60,7 +58,14 @@
 		  	  		<p class="start complete">Proposed new time accepted.</p>		
 		  	  		<!-- Completed -->	
 		  	  	<%when ("Reassigned")%>
-		  	  		<p class="start reassigned">Reassigned to <strong><%= tivit_adp_comment.activity.get_owner.name %></strong>.</p>	
+		  	  	
+		  	  	<% if (tivit_adp_comment.activity.get_owner.name == "not active") %>
+    				<% task_owner_name = tivit_adp_comment.activity.get_owner.clone_email %>
+    			<% else %>
+    				<% task_owner_name = tivit_adp_comment.activity.get_owner.name %>
+  				<% end %>
+  
+		  	  		<p class="start reassigned">Reassigned to <strong><%= task_owner_name %></strong>.</p>	
 			<%end%>
 		
 			<!-- Display actual comment -->

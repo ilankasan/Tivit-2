@@ -58,17 +58,17 @@
 
 
 		<div class="tabs">
-             
+             <!-- <div class="status">You have <%#= @tivits_ondeck.count%> activities / tivits </div> -->
 
 			<ul id="tabs-nav">
 				<li class="tab open">
-	                <a href="#tivit-desk">My Tasks </a>
+	                <a href="#tivit-desk">My Tasks</a>
 	            </li>
 	            
-	          	<li class="tab">
-	                <a href="#tasks-i-asked">Tasks I Assigned</a>
+	            <li class="tab">
+	                <a href="#tasks-i-asked">I Assigned</a>
 	            </li>
-	    	
+	            
 	    		<li class="tab">
 	                <a href="#tivit-incoming">Activities</a>
 	                
@@ -111,7 +111,7 @@
 								<ul class="list">
 						
 									<%#= render :partial => 'shared/activity_db', :collection =>  @activities_summary, :locals => {:tabview => "Summary"} %>
-					     			<%= render :partial => 'shared/task_db', :collection =>  @my_open_tasks, :as => :my_task, :locals => {:activitiesview => 'no'} %>
+					     			<%= render :partial => 'shared/task_db', :collection =>  @my_open_tasks, :as => :my_task, :locals => {:taskContext => 'tasksTabDashboard'} %>
 					     
 					     		</ul>
 					     	</div>
@@ -121,10 +121,8 @@
 			<% end %>
 
 			</div>
-
-
-
-	        <div id="tasks-i-asked" class="tasks-i-asked tabInfo"> 
+			
+			<div id="tasks-i-asked" class="tasks-i-asked tabInfo"> 
 
 			<% unless @tasks_for_others == nil %>
 			 	
@@ -136,7 +134,7 @@
 								<ul class="list">
 						
 									<%#= render :partial => 'shared/activity_db', :collection =>  @activities_summary, :locals => {:tabview => "Summary"} %>
-					     			<%= render :partial => 'shared/task_db', :collection =>  @tasks_for_others, :as => :my_task, :locals => {:activitiesview => 'no'} %>
+					     			<%= render :partial => 'shared/task_db', :collection =>  @tasks_for_others, :as => :my_task, :locals => {:taskContext => 'IAssigned'} %>
 					     
 					     		</ul>
 					     	</div>
@@ -146,9 +144,7 @@
 			<% end %>
 
 			</div>
-
-
-
+			
 
    		<div id="tivit-incoming" class="tivit-incoming tabInfo"> 
 
@@ -163,7 +159,7 @@
 					<div class="tivit-activities">		
 														 
 			 		 	<!-- ILAN: need here a list of all the activites the user either own OR participating in, ordered by date, closest one first -->
-			     		<%= render :partial => 'shared/activity_db_new', :collection =>  @activities_i_participate, :as => :activity_db, :locals => {:activitiesview => 'yes'} %>
+			     		<%= render :partial => 'shared/activity_db_new', :collection =>  @activities_i_participate, :as => :activity_db, :locals => {:taskContext => 'activitiesTabDashboard'} %>
 		     
 		    		</div> 
 				</div>
@@ -174,28 +170,28 @@
 
 			<!-- ______________________________________ Completed ___________________________________________________ -->	
 				
-				<!-- ILAN-done: need here an arraw of completed tasks, that should be sorted most recent completed first - so it'll show at the top -->
-				<% unless @completed_tasks == nil %>
+			<!-- ILAN-done: need here an arraw of completed tasks, that should be sorted most recent completed first - so it'll show at the top -->
+			<% unless @completed_tasks == nil %>
 				
-					<div id="completed-items" class="completed-items tabInfo">
-						<div id="alltivits" class="main-tivit">
-							<div id="mytivits" class="tvit-list">				
-								<div class="team tivits">
-									<div class="tvit-list">
-										<ul class="list">
+				<div id="completed-items" class="completed-items tabInfo">
+					<div id="alltivits" class="main-tivit">
+						<div id="mytivits" class="tvit-list">				
+							<div class="team tivits">
+								<div class="tvit-list">
+									<ul class="list">
 											
-											<!-- ILAN: need here an arraw of completed tasks, that should be sorted most recent completed first - so it'll show at the top -->
-											<%= render :partial => 'shared/task_db', :collection =>  @completed_tasks, :as => :my_task, :locals => {:activitiesview => 'no'} %>
+										<!-- ILAN: need here an arraw of completed tasks, that should be sorted most recent completed first - so it'll show at the top -->
+										<%= render :partial => 'shared/task_db', :collection =>  @completed_tasks, :as => :my_task, :locals => {:taskContext => 'tasksTabCompleted'} %>
 											
 				
-										</ul>
-									</div>
+									</ul>
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
 				
-				<% end %>		
+			<% end %>		
 		
 			<div id="test-items" class="test-items tabInfo">
 				

@@ -1,8 +1,4 @@
-
-
-<% if my_task.get_parent == nil %>
-	<% activityOwner = "No parent !!!!" %>
-<% elsif my_task.get_parent != nil && my_task.get_parent.get_owner.id == current_account.user.get_id %>
+<% if my_task.get_parent.get_owner.id == current_account.user.get_id %>
 	<% activityOwner = "You" %>
 <% else %>
 	<% activityOwner = my_task.get_parent_owner.name %>
@@ -15,86 +11,197 @@
 	<% loggedInUserIsTheOwner = "no" %>
 	<% tivit_owner_name = my_task.get_owner.name %>
 <% end %>
+
+<% if (tivit_owner_name=="You") && (my_task.get_owner_status == TivitStatus.get_new_id || my_task.get_owner_status == TivitStatus.get_reviewed_id) %>
+	<% newRequest = "yes" %>
+<% else %>
+	<% newRequest = "no" %>
+<% end %>
+
 	<!-- 		
 		<div class="team tivits">
 			<div class="tvit-list">
 				<ul class="list">
 	-->
-		
+	<% if taskContext == 'ADP' %>
+	
+		<div class="team tivits">
+			<div class="tvit-list">
+				<ul class="list">
+	<% end %>						
 		
 				<% if my_task.isCompleted? %>
 					<li class="record complete tivit-name-line-through">
 				<% else %>
-					<!-- all new tasks are hidden. This is needed so if the user click on it, we just redraw them -->
-					<% if ((my_task.invited_by != current_account.user.get_id || my_task.invited_by == my_task.owner_id ) && (my_task.get_owner_status == TivitStatus.get_new_id || my_task.get_owner_status == TivitStatus.get_reviewed_id)) %>
+					<!-- all new tasks are hidden on dashboard (not ADP). This is needed so if the user click on it, we just redraw them -->
+					<%# if ((my_task.invited_by != current_account.user.get_id || my_task.invited_by == my_task.owner_id ) && (my_task.get_owner_status == TivitStatus.get_new_id || my_task.get_owner_status == TivitStatus.get_reviewed_id)) %>
+					
+					<% if (my_task.invited_by != current_account.user.get_id || my_task.invited_by == my_task.owner_id ) && (taskContext != 'ADP') && (my_task.get_owner_status == TivitStatus.get_new_id || my_task.get_owner_status == TivitStatus.get_reviewed_id) %>
 						<li class="record unread hide">
 					<% else %>	
 						<li class="record unread">
 					<% end %>
 				<% end %>		
+				
+				<% if (tivit_owner_name=="You") && (taskContext == 'ADP') && (my_task.get_owner_status == TivitStatus.get_new_id || my_task.get_owner_status == TivitStatus.get_reviewed_id) %>
+						<div class="conteiner yell-bg">	
+				<% else %>
 						<div class="conteiner">	
-						
-						<% if activitiesview == 'no' %>
-							<%= render :partial => 'shared/tivit_date', :collection =>  [my_task], :as => :tivit, :locals => {:datestyle => ''} %> 
+				<% end %>							
+				
+				<!-- don't show dates in activities tab on dashboard for each task -->
+				<% if taskContext != 'activitiesTabDashboard' %>
+					<%= render :partial => 'shared/tivit_date', :collection =>  [my_task], :as => :tivit, :locals => {:datestyle => ''} %> 
+				<% end %>
+				<!--
+				<div class="calendar date beyondaweek">
+					<div class="w-day">MON</div>
+					<div class="text">22</div>
+				</div>		
+				-->
+				<div class="status">
+					<div class="icon"></div>
+					<!-- if I'm the activity owner / tivit creator or assignee, use class="status" so jQuery for dropdown list will work, otherwise use other status so it'll be ignored -->
+						<% if loggedInUserIsTheOwner == "yes" %>
+							<% mytivit = "yes"%>
+						<% else %>
+							<% mytivit = "no"%>
 						<% end %>
-						<!--
-							<div class="calendar date beyondaweek">
-								<div class="w-day">MON</div>
-								<div class="text">22</div>
-							</div>		
-						-->
-							<div class="status">
-								<div class="icon"></div>
-								<!-- if I'm the activity owner / tivit creator or assignee, use class="status"
-									so jQuery for dropdown list will work, otherwise use other status so it'll be ignored -->
-								<% if loggedInUserIsTheOwner == "yes" %>
-									<% mytivit = "yes"%>
-								<% else %>
-									<% mytivit = "no"%>
-								<% end %>
-								<% if my_task.isParentOwner? (current_account.user) %>
-									<% isActivityOwner = "yes"%>
-								<% end %>
-								<% if my_task.wasInvitedByUser? (current_account.user) %>
-										<% invitedByMe = "yes"%>
-								<% end %>
-											
-								<input type="hidden" tivitid="<%= my_task.id %>" mytivit= "<%=mytivit%>" activityOwner="<%=isActivityOwner%>" invitedByMe="<%=invitedByMe%>" >
-							</div>
+						
+						<% if my_task.isParentOwner? (current_account.user) %>
+							<% isActivityOwner = "yes"%>
+						<% end %>
+						<% if my_task.wasInvitedByUser? (current_account.user) %>
+							<% invitedByMe = "yes"%>
+						<% end %>
+						
+						<input type="hidden" tivitid="<%= my_task.id %>" mytivit= "<%=mytivit%>" activityOwner="<%=isActivityOwner%>" invitedByMe="<%=invitedByMe%>" >
+					</div>
 	
-							<div class="avatar read">
-								<%= render :partial => 'profile_images/profile_image', :collection =>  [my_task.get_owner], :as => :user %> 
-								<!-- <img width="40" height="44" src="5581_files/don-profile.png" alt="Don-profile"/> -->
-							</div>
+					<div class="avatar read">
+						<%= render :partial => 'profile_images/profile_image', :collection =>  [my_task.get_owner], :as => :user %> 
+						<!-- <img width="40" height="44" src="5581_files/don-profile.png" alt="Don-profile"/> -->
+					</div>
 										 
-							<div class="text">
-								<div class="activity">
-								<% unread_comments = my_task.get_number_of_unread_comments(current_account.user)%>
-			    
-							    <!-- Only show comments icon if there're new comments -->
-							    <% if unread_comments > 0 %>
-							   		<div class="comments">	
-							   			<i><%=unread_comments%></i>
-							   		</div>
-							  	<% end %>
-			  	
-									
-								</div>
-								<div class="text-conteiner" style="cursor: pointer;">
+					<div class="text">
+								
+						<!-- ADP view only if the tasks status is a new request, show on it and sorry buttons -->
+						<div class="activity mytivits-act">
+							<% if ( (newRequest == "yes") && (taskContext == 'ADP') ) %>
+								
+								<div class="on-it"></div>
+								<span class="btn-sorry">sorry...</span>
+													
+							<% end %>
+														
+							<% unread_comments = my_task.get_number_of_unread_comments(current_account.user)%>
+				    
+							<!-- Comments icon -->								   
+							<div class="comments">	
+								<% if unread_comments > 0 %>
+									<i><%=unread_comments%></i>
+								<% end %>
+							</div>			  			
+			  			</div>
+			  			
+			  					
+			  					<div class="text-conteiner" style="cursor: pointer;">
+									<% if (taskContext != 'ADP') %>
 									<h3><%= link_to my_task.name, my_task, :action => "show",
 	  									   :method => "get",
 	                                       :title  => my_task.get_parent.name %></h3>
+	                                <% else %>
+	                                	<h3><%= my_task.name %></h3>
+									<% end %>
+																	
 									<span class="grey">
-										<%= link_to my_task.get_parent.name, my_task.get_parent, :action => "show",
-	  									   :method => "get",
-	                                       :title  => my_task.get_parent.name %>
-	                                       
-										 for <strong><%= activityOwner %></strong></span>
+										
+										<% if (taskContext == 'ADP') || (taskContext == 'activitiesTabDashboard') || (taskContext == 'tasksTabCompleted') || (taskContext == 'IAssigned') %>
+											<%= get_task_status_line my_task, current_account.user %>
+											
+										<% else %>	
+										
+										<%= link_to my_task.get_parent.name, my_task.get_parent, :action => "show", :method => "get", :title  => my_task.get_parent.name %>
+										
+											<% if (activityOwner != "You") %>							
+												for <strong><%= activityOwner %></strong>
+		                                    <% end %>
+		                                    
+	                                   <% end %>
+	                               </span>
+	                               
+	                            	<% if my_task.get_owner_status == TivitStatus.get_new_id || my_task.get_owner_status == TivitStatus.get_reminded_id%>
+		              					<%if((current_account.user.get_id == my_task.get_parent.get_owner.get_id && current_account.user.get_id != my_task.get_owner.get_id)|| (current_account.user.get_id == my_task.get_invited_by.id) )%>	              	
+			              					<span class="send-reminder">Remind</span>
+			              			<!-- 
+			              			<a>
+									<%#= link_to "Remind",    :controller  => "activities",
+		    												:action      => "change_tivit_status",
+		    												:status      => "remind",
+		    												:id          => tivit.id, 
+		  							    					:confirm     => "Are you sure you want to accepet new date " +tivit.name+"?",
+		                                					:title       => tivit.name %>
+									</a>
+									-->
+									
+										<%end%>
+	              					<% end %>
+	              		
+										 
 								</div> <!-- text-container -->
 							</div> 
+							<!-- 						
+							<div class="text">
+								<div class="activity mytivits-act">
+									<div class="on-it"></div>
+									<span class="btn-sorry">sorry...</span>
+								</div>
+								<div class="text-conteiner" style="cursor: pointer;">
+									<h3>Set up meeting with Lucky Strike</h3>
+									<span class="grey">You agreed to help by Thu, Jun 21.</span>
+								</div> <!-- text-container 
+							</div>-->
+											
 							<!-- text -->
 							<div class="clear"></div>
+							
+							<!-- only activity owner or tivit creator (invited by) can edit tivits -->
+				
+							<% if ( (newRequest == "no") && (taskContext == 'ADP') && ( (my_task.wasInvitedByUser?(current_account.user)) || (my_task.isParentOwner? (current_account.user)) )) %>
+							
+								<div class="edit-menu">
+									<div class="icon"></div>
+									<div class="menu-dialog">
+										<ul>
+											<li class="edit">edit</li>
+											<li class="del">delete</li>
+										</ul>
+									</div>
+								</div>
+							<% end %>													
+				
+							<div class="clear"></div>
+				
+						
 						</div><!-- conteiner -->	
+						
+						
+<!-- expand tivit the user clicked on when coming to the page from dashboard or email -->				
+<% if my_task.id == @tivit_id %>
+		<!-- tivit comments / answer -->
+		<ul class="list" style="display: block">
+
+<% else %>	
+			<ul class="list">	
+<% end %>			
+				<%= render :partial => 'shared/tivit_adp_comments_list', :collection =>  [my_task], :as => :tivit %>
+			
+			</ul>
+			
+						
+						
+						
+						
 					</li>
 	<!-- 
 				</ul>
@@ -102,6 +209,12 @@
 		</div>
 	-->
 		<!-- <div class="dott-delim">&nbsp;</div> -->
+<% if taskContext == 'ADP' %>
+			</ul>
+		</div>
+	</div>
+<% end %>
+
 		
 
 							

@@ -185,6 +185,10 @@ jQuery(document).ready(function($){
 
 	});
 	// New Requests - user click I'm on it button
+	$('.newtivits .on-it').live('hover', function(){
+		$(this).css('cursor','pointer');
+	});
+			
 	$('.newtivits .on-it').live('click', function(){
 		
 		 // find out the tivit id that was clicked on
@@ -245,8 +249,8 @@ jQuery(document).ready(function($){
 				});
 			}else{
 				$('.newtivits .qty').text(newtivitQty);
+			}
 		}
-	}
 	
 	
 	});
@@ -421,6 +425,7 @@ jQuery(document).ready(function($){
     		 // Add validation in case of re-assign (we have email input)
     		 //if (newState == 're-assign')
     		 //{
+    		 
     		 $("#confirmDialogForm").validate({
 	    		 	  				           			
 			 	submitHandler: function(form) {
@@ -918,17 +923,29 @@ jQuery(document).ready(function($){
 		return false;
 		
 	});	
-	$('.text-conteiner').hover(function(){
-		$(this).css('cursor','pointer');
+	//$('.text-conteiner').hover(function(){
+	$('.text-conteiner').live('hover', function(e){
+		//alert($(this).parents('.record').children('ul').attr('class'));
+		//console.log('[Yaniv] tivit clicked - show/hide comments...');
+		
+		// This is used to isolate clicks on remind hyperlink on ADP page in each tivit, without this, the remind link will not work
+		if( $(e.target).is('.gray') ){
+			console.log("Run function because clicking on something else");
+			return;
+		}
+		else
+		{		
+			$(this).css('cursor','pointer');
+		}
 	});
-	$('.text-conteiner').live('mouseover mouseout', function(event) {
-	  if (event.type == 'mouseover') {
+	//$('.text-conteiner').live('mouseover mouseout', function(event) {
+	//  if (event.type == 'mouseover') {
 	    // do something on mouseover
-	    $(this).css('cursor','pointer');
-	  } else {
+	//    $(this).css('cursor','pointer');
+	//  } else {
 	    // do something on mouseout
-	  }
-	});
+//	  }
+	//});
 	
 	
 	/* Clicking comments icon opens comments */
@@ -1411,6 +1428,181 @@ jQuery(document).ready(function($){
 	$('.new-tivits-toggle').bind('click', function(){
 		toggleNewTivits(this);
 	});
+	
+	// Sorry button clicked - Sorry Dialog needs to show up	
+	$('.btn-sorry').click(function(){
+		/*
+		var topMarg = $(window).scrollTop() + $(window).height() / 2 - $('#sorry-tivit-window').height()/2 -100;
+
+		openNewActivity();
+		$('#sorry-tivit-window').css('top',topMarg+'px').show();
+		
+		*/
+		var record = jQuery(this).parents('.record');
+		var tivitID = record.find("input").attr("tivitid");
+    	console.log ("[Yaniv] send reminder tivitID=", tivitID);
+
+/*		
+		<div class="popup" id="sorry-tivit-window">
+
+	<form action="/">
+		<h2>Sorry I can't help</h2>
+		<p class="left-p"><input type="radio" name="sorry-reason" checked="checked" class="radb" id="radb-busy"/><label for="radb-busy" class="label-clear">I\'m too busy</label></p>
+		<p class="left-p"><input type="radio" name="sorry-reason" class="radb" id="radb-reasign"/><label for="radb-reasign" class="label-clear">I'm reassigningthis</label></p>
+		<p class="left-p reasign-row">
+			<label  class="label-clear">Reassign to:</label>
+			<input type="text" name="reassign-to" placeholder="Enter email address" class="reassign-to"/>
+		</p>
+		<p class="left-p"><textarea id="what" cols="10" rows="10" style="width:419px" class="sorry-ta"></textarea></p>
+
+		<div class="sorry-form-btns left-p">
+			<div class="form-button sorry-ok-btn" >Ok</div>
+			<div class="form-button sorry-cancel-btn" id="cancel">Cancel</div>
+			</div>
+		</form>
+	
+		<div class="close" id="sorry-popup-close"></div>
+	</div>
+
+	*/	
+		
+		var actionPost = 'action="/decline?id=' + tivitID + '&method=put"' + ' accept-charset="UTF-8">';
+		
+		console.log ("[Yaniv] ", actionPost);
+		var confirmDialogTitle = "Sorry I can\'t help";
+		
+		var confirmDialog =	'<div class="popup" id="confirmDialog">'	+
+    							'<div class="loading-popup"></div>' + 
+    							'<form id="confirmDialogForm" method="post" class="confirmPopup" ' + actionPost +
+    								'<h2>' + confirmDialogTitle + '</h2>' +
+									'<p class="left-p"><input type="radio" name="sorry-reason" checked="checked" class="radb" id="radb-busy"/><label for="radb-busy" class="label-clear">I\'m too busy</label></p>' + 
+									'<p class="left-p"><input type="radio" name="sorry-reason" class="radb" id="radb-reasign"/><label for="radb-reasign" class="label-clear">I\'m reassigning this</label></p>' + 
+									'<p class="left-p reasign-row">' +
+										'<label  class="label-clear">Reassign to:</label>' + 
+										'<input type="text" name="assign_to" id="assign_to" placeholder="-- Enter email address --" class="required email" />' + 										
+									'</p>' +
+									'<p class="left-p"><textarea cols="10" rows="10" id="comment" name="comment" style="width:419px" class="sorry-ta" placeholder="- enter a message here if you\'d like... -"></textarea></p>' + 							
+									'<div class="request"><div id="popup-cancel" class="form-button">Cancel</div><input class="form-button" type="submit" name="commit" value="OK"/></div>' +
+								'</form>' +
+								'<div class="close" id="sorry-popup-close"></div>' +
+							'</div>';		
+									
+									/*
+									'<form id="confirmDialogForm" method="post" class="confirmPopup" ' + actionPost +
+											'<h1>' + confirmDialogTitle + '</h1>' +
+											'<p><textarea rows="10" cols="10" id="comment" name="comment" placeholder="- enter a message here if you\'d like... -"/></p>' +
+											'<div class="request"><div id="popup-cancel" class="form-button">Cancel</div><input class="form-button" type="submit" name="commit" value="OK"/></div>' +
+									'</form>' +
+									'<div id="popup-close" class="close"></div>' +
+								'</div>';
+								*/
+			 
+    		 jQuery('#new-activity-background').addClass('tempHide');
+    		 // Show overlay screen
+    		 jQuery('#activity-overlay').show();
+    		
+    		 jQuery(this).parents('.record').append(confirmDialog);
+    		 // Center the dialog relative to where dropdown was clicked. Default for popups is 70px because of the add tivit window.
+    		 $('#confirmDialog').css('top', '-70px');
+    		 // by defaults, all popups are display=none which means they don't show. Let's make sure this popup shows up! 
+    		 $('#confirmDialog').css('display', 'block');	
+    		 
+    		 // autocomplete for reassign
+			 jQuery("input[id=assign_to]").autocomplete({
+			  	 	source: '/ajax/invitees',
+			 		 minLength: 2
+			 });
+			 
+	    	 // Add validation in case of re-assign (we have email input)
+    		 $("#confirmDialogForm").validate({
+	    		 	  				           			
+			 	submitHandler: function(form) {
+					console.log ('[Yaniv] confirm dialog submit button clicked!');
+					showLoadingAnimation('.loading-popup');
+					var actionparam = $(this).attr("action") + "";
+					console.log('[Yaniv] action=', actionparam);
+						
+					$.post($(form).attr("action"), $(form).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
+					
+					/*	
+					// Find the new status we need to change the checkbox to, it's hidden in the HTML of the confirmation popup.
+					var statusobject = jQuery(form).parents('.popup'); 
+					
+					var newStateVal = statusobject.find("input").attr("newstate");
+					if (newStateVal == "complete")	
+					{
+						var newState = 'record ' + statusobject.find("input").attr("newstate") + ' tivit-name-line-through';
+					}
+					else
+					{
+						var newState = 'record ' + statusobject.find("input").attr("newstate");
+					}
+				    //console.log ("[Yaniv] new state=", newState);
+					record = jQuery(form).parents('.record');
+					// Change status on UI to the new selected state (need to use this for Ajax callback)
+					
+					record.attr('class', newState);
+						
+					// Show comment of status change
+					addNewComment (record);
+					
+					// Update respond button text
+					updateRespondButtonText (record, statusobject.find("input").attr("newstate"));
+					*/	
+					
+					$(record).slideUp(function(){
+						$(this).remove();
+						$('.fresh-tivits').slideDown();
+						recalculateNewRequests();
+					});
+		
+					return false;
+					
+					function recalculateNewRequests(){
+						var newtivitQty = $('.newtivits .record').length;
+				
+						if(newtivitQty == 0){
+							$('.newtivits').slideUp(function(){
+								$(this).remove();
+							});
+						}else{
+							$('.newtivits .qty').text(newtivitQty);
+						}
+					}
+				
+				}   	
+		  
+			});   		 
+    		 	
+	});
+
+	$('#radb-reasign').live('change', (function() {        
+		$(".reasign-row").slideDown();
+		// Update the action post accordingly 
+		var popupForm = jQuery(this).parents('.popup');
+		var currentAction = popupForm.find("form").attr("action");
+		var newAction = currentAction.replace ("/decline?", "/reassign?");
+		console.log ("[Yaniv] newAction=", newAction);
+		popupForm.find("form").attr("action", newAction );
+				
+	}));
+
+	//$('#radb-busy').live('change', (function() {           
+	//	$(".reasign-row").slideUp();
+		// Update the action post accordingly 
+	//	var popupForm = jQuery(this).parents('.popup');
+	//	var currentAction = popupForm.find("form").attr("action");
+	//	var newAction = currentAction.replace ("/reassign?", "/decline?");
+	//	console.log ("[Yaniv] newAction=", newAction);
+	//	popupForm.find("form").attr("action", newAction );
+	//}));
+
+	function cleanSorryPopup(){
+		$('#sorry-tivit-window .reassign-to, #sorry-tivit-window .sorry-ta').val('');
+		$('#sorry-tivit-window .reasign-row').hide();
+		$('#radb-busy').attr('checked','checked').click();
+	}
+	
 	
 	
 });

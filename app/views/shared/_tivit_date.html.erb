@@ -10,7 +10,7 @@
 						
 <% due_time_window = tivit.get_due_window_from_now %>
 							
-<% if owner_tivit_status != TivitStatus.get_completed_id %>
+<%# if owner_tivit_status != TivitStatus.get_completed_id %>
 	<% if tivit.due == nil %>
 		<!-- no date specified -->
 		<!-- the datestyle variable comes from the partial call as local variable since the date need to float on the right for activites tab on dashboard -->
@@ -44,7 +44,7 @@
 		    <div class="text"><%= tivit.due.localtime.strftime ("%-d") %></div>  						
 	<%end%>
 	</div>
-<% end %>		
+<%# end %>		
 <!-- 
 <div class="calendar date beyondaweek">
 			<div class="w-day">TUE</div>

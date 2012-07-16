@@ -1,2 +1,37 @@
 //alert ("[Yaniv] in reassign.js.erb");
-window.location.reload();
+//window.location.reload();
+console.log('on_it.js.erb:: called.');  
+
+<% if @lastcomment != nil %>
+
+		// [Yaniv] 07122012 - this is wrong. What I need to do here is to move the re-assigned task to the team task area. It should either happen
+		// here or in the jQuery file
+		
+		
+		// This is how we construct the specific div in the base-jq.js file for the new comment (see addNewComment function in that file).
+		// They have to match, otherwise the new comment will not show up. the unique identifier is the activity ID 
+		// which is basically the tivit ID.
+		
+		var newcommentId = "#newcomment" + "<%= @activity.id %>";
+		
+		console.log('[Yaniv] decline.js.erb:: newcommentId=', newcommentId);  
+		
+		jQuery(newcommentId).append("<%= escape_javascript(render(:partial => 'shared/tivit_adp_comment', :collection =>  [@lastcomment])) %>");		
+		
+		// Mark new added comment as new with yellow background
+		var record = jQuery(newcommentId).find('.record');
+		record.addClass('active');
+					
+		console.log('[Yaniv] decline.js.erb:: succeeded?'); 
+		console.log('[Yaniv] decline.js.erb:: new comment should be rendered by now...'); 
+
+<% else %>
+
+	console.log('decline.js.erb:: seems like the comment we need to render is nil.'); 
+
+<% end %>
+	
+	
+jQuery('#confirmDialog').remove();
+jQuery('#activity-overlay').hide();
+

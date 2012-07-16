@@ -41,7 +41,7 @@ a:hover {
 }
 
 a:visited {
-  color: #069;
+  color: #3265FF/*#069*/;
 }
 .flash 
 {
@@ -191,7 +191,7 @@ a:visited {
 }
 /* Drop Down Menu **************************************************/
 /* 1. Menu Button */
-ul, li{margin:0; border:0; padding:0; list-style:none;}
+ul, li{margin:0; border:0; padding-left:10px; list-style:none;}
 #user-nav{
 	color: white;
 	font-size:15px;
@@ -607,7 +607,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 
 #tivit-container {
 	padding-bottom: 16px;
-	width: 734px;
+	width: 750px;
 }
 
 .tvit-day{
@@ -716,6 +716,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
 
 .tvit-list{
     margin-top:5px;
+    /*padding-left: 4px;*/
 }
 .tvit-list .label{
     padding: 2px 0 2px 5px;
@@ -907,6 +908,7 @@ ul, li{margin:0; border:0; padding:0; list-style:none;}
     display:inline-block;
     background:url("../images/ico_on_it.png") 0 0 no-repeat;
     float: left;
+    margin-left: -42px;
 }
 .tvit-list .record .do-it{
     width:75px;
@@ -1112,9 +1114,12 @@ footer li{
 a img{border:none;}
 .team .wrapper h2{font-size:24px;font-weight:bold;border:none;margin:0;}
 .activities{font-size:13px;}
+
 .activities p, .activities h1, .activities h2{margin:0;padding:0;}
+.tivits p, .tivits h1, .tivits h2{margin:0;padding:0;}
+
 .activities h1{font-size:24px;font-weight:bold;color:#000;margin:9px 0 2px;}
-.activities h2{font-size:18px;color:#333;font-weight:normal;padding:3px 0 0 13px;}
+.activities h2{font-size:18px;color:#333;font-weight:normal;padding:8px 0 0 12px;}
 .activities h2 span{color:#969696;}
 
 /* This line controls the tivit titles style on both dashboard AND ADP */
@@ -1122,6 +1127,7 @@ a img{border:none;}
 .activities .tivit-name-line-through h3{ text-decoration:line-through;}
 
 .activities small{color:#8d8d8d;font-size:12px;}
+.tivits small{color:#8d8d8d;font-size:12px;}
 .activities a{color:#7b7bd2;}
 .activities #new-activity{display:none;background:none;width:764px;}
 .activities #new-activity .field {width:auto;}
@@ -1231,11 +1237,11 @@ a img{border:none;}
 	.tivits li ul.list li.active{background:none !important;}
 	.tivits li ul.list .active .record-conteiner{background:#ffffcc;}
 		.record-conteiner{width:461px;padding:5px;}
-	.tivits.main-tivit{margin:20px 0;}
+	.tivits.main-tivit{margin:20px 0;padding: 0 0px 0 0px; }
 .tivits .form-button{width:auto;padding:8px 10px 8px 40px;text-align:right;font-size:15px;position:absolute;top:-43px;right:0;
 	background:#61B010 url(../images/icon_add_tivit.png) 6px center no-repeat}
 .add-tivit-button{width:auto;padding:8px 10px 8px 40px;text-align:right;font-size:15px;background:#61B010 url(../images/icon_add_tivit.png) 6px center no-repeat; 
-    margin-top:10px; border: 1px solid #C0C0C0; border-radius: 4px; font-weight:bold; color:#fff;float:right;}
+    margin-top:10px; border: 1px solid #C0C0C0; border-radius: 4px; font-weight:bold; color:#fff;float:right;cursor:pointer;}
 .tivits .tvit-list .record .status{width:33px;}
 .tivits .calendar{display:inline-block;width:53px;height:44px;overflow:hidden;
 	background:url(../images/cal-3a.png) no-repeat;text-align:center;z-index:2;position:relative;}
@@ -1320,10 +1326,11 @@ a img{border:none;}
 }
 .tivits .record{padding-right:0;}
 .tivits .record .text-conteiner{width:465px;cursor:hover;}
-.tivits .record .activity{position:relative;width:70px;padding:0;margin:2px 0 0;}
+.tivits .record .activity{position:relative;width:154px;padding:0px 22px 0px 0px;margin:2px 0 0;}
 .tivits .record .unreaded{position:absolute;top:9px;left:-105px;}
 .tivits .record .attach{position:absolute;top:9px;left:-40px;}
-.tivits .record .comments{position:absolute;top:9px;left:42px;}
+.tivits .record .comments{position:absolute;top:9px;left:118px;}
+
 .tivits .record .calendar{float:left; margin-left:-59px;}
 .newtivits .record .activity{width:140px; margin-top:5px !important;}
 /* Yaniv - changed position to relative and fixed top/right values to place the dropdown in the right place */
@@ -1334,7 +1341,7 @@ a img{border:none;}
 	.edit-menu .icon{z-index: 5; width:16px;height:17px;background:url(../images/icon_edit_menu.png) no-repeat;/*display:none;*/}
 	
 .tivits li ul.list{margin:10px 0 0 85px;display:none;}
-.tivits li ul.list{margin:10px 0 0 85px;display:none;}
+.tivits li ul.list{margin:10px 0 0 136px;display:none;}
 .tivits li ul.list li{position:relative;padding:0;}
 .tivits li ul.list li:first-child.active{margin-top:15px;}
 .tivits li ul.list .avatar,.tivits li ul.list .avatar img{width:26px;height:26px;}
@@ -1376,7 +1383,12 @@ a img{border:none;}
 
 .respond .status-list-dialog{top:27px;left:32px;width:131px;}
 .team h2{margin-top:0;}
-.team, .team .tvit-list .record,.team  ul ul .record{background:none; padding-left: 0;}
+.team, .team .tvit-list .record,.team  ul ul .record{background:none; padding-left: 0px;}
+
+/* Below is good to align the comments icons on ADP between my tasks and team tasks....
+/*.team .tivits .comments {left: 125px;}
+.team .tivits .edit-menu .icon {left: 125px;}*/
+
 
 .menu-dialog{position:absolute;color:#3a3a3a;background:#f8f8f8;padding:2px;border:1px solid #cfcfcf;display:none;}
 	.edit-menu .menu-dialog ul li{padding:2px 22px 2px 28px;}
@@ -1393,7 +1405,7 @@ a img{border:none;}
 	.post-style textarea{color:#242424;font-style:normal;}
 	
 	
-.post .post-button{display:block;width:auto;height:22px;margin:10px 0 0;padding:2px 14px 14px 12px;;background:#61B010;color:#fff;
+.post .post-button{display:block;width:auto;height:26px;margin:10px 0 0;padding:0px 14px 0px 12px;;background:#61B010;color:#fff;
 	font:normal bold 13px/13px Arial, 'Liberation Sans', FreeSans,sans-serif;border: 1px solid #C0C0C0;}
 .new-record{border:1px solid #ffcc00;}
 .attach-file{display:block;width:70px;padding:0 0 0 27px;line-height:1.6;
@@ -1465,8 +1477,8 @@ small.less{display:block;padding:0;}
     border-radius:5px;
     background-color: #f9f9f9;
     cursor: pointer;
-    margin-top:3px;
-    margin-right:2px;
+    margin-top:4px;
+    margin-right:40px;
 }
 
 .newtivits .details-link{
@@ -1499,7 +1511,7 @@ small.less{display:block;padding:0;}
 .popup label{font-size:14px;vertical-align:top;display:inline-block;width:50px;padding-right:5px;text-align:right;line-height:2.1;}
 
 /* Used for form input validations - form error messages */
-.popup label.error { font-size: 13px; text-align: left; width: 300px; float: none; color: red; padding-left: 60px; vertical-align: top; }
+.popup label.error { font-size: 13px; text-align: left; width: 300px; float: none; color: red; padding-left: 101px; vertical-align: top; }
 
 .popup input,.popup textarea{width:400px;height:27px;border:1px solid #d0d0d0;font:normal 13px Arial,'Liberation Sans',FreeSans,sans-serif;padding-left:4px;}
 .popup textarea{height:70px;resize:none; padding: 4px;width: 394px;}
@@ -1521,7 +1533,7 @@ small.less{display:block;padding:0;}
 
 
 /* Yaniv - Confirm dialog specifics, to separate from add tivit popup where it doesn't fit nicely */
-.popup .confirmPopup textarea{width:430px;height:60px;padding: 4px;margin: 5px 0 5px 20px;}
+.popup .confirmPopup textarea{width:430px;height:60px;padding: 4px;margin: 5px 0 5px 2px;}
 .popup .confirmPopup .input-date .ico_calc{float:right;left: -26px; top:4px;}
 .popup .confirmPopup .request .form-button{margin-top: 14px; margin-left: 5px; margin-right: 11px;background-color:#61B010;color:#fff;cursor:pointer;width:auto;padding:2px 16px;font-size:15px;font-weight: bold;}
 .popup .confirmPopup .request .form-button:first-child{background-color:#fff;color:#929292;margin-left:298px;margin-right:10px; padding:2px 15px;font-size:15px;font-weight: bold;}
@@ -1737,4 +1749,7 @@ small.less{display:block;padding:0;}
 
 .yell-bg{
     background:#fffee0;
+}
+.tivits .record .mytivits-act{
+    width:145px;
 }

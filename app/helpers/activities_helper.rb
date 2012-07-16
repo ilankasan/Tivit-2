@@ -1,6 +1,165 @@
 module ActivitiesHelper
 
 
+# [07/08/2012] Yaniv: Return the task status line sting for the specific user 
+def get_task_status_line (task, user)
+    
+  owner_tivit_status = task.get_owner_status
+
+  #*** 1 *** figure out the status line user name  
+  if (task.get_owner.id == current_account.user.get_id)
+    loggedInUserIsTheOwner = "yes"
+    task_owner_name = "You"
+  else
+    loggedInUserIsTheOwner = "no"
+    task_owner_name = task.get_owner.name
+  end
+
+  if task.get_owner.name == "not active"
+    task_owner_name = task.get_owner.clone_email
+  end
+
+  #*** 2 *** Figure out the appropriate window to determine the statusline relevant text
+  due_time_window = task.get_due_window_from_now
+  if (task.due == nil) 
+    status_line_window = ""
+
+  elsif (due_time_window == "overdue")
+    #activity is overdue -->
+    if ( (((Time.now.end_of_day - task.due.localtime.end_of_day)/(3600*24)).to_i) == 1 )
+      status_line_window = " yesterday"
+    else 
+      status_line_window = " " + (((Time.now.end_of_day - task.due.localtime.end_of_day)/(3600*24)).to_i).to_s + " days ago"
+    end
+  
+  elsif (due_time_window == "today")
+    #activity due today -->
+    status_line_window = " today."
+      
+  elsif due_time_window == "tomorrow"
+    #activity due tomorrow
+    status_line_window = " tomorrow."
+        
+  elsif (due_time_window == "withinaweek")
+    #activity due within a week
+    status_line_window = " " + (task.due.strftime ("%a")) + ", " + (task.due.strftime ("%b")) + " " + (task.due.strftime ("%d")) + "."
+  else
+    #activity due within more than a week
+    status_line_window = " " + (task.due.strftime ("%a")) + ", " + (task.due.strftime ("%b")) + " " + (task.due.strftime ("%d")) + "."
+  end
+
+  #*** 3 *** the middle text in status line varies dpending on the status of each tivit, let's set it up based on the status -->
+  status_line_middle = ""
+  
+  if (task.isCompleted?)
+    status_line_middle = " finished this " +  (time_ago_in_words (task.completed_at)) + " ago."
+    status_line_window = ""
+    
+  elsif ( TivitStatus.is_proposed_id?(owner_tivit_status) )
+    proposed_date = "no data was set"
+    if (task.get_owner_proposed_date == nil || task.get_owner_proposed_date == "")
+      proposed_date = "[no data was set]"
+    else
+      proposed_date = (task.get_owner_proposed_date.localtime.strftime("%A %b %d, %Y"))
+    end
+  
+    status_line_middle = " requested a different date: " + proposed_date
+    
+  elsif (task.due != nil && task.due.localtime.end_of_day < Time.now.end_of_day)
+      
+    if (owner_tivit_status == TivitStatus.get_new_id || owner_tivit_status == TivitStatus.get_reminded_id)
+      if (task_owner_name == "You")
+        status_line_middle = " haven't read this."
+      else
+        status_line_middle = " hasn't read this."
+      end
+  
+    elsif (owner_tivit_status == TivitStatus.get_onit_id || owner_tivit_status == TivitStatus.get_accepted_id)
+      status_line_middle = " agreed to help by"
+        
+    elsif (owner_tivit_status == TivitStatus.get_reviewed_id)
+      if (task_owner_name == "You")
+        status_line_middle = " haven't responded."
+      else
+        status_line_middle = " hasn't responded."
+      end
+      
+    else
+      status_line_middle = "un-handled status...if you see this let yaniv know"
+    end
+            
+  elsif (owner_tivit_status == TivitStatus.get_onit_id || owner_tivit_status == TivitStatus.get_accepted_id)
+
+    if (task.due != nil)
+      status_line_middle = " agreed to help by"
+    else
+      status_line_middle = " agreed to help."
+    end
+  
+  elsif (owner_tivit_status == TivitStatus.get_new_id || owner_tivit_status == TivitStatus.get_reminded_id)
+
+    if (task_owner_name == "You")
+      status_line_middle = " haven't read this."
+    else
+      status_line_middle = " hasn't read this."
+    end
+  
+    if (task.due != nil)
+      status_line_window = " Due " + status_line_window
+    else
+        status_line_window = ""
+    end
+  
+  elsif (owner_tivit_status == TivitStatus.get_reviewed_id)
+  
+    if (task_owner_name == "You")
+      status_line_middle = " haven't responded."
+    else
+      status_line_middle = " hasn't responded."
+    end
+  
+    if (task.due != nil)
+      status_line_window = " Due " + status_line_window
+    else
+      status_line_window = ""
+    end
+
+  elsif (owner_tivit_status == TivitStatus.get_reassigned_id)
+        
+    if (task.get_invited_by.id == current_account.user.id)
+      task_owner_name = "You"
+    else
+      task_owner_name = task.get_invited_by.get_name
+    end
+      
+    if (task.get_owner.id == current_account.user.id)
+        status_line_middle = " reassigned to you."
+    else
+      status_line_middle = " reassigned to " +  task.get_owner.get_name
+    end
+      
+    if (task.due != nil)
+      status_line_window = " Due " + status_line_window
+    else
+      status_line_window = ""
+    end
+                                  
+  else                              
+
+    status_line_middle = " can't help."
+    status_line_window = ""
+  
+  end
+
+ 
+  status_line = task_owner_name + status_line_middle + status_line_window
+  return status_line
+                             
+end          
+  
+  
+  
+  
   def owner_need_to_respond? (activity, user)
     
     if ((activity.get_owner.id == current_account.user.id) && 
