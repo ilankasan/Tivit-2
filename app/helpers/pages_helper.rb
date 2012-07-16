@@ -329,7 +329,7 @@ def get_tasks_for_other(current_user_id)
   def get_completed_tivits(user)
   #  puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
   
-    return user.activities.where(:status_id => TivitStatus.get_completed_id,:activity_type => 'tivit' )
+    return user.activities.where(:status_id => TivitStatus.get_completed_id,:activity_type => 'tivit' ).order(:completed_at).reverse.paginate(:page => params[:page], :per_page => 10)
   end
 
 

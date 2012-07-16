@@ -108,7 +108,7 @@
 	            		<strong> <%=(( 100 * activitydetails.get_number_of_completed_tivits) / activitydetails.get_number_of_tivits)%>%</strong>
 	     
 	        			</span> 
-	     				(<%= activitydetails.get_number_of_completed_tivits %>/<%= activitydetails.get_number_of_tivits %> tasks completed)	
+	     				(<%= activitydetails.get_number_of_completed_tivits %>/<%= activitydetails.get_number_of_tivits %> tasks completed <%= activitydetails.get_number_of_completed_tasks(current_account.user) %>)	
 	     			   		
 	        		<%end%>   
 	        </p>                                        

@@ -53,11 +53,11 @@ def home
           @activities_summary             = get_activities_i_participate(current_user_id)
                 
       when ("2") # Just My tivits
-         # puts "My tivits"
+          puts "My tivits"
          @activities_summary             = get_activities_i_have_open_tivits (current_user_id)
          
       when ("3") # All unresponded
-         # puts "All unresponded"
+          puts "All unresponded"
            @activities_summary            = get_activities_i_participate (current_user_id)
            
       when ("4") # All open
@@ -70,17 +70,24 @@ def home
         end
   # Filter only product On Deck (for now)
       @completed_activities          = nil
+  puts "completed tivits"
       @completed_tasks          = get_completed_tivits(current_account.user)
       
       @activities_i_participate      = @activities_summary
      # @incoming_activities           = get_activities_with_new_tivit_requests(current_user_id)
+     puts "new tivits"
+  
       @new_tivit_requests            = get_new_tivit_requests(current_user_id)
+      puts "open tivits"
+  
       @my_open_tasks                 = get_my_open_tasks(current_user_id)
       
+      puts "i assign tivits"
+  
       @tasks_for_others              = get_tasks_for_other(current_user_id)
       
       
-    #  puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
      # puts "tasks for others "+ @tasks_for_others.size.to_s
       
       account_session[:filter_id] = @filter_id

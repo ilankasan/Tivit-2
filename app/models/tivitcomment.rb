@@ -40,7 +40,9 @@ class Tivitcomment < ActiveRecord::Base
        end
          
      else
-       puts "someting is fishi!"
+    #   puts "someting is fishi in activity "+self.activity.name
+     #  puts "tivit_user_status "+tivit_user_status.to_s
+# Ilan: revisit this funciton. might have issuein the logic 
        return true
      end
       

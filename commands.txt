@@ -31,7 +31,7 @@ Staging
 ------------
 bamboo-ree-1.8.7
 heroku create --stack bamboo-ree-1.8.7 stating1 --remote staging1
-heroku logs --remote staging
+heroku logs --remote staging2
 heroku--remote staging
 
 heroku stack:migrate bamboo-mri-1.9.2 --remote staging2
@@ -138,7 +138,7 @@ You will receive an email with instructions about how to reset your password in 
 
 $ git add .
 
-git commit -am "1-29-12 yanivs bug fixes stg 1"
+git commit -am "7-15-12 yanivs UE changes"
 git commit -am "1-31-12 autocomplete"
 git commit -am "4-1-12 get rid of the create activity in ADP"
 

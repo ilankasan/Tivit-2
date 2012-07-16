@@ -88,7 +88,11 @@ class Activity < ActiveRecord::Base
   end
 
 
-  
+  def get_number_of_completed_tasks( user)
+     size = self.tivits.where(:owner_id=>user.get_id, :status_id =>TivitStatus.get_completed_id).count
+     puts "get_number_of_completed_tasks => "+size.to_s
+     return size
+  end
 
 
 #return a unique array of all users who commented on this tivit
@@ -368,20 +372,20 @@ return results
   end
 
   def get_my_tivits (user)
-  #   puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
+     puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
     
     my_done_tivits = self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_completed_id])
-   # puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
+   puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
     
   
     my_open_tivits_no_due = self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_in_progress_id, TivitStatus.get_closed_id ],:due => nil)
-    #puts "--------^^^^^^^ my_open_tivits_no_due ^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> "+my_open_tivits_no_due.count.to_s
+    puts "--------^^^^^^^ my_open_tivits_no_due ^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> "+my_open_tivits_no_due.count.to_s
    
    
      my_open_tivits_due = self.tivits.where("owner_id = ? AND NOT status_id = ? AND due IS NOT NULL",user.get_id,TivitStatus.get_completed_id).order(:due).reverse_order
    
      
- #puts "--------^^^^^^^ my_open_tivits_due ^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> "+my_open_tivits_due.count.to_s
+ puts "--------^^^^^^^ my_open_tivits_due ^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> "+my_open_tivits_due.count.to_s
      
    return my_open_tivits_due + my_open_tivits_no_due +  my_done_tivits
   end
@@ -463,7 +467,8 @@ return results
  def update_tivit_user_status_onit(user,comment)
   # puts "update_tivit_user_status_onit   <<<<_________________ is done? "+self.isDone?
   change_status(user,TivitStatus.get_onit_id,comment)
-  self.change_status_to_in_progress if self.isCompleted?
+#Ilan: not sure why we need this lie below
+  self.change_status_id_to_in_progress if self.isCompleted?
   
  end
  
@@ -474,7 +479,10 @@ return results
  
  def update_tivit_user_status_decline(user,comment)
   change_status(user,TivitStatus.get_declined_id,comment)
-  self.change_status_to_in_progress if self.isCompleted?
+#  self.change_status_to_in_progress if self.isCompleted?
+   self.change_status_id_to_unassigned
+   
+ 
   
  end
  
@@ -486,7 +494,7 @@ return results
  
  def update_tivit_user_propose_date(user,comment,date)
   change_user_status(user,TivitStatus.get_proposed_id,comment,date,Time.now().utc,nil)
-  self.change_status_to_in_progress if self.isCompleted?
+  self.change_status_id_to_in_progress if self.isCompleted?
  end
  
  
@@ -563,6 +571,7 @@ return results
      end
   end
  
+  
   
   def get_number_of_comments
      if(self.tivitcomments == nil)
@@ -757,18 +766,29 @@ return self.tivits.size
   end
   
   
-  def change_status_to_closed
-
-    #puts "change_status_to_closed for tivit "+self.id.to_s
-    self.status_id = TivitStatus.get_closed_id
+  def change_status_id(id)
+    
+    self.status_id = id
     self.save
+  end
+     
+  def change_status_id_to_unassigned
+
+    self.change_status_id(TivitStatus.get_unassigned_id)
+    #puts "change_status_to_closed for tivit "+self.id.to_s
+    
+  end
+
   
+  def change_status_id_to_closed
+    #puts "change_status_to_closed for tivit "+self.id.to_s
+    change_status_id(TivitStatus.get_closed_id)
+    
   end
   
-  def change_status_to_done
+  def change_status_if_to_done
     puts "------>>>>>>>>>>>>>>>  change_status_to_Done --------------------------------------------"
-    self.status_id = TivitStatus.get_completed_id
-    self.save
+    change_status_id(TivitStatus.get_completed_id)
   end
   
   def isCompleted?

@@ -256,7 +256,8 @@ end
  
 #Clean comment to be less than 256 chars and no cariege returns
   def clean_comment (comment)
-       unless (comment == nil || comment.lstrip.empty?) 
+      return "" if comment == nil
+      unless (comment == nil || comment.lstrip.empty?) 
           comment_without_carriage = comment.gsub(/\r/,"")
           comment_without_carriage = comment_without_carriage.gsub(/\n/," ")
       
@@ -273,7 +274,7 @@ end
 # Add any change of user status to a comment in the activity feed 
 ######################################################
     def log_action_as_comment(activity,comment,action,user)
-      puts "log_action_as_comment"
+      puts "log_action_as_comment. Action = "+action
     	params = {"user_id" =>user.id,"comment" => clean_comment(comment),"action" => action}
     	
     #	puts "log_action_as_comment => "+params.inspect
