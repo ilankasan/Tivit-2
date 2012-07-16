@@ -110,7 +110,7 @@ Heroku
 ---------------
 If you simply want to start fresh with a fresh set of empty tables, you can first ensure you have an up-to-date definition of the schema in db/schema.rb:
 
-heroku rake db:migrate
+heroku rake db:migrate 
 heroku rake db:schema:dump
 and then:
 
