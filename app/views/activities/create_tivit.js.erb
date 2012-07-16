@@ -39,7 +39,8 @@ console.log('[Yaniv] activity owner user id=', <%= @activity.owner_id %>);
 		jQuery('#alltivits').append('<div class="tvit-list" id="mytivits"></div>');			
 	<% end %>
 	
-	jQuery("#mytivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");	
+	//jQuery("#mytivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");	
+	jQuery("#mytivits").append("<%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  [@activity], :as => :my_task, :locals => {:taskContext => 'ADP'})) %>");	
 	
 	console.log('[Yaniv] after partial rendering....(myself)...'); 
 	
@@ -59,7 +60,9 @@ console.log('[Yaniv] activity owner user id=', <%= @activity.owner_id %>);
 	<%end%>
 	
 	console.log('[Yaniv] trying to run the partial...'); 
-	jQuery("#teamtivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");
+	//jQuery("#teamtivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");
+	jQuery("#teamtivits").append("<%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  [@activity], :as => :my_task, :locals => {:taskContext => 'ADP'})) %>");
+	
 	
 	console.log('[Yaniv] after partial rendering...(others)..'); 
 	

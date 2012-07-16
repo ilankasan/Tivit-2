@@ -48,32 +48,35 @@ def home
       end
         
       @activities_summary =[]
-      case @filter_id
-      when ("1") # On Deck
+    #  case @filter_id
+     # when ("1") # On Deck
           @activities_summary             = get_activities_i_participate(current_user_id)
                 
-      when ("2") # Just My tivits
-          puts "My tivits"
-         @activities_summary             = get_activities_i_have_open_tivits (current_user_id)
+      #when ("2") # Just My tivits
+      #    puts "My tivits"
+      #   @activities_summary             = get_activities_i_have_open_tivits (current_user_id)
          
-      when ("3") # All unresponded
-          puts "All unresponded"
-           @activities_summary            = get_activities_i_participate (current_user_id)
+      #when ("3") # All unresponded
+      #    puts "All unresponded"
+      #     @activities_summary            = get_activities_i_participate (current_user_id)
            
-      when ("4") # All open
+      #when ("4") # All open
          # puts "All open"
-          @activities_summary             = get_activities_i_participate (current_user_id)
+       #   @activities_summary             = get_activities_i_participate (current_user_id)
           
-        else
+        #else
          # @activities_summary             = get_activities_i_participate (current_user_id)
-          @filter_id = "1"    
-        end
+        #  @filter_id = "1"    
+        #end
   # Filter only product On Deck (for now)
-      @completed_activities          = nil
+    #  @completed_activities          = nil
   puts "completed tivits"
-      @completed_tasks          = get_completed_tivits(current_account.user)
+      #@completed_tasks          = get_completed_tivits(current_account.user)
+      @completed_tasks          = nil
       
-      @activities_i_participate      = @activities_summary
+      #@activities_i_participate      = @activities_summary
+      @activities_i_participate      = nil
+      
      # @incoming_activities           = get_activities_with_new_tivit_requests(current_user_id)
      puts "new tivits"
   
@@ -84,7 +87,8 @@ def home
       
       puts "i assign tivits"
   
-      @tasks_for_others              = get_tasks_for_other(current_user_id)
+     # @tasks_for_others              = get_tasks_for_other(current_user_id)
+      @tasks_for_others              = nil
       
       
       puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"

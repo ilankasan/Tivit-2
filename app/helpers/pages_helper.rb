@@ -33,9 +33,9 @@ module PagesHelper
 
 
 def get_tasks_for_other(current_user_id)
-      puts "____________________________________________"
-      puts " ---->>>>> in get_tasks for others <<<<<<------"
-      puts "____________________________________________"
+      
+      puts "--->>> in get tasks for others"
+      time = Time.now()
       
       in_progress_id = TivitStatus.get_in_progress_id.to_s
       
@@ -46,9 +46,9 @@ def get_tasks_for_other(current_user_id)
                     ",in_progress_id,current_user_id,current_user_id).order(" due, created_at DESC")
       
       puts "number of tasks is = "+results1.size.to_s
-      results1.each do |tivit|
-        puts "parent status id = "+ tivit.get_parent.status_id.to_s+ " tivit status = "+tivit.status_id.to_s
-      end
+      
+      puts "<<<--- out get other tasks "+(Time.now()-time).to_s
+      
       return results1  
     end
     
@@ -57,6 +57,10 @@ def get_tasks_for_other(current_user_id)
 
 ###################
     def get_my_open_tasks(current_user_id)
+      
+      puts "--->>> in my open tasks"
+      time = Time.now()
+      
       puts "____________________________________________"
       puts " ---->>>>> in get_my_open_tasks <<<<<<------"
       puts "____________________________________________"
@@ -97,11 +101,16 @@ def get_tasks_for_other(current_user_id)
      
      
     #  puts "number of tasks is " + results1.size.to_s
+      puts "<<<--- out my open tasks "+(Time.now()-time).to_s
+      
       return results1
        
     end
     
     def get_new_tivit_requests(current_user_id)
+      puts "--->>> in get_new_tivit_requests"
+      time = Time.now()
+      
   # get activities with New and unread tivits  
       completed   = TivitStatus.get_completed_id.to_s
       new_id      = TivitStatus.get_new_id.to_s
@@ -123,7 +132,9 @@ def get_tasks_for_other(current_user_id)
     #OR tivit_user_statuses.status_id    = "+proposed_id+"
       results1  =  Activity.find_by_sql(sql_new_tivit_requests)
     
-    #  puts "^^^^^^^^^^^^^^^^^   -------->>>>>>>>>>>>>>> R1 = "+results1.size.to_s
+      #puts "^^^^^^^^^^^^^^^^^   -------->>>>>>>>>>>>>>> R1 = "+results1.size.to_s
+      puts "<<<--- out get_new_tivit_requests "+(Time.now()-time).to_s
+      
     #  puts results1.inspect
       return results1 
   end

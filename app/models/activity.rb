@@ -558,16 +558,19 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
  
  def get_number_of_unread_comments(user)
 #get date of last unread
-#puts "tivit: "+self.activity_name+ " id = "+self.id.to_s
-#puts "checking status for user "+user.get_name
+      puts "--->>> in get_number_of_unread_comments"
+      time = Time.now()
+      
 
      tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
      if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
    # puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
        size = self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id).count
+      puts "<<<--- out get_number_of_unread_comments "+(Time.now()-time).to_s
        return size
      else
-     #puts "tivit_user_status.last_reviewed = nill"
+     puts "<<<--- out get_number_of_unread_comments "+(Time.now()-time).to_s
+      
        return self.get_number_of_comments
      end
   end
