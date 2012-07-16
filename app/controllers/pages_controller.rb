@@ -71,8 +71,8 @@ def home
   # Filter only product On Deck (for now)
     #  @completed_activities          = nil
   puts "completed tivits"
-      #@completed_tasks          = get_completed_tivits(current_account.user)
-      @completed_tasks          = nil
+      @completed_tasks          = get_completed_tivits(current_account.user)
+   #   @completed_tasks          = nil
       
       #@activities_i_participate      = @activities_summary
       @activities_i_participate      = nil
