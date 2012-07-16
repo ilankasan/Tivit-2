@@ -19,6 +19,8 @@ class TivitStatus < ActiveRecord::Base
   @reminded    = 9
   @accepted    = 10
   @closed      = 11 # closed are open tasks that their activity has been marked as completed
+  @unassigned      = 12 
+  
   
   
   
@@ -129,4 +131,13 @@ class TivitStatus < ActiveRecord::Base
 
   
   
+  # unassigned id = 12
+  def self.get_unassigned_id
+    return @unassigned
+  end
+  
+  def self.is_unassigned_id?(id)
+    return (id==@unassigned)
+  end
+
 end
