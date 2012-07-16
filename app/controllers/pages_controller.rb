@@ -50,7 +50,7 @@ def home
       @activities_summary =[]
     #  case @filter_id
      # when ("1") # On Deck
-          @activities_summary             = get_activities_i_participate(current_user_id)
+     #     @activities_summary             = get_activities_i_participate(current_user_id)
                 
       #when ("2") # Just My tivits
       #    puts "My tivits"
@@ -87,8 +87,8 @@ def home
       
       puts "i assign tivits"
   
-     # @tasks_for_others              = get_tasks_for_other(current_user_id)
-      @tasks_for_others              = nil
+      @tasks_for_others              = get_tasks_for_other(current_user_id)
+    #  @tasks_for_others              = nil
       
       
       puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
