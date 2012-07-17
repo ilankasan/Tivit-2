@@ -73,7 +73,7 @@ def home
         
       @activities_summary =[]
         # Filter only product On Deck (for now)
-      @completed_tasks          = get_completed_tivits(current_account.user)
+      #@completed_tasks          = get_completed_tivits(current_account.user)
       
       @activities_summary             = get_activities_i_participate (current_user_id)
       
