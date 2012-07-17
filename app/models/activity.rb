@@ -422,7 +422,7 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
      
   # puts "my_open_activities = "+my_open_activities.size.to_s
  #  puts "my_done_activities = "+my_done_activities.size.to_send
-      puts "$$$$  <<<--- get_team_tivits "+(Time.now()-time).to_s
+   #   puts "$$$$  <<<--- get_team_tivits "+(Time.now()-time).to_s
       
     return (team_open_tivits_due + team_open_tivits_no_due + team_done_tivits)
   end
