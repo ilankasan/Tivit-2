@@ -325,7 +325,6 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
     time = Time.now()
      r =  self.tivits.where(:status_id => TivitStatus.get_in_progress_id).order(:due).reverse_order
      #                AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id).order(:due).reverse_order
-      puts "------<<<<<<___--- get open tivits "+(Time.now()-time).to_s
       return r
     
   end
