@@ -3,7 +3,8 @@
 <% else %>
 	<% activityOwner = activity_db.get_owner.name %>
 <% end %>
-								
+<%time = Time.now()%>
+			     										
 <div class="tivits top-tivit">
 	<div class="tvit-list">
 		<ul class="list">
@@ -18,15 +19,26 @@
 						<div class="text">26</div>
 					</div>
 					-->
-					<% if activityOwner == "You" && activity_db.get_number_of_tivits > 0 %>
+					<!--% puts "___--- rendering new activity check 3 "+(Time.now()-time).to_s%-->
+    	    		<%total_tivits     = activity_db.get_number_of_tivits %>
+					
+					<% if activityOwner == "You" && total_tivits > 0 %>
+					<%completed_tivits = activity_db.get_number_of_completed_tivits %>
+					
 						<div class="statistic">
-							<div class="perc"><%=(( 100 * activity_db.get_number_of_completed_tivits) / activity_db.get_number_of_tivits)%>%</div>
-							<%= activity_db.get_number_of_completed_tivits %> of <%= activity_db.get_number_of_tivits %> completed
+							<div class="perc"><%=(( 100 * completed_tivits) / total_tivits)%>%</div>
+							<%= completed_tivits %> of <%= total_tivits %> completed
 						</div>
 					<% end %>
+					<!--% puts "___--- rendering new activity check 7 "+(Time.now()-time).to_s%-->
+    	    	
 					<div class="avatar read">
-						<%= render :partial => 'profile_images/profile_image', :collection =>  [activity_db.get_owner], :as => :user %> 
+						<!--%= render :partial => 'profile_images/profile_image', :collection =>  [activity_db.get_owner], :as => :user %-->
+						<%= profile_image(activity_db.get_owner)%>
+			 
 					</div>
+				<!--% puts "___--- rendering new activity check 8 "+(Time.now()-time).to_s%-->
+    	    	
 					<div class="text">
 						<div class="text-conteiner" style="cursor: pointer;">
 							<h3>
@@ -60,7 +72,8 @@
 	
 -->
 <% if activity_db.tivits !=nil && activity_db.tivits.size > 0 %>
-	        	
+	<!--% puts "___--- rendering new activity check 9 "+(Time.now()-time).to_s%-->
+    	            	
 	<div class="tivits sub-tivits">
 		<div class="tvit-list">
 			<ul class="list">
@@ -69,13 +82,19 @@
 				<% if activityOwner == "You" %>
 <!-- ILAN: need an array here with all the open tasks in the specific activity since the user owns it i used an existing method exclude my tivit i have not agreed to help with-->
 					<%= render :partial => 'shared/task_db', :collection =>  activity_db.get_open_tivits, :as => :my_task, :locals => {:taskContext => 'activitiesTabDashboard'} %>
+					<!--% puts "___--- rendering new activity check 13 "+(Time.now()-time).to_s%-->
+
 				<% else %>
 <!-- ILAN: need an array here with all the open tasks for the logged in user in the specific activity exclude my tivit i have not agreed to help with -->
+    	    
 					<%= render :partial => 'shared/task_db', :collection =>  activity_db.get_my_open_tivits(current_account.user), :as => :my_task, :locals => {:taskContext => 'activitiesTabDashboard'} %>
+					<!--% puts "___--- rendering new activity check 14 "+(Time.now()-time).to_s%-->
+
 				<% end %>
 				
 			</ul>
-			
+			<% puts "<<<<<<___--- rendering new activity check 15 "+(Time.now()-time).to_s%>
+    	    	
 			<!-- Now render the hidden tasks -->
 			<ul class="list additional-tivits hide">
 				<% if activityOwner == "You" %>
@@ -104,7 +123,8 @@
 				
 		</div>
 	</div>
-		    	
+				<% puts "____________________<<<<<<___--- rendering new activity db Final _________________"+(Time.now()-time).to_s%>
+    	    	
 <%end%>
 
 						

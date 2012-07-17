@@ -1,5 +1,8 @@
+<% time1 = Time.now()%>
+
 <!-- Answer (second) tivit -->
 <%if   tivit_adp_comment.comment != nil && tivit_adp_comment.user != nil && tivit_adp_comment.created_at != nil %>
+
 
 <!-- if new comment for this user, paint background yellow -->
 <% if tivit_adp_comment.wasReviewed? (current_account.user) %>
@@ -14,10 +17,14 @@
 		
 		<!-- Delete button -->
 		<!-- <a href="#" class="delete"></a> -->
-		
+		<% users = [tivit_adp_comment.user]%>
+
 		<!-- comment user avatar -->
 		<div class="avatar">
-			<%= render :partial => 'profile_images/profile_image', :collection =>  [tivit_adp_comment.user], :as => :user, :class => "avatar" %> 
+			
+			<%= profile_image(tivit_adp_comment.user)%>
+			<!--%= render :partial => 'profile_images/profile_image', :collection =>  users, :as => :user, :class => "avatar" %-->
+			
 		</div>
 		<!-- If comment is associated with action, show the action -->		
 		<!-- 
@@ -31,7 +38,8 @@
 		# Proposed  - user proposes a change in the tivit (initially a new date)
 		# Accepted  - Tiviti Owner Accepter the tivit	
 		# Reassigned 
-		-->							
+		-->	
+						
 		<div class="text">
 			<%case tivit_adp_comment.action%>
 		  	  	<%when ("OnIt")%>
@@ -109,4 +117,6 @@
 	</li>
 	  	  
 <% end %>
+<!--% puts "<<<<<  Rendering comment ----final  "+(Time.now()-time1).to_s% -- >
+
 	

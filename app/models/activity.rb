@@ -8,6 +8,8 @@ class Activity < ActiveRecord::Base
   
   has_one :parent, :class_name => "Activity", :primary_key => "parent_id", :foreign_key => "id"
   
+  has_one :owner,  :class_name => "User", :primary_key => "owner_id", :foreign_key => "id"
+  
   
 
 # each tivit has many comments
@@ -115,9 +117,11 @@ class Activity < ActiveRecord::Base
  end
   
   def delete_this_get_open_or_recently_done_tivits
+    
       self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id
             AND ((NOT tivit_user_statuses.status_id = ?)
             OR ((tivit_user_statuses.status_id = ? AND tivit_user_statuses.last_status_change > ?)))",TivitStatus.get_completed_id,TivitStatus.get_completed_id,Time.now-1.day)
+    
   end
   
   
@@ -125,25 +129,6 @@ class Activity < ActiveRecord::Base
     self.tivits.where(:owner_id => user.get_id)
   end
   
-  def delete_this_get_last_reviewed (user)
-    #tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
-    tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
-    if(tivit_user_status == nil )
-      last_reviewed = Time.now
-      #puts "last review is nill?"
-    else
-      last_reviewed = tivit_user_status.last_reviewed
-    end
-    #puts "Last Reviewed = "+last_reviewed.to_s
-    if(last_reviewed.to_s.empty?)
-        
-        puts "--------------- last review is  empty ------------- "+last_reviewed.to_s
-        last_reviewed = Time.now()
-        last_reviewed = last_reviewed - 1000000000
-        
-    end
-    return last_reviewed
-  end
   
   def get_on_deck_tivits (user)
     #puts "new  --------------->>>>>>>>>>>>>>>>> On deck filter! ---->>>  "+self.name+ "  "+self.id.to_s
@@ -337,8 +322,12 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
   #  puts "------------->>>>>>>>>>>>>>>>   in get_open_tivits"
     #self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = ?
      #                AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id).order(:due).reverse_order
-     return self.tivits.where(:status_id => TivitStatus.get_in_progress_id).order(:due).reverse_order
+    time = Time.now()
+     r =  self.tivits.where(:status_id => TivitStatus.get_in_progress_id).order(:due).reverse_order
      #                AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id).order(:due).reverse_order
+      puts "------<<<<<<___--- get open tivits "+(Time.now()-time).to_s
+      return r
+    
   end
   
   
@@ -394,7 +383,11 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
   
   def get_my_open_tivits (user)
  #    puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my_open_tivits"
-    return  self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_in_progress_id])
+  time = Time.now()
+    r = self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_in_progress_id])
+    puts "------<<<<<<___ get_my_open_tivits "+(Time.now()-time).to_s
+    return r
+    
   end
   
   def get_my_open_tivits_i_agreed_to_help_with (user)
@@ -419,6 +412,7 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
   def get_team_tivits (user)
     
    # puts "----------------->>>> in team_my tivits"
+   time = Time.now()
     team_done_tivits = self.tivits.where("NOT owner_id = ? AND (status_id = ? )",user.get_id, TivitStatus.get_completed_id)
     
     #puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_done_tivits "+team_done_tivits.count.to_s
@@ -429,6 +423,8 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
      
   # puts "my_open_activities = "+my_open_activities.size.to_s
  #  puts "my_done_activities = "+my_done_activities.size.to_send
+      puts "$$$$  <<<--- get_team_tivits "+(Time.now()-time).to_s
+      
     return (team_open_tivits_due + team_open_tivits_no_due + team_done_tivits)
   end
 
@@ -558,7 +554,6 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
  
  def get_number_of_unread_comments(user)
 #get date of last unread
-      puts "--->>> in get_number_of_unread_comments"
       time = Time.now()
       
 
@@ -566,11 +561,8 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
      if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
    # puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
        size = self.tivitcomments.where("created_at > ? AND NOT user_id = ?",tivit_user_status.last_reviewed,user.id).count
-      puts "<<<--- out get_number_of_unread_comments "+(Time.now()-time).to_s
        return size
      else
-     puts "<<<--- out get_number_of_unread_comments "+(Time.now()-time).to_s
-      
        return self.get_number_of_comments
      end
   end
@@ -608,7 +600,8 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
  def get_owner
  #adding the user to the existing users on the task
      #puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   error no owner!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    return User.find_by_id(self.owner_id)
+    return self.owner
+    
  end
  
  def get_owner_name

@@ -1,7 +1,9 @@
 <h1><%= @title %></h1>
 
 
-<%= render :partial => 'profile_images/profile_image', :collection =>  [@user], :as => :user%> 
+<%= profile_image(@user)%>
+			
+<!--%= render :partial => 'profile_images/profile_image', :collection =>  [@user], :as => :user%--> 
 
 <h1>Edit Image</h1>
 

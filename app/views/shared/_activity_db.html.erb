@@ -126,8 +126,11 @@
 
 				<%= render :partial => 'shared/tivit_db', :collection =>  activity_db.get_closed_tivits       , :as => :tivit  %>
 			<%else%>
+				<%time = Time.now()%>
+			     		
 				<%= render :partial => 'shared/tivit_db', :collection =>  @tivits, :as => :tivit  %>
-				
+				<% puts "<<<<<<___--- rendering tivit_db array "+(Time.now()-time).to_s%>
+     
 					
 			<%end%>
 		      

@@ -161,7 +161,10 @@
 					<div class="tivit-activities">		
 														 
 			 		 	<!-- ILAN: need here a list of all the activites the user either own OR participating in, ordered by date, closest one first -->
+			 		 	<%time = Time.now()%>
 			     		<%= render :partial => 'shared/activity_db_new', :collection =>  @activities_i_participate, :as => :activity_db, :locals => {:taskContext => 'activitiesTabDashboard'} %>
+			     		<% puts "<<<--- rendering activities tab "+(Time.now()-time).to_s%>
+     
 		     
 		    		</div> 
 				</div>

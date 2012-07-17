@@ -1,3 +1,5 @@
+<% time = Time.now()%>
+
 <% if my_task.get_parent.get_owner.id == current_account.user.get_id %>
 	<% activityOwner = "You" %>
 <% else %>
@@ -53,6 +55,8 @@
 				<% if taskContext != 'activitiesTabDashboard' %>
 					<%= render :partial => 'shared/tivit_date', :collection =>  [my_task], :as => :tivit, :locals => {:datestyle => ''} %> 
 				<% end %>
+				<!--% puts "task db__________________ task tb 8 _________________"+(Time.now()-time).to_s%-->
+
 				<!--
 				<div class="calendar date beyondaweek">
 					<div class="w-day">MON</div>
@@ -79,7 +83,9 @@
 					</div>
 	
 					<div class="avatar read">
-						<%= render :partial => 'profile_images/profile_image', :collection =>  [my_task.get_owner], :as => :user %> 
+						<!--%= render :partial => 'profile_images/profile_image', :collection =>  [my_task.get_owner], :as => :user %-->
+						<%= profile_image(my_task.get_owner)%>
+			 
 						<!-- <img width="40" height="44" src="5581_files/don-profile.png" alt="Don-profile"/> -->
 					</div>
 										 
@@ -93,7 +99,8 @@
 								<span class="btn-sorry">sorry...</span>
 													
 							<% end %>
-														
+									<!--% puts "task db__________________ task tb 10 _________________"+(Time.now()-time).to_s%-->
+					
 							<% unread_comments = my_task.get_number_of_unread_comments(current_account.user)%>
 				    
 							<!-- Comments icon -->								   
@@ -104,7 +111,7 @@
 							</div>			  			
 			  			</div>
 			  			
-			  					
+			  		
 			  					<div class="text-conteiner" style="cursor: pointer;">
 									<% if (taskContext != 'ADP') %>
 									<h3><%= link_to my_task.name, my_task, :action => "show",
@@ -129,7 +136,7 @@
 		                                    
 	                                   <% end %>
 	                               </span>
-	                               
+	                        
 	                            	<% if my_task.get_owner_status == TivitStatus.get_new_id || my_task.get_owner_status == TivitStatus.get_reminded_id%>
 		              					<%if((current_account.user.get_id == my_task.get_parent.get_owner.get_id && current_account.user.get_id != my_task.get_owner.get_id)|| (current_account.user.get_id == my_task.get_invited_by.id) )%>	              	
 			              					<span class="send-reminder">Remind</span>
@@ -186,7 +193,8 @@
 						</div><!-- conteiner -->	
 						
 						
-<!-- expand tivit the user clicked on when coming to the page from dashboard or email -->				
+<!-- expand tivit the user clicked on when coming to the page from dashboard or email -->
+				
 <% if my_task.id == @tivit_id %>
 		<!-- tivit comments / answer -->
 		<ul class="list" style="display: block">
@@ -198,8 +206,6 @@
 			
 			</ul>
 			
-						
-						
 						
 						
 					</li>
@@ -215,6 +221,8 @@
 	</div>
 <% end %>
 
+<!--% puts "__________________ task tb Final _________________"+(Time.now()-time).to_s%-->
+    	    	
 		
 
 							

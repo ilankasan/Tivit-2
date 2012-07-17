@@ -74,10 +74,9 @@ def home
       @completed_tasks          = get_completed_tivits(current_account.user)
    #   @completed_tasks          = nil
       
-      #@activities_i_participate      = @activities_summary
-      @activities_i_participate      = nil
+      @activities_i_participate      =get_activities_i_participate(current_user_id)
+     #@activities_i_participate      = nil
       
-     # @incoming_activities           = get_activities_with_new_tivit_requests(current_user_id)
      puts "new tivits"
   
       @new_tivit_requests            = get_new_tivit_requests(current_user_id)

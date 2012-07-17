@@ -88,7 +88,9 @@
 		
 		<div class="avatar">
 			<!-- <img class="avatar" src="images/act_avatar.gif" alt="Don-profile"> -->
-			<%= render :partial => 'profile_images/profile_image', :collection =>  [activitydetails.get_owner], :as => :user, :class => "avatar" %> 
+			<!--%= render :partial => 'profile_images/profile_image', :collection =>  [activitydetails.get_owner], :as => :user, :class => "avatar" %-->
+			<%= profile_image(activitydetails.get_owner)%>
+			  
 			
 		</div>
 		<div class="info">

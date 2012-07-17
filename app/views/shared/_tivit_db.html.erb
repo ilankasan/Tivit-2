@@ -185,7 +185,8 @@
 <% else %>
 	<div class="avatar">
 <%end%>
-		<%= render :partial => 'profile_images/profile_image', :collection =>  [tivit.get_owner], :as => :user%> 
+		<!--%= render :partial => 'profile_images/profile_image', :collection =>  [tivit.get_owner], :as => :user%-->
+		<%= profile_image(tivit.get_owner)%>  
 	</div>
 	<div class="text">
 		<div class="activity">
