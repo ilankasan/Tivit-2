@@ -23,9 +23,8 @@
 		<%= javascript_include_tag "controls.js" %>
 		<%= javascript_include_tag "rails.js" %>
 		<%= javascript_include_tag "jquery-ui-1.8.16.custom.min.js" %>
-		
-		
-		
+		<%= javascript_include_tag "jquery.cookie.js" %>
+			
 		<!-- This one was in Irina's code BUT when you un-comment it, the sign out failes. Not sure what exactly this is used for" -->
 		<!-- <%= javascript_include_tag "jquery-1.6.4.min.js" %> -->
 		
@@ -63,14 +62,31 @@
 <script type="text/javascript">
 
     jQuery(function()
-    {
-        jQuery('.post textarea').autoResize({extraSpace : 0});
-        
-        jQuery('.description p span').truncate({
-            width: '1100',
-            after: '&hellip;'
-        });
-    });
+		{
+			jQuery('.post textarea').autoResize({extraSpace : 0});
+			
+			jQuery('.description p span').truncate({
+				width: '1100',
+				after: '&hellip;'
+			});
+
+			// Set up cookie to remember the last tab that was visited
+			(function(){
+				var tabId = jQuery.cookie('tabactive');
+				//if(tabId && !jQuery('#tabs-nav a[href="'+tabId+'"]').parent().hasClass('active')){
+				//	document.location.hash = tabId;
+				//	window.location.reload();
+				//}
+
+				jQuery('#tabs-nav a').live('click', function(){
+					jQuery.cookie('tabactive',jQuery(this).attr('href'));
+				});	
+			})();
+			
+
+		});
+    
+    
 </script>
 
 <!-- Googld Analytics Tracking -->

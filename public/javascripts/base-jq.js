@@ -87,14 +87,42 @@ jQuery(document).ready(function($){
 	    tab: ".tabContent .tabInfo",
 	    //"fade", "fadeIn", "slide", "slide_down" or ""
 	    effect: "fade",
-	    hashchange: false
+	    hashchange: true
 	});
 	
+	// Figure out which tab was clicked!!
+	jQuery('#tabs-nav a').live('click', function(){
+		//jQuery.cookie('tabactive',jQuery(this).attr('href'));
+		var jtabclicked = jQuery(this).attr('href');
+		console.log ('[Yaniv] tab clicked=', jtabclicked);
+		
+		var action = '/home/load_tabs?id=';
+		
+		switch(jtabclicked){
+	    		case '#activities-tab':
+	    			action = action + 'activities-tab;'
+	    			break;
+	    		case '#tivit-desk':
+	    			return;
+	    			break;
+	    		case '#completed-tab':
+	    			action = action + 'completed-tab;'
+	    			break;
+	    		case '#tasks-i-asked':
+	    			action = action + 'tasks-i-asked;'
+	    			break;	    
+	    
+	    }	
+	    
+	    console.log ("[Yaniv] Loading tab with ajax. action=", action);
+	    	
+		showLoadingAnimation('.loading-tabs');
+			
+		$.post(action, $(this).serialize(), function() { hideLoadingAnimation ('.loading-tabs');}, "script");	
+		//$.post(action, $(this).serialize(), null, "script");	
+		
+	});	
 	
-	
-	
-	
-	   
 	var inputEl = jQuery('#new-activity input#name');
     inputEl.live('focus',function(){
         openNewActivity();

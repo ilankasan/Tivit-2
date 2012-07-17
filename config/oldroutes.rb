@@ -93,7 +93,7 @@ resources :activities
   	match "/ajax/invitees"         => "users#autoname"
   	# Add by Yaniv 2/19 to enable Edit Activity with Ajax
   	match "activities/:id/edit"                  => "activities#edit"
-        	
+      	
   	#match "/images"    => "../images"
 #resources :bireports  
  #match "bireports/show"   => "bireports#show"
@@ -106,11 +106,14 @@ resources :pages
   match '/help',      :to => 'pages#help'
   match '/contact',   :to => 'pages#contact'
   match '/myaccount', :to => 'pages#myaccount'
-  match '/filter',     :to => 'pages#filter'
+  match '/filter',    :to => 'pages#filter'
+  match '/test1',     :to => 'pages#test'
+  
   #match '/awaiting_confirmation',      :to => 'pages#awaiting_confirmation'
-  match "/home/load_tabs"   => "pages#load_tabs"
   
   
+  
+
   #get "pages/signout"
 
 resources :users do

@@ -1,0 +1,26 @@
+console.log('in load tab in ajax!'); 
+
+<% if @objectsToRender != nil %>
+	console.log('@objectsToRender.size=', <%= @objectsToRender.size %>); 
+<% else %>
+	console.log('@objectsToRender=nil');
+<% end %>
+
+//jQuery("#mytivits").append("<%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  [@activity], :as => :my_task, :locals => {:taskContext => 'ADP'})) %>");	
+
+<% if @tabToLoad == 'activities-tab' %>
+	jQuery("#activities-tab-tasks").append("<%= escape_javascript(render(:partial => 'shared/activity_db_new', :collection =>  @objectsToRender, :as => :activity_db)) %>");	
+<% elsif @tabToLoad == 'completed-tab' %>
+	jQuery("#completed-tab-tasks").append("<%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  @objectsToRender, :as => :my_task, :locals => {:taskContext => 'tasksTabCompleted'})) %>");	
+	console.log('After rendering completed tasks'); 
+	
+<% elsif @tabToLoad == 'tasks-i-asked' %>
+	jQuery("#tasks-i-asked-tab").append("<%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  @objectsToRender, :as => :my_task, :locals => {:taskContext => 'IAssigned'})) %>");	
+	console.log('After rendering completed tasks'); 
+	
+<% end %>
+
+
+	 
+console.log('activities tab ajax. Should be drawn now'); 
+

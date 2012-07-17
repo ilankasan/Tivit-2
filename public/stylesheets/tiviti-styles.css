@@ -302,6 +302,17 @@ ul, li{margin:0; border:0; padding-left:10px; list-style:none;}
 	width: 32px;
     height: 32px; 
 }
+.loading-tabs {
+	position:relative;
+	display:none;
+    z-index:120;
+    top:80px;
+    left:50%;   
+    background:url("../images/ajax-loader.gif");
+	width: 32px;
+    height: 32px; 
+    margin: -16px;
+}
 .loading {
 	position:absolute;
     display:none;
