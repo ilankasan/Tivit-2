@@ -72,36 +72,17 @@ def home
       end
         
       @activities_summary =[]
-      case @filter_id
-      when ("1") # On Deck
-          @activities_summary             = get_activities_i_participate(current_user_id)
-                
-      when ("2") # Just My tivits
-         # puts "My tivits"
-         @activities_summary             = get_activities_i_have_open_tivits (current_user_id)
-         
-      when ("3") # All unresponded
-         # puts "All unresponded"
-           @activities_summary            = get_activities_i_participate (current_user_id)
-           
-      when ("4") # All open
-         # puts "All open"
-          @activities_summary             = get_activities_i_participate (current_user_id)
-          
-        else
-         # @activities_summary             = get_activities_i_participate (current_user_id)
-          @filter_id = "1"    
-        end
-  # Filter only product On Deck (for now)
-      @completed_activities          = nil
+        # Filter only product On Deck (for now)
       @completed_tasks          = get_completed_tivits(current_account.user)
       
-      @activities_i_participate      = @activities_summary
+      @activities_summary             = get_activities_i_participate (current_user_id)
+      
+      #@activities_i_participate      = @activities_summary
      # @incoming_activities           = get_activities_with_new_tivit_requests(current_user_id)
       @new_tivit_requests            = get_new_tivit_requests(current_user_id)
       @my_open_tasks                 = get_my_open_tasks(current_user_id)
       
-      @tasks_for_others              = get_tasks_for_other(current_user_id)
+      #@tasks_for_others              = get_tasks_for_other(current_user_id)
       
       
     #  puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
