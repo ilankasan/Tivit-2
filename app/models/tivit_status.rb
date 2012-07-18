@@ -22,8 +22,6 @@ class TivitStatus < ActiveRecord::Base
   @unassigned      = 12 
   
   
-  
-  
 # in progress id = 1
   def self.get_in_progress_id
     return @in_progress
