@@ -100,16 +100,19 @@ jQuery(document).ready(function($){
 		
 		switch(jtabclicked){
 	    		case '#activities-tab':
-	    			action = action + 'activities-tab;'
+	    			action = action + 'activities-tab'
+	    			$("#activities-tab-tasks").empty();
 	    			break;
 	    		case '#tivit-desk':
 	    			return;
 	    			break;
 	    		case '#completed-tab':
-	    			action = action + 'completed-tab;'
+	    			action = action + 'completed-tab'
+	    			$("#completed-tab-tasks").empty();
 	    			break;
 	    		case '#tasks-i-asked':
-	    			action = action + 'tasks-i-asked;'
+	    			action = action + 'tasks-i-asked';
+	    			$("#tasks-i-asked-tab").empty();
 	    			break;	    
 	    
 	    }	

@@ -16,7 +16,7 @@
 <div id="homepage-tivit-list-container">
 	
 	
-	<% if @activities_summary.count == 0 %>
+	<% if @activities_summary.count == 0 &&  @completed_activities.count == 0 %>
 	
 		<div id="dashboardFTE">
 		</div>
@@ -108,7 +108,7 @@
 			<!-- ______________________________________ Tasks ___________________________________________________ -->		
 	        <div id="tivit-desk" class="tivit-desk tabInfo"> 
 
-			<% unless @my_open_tasks == nil %>
+			<%# unless @my_open_tasks == nil %>
 			 	
 			 	<div id="alltivits" class="main-tivit">
 					<div id="mytivits" class="tvit-list">	
@@ -125,13 +125,13 @@
 					     </div>
 		     		</div>
 		     	</div>
-			<% end %>
+			<%# end %>
 
 			</div>
 			
 			<div id="tasks-i-asked" class="tasks-i-asked tabInfo"> 
 
-			<% unless @tasks_for_others == nil %>
+			<%# unless @tasks_for_others == nil %>
 			 	
 			 	<div id="alltivits" class="main-tivit">
 					<div id="mytivits" class="tvit-list">	
@@ -147,7 +147,7 @@
 					     </div>
 		     		</div>
 		     	</div>
-			<% end %>
+			<%# end %>
 
 			</div>
 			
@@ -178,7 +178,7 @@
 			<!-- ______________________________________ Completed ___________________________________________________ -->	
 				
 			<!-- ILAN-done: need here an arraw of completed tasks, that should be sorted most recent completed first - so it'll show at the top -->
-			<% unless @completed_tasks == nil %>
+			<%# unless @completed_tasks == nil %>
 				
 				<div id="completed-tab" class="completed-tab tabInfo">
 					<div id="alltivits" class="main-tivit">
@@ -198,7 +198,7 @@
 					</div>
 				</div>
 				
-			<% end %>		
+			<%# end %>		
 		
 			<div id="test-items" class="test-items tabInfo">
 				
