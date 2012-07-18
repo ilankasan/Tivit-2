@@ -253,7 +253,7 @@ def get_tasks_for_other(current_user_id)
                          AND tivit_user_statuses.user_id       = "+user_id+"))
                  ORDER BY  activities.due ASC "
                  
-     puts sql_activities_i_participate
+ #    puts sql_activities_i_participate
                               
      temp_delete_sql_activities_i_participate  = "SELECT DISTINCT activities.*, ISNULL(activities.due) AS 'isnull' FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status_id        = "+TivitStatus.get_completed_id.to_s+"  
@@ -270,7 +270,7 @@ def get_tasks_for_other(current_user_id)
                             
                             
         activities_i_participate      = Activity.find_by_sql(sql_activities_i_participate)
-        puts "activities_i_participate = "+activities_i_participate.size.to_s
+      #  puts "activities_i_participate = "+activities_i_participate.size.to_s
          puts "<<<--- out activities_i_participate "+(Time.now()-time).to_s
         
         return activities_i_participate
