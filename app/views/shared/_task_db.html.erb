@@ -54,10 +54,10 @@
 				<!-- don't show dates in activities tab on dashboard for each task -->
 				<% if taskContext != 'activitiesTabDashboard' %>
 				
-					<%time = Time.now() %>
+					<!--%time = Time.now() %-->
  
 						<%= render :partial => 'shared/tivit_date', :collection =>  [my_task], :as => :tivit, :locals => {:datestyle => ''} %>
-					<% puts "date: "+(Time.now()-time).to_s%>
+					<!--% puts "date: "+(Time.now()-time).to_s%-->
  
 				<% end %>
 				<!--
@@ -201,8 +201,7 @@
 <% else %>	
 			<ul class="list">	
 <% end %>			
-				<%= render :partial => 'shared/tivit_adp_comments_list', :collection =>  [my_task], :as => :tivit %>
-			
+				
 			</ul>
 			
 						
