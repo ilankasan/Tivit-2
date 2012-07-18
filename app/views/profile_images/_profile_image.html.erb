@@ -1,6 +1,5 @@
 
-<% time2 = Time.now()%>
-<% puts Time.now().usec.to_s+": Rendering Profile image ---->>>> 0  "+(Time.now()-time2).to_s%>
+<!--% time2 = Time.now()%-->
 
 
 <!--%=  puts AvatarUploader.storage.inspect%-->
@@ -10,7 +9,7 @@
 	
 	<%if(AvatarUploader.storage.kind_of?(File))%>
 		<%= image_tag user.profile_image.avatar.url, :class => "avatar", :size => "40x40"%>
-		<% puts Time.now().usec.to_s+": Rendering Profile image ---->>>> 1  "+(Time.now()-time2).to_s%>
+		<!--% puts Time.now().usec.to_s+": Rendering Profile image ---- 1  "+(Time.now()-time2).to_s%-->
 
 	<%else%>
 <!-- The line below needs to be generalized by taking amazon url and bucket name from a config file -->
@@ -26,4 +25,4 @@
 	<%= image_tag "/images/default-avatar.jpg", :class => "avatar" , :class => "avatar", :size => "40x40"   %> 
 
 <%end%>	
-<% puts Time.now().usec.to_s+": Rendering Profile image ---->>>> Final  "+(Time.now()-time2).to_s%>
+<!--% puts Time.now().usec.to_s+": Rendering Profile image ---- Final  "+(Time.now()-time2).to_s%-->

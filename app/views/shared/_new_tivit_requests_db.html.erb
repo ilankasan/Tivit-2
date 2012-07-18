@@ -4,7 +4,9 @@
 	<input type="hidden" tivitid="<%= new_tivit_request.id %>"</input>
 	<div class="conteiner no-hover">	
 		<div class="avatar read">
-			<%= render :partial => 'profile_images/profile_image', :collection =>  [new_tivit_request.get_invited_by], :as => :user %> 
+			<!--%= render :partial => 'profile_images/profile_image', :collection =>  [new_tivit_request.get_invited_by], :as => :user %-->
+			<%= profile_image(new_tivit_request.get_invited_by)%>
+		 
 		</div>
 		
 		<!-- 

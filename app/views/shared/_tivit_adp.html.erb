@@ -234,7 +234,10 @@
 				<% else %>
 				<div class="avatar read">
 				<% end %>
-						<%= render :partial => 'profile_images/profile_image', :collection =>  [tivit_adp.get_owner], :as => :user, :class => "avatar" %> 
+						<!--%= render :partial => 'profile_images/profile_image', :collection =>  [tivit_adp.get_owner], :as => :user, :class => "avatar" %-->
+						<%= profile_image(tivit_adp.get_owner)%>  
+	
+						 
 				</div>
 								 
 				<div class="text">

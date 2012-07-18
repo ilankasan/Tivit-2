@@ -81,8 +81,9 @@
 					</div>
 	
 					<div class="avatar read">
-						<%= render :partial => 'profile_images/profile_image', :collection =>  [my_task.get_owner], :as => :user %> 
-						<!-- <img width="40" height="44" src="5581_files/don-profile.png" alt="Don-profile"/> -->
+						<%= profile_image(my_task.get_owner)%>
+		
+						<!--%= render :partial => 'profile_images/profile_image', :collection =>  [my_task.get_owner], :as => :user %--> 
 					</div>
 										 
 					<div class="text">
