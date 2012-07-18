@@ -201,7 +201,8 @@
 <% else %>	
 			<ul class="list">	
 <% end %>			
-				
+				<%= render :partial => 'shared/tivit_adp_comments_list', :collection =>  [my_task], :as => :tivit %>
+			
 			</ul>
 			
 						

@@ -231,6 +231,7 @@ def get_tasks_for_other(current_user_id)
   def get_activities_i_participate (user_id)
 #all the activites the user either own OR participating in, ordered by date, closest one first, do not show the activities i have not accepted any tivit
   #  puts "_______________________________________________"
+  time = Time.now()
     puts "NEW get_activities_i_participate "
     puts "_______________________________________________"
     
@@ -268,6 +269,7 @@ def get_tasks_for_other(current_user_id)
                             
         activities_i_participate      = Activity.find_by_sql(sql_activities_i_participate)
         puts "activities_i_participate = "+activities_i_participate.size.to_s
+         puts "<<<--- out activities_i_participate "+(Time.now()-time).to_s
         
         return activities_i_participate
         

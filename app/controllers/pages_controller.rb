@@ -72,17 +72,15 @@ def home
       end
         
       @activities_summary =[]
-        # Filter only product On Deck (for now)
+     
+  # Filter only product On Deck (for now)
       #@completed_tasks          = get_completed_tivits(current_account.user)
-      
-      @activities_summary             = get_activities_i_participate (current_user_id)
       
       #@activities_i_participate      = @activities_summary
      # @incoming_activities           = get_activities_with_new_tivit_requests(current_user_id)
       @new_tivit_requests            = get_new_tivit_requests(current_user_id)
       @my_open_tasks                 = get_my_open_tasks(current_user_id)
       
-      #@tasks_for_others              = get_tasks_for_other(current_user_id)
       
       
     #  puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
