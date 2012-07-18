@@ -382,9 +382,7 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
   
   def get_my_open_tivits (user)
  #    puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my_open_tivits"
-  time = Time.now()
     r = self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_in_progress_id])
-    puts "------<<<<<<___ get_my_open_tivits "+(Time.now()-time).to_s
     return r
     
   end

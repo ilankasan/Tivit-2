@@ -53,7 +53,12 @@
 				
 				<!-- don't show dates in activities tab on dashboard for each task -->
 				<% if taskContext != 'activitiesTabDashboard' %>
-					<%= render :partial => 'shared/tivit_date', :collection =>  [my_task], :as => :tivit, :locals => {:datestyle => ''} %> 
+				
+					<%time = Time.now() %>
+ 
+						<%= render :partial => 'shared/tivit_date', :collection =>  [my_task], :as => :tivit, :locals => {:datestyle => ''} %>
+					<% puts "date: "+(Time.now()-time).to_s%>
+ 
 				<% end %>
 				<!--
 				<div class="calendar date beyondaweek">
