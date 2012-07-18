@@ -232,6 +232,8 @@ def get_tasks_for_other(current_user_id)
 #all the activites the user either own OR participating in, ordered by date, closest one first, do not show the activities i have not accepted any tivit
   #  puts "_______________________________________________"
   time = Time.now()
+    puts "_______________________________________________"
+    
     puts "NEW get_activities_i_participate "
     puts "_______________________________________________"
     
@@ -251,7 +253,7 @@ def get_tasks_for_other(current_user_id)
                          AND tivit_user_statuses.user_id       = "+user_id+"))
                  ORDER BY  activities.due ASC "
                  
-   #  puts sql_activities_i_participate
+     puts sql_activities_i_participate
                               
      temp_delete_sql_activities_i_participate  = "SELECT DISTINCT activities.*, ISNULL(activities.due) AS 'isnull' FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status_id        = "+TivitStatus.get_completed_id.to_s+"  
@@ -293,29 +295,9 @@ def get_tasks_for_other(current_user_id)
                           
         activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
         
-        return activities_i_participate_with_due_date.uniq 
+        return activities_i_participate_with_due_date 
   end
   
-  def deleted_get_activities_i_have_unresponed_tivits(user_id)
-    puts "get_activities_i_have_unresponed_tivits(user_id)"
-    puts "get_activities_i_have_unresponed_tivits(user_id)"
-    puts "get_activities_i_have_unresponed_tivits(user_id)"
-    
-      sql_activities_i_participate = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
-                 WHERE NOT activities.status_id        = "+TivitStatus.get_completed_id+"
-                 AND activities.activity_type          = 'activity' 
-                 AND tivits.owner_id                   = "+user_id+"
-                 AND tivits.parent_id                  = activities.id
-                 AND tivit_user_statuses.activity_id   = tivits.id 
-                 AND NOT tivits.status_id              = ? 
-                
-                 AND tivit_user_statuses.user_id       = "+user_id+"
-                 ORDER BY activities.due"
-               #  AND NOT tivit_user_statuses.status_id = TivitStatus.get_completed_id
-                         
-        return Activity.find_by_sql(sql_activities_i_participate,TivitStatus.get_completed_id)
-        
-  end
   
   def get_new_activities      
                  
