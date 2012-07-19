@@ -148,7 +148,7 @@ git merge yaniv-new_ui_1
 git merge 1-19-12_tabfilters
 
 
-heroku rake db:migrate --app tiviti-staging
+heroku rake db:migrate --app tiviti-ss
 heroku rake db:seed --remote staging
 rake db:closedstatus
 
@@ -203,11 +203,14 @@ rails -d mysql my_rails_app
  rails generate migration add_status_id_to_tivit_user_statuses status_id:integer
  
  rails generate migration add_index_to_status_id_column_in_activities
+ 
  rails generate migration add_index_to_activity_id_activity_id_columns_in_tivit_user_statuses
  
  add_index :categories_posts, [ :category_id, :post_id ], :unique => true, :name => 'by_category_and_post' 
  rails generate migration add_index_to_status_id_column_in_tivit_user_statuses 
  rails generate migration add_index_to_activity_id_column_in_tivit_user_statuses 
+ rails generate migration remove_index_to_activity_id_column_in_tivit_user_statuses 
+ rails generate migration remove_index_to_user_id_column_in_tivit_user_statuses 
  
  rails generate migration remove_avatar_columns_from_users avatar_file_name:string avatar_content_type:string avatar_file_size:integer avatar_updated_at:datetime
  
