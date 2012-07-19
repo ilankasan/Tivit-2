@@ -237,20 +237,34 @@ def get_tasks_for_other(current_user_id)
     puts "NEW get_activities_i_participate "
     puts "_______________________________________________"
     
-                          
-     sql_activities_i_participate  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
+    
+    
+    oldsql_activities_i_participate  = "SELECT DISTINCT activities.* FROM activities, activities as tivits, tivit_user_statuses 
                  WHERE NOT activities.status_id         = "+TivitStatus.get_completed_id.to_s+"  
                  AND  activities.activity_type          = 'activity'
                  AND ((activities.owner_id               = "+user_id+") 
                       OR 
                          (    tivits.owner_id                   = "+user_id+"
                          AND  tivits.parent_id                  = activities.id
-                         AND  tivit_user_statuses.activity_id   = tivits.id 
+                         AND  tivit_user_statuses.activity_id   = tivits.id
+                         AND tivit_user_statuses.user_id       = "+user_id+" 
                          AND NOT (    tivits.status_id             = "+TivitStatus.get_new_id.to_s + "  
                                    OR tivits.status_id          = "+TivitStatus.get_declined_id.to_s + " 
                                    OR tivits.status_id          = "+TivitStatus.get_completed_id.to_s + ") 
                         
-                         AND tivit_user_statuses.user_id       = "+user_id+"))
+                         ))
+                 ORDER BY  activities.due ASC "
+     
+                          
+     sql_activities_i_participate  = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
+                 WHERE NOT activities.status_id         = "+TivitStatus.get_completed_id.to_s+"  
+                 AND  activities.activity_type          = 'activity'
+                 AND ((activities.owner_id               = "+user_id+") 
+                      OR (     
+                               tivits.parent_id                  = activities.id
+                          AND  tivits.owner_id                   = "+user_id+"
+                          AND  tivits.status_id             = "+TivitStatus.get_in_progress_id.to_s+ "
+                          ))
                  ORDER BY  activities.due ASC "
                  
  #    puts sql_activities_i_participate
