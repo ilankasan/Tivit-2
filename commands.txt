@@ -202,7 +202,10 @@ rails -d mysql my_rails_app
  rails generate migration add_parent_id_to_activities parent_id:integer
  rails generate migration add_status_id_to_tivit_user_statuses status_id:integer
  
- rails generate migration add_index_to_status_id_column_in_activities 
+ rails generate migration add_index_to_status_id_column_in_activities
+ rails generate migration add_index_to_activity_id_activity_id_columns_in_tivit_user_statuses
+ 
+ add_index :categories_posts, [ :category_id, :post_id ], :unique => true, :name => 'by_category_and_post' 
  rails generate migration add_index_to_status_id_column_in_tivit_user_statuses 
  rails generate migration add_index_to_activity_id_column_in_tivit_user_statuses 
  
