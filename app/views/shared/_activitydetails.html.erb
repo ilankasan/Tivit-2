@@ -274,7 +274,7 @@
 				<% teamNewRequestTasks = activitydetails.get_team_new_tasks (current_account.user) %>
 				<% teamTasks = activitydetails.get_team_open_tasks_they_agreed_to_help_with (current_account.user) %>
 				<% teamCompletedTasks = activitydetails.get_team_completed_tasks (current_account.user) %>
-				<% totalNumberOfTeamTasks = teamNewRequestTasks.size + teamTasks.size + teamNewRequestTasks.size %>
+				<% totalNumberOfTeamTasks = teamNewRequestTasks.size + teamTasks.size + teamCompletedTasks.size %>
 				
 			
 				<%# teamtivits = activitydetails.get_team_tivits(current_account.user) %>
