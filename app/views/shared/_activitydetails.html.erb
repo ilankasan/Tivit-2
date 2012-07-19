@@ -221,15 +221,38 @@
 			<div class="clear"></div>
 			
 			<!-- My tivits -->
-			<% mytivits = activitydetails.get_my_tivits(current_account.user) %>
-			<% if mytivits != nil && mytivits.size > 0 %>
+			<% myNewRequestTasks = activitydetails.get_my_new_tasks (current_account.user) %>
+			<% myTasks = activitydetails.get_my_open_tasks_i_agreed_to_help_with (current_account.user) %>
+			<% myCompletedTasks = activitydetails.get_my_completed_tasks (current_account.user) %>
+			<% myTotalNumberOfTasks = myNewRequestTasks.size + myTasks.size + myCompletedTasks.size %>
+			
+			<%# mytivits = activitydetails.get_my_tivits(current_account.user) %>
+			
+			<%# if mytivits != nil && mytivits.size > 0 %>
+			<% if (myNewRequestTasks != nil && myNewRequestTasks.size > 0) || (myTasks != nil && myTasks.size > 0) || (myCompletedTasks != nil && myCompletedTasks.size > 0) %>
 				<div class="tivits main-tivit" id="alltivits">
-					<div class="perc-completed"><strong>0%</strong> complete</div>
-					<h2>my tasks <span>(<%= mytivits.size %>)</span></h2>
-					<div class="tvit-list" id="mytivits">
+					<div class="perc-completed"><strong><%=(( 100 * myCompletedTasks.size) / myTotalNumberOfTasks)%>%</strong> complete</div>
+					<h2>my tasks <span>(<%= myTotalNumberOfTasks %>)</span></h2>
+					<div class="tvit-list" id="mytivits">						
+						
 						<%#= render :partial => 'shared/tivit_adp', :collection =>  mytivits %>
 						
-									<%= render :partial => 'shared/task_db', :collection =>  mytivits, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+						<% if myNewRequestTasks != nil && myNewRequestTasks.size > 0 %>
+						<ul class="list">
+							<%= render :partial => 'shared/task_db', :collection =>  myNewRequestTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+						</ul>
+						<% end %>
+						<% if myTasks != nil && myTasks.size > 0 %>
+							<ul class="list">
+							<%= render :partial => 'shared/task_db', :collection =>  myTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+							</ul>
+						<% end %>
+						<% if myCompletedTasks != nil && myCompletedTasks.size > 0 %>
+							<ul class="list additional-tivits hide"">
+								<%= render :partial => 'shared/task_db', :collection =>  myCompletedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+							</ul>
+							<p class="show-other-tasks">Show <%= myCompletedTasks.size %> completed tasks</p>
+						<% end %>						
 					</div>
 					
 			<%else%>
@@ -246,18 +269,43 @@
 			</div> <!-- My tivits -->
 			
 			<!-- Team tivits -->
-		
 			
 				<!-- <h2>team tivits<span>(4)</span></h2> -->
-				<% teamtivits = activitydetails.get_team_tivits(current_account.user) %>
-				<% if teamtivits !=nil && teamtivits.size > 0 %>
+				<% teamNewRequestTasks = activitydetails.get_team_new_tasks (current_account.user) %>
+				<% teamTasks = activitydetails.get_team_open_tasks_they_agreed_to_help_with (current_account.user) %>
+				<% teamCompletedTasks = activitydetails.get_team_completed_tasks (current_account.user) %>
+				<% totalNumberOfTeamTasks = teamNewRequestTasks.size + teamTasks.size + teamNewRequestTasks.size %>
+				
+			
+				<%# teamtivits = activitydetails.get_team_tivits(current_account.user) %>
+				<%# if teamtivits !=nil && teamtivits.size > 0 %>
+				<% if (teamNewRequestTasks != nil && teamNewRequestTasks.size > 0) || (teamTasks != nil && teamTasks.size > 0) || (teamCompletedTasks != nil && teamCompletedTasks.size > 0) %>
 				
 				<div class="team tivits" id="team-tivits">
-					<h2>team tasks <span>(<%= teamtivits.size %>)</span></h2>
+					<h2>team tasks <span>(<%= totalNumberOfTeamTasks %>)</span></h2>
 					<div class="tvit-list" id="teamtivits">
 					
 						<%#= render :partial => 'shared/tivit_adp', :collection =>  teamtivits %>
-						<%= render :partial => 'shared/task_db', :collection =>  teamtivits, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+						<%#= render :partial => 'shared/task_db', :collection =>  teamtivits, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+						
+						<% if teamNewRequestTasks != nil && teamNewRequestTasks.size > 0 %>
+						<ul class="list">
+							<%= render :partial => 'shared/task_db', :collection =>  teamNewRequestTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+						</ul>
+						<% end %>
+						<% if teamTasks != nil && teamTasks.size > 0 %>
+							<ul class="list">
+							<%= render :partial => 'shared/task_db', :collection =>  teamTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+							</ul>
+						<% end %>
+						<% if teamCompletedTasks != nil && teamCompletedTasks.size > 0 %>
+							<ul class="list additional-tivits hide"">
+								<%= render :partial => 'shared/task_db', :collection =>  teamCompletedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+							</ul>
+							<p class="show-other-tasks">Show <%= teamCompletedTasks.size %> completed tasks</p>
+						<% end %>		
+						
+						
 						
 					</div>
 				
@@ -266,7 +314,7 @@
 				<%end%>
 				
 			</div> <!-- team tivits --> 
-			<% if (teamtivits == nil || teamtivits.size == 0) &&  (mytivits == nil || mytivits.size == 0) %>
+			<% if (totalNumberOfTeamTasks == nil || totalNumberOfTeamTasks.size == 0) &&  (myTotalNumberOfTasks == nil || myTotalNumberOfTasks.size == 0) %>
 				<div id="adpfte"></div>
 			<% end %>	
 		</div> <!-- "leftCol" -->

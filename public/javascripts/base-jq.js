@@ -188,17 +188,24 @@ jQuery(document).ready(function($){
 	   }
 	);
 	*/
-	//add from Irina Sorokina
-	$('.conteiner').not('.no-hover').hover(
+	// task container hover
+	//$('.conteiner').not('.no-hover').hover(
+	$('.conteiner:not(.no-hover)').live({
+		mouseenter:
 	   function() {
-	      $(this).addClass('record-hovered');
+	     $(this).addClass('record-hovered');
+	     //console.log (".conteiner hovered");
 	   },
+	   mouseleave:
 	   function() {
 	      $(this).removeClass('record-hovered');
+	      //console.log (".conteiner moved hover");
 	   }
+	  }
 	);
 	
-	$('.show-other-tasks').click(function(){
+	$('.show-other-tasks').live('click', function(){
+		console.log('[Yaniv] Show other tasks clicked');
 		var that = $(this);
 		var thatText = that.text();
 		var additionalLIst = that.parent().find('.additional-tivits');

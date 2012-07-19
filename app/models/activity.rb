@@ -401,19 +401,19 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
   end
  
  def get_my_completed_tasks (user)
-  # puts "^^^^^^^^^^^^^^^--------->>>> get_my_open_tivits_i_agreed_to_help_with"
+  puts "^^^^^^^^^^^^^^^--------->>>> get_my_completed_tasks"
      return self.tivits.where(:owner_id => user.get_id ,:status_id => TivitStatus.get_completed_id).order(:completed_at)
   end
  
  
  def get_team_new_tasks (user)
- #    puts "--------^^^^^^^^^^^^^^^^^^^^^^^--------->>>> get_team_new_tasks "
-    return self.tivits.where(" NOT owner_id = ? AND status_id = ?",user.get_id, [TivitStatus.get_new_id,TivitStatus.get_reviewed_id]).order(:created_at)
+     puts "--------^^^^^^^^^^^^^^^^^^^^^^^--------->>>> get_team_new_tasks "
+    return self.tivits.where(" NOT owner_id = ? AND (status_id = ? OR status_id = ?) ",user.get_id, TivitStatus.get_new_id,TivitStatus.get_reviewed_id).order(:created_at)
  end
   
   
  def get_team_open_tasks_they_agreed_to_help_with (user)
-  # puts "^^^^^^^^^^^^^^^--------->>>> get_my_open_tivits_i_agreed_to_help_with"
+  puts "^^^^^^^^^^^^^^^--------->>>> get_team_open_tasks_they_agreed_to_help_with"
      return self.tivits.where(" NOT owner_id = ? AND status_id = ?",user.get_id, TivitStatus.get_in_progress_id).order(:due)
  end
  
