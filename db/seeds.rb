@@ -8,8 +8,40 @@
 
 
 puts "starting seed....."
+puts "changing to not started"
+  i = 1
+  changed = 0
+  strange = 0
+  count = Activity.all.count
+  puts "total tivits with activities is"+count.to_s
+  
+  
+  count = Activity.where(:activity_type => 'tivit', :status_id => TivitStatus.get_in_progress_id ).count
+  puts "Processing total tivits = "+count.to_s
+  
+  Activity.where(:activity_type => 'tivit',:status_id => TivitStatus.get_in_progress_id).each do |tivit|
+      
+      if(tivit.status_id == TivitStatus.get_in_progress_id)
+        tivit_user_status = tivit.tivit_user_statuses.find_by_user_id(tivit.owner_id).status_id
+        
+        puts i.to_s+" id = "+tivit.id.to_s+", owner = "+tivit.owner_id.to_s+", tivit_user_status = "+tivit_user_status.to_s
+        
+   
+        if(TivitStatus.is_reviewed_id?(tivit_user_status) || TivitStatus.is_new_id?(tivit_user_status) )
+          tivit.change_status_id(TivitStatus.not_started_id)
+          puts  "Changes to not started"
+          changed = changed + 1   
+        else 
+          
+        end
+      end 
+      i = i + 1 
+  end # end each
+  puts "Total tivits changed "+changed.to_s
+  puts "Total strange " +strange.to_s
 
 
+if (false)
 puts "starting seed close status..."
   i = 1
   changed = 0
@@ -56,7 +88,7 @@ puts "starting seed close status..."
   puts "Total tivits changed "+changed.to_s
   puts "Total strange " +strange.to_s
   
-
+end
 
 if(false)
   i = 1

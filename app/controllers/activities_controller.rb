@@ -340,10 +340,7 @@ class ActivitiesController < ApplicationController
   
   def create_tivit
   	puts "--------------->> create Tvit"
-  	puts "--------------->> create Tvit"
-    puts "--------------->> create Tvit"
-    puts "--------------->> create Tvit"
-      
+  	  
   	due = parse_date(params,"due")
   	
   	puts "due date = "+due.to_s
@@ -352,7 +349,7 @@ class ActivitiesController < ApplicationController
   	puts " adujested due date "+params["due"]
   	params["parent_id"]  = params[:id] 						#   adding Parent ID
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
-	  params["status_id"]     = TivitStatus.get_in_progress_id
+	  params["status_id"]     = TivitStatus.not_started_id
 	  
     invitees = params["invitees"]
   #  puts "______________________________________________y__"

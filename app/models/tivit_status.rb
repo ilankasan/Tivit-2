@@ -19,7 +19,9 @@ class TivitStatus < ActiveRecord::Base
   @reminded    = 9
   @accepted    = 10
   @closed      = 11 # closed are open tasks that their activity has been marked as completed
-  @unassigned      = 12 
+  @unassigned  = 12
+  @not_started = 13 # tivit status. This is the initial status for tivits with owners that did not agree to help (before  on it)
+   
   
   
 # in progress id = 1
@@ -136,6 +138,16 @@ class TivitStatus < ActiveRecord::Base
   
   def self.is_unassigned_id?(id)
     return (id==@unassigned)
+  end
+
+
+# not started id = 13
+  def self.not_started_id
+    return @not_started
+  end
+  
+  def self.is_not_started?(id)
+    return (id==@not_started)
   end
 
 end
