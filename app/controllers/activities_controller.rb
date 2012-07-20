@@ -227,14 +227,14 @@ class ActivitiesController < ApplicationController
         comment.save
       end
            
-      flash[:success] = "tivit " + @activity.name + " has been updated"
+      flash[:success] = "task " + @activity.name + " has been updated"
       redirect_to @activity
       
     else
       if(params[:name] == nil || params[:name].empty?)   
-        flash[:failed] = "Failed to update tivit. Name cannot be empty"
+        flash[:failed] = "Failed to update task. Name cannot be empty"
       else
-        flash[:failed] = "Failed to update tivit"
+        flash[:failed] = "Failed to update t"
       end
       redirect_to @activity
     end
@@ -278,7 +278,7 @@ class ActivitiesController < ApplicationController
         notify_users_activity_is_closed(@activity,params["summary"],@activity.get_owner)
      end
 
-    flash[:success] = "tivit " + @activity.name + " updated"
+    flash[:success] = "task " + @activity.name + " updated"
       redirect_to @activity
       
     else
@@ -601,7 +601,7 @@ class ActivitiesController < ApplicationController
       end
 
       
-      flash[:success] = "You successfuly re-assigned tivit to "+@assigned_user.get_name
+      flash[:success] = "You successfuly re-assigned task to "+@assigned_user.get_name
       @tivit.save
     end
     
