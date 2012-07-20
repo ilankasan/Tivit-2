@@ -148,7 +148,7 @@ git merge yaniv-new_ui_1
 git merge 1-19-12_tabfilters
 
 
-heroku rake db:migrate --app tiviti-ss
+heroku rake db:migrate --app tiviti-staging
 heroku rake db:seed --remote staging
 rake db:closedstatus
 

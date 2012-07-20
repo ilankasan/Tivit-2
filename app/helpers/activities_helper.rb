@@ -75,7 +75,7 @@ def get_task_status_line (task, user)
       end
   
     elsif (owner_tivit_status == TivitStatus.get_onit_id || owner_tivit_status == TivitStatus.get_accepted_id)
-      status_line_middle = " agreed to help by"
+      status_line_middle = " agreed to help " + task.get_owner.name + " by "
         
     elsif (owner_tivit_status == TivitStatus.get_reviewed_id)
       if (task_owner_name == "You")
@@ -91,9 +91,9 @@ def get_task_status_line (task, user)
   elsif (owner_tivit_status == TivitStatus.get_onit_id || owner_tivit_status == TivitStatus.get_accepted_id)
 
     if (task.due != nil)
-      status_line_middle = " agreed to help by"
+      status_line_middle = " agreed to help " + task.get_owner.name + " by "
     else
-      status_line_middle = " agreed to help."
+      status_line_middle = " agreed to help " + task.get_owner.name + "."
     end
   
   elsif (owner_tivit_status == TivitStatus.get_new_id || owner_tivit_status == TivitStatus.get_reminded_id)

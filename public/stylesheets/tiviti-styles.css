@@ -43,28 +43,43 @@ a:hover {
 a:visited {
   color: #3265FF/*#069*/;
 }
+/*
+.notify-wrapper{
+    padding: 0 0 20px 0;
+    text-align:center;
+}
+.top-notify{
+    display: inline-block;
+    background-color: #FFFEE0;
+    border:1px solid #ffd5a9;
+    padding:5px 30px;
+    border-radius:7px;
+}
+*/
 .flash 
 {
 	background-color: #F9EDBE;
     margin: -6px 0;
     position: absolute;
     top: 11px;
-    right: 300px;
+    right: 40%;
     border: 1px solid transparent;
     border-radius: 2px 2px 2px 2px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    padding: 8px;
+    padding: 7px 10px 8px 14px;
     font-size: 13px;
     font-weight: bold;
     text-align: center;
-    z-index: 20;
+    z-index: 130;
     /*background: none repeat scroll 0 0 #F9EDBE;*/
     color: #222222;
     font-family: arial,sans-serif;
-    width: 400px;
+    /*width: 400px;*/
     border-color: #F0C36D;
     white-space:nowrap;
     margin: -6px auto;
+    text-align: center;
+    display: inline-block;
 }
 
 .happy-path-button {
@@ -919,8 +934,12 @@ ul, li{margin:0; border:0; padding-left:10px; list-style:none;}
     display:inline-block;
     background:url("../images/ico_on_it.png") 0 0 no-repeat;
     float: left;
-    margin-left: -42px;
+    margin-left: -8px;
 }
+.tvit-list .team .record .on-it{
+	margin-left: -44px;
+}
+	
 .tvit-list .record .do-it{
     width:75px;
     height:42px;
@@ -1337,10 +1356,13 @@ a img{border:none;}
 }
 .tivits .record{padding-right:0;}
 .tivits .record .text-conteiner{width:465px;cursor:hover;}
-.tivits .record .activity{position:relative;width:154px;padding:0px 22px 0px 0px;margin:2px 0 0;}
+.tivits .record .activity{position:relative;width:154px;padding:0px 0px 0px 0px;margin:2px 0 0;}
 .tivits .record .unreaded{position:absolute;top:9px;left:-105px;}
 .tivits .record .attach{position:absolute;top:9px;left:-40px;}
-.tivits .record .comments{position:absolute;top:9px;left:118px;}
+.tivits .record .comments{position:absolute;top:9px;right:29px;}
+
+/* used for I'm On it button on ADP */
+.team .record .activity{position:relative;width:154px;padding:0px 22px 0px 0px;margin:2px 0 0;}
 
 .tivits .record .calendar{float:left; margin-left:-59px;}
 .newtivits .record .activity{width:140px; margin-top:5px !important;}
@@ -1480,6 +1502,7 @@ small.less{display:block;padding:0;}
     width:140px;
 }
 
+
 .btn-sorry{
     display: inline-block;
     color:#000;
@@ -1489,7 +1512,11 @@ small.less{display:block;padding:0;}
     background-color: #f9f9f9;
     cursor: pointer;
     margin-top:4px;
-    margin-right:40px;
+    margin-right:8px;
+}
+/* Used ADP page */
+.team .btn-sorry{
+	margin-right:40px;
 }
 
 .newtivits .details-link{

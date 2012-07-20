@@ -133,15 +133,21 @@
 <%end%>    		
 			<% flash.each do |key, value| %>
 				<div class="flash <%= key %>" id="confirmMsg"><%= value %></div>
-			<% end %>
-
-		    
+				
+				<!--
+				<div class="notify-wrapper">
+				   	<div class="top-notify">
+				   		You reassigned a task to Peggy Olsen. <a href="">Undo</a>
+				   	</div> 
+				</div>
+				-->
+			<% end %>		
+			
+			
+	    
 		     
 		    <%= yield %>	     	 
-		     
-	       
-	     
-		
+		     		
 	       <div style="clear: both;"></div>
 	       
     	</div>    
