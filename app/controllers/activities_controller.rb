@@ -349,7 +349,6 @@ class ActivitiesController < ApplicationController
   	puts " adujested due date "+params["due"]
   	params["parent_id"]  = params[:id] 						#   adding Parent ID
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
-	  params["status_id"]     = TivitStatus.not_started_id
 	  
     invitees = params["invitees"]
   #  puts "______________________________________________y__"
@@ -361,11 +360,14 @@ class ActivitiesController < ApplicationController
     #  puts "[Yaniv] invitees is empty!"
       puts "[Yaniv] current_account user email=" + current_account.user.get_email
       @invited_user = current_account.user
+      # if assign to myself statusis in progress
+      params["status_id"]     = TivitStatus.get_in_progress_id
     else
  #   puts "____________________________________________f____"
  #   puts " invitees --->>>>    " +invitees  
  #  puts "____________________________________________f____"
-      
+      params["status_id"]     = TivitStatus.not_started_id
+    
       @invited_user = user_by_email(invitees.strip)
     
     end
@@ -383,6 +385,7 @@ class ActivitiesController < ApplicationController
     @tivit.update_tivit_user_status_reviewed(current_account.user,"")
     #Change status to on it is tivit assigned to self. Ilan - optimize this section to one function
     if(@invited_user.get_id == current_account.user.get_id)
+      puts "i am on it"
       @tivit.update_tivit_user_status_onit(current_account.user,"")
     end
     

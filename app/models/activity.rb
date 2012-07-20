@@ -534,7 +534,7 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
   # puts "update_tivit_user_status_onit   <<<<_________________ is done? "+self.isDone?
   change_status(user,TivitStatus.get_onit_id,comment)
 #Ilan: not sure why we need this lie below
-  self.change_status_id_to_not_started 
+  self.change_status_id_to_in_progress 
   
  end
  
@@ -841,6 +841,11 @@ return self.tivits.size
     change_status_id(TivitStatus.not_started_id)
     
   end 
+  
+  def change_status_id_to_in_progress
+    change_status_id(TivitStatus.get_in_progress_id)
+    
+  end
   def change_status_id_to_unassigned
 
     self.change_status_id(TivitStatus.get_unassigned_id)
