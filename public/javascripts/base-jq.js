@@ -24,19 +24,7 @@ jQuery(document).ready(function($){
 	    },
 	    "Please enter date in format dd-mm-yyyy"
 	);
-	
-	/**************************************************************************/
-	/* Yaniv - Create new tivit with Ajax */	
-	//jQuery("#create-new-tivit-form").submit(function() {
-	//	console.log ('[Yaniv] #create-new-tivit-form clicked');
-	//	showLoadingAnimation('.loading-popup');
-	//	console.log ('[Yaniv] after loading animation...');
-	//	$.post($(this).attr("action"), $(this).serialize(), function() { hideLoadingAnimation ('.loading-popup');}, "script");
-	//	return false;
-	//});
-	/**************************************************************************/
-	
-	//$('.post-button').live('click', function(){
+		
 	jQuery('.new_tivitcomment').live ('submit', function() {
 		
 		showInlineLoadingAnimation();
@@ -90,7 +78,7 @@ jQuery(document).ready(function($){
 	    hashchange: true
 	});
 	
-	// Figure out which tab was clicked!!
+	// Figure out which tab was clicked and load content with ajax!!
 	jQuery('#tabs-nav a').live('click', function(){
 		//jQuery.cookie('tabactive',jQuery(this).attr('href'));
 		var jtabclicked = jQuery(this).attr('href');
@@ -128,6 +116,8 @@ jQuery(document).ready(function($){
 	
 	var inputEl = jQuery('#new-activity input#name');
     inputEl.live('focus',function(){
+    	// Hide confirmation message if displayed
+    	$('#confirmMsg').remove();
         openNewActivity();
     });
 
@@ -226,6 +216,40 @@ jQuery(document).ready(function($){
 	$('.newtivits .on-it').live('hover', function(){
 		$(this).css('cursor','pointer');
 	});
+	$('.mytivits-act .on-it').live('hover', function(){
+		$(this).css('cursor','pointer');
+	});
+	$('.mytivits-act .on-it').live('click', function(){
+		var record = jQuery(this).parents('.record');
+	    var tivitID = $(record).find("input").attr("tivitid");
+	    console.log ("[Yaniv] on-it tivitid=", tivitID);
+	    
+	    // This will bring the tivit record based on all the input elements that has the tivitid attrivute equal to the tivit id in hand. Good examples here: http://www.mkyong.com/jquery/jquery-attribute-selector-examples/
+		var tivitRecord = $("input[tivitid='" + tivitID + "']").parents('.record');
+		// Just testing we found the right one
+		var foundtivitID = $(tivitRecord).find("input").attr("tivitid");
+		console.log ("[Yaniv] on-it foundtivitID=", foundtivitID);
+		
+		// add the yellow background to show newly added
+		tivitRecord.find('.conteiner').removeClass('yell-bg').removeClass('record-hovered').removeClass('no-hover');
+		
+		// Make an Ajax call to update the status of the tivit to on-it!
+		var action = '/onit?id=' + tivitID + '&method=post';
+		
+		console.log ("[Yaniv] action=", action);
+		
+		var onItAndSorryButtons = $(this).parents('.mytivits-act');
+					
+		// Actual Ajax call to the controller
+		$.post(action, $(this).serialize(), null, "script");	
+		
+		// Open the comments area so user can post something if they like
+		$(this).parents('.record').children('ul').fadeIn('slow');
+		$(onItAndSorryButtons).remove();
+		
+		console.log ("[Yaniv] after Ajax call");
+		
+	});
 			
 	$('.newtivits .on-it').live('click', function(){
 		
@@ -234,7 +258,7 @@ jQuery(document).ready(function($){
 	    var tivitID = $(record).find("input").attr("tivitid");
 	    console.log ("[Yaniv] on-it tivitid=", tivitID);
 	    		
-		var record = $(this).parents('li.record:first')
+		var record = $(this).parents('li.record:first');
 		var recordHTML = record.html();
 		//var appendHTML = "<div class='team tivits fresh-tivits' style='display:none'><div class='tvit-list'><ul class='list'><li class='record unread'>"
 		//					+ recordHTML +
@@ -870,6 +894,9 @@ jQuery(document).ready(function($){
 	/************************************************************/
 	// add a tivit popup
 	$('#add-tivit').click(function(){
+		
+		// Hide confirmation message if displayed
+    	jQuery('#confirmMsg').remove();
 		console.log ('[Yaniv] add a tivit button clicked');
 		jQuery('#activity-overlay').show();
 		/* Yaniv - clear the form before creating new tivit **/
