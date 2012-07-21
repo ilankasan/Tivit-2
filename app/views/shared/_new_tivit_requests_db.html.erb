@@ -40,8 +40,6 @@
 					
 					
 					
-					<strong><%#= new_tivit_request.get_invited_by.name %>
-					</strong>
 					
 					<%= render :partial => 'users/user_link', :collection =>  [new_tivit_request.get_invited_by], :as => :user%> 
 					 needs your help to </div>
@@ -50,10 +48,7 @@
 	  									   :method => "get",
 	                                       :title  => new_tivit_request.get_parent.name,
 	                                       :class => "activity-name" %>
-	                                       
-					
-					
-					</h3>
+	            </h3>
 				<span class="grey">for 
 					 <%= link_to new_tivit_request.get_parent.name, new_tivit_request.get_parent, :action => "show",
 	  									   :method => "get",
