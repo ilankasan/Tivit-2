@@ -112,6 +112,23 @@ def get_tasks_for_other(current_user_id)
       time = Time.now()
       
   # get activities with New and unread tivits  
+      
+        
+      
+      results1  =  Activity.where(:status_id => TivitStatus.not_started_id, :owner_id => current_user_id  )
+    
+      #puts "^^^^^^^^^^^^^^^^^   -------->>>>>>>>>>>>>>> R1 = "+results1.size.to_s
+      puts "<<<--- out get_new_tivit_requests "+(Time.now()-time).to_s
+      
+    #  puts results1.inspect
+      return results1 
+  end
+
+  def delete_this_get_new_tivit_requests(current_user_id)
+      puts "--->>> in get_new_tivit_requests"
+      time = Time.now()
+      
+  # get activities with New and unread tivits  
       completed   = TivitStatus.get_completed_id.to_s
       new_id      = TivitStatus.get_new_id.to_s
       reviewed_id = TivitStatus.get_reviewed_id.to_s
@@ -138,8 +155,7 @@ def get_tasks_for_other(current_user_id)
     #  puts results1.inspect
       return results1 
   end
-
-    
+  
     
     
   def get_activities_with_new_tivit_requests(current_user_id)

@@ -2,19 +2,24 @@
 
 class UsersController < ApplicationController
  before_filter :authenticate_account!
+ 
+ prepend_before_filter :user_authenticate_account
+  
  #before_filter :validate_user_access_to_user_profile
  # :only => :show, :update,:edit,:create 
- 
+ def tiviti_authenticate_account
+   puts "tiviti_authenticate_account"
+ end
   
  # ilan delete autocomplete :user, :email, :extra_data => [:slogan], :display_value => :funky_method
   
  def autoname
 # auto completed to get list of users. Nee to expand it to seach name field and names in the user table
-  puts "term = "+params[:term]
+  #puts "term = "+params[:term]
   #names = Account.all
  
-puts "_____________    autoname ____________________________"
-puts "_____________    autoname ____________________________"
+#puts "_____________    autoname ____________________________"
+
   if (params[:term] && !current_account.user.mycontacts.nil?)
     like= "%".concat(params[:term].concat("%"))
     clone_emails  = current_account.user.mycontacts.where("clone_email LIKE ? OR name LIKE ? ", like, like)

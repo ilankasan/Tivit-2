@@ -393,13 +393,13 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
     puts ">>>--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my_new_tasks"
     
     
-    r =   self.tivits.joins(:tivit_user_statuses).where(
-                          "activities.owner_id     = ?
-                  AND  activities.status_id        = ?
-                  AND  activities.owner_id         = tivit_user_statuses.user_id 
-                  AND  (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)", 
-                  user.get_id, TivitStatus.get_in_progress_id,TivitStatus.get_new_id,TivitStatus.get_reviewed_id).order(:created_at)
-  
+  # r =   self.tivits.joins(:tivit_user_statuses).where(
+   #                       "activities.owner_id     = ?
+    #              AND  activities.status_id        = ?
+     #             AND  activities.owner_id         = tivit_user_statuses.user_id 
+      #            AND  (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)", 
+       #           user.get_id, TivitStatus.get_in_progress_id,TivitStatus.get_new_id,TivitStatus.get_reviewed_id).order(:created_at)
+     r = self.tivits.where(:activity_type => 'tivit', :owner_id => user.get_id, :status_id =>TivitStatus.not_started_id )
      puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my_new_tasks "+r.size.to_s
   #    puts r.inspect
     return r
