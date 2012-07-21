@@ -19,7 +19,7 @@ module PagesHelper
 
 def get_tasks_for_other(current_user_id)
       
-      puts "--->>> in get tasks for others"
+      #puts "--->>> in get tasks for others"
       time = Time.now()
       
       in_progress_id = TivitStatus.get_in_progress_id.to_s
@@ -43,7 +43,7 @@ def get_tasks_for_other(current_user_id)
 ###################
     def get_my_open_tasks(current_user_id)
       
-      puts "--->>> in my open tasks"
+      #puts "--->>> in my open tasks"
       time = Time.now()
       
       completed   = TivitStatus.get_completed_id.to_s
@@ -62,7 +62,7 @@ def get_tasks_for_other(current_user_id)
     end
     
     def get_new_tivit_requests(current_user_id)
-      puts "--->>> in get_new_tivit_requests"
+      #puts "--->>> in get_new_tivit_requests"
       time = Time.now()
       
   # get activities with New and unread tivits  
@@ -79,7 +79,7 @@ def get_tasks_for_other(current_user_id)
   end
 
   def delete_this_get_new_tivit_requests(current_user_id)
-      puts "--->>> in get_new_tivit_requests"
+      #puts "--->>> in get_new_tivit_requests"
       time = Time.now()
       
   # get activities with New and unread tivits  

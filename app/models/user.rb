@@ -22,7 +22,6 @@ require 'digest'
 
 class User < ActiveRecord::Base
 	
-  #attr_accessor :user_email
   #attr_accessible :name, :email, :password, :password_confirmation, :is_active,:last_signin,:admin
   attr_accessible :name, :is_active,:admin,:account_id,:clone_email
   

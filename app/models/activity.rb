@@ -390,7 +390,7 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
   
 # get tasks user has not responded yet
   def get_my_new_tasks (user)
-    puts ">>>--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my_new_tasks"
+    #puts ">>>--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my_new_tasks"
     
     
   # r =   self.tivits.joins(:tivit_user_statuses).where(
@@ -777,7 +777,7 @@ return self.tivits.size
 
   
   def change_status_to_completed (summary)
-   puts "------------->>>>. change_status_to_completed"
+   #puts "------------->>>>. change_status_to_completed"
    
    self.completed_at = Time.now()
    self.status_id = TivitStatus.get_completed_id

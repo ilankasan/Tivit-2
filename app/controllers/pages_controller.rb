@@ -109,16 +109,19 @@ def home
      #    users = User.joins(:tivitcomments).where("tivitcomments.activity_id = ? AND users.id = tivitcomments.user_id AND NOT tivitcomments.user_id = ? ",self.id, user.get_id)
  
 #     puts "Number of active user is = "+@active_users.size.to_s
-
-  #<%if user.tivitcomments != nil && user.tivitcomments.size > 0 %>
-   # <%=time_ago_in_words(user.tivitcomments.last.updated_at)
-  
-
-     
+       
   end
 
   def help
      @title = "How Does It Work?"
+     
+  end
+  
+  def people
+     puts "in People controller"
+     
+     @title = "People i work with"
+     @users  = current_account.user.contacts
   end
   
   def myaccount

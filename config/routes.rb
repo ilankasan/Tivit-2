@@ -94,16 +94,15 @@ resources :activities
   	# Add by Yaniv 2/19 to enable Edit Activity with Ajax
   	match "activities/:id/edit"                  => "activities#edit"
         	
-  	#match "/images"    => "../images"
-#resources :bireports  
- #match "bireports/show"   => "bireports#show"
-  	    
+  
 resources :pages  
   match '/about',     :to => 'pages#about'
   match '/home',      :to => 'pages#home'
   match '/bireport',  :to => 'pages#bireport'
   match '/myteam',    :to => 'pages#myteam'
   match '/help',      :to => 'pages#help'
+  match '/people',      :to => 'pages#people'
+  
   match '/contact',   :to => 'pages#contact'
   match '/myaccount', :to => 'pages#myaccount'
   match '/filter',     :to => 'pages#filter'
