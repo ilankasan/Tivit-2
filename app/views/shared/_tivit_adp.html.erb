@@ -8,7 +8,9 @@
 	<% tivit_owner_name = "You" %>
 <% else %>
 	<% loggedInUserIsTheOwner = "no" %>
-	<% tivit_owner_name = tivit_adp.get_owner.name %>
+	<%# tivit_owner_name = tivit_adp.get_owner.name %>
+	<%tivit_owner_name = render :partial => 'users/user_link', :collection =>  [tivit_adp.get_owner], :as => :user%> 
+		
 <% end %>
 
 <% if tivit_adp.get_owner.name == "not active" %>

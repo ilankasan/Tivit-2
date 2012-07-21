@@ -20,11 +20,23 @@
 	    	
 	    	<!-- <li><%= link_to "Activities", about_path %></li> -->
 	    	<!-- <li><%= link_to "Team", contact_path %></li> -->
+	    	<%if false %>
+		    	<% if @title == "People" %>
+		    		<li><%= link_to "People", help_path, :class => "current" %></li>
+		    	<% else %>
+		    		<li><%= link_to "People", help_path %></li>
+		    	<% end %>
+	    	<% end %>
+	    	
+	  
 	    	<% if @title == "How Does It Work?" %>
 	    		<li><%= link_to "How Does It Work?", help_path, :class => "current" %></li>
 	    	<% else %>
 	    		<li><%= link_to "How Does It Work?", help_path %></li>
 	    	<% end %>
+	    	
+	    	
+	    	
 	    	
 	    	<%if current_account.user.isAdmin?%>
 	    		<% if @title == "Analytics" %>

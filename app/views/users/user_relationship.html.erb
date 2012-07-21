@@ -31,9 +31,9 @@
 			
 			<!-- Activity Name -->
 
-			<h1><%= @other_user.get_name %> </h1>
+			<h1>In common with <%= @other_user.get_name %> </h1>
 			
-			<p><small><b>You have <%= newTasksForMe.size + openTasksForMe.size + newTasksForOther.size + openTasksForOther.size %> open tasks between you and are jointly working on 20 Activities </b> </small></p>
+			<p><small><b>You have <%= newTasksForMe.size + openTasksForMe.size + newTasksForOther.size + openTasksForOther.size %> open tasks between you and <%=@other_user.get_name%> </b> </small></p>
 			
 			<p class="progress-complete">
 				<span>
@@ -57,7 +57,7 @@
 			
 			<% if (myTotalNumberOfTasks > 0) %>
 				<div class="tivits main-tivit" id="alltivits">
-					<h2>tasks <b><%=@other_user.get_name %></b> assigned to me <span>(<%= newTasksForMe.size + openTasksForMe.size %>)</span></h2>
+					<h2>You have <span><%= newTasksForMe.size + openTasksForMe.size %></span> tasks <b><%=@other_user.get_name %></b> assigned to you </h2>
 					<div class="tvit-list" id="mytivits">						
 						
 						<% if newTasksForMe.size > 0 %>
@@ -95,7 +95,7 @@
 				<% if (totalTasksIAssigned > 0) %>
 				
 				<div class="team tivits" id="team-tivits">
-					<h2>You have <span><%= openTasksForOther.size + completedTasksForOther.size %></span> open tasks you assigned to <b><%=@other_user.get_name %></b> </h2>
+					<h2>You have assigned <span><%= openTasksForOther.size + newTasksForOther.size %></span> tasks to <b><%=@other_user.get_name %></b> </h2>
 					<div class="tvit-list" id="teamtivits">
 					
 						

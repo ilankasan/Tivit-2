@@ -12,7 +12,10 @@ def get_task_status_line (task, user)
     task_owner_name = "You"
   else
     loggedInUserIsTheOwner = "no"
-    task_owner_name = task.get_owner.name
+    #task_owner_name = task.get_owner.name
+    task_owner_name = render :partial => 'users/user_link', :collection =>  [task.get_owner], :as => :user 
+        
+    
   end
 
   if task.get_owner.name == "not active"

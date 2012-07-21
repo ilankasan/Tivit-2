@@ -43,18 +43,8 @@
 					<strong><%#= new_tivit_request.get_invited_by.name %>
 					</strong>
 					
-					
-					<%= link_to new_tivit_request.get_invited_by.name, 
-										   :controller  => "users",
-										   :action 		=> "relationship",
-	  									   :method 		=> "get",
-	  									   :id	   		=> new_tivit_request.get_invited_by.get_id,
-	                                       :title  		=> new_tivit_request.get_invited_by.name,
-	                                       :class  		=> "user" %>
-	                           
-					
-					
-					 needs your help to lalala</div>
+					<%= render :partial => 'users/user_link', :collection =>  [new_tivit_request.get_invited_by], :as => :user%> 
+					 needs your help to </div>
 				<h3>
 					<%= link_to new_tivit_request.name, new_tivit_request, :action => "show",
 	  									   :method => "get",
