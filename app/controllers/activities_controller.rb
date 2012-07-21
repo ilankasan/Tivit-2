@@ -5,7 +5,7 @@ class ActivitiesController < ApplicationController
   
   before_filter :validate_access, :except => [:remove_tivit, :reassign]
   after_filter  :update_view_status,   :only => :show
-  #after_filter  :send_email_create_tivit, :only => :create_tivit 
+  
    
   # [Yaniv] This line disables the CSRF protection by rails when "post" is done outside of the controller (in our case my jQuery stuff). It's not recommended
   # but to make this work I need to do something in the code which I need to continue to research
@@ -21,18 +21,18 @@ class ActivitiesController < ApplicationController
      if(params[:email] != nil)
        #render '../my_devise/registrations/new'
        #redirect_to sign_up_path_for(User.new)
-       puts "email is "+params[:email]
+      # puts "email is "+params[:email]
        user = User.where(:clone_email => params[:email])
-       puts "users = "+user.inspect
+       #puts "users = "+user.inspect
        
        if (user != nil && user[0] != nil && user[0].get_account == nil)
         #redirect_to new_registration_path(user[0].get_account)
         @account = Account.new()
         #puts "account = "+@account.inspect
-        puts "---------------------------------------------------------------"
-        puts "-------------------------     redirect_to new_registration_path    --------------------------------------"
+      #  puts "---------------------------------------------------------------"
+      #  puts "-------------------------     redirect_to new_registration_path    --------------------------------------"
         redirect_to new_registration_path(@account,:email =>params[:email])
-        puts "---------------------------------------------------------------"
+       # puts "---------------------------------------------------------------"
         return
        end
      end
@@ -363,9 +363,7 @@ class ActivitiesController < ApplicationController
       # if assign to myself statusis in progress
       params["status_id"]     = TivitStatus.get_in_progress_id
     else
- #   puts "____________________________________________f____"
  #   puts " invitees --->>>>    " +invitees  
- #  puts "____________________________________________f____"
       params["status_id"]     = TivitStatus.not_started_id
     
       @invited_user = user_by_email(invitees.strip)
@@ -374,10 +372,7 @@ class ActivitiesController < ApplicationController
     
 	  params["owner_id"] =  @invited_user.get_id
 	  params["activity_type"] = "tivit"
-	
-	  #puts "Inspect Params " +params.inspect
-	  
-   	
+	 	
 	  current_account.user.addTwoWayContact(@invited_user)
 	  params["description"] = clean_comment(params["description"]) 
     @tivit = @invited_user.activities.create(params)

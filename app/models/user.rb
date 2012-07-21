@@ -136,25 +136,53 @@ class User < ActiveRecord::Base
   end
      
 #builds a new activity to a user (as an owner)
-def add_my_ativity (params)
- # settign owner Id to be rqual to the current user
- puts "---------------- add_my_ativity  ----------------------" 
- puts "---------------- add_my_ativity  ----------------------" 
- puts "---------------- add_my_ativity  ----------------------" 
- puts "---------------- add_my_ativity  ----------------------" 
- puts "---------------- add_my_ativity  ----------------------" 
- puts "---------------- add_my_ativity  ----------------------" 
- 
-   
+  def add_my_ativity (params)
+
    	params["owner_id"] = self.id
    	params["status_id"]   = TivitStatus.get_in_progress_id
    	params["activity_type"]     = "activity"
- 	
- 	puts params.inspect	
-# returns a new activity created from the parameters in hash
   	return  activities.create(params)		
    end
 
+  def get_new_tasks_assign_to_me  (other_user)
+    r = self.activities.where(:status_id => TivitStatus.not_started_id,:invited_by => other_user.get_id)
+    puts "get_new_tasks_assign_to_me "+r.size.to_s
+    return r
+  end
+  
+  def get_open_tasks_assign_to_me  (other_user)
+    r = self.activities.where(:status_id => TivitStatus.get_in_progress_id,:invited_by => other_user.get_id)
+    
+    puts "get_open_tasks_assign_to_me "+r.size.to_s
+    
+    return r
+  end
+  
+  def get_completed_tasks_assign_to_me  (other_user)
+    r = self.activities.where(:status_id => TivitStatus.get_completed_id,:invited_by => other_user.get_id)
+    
+    
+    puts "get_completed_tasks_assign_to_me "+r.size.to_s
+    return r
+  end
+  
+ #####################################################
+  def get_new_tasks_i_assigned  (other_user)
+    return other_user.get_new_tasks_assign_to_me (self) 
+  end
+  
+  def get_open_tasks_i_assign  (other_user)
+    
+    return  other_user.get_open_tasks_assign_to_me (self) 
+
+  end
+  
+  def get_completed_tasks_i_assign  (other_user)
+    return  other_user.get_completed_tasks_assign_to_me (self) 
+
+  end
+  
+  
   private
                     
 end

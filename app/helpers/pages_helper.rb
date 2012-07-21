@@ -15,21 +15,6 @@ module PagesHelper
   end
     
 
-#  Other's activity:
-#Only show the activity if I have a tivit there and it's not completed yet. 
-#If I completed all my tivits in others activity, 
-#only show it if other tivits I participated in the discussion had new comments or someone commented it my tivit. 
-#Otherwise, don't show the activity at all.
-#My tivits should show up at the top
-#Only show other team tivits IF I ever participated in the discussion and there's a status change or new comment there
-#Don't show closed/completed activities
-
-#My Activities
-#Always show all my Activites that are not closed - so I could close it
-#Show the following tivits in each activity:
-#Not completed (basically everything that is not yet completed - on it, in progress, late, etc.)
-#Completed that had new comments on it
-
 
 
 def get_tasks_for_other(current_user_id)
@@ -61,46 +46,15 @@ def get_tasks_for_other(current_user_id)
       puts "--->>> in my open tasks"
       time = Time.now()
       
-      puts "____________________________________________"
-      puts " ---->>>>> in get_my_open_tasks <<<<<<------"
-      puts "____________________________________________"
-      
       completed   = TivitStatus.get_completed_id.to_s
       new_id      = TivitStatus.get_new_id.to_s
       reviewed_id = TivitStatus.get_reviewed_id.to_s
       
-      results1 = Activity.where("status_id     = ?  
+      results1 = Activity.where("(status_id     = ? OR status_id     = ?)   
                     AND activity_type = 'tivit'
                     AND owner_id      = ?
-                    ",TivitStatus.get_in_progress_id.to_s,current_user_id).order(" due, created_at DESC")
-                    
+                    ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id).order(" due, created_at DESC")
      
-         
-      old2_sql_my_not_new_tasks = "SELECT DISTINCT tivits.* FROM  activities as tivits, tivit_user_statuses 
-                   WHERE NOT tivits.status_id              = "+completed+"  
-                   AND  tivits.activity_type               = 'tivit' 
-                   AND  tivits.owner_id                    = "+current_user_id+"  
-                   AND  tivits.owner_id                    = tivit_user_statuses.user_id 
-                   AND  tivits.id                          = tivit_user_statuses.activity_id 
-                   AND  NOT (tivit_user_statuses.status_id = "+new_id+" 
-                      OR tivit_user_statuses.status_id     = "+reviewed_id+")
-                   ORDER BY tivits.due ASC"
-                   
-                   
-                   old_sql_my_not_new_tasks = "SELECT DISTINCT tivits.*, ISNULL(tivits.due) AS 'isnull' FROM  activities as tivits, tivit_user_statuses 
-                   WHERE NOT tivits.status_id              = "+completed+"  
-                   AND  tivits.activity_type               = 'tivit' 
-                   AND  tivits.owner_id                    = "+current_user_id+"  
-                   AND  tivits.owner_id                    = tivit_user_statuses.user_id 
-                   AND  tivits.id                          = tivit_user_statuses.activity_id 
-                   AND  NOT (tivit_user_statuses.status_id = "+new_id+" 
-                      OR tivit_user_statuses.status_id     = "+reviewed_id+")
-                   ORDER BY isnull ASC,tivits.due ASC"
-    #OR tivit_user_statuses.status_id    = "+proposed_id+"
-      #results1  =  Activity.find_by_sql(sql_my_not_new_tasks)
-     
-     
-    #  puts "number of tasks is " + results1.size.to_s
       puts "<<<--- out my open tasks "+(Time.now()-time).to_s
       
       return results1

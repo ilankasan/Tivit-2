@@ -361,20 +361,20 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
 
 
   def get_my_tivits (user)
-     puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
+     #puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
     
     my_done_tivits = self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_completed_id])
-   puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
+   #puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
     
   
     my_open_tivits_no_due = self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_in_progress_id, TivitStatus.get_closed_id ],:due => nil)
-    puts "--------^^^^^^^ my_open_tivits_no_due ^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> "+my_open_tivits_no_due.count.to_s
+    #puts "--------^^^^^^^ my_open_tivits_no_due ^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> "+my_open_tivits_no_due.count.to_s
    
    
      my_open_tivits_due = self.tivits.where("owner_id = ? AND NOT status_id = ? AND due IS NOT NULL",user.get_id,TivitStatus.get_completed_id).order(:due).reverse_order
    
      
- puts "--------^^^^^^^ my_open_tivits_due ^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> "+my_open_tivits_due.count.to_s
+ #puts "--------^^^^^^^ my_open_tivits_due ^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> "+my_open_tivits_due.count.to_s
      
    return my_open_tivits_due + my_open_tivits_no_due +  my_done_tivits
   end
@@ -426,7 +426,6 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
  
  
  def get_team_new_tasks (user)
-     puts "--------^^^^^^^^^^^^^^^^^^^^^^^--------->>>> get_team_new_tasks "
     
     r =   self.tivits.joins(:tivit_user_statuses).where(
                           "NOT activities.owner_id     = ?
@@ -439,7 +438,6 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
   
   
  def get_team_open_tasks_they_agreed_to_help_with (user)
-  puts "^^^^^^^^^^^^^^^--------->>>> get_team_open_tasks_they_agreed_to_help_with"
    #  return self.tivits.where(" NOT owner_id = ? AND status_id = ?",user.get_id, TivitStatus.get_in_progress_id).order(:due)
    r =   self.tivits.joins(:tivit_user_statuses).where(
                           "NOT activities.owner_id       = ?
@@ -452,19 +450,11 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
  end
  
  def get_team_completed_tasks (user)
-  # puts "^^^^^^^^^^^^^^^--------->>>> get_my_open_tivits_i_agreed_to_help_with"
      return self.tivits.where("NOT owner_id = ? AND  status_id = ?",user.get_id, TivitStatus.get_completed_id).order(:completed_at)
   end
  
- 
- 
- 
   def delete_get_my_open_tivits_i_agreed_to_help_with (user)
-  # puts "^^^^^^^^^^^^^^^--------->>>> get_my_open_tivits_i_agreed_to_help_with"
-     
-     
- 
-    result =   self.tivits.joins(:tivit_user_statuses).where(
+     result =   self.tivits.joins(:tivit_user_statuses).where(
                          "activities.owner_id         = ? 
                   AND     activities.activity_type    = 'tivit' 
                   AND     activities.id               = tivit_user_statuses.activity_id 
@@ -746,25 +736,11 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
   def get_number_of_completed_tivits
    #puts "get_number_of_completed_tivits" 
    return 0 if (self.tivits == nil || self.tivits.size == 0)
-  #puts "______________________________________________________" 
    #puts "^^^^^^^^^^^^^^^^^^^^^  Activity = "+self.name
-   
-   #count = 0
-   #self.tivits.each do |tivit|
-   #  status = tivit.get_user_status(tivit.get_owner)
-   #  if (status == "Done")
-   #   count = count+1
-   #   tivit.status_id = TivitStatus.get_completed_id
-   #   tivit.save()
-   #  end
-   #end
                                          
    count1 = self.tivits.where(:status_id=>[TivitStatus.get_completed_id, "Done"]).count
   # puts "count 1 = "+count1.to_s
   # puts "count  = "+count.to_s
-   
-   #puts "************* end **************************************************"
-     
    return count1
  end
   

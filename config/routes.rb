@@ -122,6 +122,8 @@ resources :users
   #match '/signup',  :to => 'users#new'
   match '/allusers',  :to => 'users#allusers'
   match "users/:id" => "users#update"
+  match "users/relationship/:id" => "users#relationship"
+  
   	
 #resources :activity_documents
   #match "activity_documents/:id" => "activity_documents#add_file"

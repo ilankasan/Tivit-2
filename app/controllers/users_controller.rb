@@ -3,13 +3,22 @@
 class UsersController < ApplicationController
  before_filter :authenticate_account!
  
- prepend_before_filter :user_authenticate_account
+ prepend_before_filter :validate_access, :except => [:relationship]
   
- #before_filter :validate_user_access_to_user_profile
- # :only => :show, :update,:edit,:create 
- def tiviti_authenticate_account
-   puts "tiviti_authenticate_account"
+  
+ def validate_access
+   puts "-------------- tiviti_authenticate_account --------------"
+   puts " User is is "+params[:id]
+   return if(params == nil || params[:id] == nil)
+   if(current_account == nil)
+    puts "------>>>>>>>>>>>>>>> current user is NIL!!!!!!"
+    return
+   end
+   if(current_account.user.id != params[:id])
+     render 'shared/access_denied' 
+   end   
  end
+ 
   
  # ilan delete autocomplete :user, :email, :extra_data => [:slogan], :display_value => :funky_method
   
@@ -18,7 +27,6 @@ class UsersController < ApplicationController
   #puts "term = "+params[:term]
   #names = Account.all
  
-#puts "_____________    autoname ____________________________"
 
   if (params[:term] && !current_account.user.mycontacts.nil?)
     like= "%".concat(params[:term].concat("%"))
@@ -33,6 +41,9 @@ class UsersController < ApplicationController
   render :json => list
 end
 
+
+
+
   def concat_email_name (user)
     puts "******************************"
     if (user.account == nil)
@@ -43,15 +54,8 @@ end
        str = user.account.email
       
     end
-    puts str
+  
     return str
-    
-      #:g => "You sure you want to delete #{activitydetails.name}?"
-        
-    #else
-      
-   # end
-    
   end
 
   
@@ -73,7 +77,17 @@ end
     @title = "Sign up"
   end
   
+ def relationship
+  puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
+  puts "relationship"
+  puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
+  @other_user = User.find(params[:id])
+  puts @other_user.inspect
   
+  render "user_relationship"
+   
+ end  
+ 
  def create
  	params[:user][:email] = params[:user][:email].downcase 
 	@user = User.find_by_email( params[:user]["email"])
