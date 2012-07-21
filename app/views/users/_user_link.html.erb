@@ -1,0 +1,6 @@
+<%= link_to user.name, 	:controller  => "users",
+						:action 		=> "relationship",
+	  					:method 		=> "get",
+	  					:id	   		=> user.get_id,
+	                    :title  		=> "You stuff with "+user.name,
+	                    :class  		=> "user" %>
