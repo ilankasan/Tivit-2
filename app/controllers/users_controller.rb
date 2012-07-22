@@ -3,7 +3,7 @@
 class UsersController < ApplicationController
  before_filter :authenticate_account!
  
- prepend_before_filter :validate_access, :except => [:relationship]
+ prepend_before_filter :validate_access, :except => [:relationship,:autoname]
   
   
  def validate_access
@@ -27,10 +27,8 @@ class UsersController < ApplicationController
   
  def autoname
 # auto completed to get list of users. Nee to expand it to seach name field and names in the user table
-  #puts "term = "+params[:term]
-  #names = Account.all
+#  puts "----------->>>>>>>>>>>>>>>>>  in Auto Name"
  
-
   if (params[:term] && !current_account.user.mycontacts.nil?)
     like= "%".concat(params[:term].concat("%"))
     clone_emails  = current_account.user.mycontacts.where("clone_email LIKE ? OR name LIKE ? ", like, like)
@@ -48,7 +46,7 @@ end
 
 
   def concat_email_name (user)
-    puts "******************************"
+ #   puts "******************************"
     if (user.account == nil)
    #   str = "(#{user.name}) #{user.clone_email}"
        str = user.clone_email
