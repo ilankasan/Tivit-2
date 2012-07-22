@@ -432,7 +432,7 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
                   AND  activities.status_id        = ?
                   AND  activities.owner_id         = tivit_user_statuses.user_id 
                   AND  (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)", 
-                  user.get_id, TivitStatus.get_in_progress_id,TivitStatus.get_new_id,TivitStatus.get_reviewed_id).order(:created_at)
+                  user.get_id, TivitStatus.not_started_id,TivitStatus.get_new_id,TivitStatus.get_reviewed_id).order(:created_at)
    return r
  end
   

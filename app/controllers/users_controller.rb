@@ -48,15 +48,10 @@ end
   def concat_email_name (user)
  #   puts "******************************"
     if (user.account == nil)
-   #   str = "(#{user.name}) #{user.clone_email}"
-       str = user.clone_email
-      
+        return user.clone_email
     else
-       str = user.account.email
-      
+       return  user.account.email
     end
-  
-    return str
   end
 
   
