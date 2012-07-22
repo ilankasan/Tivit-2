@@ -62,14 +62,14 @@ def get_tasks_for_other(current_user_id)
     end
     
     def get_new_tivit_requests(current_user_id)
-      #puts "--->>> in get_new_tivit_requests"
+      puts "--->>> in get_new_tivit_requests"
       time = Time.now()
       
   # get activities with New and unread tivits  
       
         
       
-      results1  =  Activity.where(:status_id => TivitStatus.not_started_id, :owner_id => current_user_id  )
+      results1  =  Activity.where("status_id = ? AND owner_id = ? AND NOT invited_by = ?",TivitStatus.not_started_id,current_user_id,current_user_id)
     
       #puts "^^^^^^^^^^^^^^^^^   -------->>>>>>>>>>>>>>> R1 = "+results1.size.to_s
       puts "<<<--- out get_new_tivit_requests "+(Time.now()-time).to_s

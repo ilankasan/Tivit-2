@@ -121,7 +121,7 @@ def home
      puts "in People controller"
      
      @title = "People i work with"
-     @users  = current_account.user.contacts
+     @users  = current_account.user.mycontacts
   end
   
   def myaccount

@@ -31,7 +31,8 @@
 			
 			<!-- Activity Name -->
 
-			<h1>In common with <%= @other_user.get_name %> </h1>
+			<h1>In common with <font color="blue"><%= @other_user.get_name %></font>
+							 </h1>
 			
 			<p><small><b>You have <%= newTasksForMe.size + openTasksForMe.size + newTasksForOther.size + openTasksForOther.size %> open tasks between you and <%=@other_user.get_name%> </b> </small></p>
 			
@@ -87,15 +88,10 @@
 			<!-- End of Main Tivits -->
 			</div> <!-- My tivits -->
 			
-			<!-- tasks i assign to other_user -->
-			
-				<!-- <h2>team tivits<span>(4)</span></h2> -->
-				
-			
 				<% if (totalTasksIAssigned > 0) %>
 				
 				<div class="team tivits" id="team-tivits">
-					<h2>You have assigned <span><%= openTasksForOther.size + newTasksForOther.size %></span>tasks to <b><%=@other_user.get_name %></b> </h2>
+					<h2>You have  <span><%= openTasksForOther.size + newTasksForOther.size %></span> assigned open tasks to <b><%=@other_user.get_name %></b> </h2>
 					<div class="tvit-list" id="teamtivits">
 					
 						
@@ -104,20 +100,19 @@
 							<%= render :partial => 'shared/task_db', :collection =>  newTasksForOther, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
 						</ul>
 						<% end %>
+						
 						<% if openTasksForOther.size > 0 %>
 							<ul class="list">
 							<%= render :partial => 'shared/task_db', :collection =>  openTasksForOther, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
 							</ul>
 						<% end %>
+						
 						<% if completedTasksForOther.size > 0 %>
 							<ul class="list additional-tivits hide"">
 								<%= render :partial => 'shared/task_db', :collection =>  completedTasksForOther, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
 							</ul>
 							<p class="show-other-tasks">Show <%= completedTasksForOther.size %> completed tasks</p>
-						<% end %>		
-						
-						
-						
+						<% end %>
 					</div>
 				
 				<% else %>

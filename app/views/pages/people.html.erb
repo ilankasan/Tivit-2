@@ -43,20 +43,13 @@
 			
 			<% if ( @users.size > 0) %>
 				<div class="tivits main-tivit" id="alltivits">
-					<!--h2>You have <span><%= newTasksForMe.size + openTasksForMe.size %></span> tasks <b><%=@other_user.get_name %></b> assigned to you </h2-->
+					<h2>You have active tasks with  <span><%= @users.size %></span>  people</h2-->
 					<div class="tvit-list" id="mytivits">						
 						
-						<% if newTasksForMe.size > 0 %>
 						<ul class="list">
-							<%= render :partial => 'shared/task_db', :collection =>  newTasksForMe, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+							<%= render :partial => 'users/user_relationship_db', :collection =>  @users, :as => :user %>
 						</ul>
-						<% end %>
-						<% if openTasksForMe.size > 0 %>
-							<ul class="list">
-							<%= render :partial => 'shared/task_db', :collection =>  openTasksForMe, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
-							</ul>
-						<% end %>
-						<% if completedTasksForMe.size > 0 %>
+						<% if false %>
 							<ul class="list additional-tivits hide"">
 								<%= render :partial => 'shared/task_db', :collection =>  completedTasksForMe, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
 							</ul>
@@ -78,7 +71,7 @@
 				<!-- <h2>team tivits<span>(4)</span></h2> -->
 				
 			
-				<% if (totalTasksIAssigned > 0) %>
+				<% if false %>
 				
 				<div class="team tivits" id="team-tivits">
 					<h2>You have assigned <span><%= openTasksForOther.size + newTasksForOther.size %></span> tasks to <b><%=@other_user.get_name %></b> </h2>

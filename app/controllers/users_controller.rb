@@ -9,12 +9,15 @@ class UsersController < ApplicationController
  def validate_access
    puts "-------------- tiviti_authenticate_account --------------"
    puts " User is is "+params[:id]
+   puts " current user is "+current_account.user.id.to_s
    return if(params == nil || params[:id] == nil)
    if(current_account == nil)
     puts "------>>>>>>>>>>>>>>> current user is NIL!!!!!!"
     return
    end
-   if(current_account.user.id != params[:id])
+   if(current_account.user.id.to_s != params[:id])
+     puts "Access Denied!"
+    
      render 'shared/access_denied' 
    end   
  end
