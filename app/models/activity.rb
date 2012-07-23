@@ -553,10 +553,21 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
   self.change_status_id_to_in_progress if self.isCompleted?
  end
  
+ def is_not_started?
+   return self.status_id == TivitStatus.not_started_id
+ end
+ 
+ def is_completed?
+   return self.status_id == TivitStatus.get_completed_id
+ end
+ 
+ def is_inprogress?
+   return self.status_id == TivitStatus.get_in_progress_id
+ end
  
  def update_tivit_status_reassiged(user,comment,assined_user)
   change_user_status(user,TivitStatus.get_reassigned_id,comment,nil,Time.now().utc,assined_user)
-     
+  change_status_id_to_not_started 
  end
       
 #returns the status of a user with respect to this activity
@@ -798,8 +809,8 @@ return self.tivits.size
   
   def change_status_to_in_progress
     puts "change_status_to_in_progress"
-    self.status_id = TivitStatus.get_in_progress_id
-    self.save
+    
+    change_status_id(TivitStatus.get_in_progress_id)
     if(self.tivits != nil || self.tivits.size > 0)
       self.tivits.each do |tivit|
         tivit.change_status_to_in_progress
@@ -814,7 +825,8 @@ return self.tivits.size
     self.save
   end
   def change_status_id_to_not_started
-    change_status_id(TivitStatus.not_started_id)
+    
+    change_status_id(TivitStatus.not_started_id) if !is_not_started? 
     
   end 
   

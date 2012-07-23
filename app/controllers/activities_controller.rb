@@ -555,14 +555,10 @@ class ActivitiesController < ApplicationController
     
     if(@assigned_user == nil || @tivit == nil)
       flash[:failed] = "Failed to Reasign tivit"
-      #redirect_to root_path if @tivit == nil
-      puts "not a user email"
-      #redirect_to @tivit if @assined_user == nil   
+      puts "not a user email !!!!!!!!!!"
     else
       puts " Reasign tivit "+@tivit.name
-      if (params["comment"] == nil)
-        params["comment"] = ""
-      end
+      params["comment"] = "" if (params["comment"] == nil)
       
       @tivit.owner_id =  @assigned_user.id
       @tivit.users    << @assigned_user
