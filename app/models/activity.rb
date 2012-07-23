@@ -318,12 +318,22 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
     
   end
   
-  def get_open_tivits 
-  #  puts "------------->>>>>>>>>>>>>>>>   in get_open_tivits"
+  def get_open_tivits (user) 
+   puts "------------->>>>>>>>>>>>>>>>   in get_open_tivits"
     #self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = ?
      #                AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id).order(:due).reverse_order
     time = Time.now()
-     r =  self.tivits.where(:status_id => TivitStatus.get_in_progress_id).order(:due).reverse_order
+r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)",TivitStatus.get_in_progress_id,TivitStatus.not_started_id, user.get_id).order(:due).reverse_order
+     #                AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id).order(:due).reverse_order
+      return r
+    
+  end
+  def delete_this_get_open_tivits 
+   puts "------------->>>>>>>>>>>>>>>>   in get_open_tivits"
+    #self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = ?
+     #                AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id).order(:due).reverse_order
+    time = Time.now()
+     r =  self.tivits.where(:status_id => [TivitStatus.get_in_progress_id]).order(:due).reverse_order
      #                AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id).order(:due).reverse_order
       return r
     
@@ -425,7 +435,7 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
   end
  
  
- def get_team_new_tasks (user)
+ def delete_this_get_team_new_tasks (user)
     
     r =   self.tivits.joins(:tivit_user_statuses).where(
                           "NOT activities.owner_id     = ?
@@ -433,6 +443,15 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
                   AND  activities.owner_id         = tivit_user_statuses.user_id 
                   AND  (tivit_user_statuses.status_id = ? OR tivit_user_statuses.status_id = ?)", 
                   user.get_id, TivitStatus.not_started_id,TivitStatus.get_new_id,TivitStatus.get_reviewed_id).order(:created_at)
+   return r
+ end
+ 
+ def get_team_new_tasks (user)
+    
+    r =   self.tivits.joins(:tivit_user_statuses).where(
+                  "NOT activities.owner_id     = ?
+                  AND  activities.status_id    = ?", 
+                  user.get_id, TivitStatus.not_started_id).order(:created_at)
    return r
  end
   
@@ -895,6 +914,7 @@ private
  def create_status_new(user)
   return create_status(user,TivitStatus.get_new_id)
  end
+ 
  
  
  def create_status(user, status)

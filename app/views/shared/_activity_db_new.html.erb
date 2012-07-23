@@ -66,16 +66,18 @@
 		<div class="tvit-list">
 			<ul class="list">
 																															
-				<% openTasks = activity_db.get_open_tivits %>
-				<% myOpenTasks = activity_db.get_my_open_tivits(current_account.user) %>																												
+																																
 				
 				<% if activityOwner == "You" %>
 <!-- ILAN: need an array here with all the open tasks in the specific activity since the user owns it i used an existing method exclude my tivit i have not agreed to help with-->
+					<% openTasks = activity_db.get_open_tivits(current_account.user) %>
+		
 					<% if openTasks != nil %>
 						<%= render :partial => 'shared/task_db', :collection =>  openTasks, :as => :my_task, :locals => {:taskContext => 'activitiesTabDashboard'} %>
 					<% end %>
 				<% else %>
 <!-- ILAN: need an array here with all the open tasks for the logged in user in the specific activity exclude my tivit i have not agreed to help with -->
+					<% myOpenTasks = activity_db.get_my_open_tivits(current_account.user) %>
 					<% if myOpenTasks != nil %>
 						<%= render :partial => 'shared/task_db', :collection =>  myOpenTasks, :as => :my_task, :locals => {:taskContext => 'activitiesTabDashboard'} %>
 					<% end %>
