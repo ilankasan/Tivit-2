@@ -24,11 +24,11 @@ def get_tasks_for_other(current_user_id)
       
       in_progress_id = TivitStatus.get_in_progress_id.to_s
       
-      results1 = Activity.where("     status_id        = ?  
+      results1 = Activity.where("     (status_id        = ? OR status_id        = ?)   
                              AND      activity_type    = 'tivit'
                              AND NOT  owner_id         = ?
                              AND      invited_by       = ?
-                    ",in_progress_id,current_user_id,current_user_id).order(" due, created_at DESC")
+                    ",in_progress_id,TivitStatus.not_started_id ,current_user_id,current_user_id).order(" due, created_at DESC")
       
       puts "number of tasks is = "+results1.size.to_s
       

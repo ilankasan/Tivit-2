@@ -81,11 +81,7 @@ def home
       @new_tivit_requests            = get_new_tivit_requests(current_user_id)
       @my_open_tasks                 = get_my_open_tasks(current_user_id)
       
-      
-      
-    #  puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-     # puts "tasks for others "+ @tasks_for_others.size.to_s
-      
+ 
       account_session[:filter_id] = @filter_id
      end
   end
@@ -100,15 +96,11 @@ def home
      @title = "Analytics"
      @user_adopt   = get_user_stats
      @tivit_stats  = get_tivits_stats
-     #@users = User.paginate(:page => params[:page], :per_page => 30)
-     #@users = User.joins(:account).order(:current_sign_in_at).reverse_order.paginate(:page => params[:page], :per_page => 25)
      @users = User.joins("LEFT OUTER JOIN accounts ON accounts.id = users.account_id").order(:current_sign_in_at,:created_at).reverse_order.paginate(:page => params[:page], :per_page => 30)
      
      #@active_users = User.where(:is_active => true)
      @active_users = User.joins(:account,:tivitcomments).where(:is_active => true).order("tivitcomments.updated_at").reverse_order.uniq
      #    users = User.joins(:tivitcomments).where("tivitcomments.activity_id = ? AND users.id = tivitcomments.user_id AND NOT tivitcomments.user_id = ? ",self.id, user.get_id)
- 
-#     puts "Number of active user is = "+@active_users.size.to_s
        
   end
 
