@@ -60,9 +60,9 @@ puts "starting seed close status...if production check that "
         
         if(TivitStatus.is_completed_id?(tivit.get_parent.status_id))
           
-          if(TivitStatus.is_in_progress_id?(tivit.status_id))
+          if(TivitStatus.is_in_progress_id?(tivit.status_id) || tivit.is_not_started?)
           
-              tivit.change_status_to_closed
+              tivit.change_status_id_to_closed
               changed = changed +1
               puts i.to_s+" tivit " +tivit.id.to_s+" closed!"
           else
