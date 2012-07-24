@@ -105,14 +105,14 @@
 							<% unread_comments = my_task.get_number_of_unread_comments(current_account.user)%>
 				    
 							<!-- Comments icon -->								   
-							<div class="comments">	
+									  			
+			  			</div>
+			  			
+			  				<div class="comments">	
 								<% if unread_comments > 0 %>
 									<i><%=unread_comments%></i>
 								<% end %>
-							</div>			  			
-			  			</div>
-			  			
-			  					
+							</div>		
 			  					<div class="text-conteiner" style="cursor: pointer;">
 									<% if (taskContext != 'ADP') %>
 									<h3><%= link_to my_task.name, my_task, :action => "show",
@@ -128,7 +128,7 @@
 											<%= get_task_status_line my_task, current_account.user %>
 										<% else %>	
 										
-										<%= link_to my_task.get_parent.name, my_task.get_parent, :action => "show", :method => "get", :title  => my_task.get_parent.name %>
+											<%= link_to my_task.get_parent.name, my_task.get_parent, :action => "show", :method => "get", :title  => my_task.get_parent.name %>
 										
 											<% if (activityOwner != "You") %>							
 												for <strong><%= activityOwner %></strong>

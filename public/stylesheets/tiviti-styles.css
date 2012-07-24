@@ -68,7 +68,7 @@ a:visited {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     padding: 7px 10px 8px 14px;
     font-size: 13px;
-    font-weight: bold;
+    /*font-weight: bold;*/
     text-align: center;
     z-index: 130;
     /*background: none repeat scroll 0 0 #F9EDBE;*/

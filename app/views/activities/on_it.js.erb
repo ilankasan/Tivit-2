@@ -4,6 +4,6 @@ console.log('on_it.js.erb:: called.');
 //console.log('activity name=', "<%= @activity.name %>");  
 //console.log('@lastcomment=', "<%= @lastcomment %>");  
 
-jQuery('#page-container').append('<div class="flash" id="confirmMsg">You agreed to help <%= @activity.get_owner.name.gsub("\'", "\\\\'") %> </div>');
-
+//jQuery('#page-container').append('<div class="flash" id="confirmMsg">You agreed to help <%= @activity.get_owner.name.gsub("\'", "\\\\'") %> </div>');
+showConfirmationMessage ("You agreed to help <b><%= @activity.get_owner.name.gsub("\'", "\\\\'") %></b>");
 

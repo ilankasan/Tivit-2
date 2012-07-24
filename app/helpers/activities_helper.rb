@@ -14,10 +14,14 @@ def get_task_status_line (task, user)
     loggedInUserIsTheOwner = "no"
     #task_owner_name = task.get_owner.name
     task_owner_name = render :partial => 'users/user_link', :collection =>  [task.get_owner], :as => :user 
-        
     
+   
   end
 
+  #task_invited_by = render :partial => 'users/user_link', :collection =>  [task.get_invited_by], :as => :user 
+  task_invited_by = task.get_invited_by.get_name
+  #task_invited_by = "INVITED BY"
+  
   if task.get_owner.name == "not active"
     task_owner_name = task.get_owner.clone_email
   end
@@ -78,8 +82,14 @@ def get_task_status_line (task, user)
       end
   
     elsif (owner_tivit_status == TivitStatus.get_onit_id || owner_tivit_status == TivitStatus.get_accepted_id)
-      status_line_middle = " agreed to help " + task.get_owner.name + " by "
-        
+      
+      status_line_middle = " agreed to help "
+       if (task.get_owner.get_id != task.get_invited_by.get_id)
+         status_line_middle += task_invited_by
+       end
+       
+      status_line_middle += " by "
+             
     elsif (owner_tivit_status == TivitStatus.get_reviewed_id)
       if (task_owner_name == "You")
         status_line_middle = " haven't responded."
@@ -87,16 +97,23 @@ def get_task_status_line (task, user)
         status_line_middle = " hasn't responded."
       end
       
-    else
-      status_line_middle = "un-handled status...if you see this let yaniv know"
-    end
+   else
+      status_line_middle = " ***un-handled status case*** "
+   end
             
   elsif (owner_tivit_status == TivitStatus.get_onit_id || owner_tivit_status == TivitStatus.get_accepted_id)
 
     if (task.due != nil)
-      status_line_middle = " agreed to help " + task.get_owner.name + " by "
+       status_line_middle = " agreed to help "
+       if (task.get_owner.get_id != task.get_invited_by.get_id)
+         status_line_middle += task_invited_by
+       end
+      status_line_middle += " by "
     else
-      status_line_middle = " agreed to help " + task.get_owner.name + "."
+      status_line_middle = " agreed to help"
+      if (task.get_owner.get_id != task.get_invited_by.get_id)
+        status_line_middle += " " + task_invited_by 
+      end
     end
   
   elsif (owner_tivit_status == TivitStatus.get_new_id || owner_tivit_status == TivitStatus.get_reminded_id)
@@ -153,7 +170,6 @@ def get_task_status_line (task, user)
     status_line_window = ""
   
   end
-
  
   status_line = task_owner_name + status_line_middle + status_line_window
   return status_line

@@ -80,6 +80,9 @@ jQuery(document).ready(function($){
 	
 	// Figure out which tab was clicked and load content with ajax!!
 	jQuery('#tabs-nav a').live('click', function(){
+		
+		hideConfirmationMessage();
+		
 		//jQuery.cookie('tabactive',jQuery(this).attr('href'));
 		var jtabclicked = jQuery(this).attr('href');
 		console.log ('[Yaniv] tab clicked=', jtabclicked);
@@ -862,6 +865,17 @@ function closeNewActivity(){
     
     
 }
+//////////////////////////////////////////////////////////////////////////////
+// Confirmation message
+function showConfirmationMessage(message){	
+	confirmMsg = '<div class="flash" id="confirmMsg">' + message + '</div>';
+	jQuery('#page-container').append(confirmMsg);
+}
+//////////////////////////////////////////////////////////////////////////////
+// Hide Confirmation Message at the top
+function hideConfirmationMessage(){
+	jQuery('#confirmMsg').remove();
+}
 /***********************************************************************************************************************************************************/
 // Scripts for Activity Page
 // from Irina Sorokina (sorokina333@gmail.com)
@@ -896,7 +910,7 @@ jQuery(document).ready(function($){
 	$('#add-tivit').click(function(){
 		
 		// Hide confirmation message if displayed
-    	jQuery('#confirmMsg').remove();
+    	hideConfirmationMessage();
 		console.log ('[Yaniv] add a tivit button clicked');
 		jQuery('#activity-overlay').show();
 		/* Yaniv - clear the form before creating new tivit **/
@@ -1062,12 +1076,28 @@ jQuery(document).ready(function($){
 	});	
 	//$(".record").not('.tivits .record').not('.main-tivit').hover(
 		
-	$('.comments').hover(function(){
+	//$('.comments').hover(function(){
 		//if (jQuery(this).parents(".record").not('.tivits .record').not('.main-tivit'))
 		//{
-			$(this).css('cursor','pointer');
+		//	$(this).css('cursor','pointer');
 		//}
-	});
+	//});
+	
+	// Hover over comments icon, show hand. It has to be .live function since tabs add the task divs in ajax
+	$('.comments').live({
+		mouseenter:
+	   function() {
+	    $(this).css('cursor','pointer');
+	     //console.log (".conteiner hovered");
+	   },
+	   mouseleave:
+	   function() {
+	      $(this).css('cursor','normal');
+	      //console.log (".conteiner moved hover");
+	   }
+	  }
+	);
+	
 	/*
 	//change respond status
 	$('.respond .form-button').live('click', function(){
