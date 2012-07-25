@@ -448,7 +448,7 @@ AND NOT tivit_user_statuses.status_id = ? ", Time.now,TivitStatus.get_completed_
  
  def get_team_new_tasks (user)
     
-    r =   self.tivits.joins(:tivit_user_statuses).where(
+    r =   self.tivits.where(
                   "NOT activities.owner_id     = ?
                   AND  activities.status_id    = ?", 
                   user.get_id, TivitStatus.not_started_id).order(:created_at)
