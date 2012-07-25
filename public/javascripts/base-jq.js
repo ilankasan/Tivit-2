@@ -344,6 +344,7 @@ jQuery(document).ready(function($){
      
     // status icon on each tivit on the left AND in the respond button
     statusIcon.live('click',function(){
+    	hideConfirmationMessage();
     	showStatusListDialog (this);    	
     });
     
@@ -674,7 +675,6 @@ function showStatusListDialog(clickedObject){
 		console.log ("[Yaniv] activityOwner=", activityOwner);
 		console.log ("[Yaniv] invitedByMe=", invitedByMe);
 		    	
-    	
     	var statusList = '';
     	
     	if (mytivit == "yes" && invitedByMe != "yes")
@@ -682,7 +682,7 @@ function showStatusListDialog(clickedObject){
     		statusList = '<div class="status-list-dialog">'+
                         '<ul class="status-list">'+
                             //'<li class="unread"><div class="ico"></div>Not started</li>'+
-                            '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
+                            //'<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
                             '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
                             '<li class="busy"><div class="ico"></div>Sorry, I can\'t help</li>'+
                             '<li class="attention"><div class="ico"></div>Propose new date</li>'+
@@ -696,7 +696,7 @@ function showStatusListDialog(clickedObject){
          		statusList = '<div class="status-list-dialog">'+
                         '<ul class="status-list">'+
                             //'<li class="unread"><div class="ico"></div>Not started</li>'+
-                            '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
+                            //'<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
                             '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
                             '<li class="re-assign"><div class="ico"></div>Reassign</li>'+
                         '</ul>'+
@@ -1533,6 +1533,7 @@ jQuery(document).ready(function($){
 		$('#sorry-tivit-window').css('top',topMarg+'px').show();
 		
 		*/
+		hideConfirmationMessage();
 		var record = jQuery(this).parents('.record');
 		var tivitID = record.find("input").attr("tivitid");
     	console.log ("[Yaniv] send reminder tivitID=", tivitID);
