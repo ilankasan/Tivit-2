@@ -157,10 +157,10 @@ class User < ActiveRecord::Base
     return r
   end
   
-  def get_completed_tasks_assign_to_me  (other_user)
-    r = self.activities.where(:status_id => TivitStatus.get_completed_id,:invited_by => other_user.get_id)
-    
-    
+  def get_last_ten_completed_tasks_assign_to_me  (other_user)
+    r = self.activities.where(:status_id => TivitStatus.get_completed_id,:invited_by => other_user.get_id).order(:completed_at).limit(10)
+    #.paginate(:page => params[:page], :per_page => 5)
+    # .paginate(:page => params[:page], :per_page => 30)
     puts "get_completed_tasks_assign_to_me "+r.size.to_s
     return r
   end
@@ -176,8 +176,8 @@ class User < ActiveRecord::Base
 
   end
   
-  def get_completed_tasks_i_assign  (other_user)
-    return  other_user.get_completed_tasks_assign_to_me (self) 
+  def get_last_ten_completed_tasks_i_assign  (other_user)
+    return  other_user.get_last_ten_completed_tasks_assign_to_me (self) 
 
   end
   

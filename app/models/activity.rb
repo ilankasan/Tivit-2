@@ -116,14 +116,6 @@ class Activity < ActiveRecord::Base
  
  end
   
-  def delete_this_get_open_or_recently_done_tivits
-    
-      self.tivits.joins(:tivit_user_statuses).where("tivit_user_statuses.user_id = activities.owner_id
-            AND ((NOT tivit_user_statuses.status_id = ?)
-            OR ((tivit_user_statuses.status_id = ? AND tivit_user_statuses.last_status_change > ?)))",TivitStatus.get_completed_id,TivitStatus.get_completed_id,Time.now-1.day)
-    
-  end
-  
   
   def get_all_my_tivits (user)
     self.tivits.where(:owner_id => user.get_id)
@@ -328,14 +320,7 @@ r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)
       return r
     
   end
-  def delete_this_get_open_tivits 
-   puts "------------->>>>>>>>>>>>>>>>   in get_open_tivits"
-    #self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = ?
-     #                AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id).order(:due).reverse_order
-    time = Time.now()
-     r =  self.tivits.where(:status_id => [TivitStatus.get_in_progress_id]).order(:due).reverse_order
-      return r
-  end
+ 
   
   
 
@@ -381,10 +366,11 @@ r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)
  def get_my_completed_tasks (user)
   puts "^^^^^^^^^^^^^^^--------->>>> get_my_completed_tasks"
      return self.tivits.where(:owner_id => user.get_id ,:status_id => TivitStatus.get_completed_id).order(:completed_at)
+# .paginate(:page => params[:page], :per_page => 30)
+
  end
  
  def get_num_of_completed_tasks (user)
-  puts "^^^^^^^^^^^^^^^--------->>>> get_my_completed_tasks"
      return self.tivits.where(:owner_id => user.get_id ,:status_id => TivitStatus.get_completed_id).count
  end
  

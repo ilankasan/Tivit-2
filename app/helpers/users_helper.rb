@@ -9,6 +9,9 @@ module UsersHelper
     end
   end
   
+  
+ 
+ 
  #Returnes a user object. If there is an inactive skeleton it activates it. 
  # If no user with that email address exists, it creates a new object 
   def get_user(params)

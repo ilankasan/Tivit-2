@@ -74,12 +74,20 @@ end
   end
   
  def relationship
-  puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
-  puts "relationship"
-  puts "++++++++++++++++++++++++++++++++++++++++++++++++++"
   @other_user = User.find(params[:id])
-  puts @other_user.inspect
-  
+  me = current_account.user
+
+  @newTasksForMe       = me.get_new_tasks_assign_to_me  (@other_user) 
+  @openTasksForMe      = me.get_open_tasks_assign_to_me (@other_user) 
+  @completedTasksForMe = me.get_last_ten_completed_tasks_assign_to_me (@other_user) 
+      
+      
+
+  @newTasksForOther       = me.get_new_tasks_i_assigned  (@other_user) 
+  @openTasksForOther    = me.get_open_tasks_i_assign  (@other_user) 
+  @completedTasksForOther = me.get_last_ten_completed_tasks_i_assign (@other_user) 
+        
+
   render "user_relationship"
    
  end  
