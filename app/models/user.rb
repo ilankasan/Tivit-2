@@ -130,13 +130,11 @@ class User < ActiveRecord::Base
   end
   
   def isContact?(user)
-  	
   	return self.mycontacts.exists?(user)
   end
      
 #builds a new activity to a user (as an owner)
   def add_my_ativity (params)
-
    	params["owner_id"] = self.id
    	params["status_id"]   = TivitStatus.get_in_progress_id
    	params["activity_type"]     = "activity"
@@ -151,15 +149,12 @@ class User < ActiveRecord::Base
   
   def get_open_tasks_assign_to_me  (other_user)
     r = self.activities.where(:status_id => TivitStatus.get_in_progress_id,:invited_by => other_user.get_id)
-    
-    puts "get_open_tasks_assign_to_me "+r.size.to_s
-    
+     #  puts "get_open_tasks_assign_to_me "+r.size.to_s
     return r
   end
   
   def get_last_ten_completed_tasks_assign_to_me  (other_user)
     r = self.activities.where(:status_id => TivitStatus.get_completed_id,:invited_by => other_user.get_id).order(:completed_at).limit(10)
-    #.paginate(:page => params[:page], :per_page => 5)
     # .paginate(:page => params[:page], :per_page => 30)
     puts "get_completed_tasks_assign_to_me "+r.size.to_s
     return r
@@ -171,14 +166,11 @@ class User < ActiveRecord::Base
   end
   
   def get_open_tasks_i_assign  (other_user)
-    
     return  other_user.get_open_tasks_assign_to_me (self) 
-
   end
   
   def get_last_ten_completed_tasks_i_assign  (other_user)
     return  other_user.get_last_ten_completed_tasks_assign_to_me (self) 
-
   end
   
   

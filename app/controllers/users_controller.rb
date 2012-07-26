@@ -81,8 +81,7 @@ end
   @openTasksForMe      = me.get_open_tasks_assign_to_me (@other_user) 
   @completedTasksForMe = me.get_last_ten_completed_tasks_assign_to_me (@other_user) 
       
-      
-
+     
   @newTasksForOther       = me.get_new_tasks_i_assigned  (@other_user) 
   @openTasksForOther    = me.get_open_tasks_i_assign  (@other_user) 
   @completedTasksForOther = me.get_last_ten_completed_tasks_i_assign (@other_user) 

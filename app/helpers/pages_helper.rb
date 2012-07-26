@@ -30,9 +30,9 @@ def get_tasks_for_other(current_user_id)
                              AND      invited_by       = ?
                     ",in_progress_id,TivitStatus.not_started_id ,current_user_id,current_user_id).order(" due, created_at DESC")
       
-      puts "number of tasks is = "+results1.size.to_s
+   #   puts "number of tasks is = "+results1.size.to_s
       
-      puts "<<<--- out get other tasks "+(Time.now()-time).to_s
+    #  puts "<<<--- out get other tasks "+(Time.now()-time).to_s
       
       return results1  
     end
@@ -288,18 +288,14 @@ def get_tasks_for_other(current_user_id)
 ################################# Completed ACTITVITIES #######################################################################################
 
   def get_completed_tivits(user)
-  #  puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-  
-    return user.activities.where(:status_id => TivitStatus.get_completed_id,:activity_type => 'tivit' ).order(:completed_at).reverse.paginate(:page => params[:page], :per_page => 10)
+    puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+     return Activity.where("status_id = ? AND activity_type = 'tivit' AND (owner_id = ? OR invited_by = ?)",TivitStatus.get_completed_id, user.get_id, user.get_id ).order(:completed_at).paginate(:page => params[:page], :per_page => 10)
+
   end
 
 
 
 def get_activities_completed_or_with_completed_tivits(user_id)
-    #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
-    
-          
-    
     sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE 
                  activities.activity_type   = 'activity' 
@@ -321,27 +317,6 @@ def get_activities_completed_or_with_completed_tivits(user_id)
   end
 
 
-def delete_this_get_activities_completed_or_with_completed_tivits(user_id)
-    #puts "------>>>>  get_activities_completed_or_with_completed_tivits <<<<<<<<<<________________"
-    sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
-                 WHERE (activities.status_id       = "+TivitStatus.get_completed_id.to_s+"  
-                 AND activities.activity_type   = 'activity' 
-                 AND (activities.owner_id       = "+user_id+"
-                 OR ( 
-                 tivits.owner_id      = "+user_id+" 
-                 AND tivits.parent_id   = activities.id)))
-                 OR
-                 (NOT activities.status_id      = "+TivitStatus.get_completed_id.to_s+"  
-                 AND activities.activity_type   = 'activity' 
-                 AND ((activities.owner_id       = "+user_id+")
-                 OR (tivits.owner_id      = "+user_id+" AND tivits.parent_id   = activities.id)))
-                 ORDER BY tivits.completed_at DESC"
-                 #ORDER BY activities.due ASC DESC"
-     
-     @completed_activities = Activity.find_by_sql(sql_completed_activities_or_with_completed_tivits).paginate(:page => params[:page], :per_page => 60)
-     #puts "1. ------>>>>  "+completed_activities.inspect
-      return @completed_activities
-  end
          
 
   def get_user_stats  

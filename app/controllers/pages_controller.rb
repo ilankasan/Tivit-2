@@ -28,6 +28,7 @@ def load_tabs
   if ( @tabToLoad == 'activities-tab' )
     @objectsToRender = get_activities_i_participate(current_account.user.get_id.to_s)
   elsif ( @tabToLoad == 'completed-tab' )
+     
     @objectsToRender = get_completed_tivits(current_account.user)
   elsif ( @tabToLoad == 'tasks-i-asked' ) 
     @objectsToRender = get_tasks_for_other(current_account.user.get_id.to_s)
