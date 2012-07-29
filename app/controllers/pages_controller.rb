@@ -82,6 +82,7 @@ def home
       @new_tivit_requests            = get_new_tivit_requests(current_user_id)
       @my_open_tasks                 = get_my_open_tasks(current_user_id)
       
+      @activity_notification               = get_user_activity_notifications(current_user_id)           
  
       account_session[:filter_id] = @filter_id
      end

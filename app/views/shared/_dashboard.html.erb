@@ -25,7 +25,17 @@
 	<%# else %>
 	
 	 
-    
+    <div class="filter">
+        <dl>
+            <dt><h3>Notifications:</h3></dt>
+            	<%= render :partial => 'shared/notification', :collection =>  @activity_notification, :as => :event %>	
+							
+            <dd>
+	          
+            </dd>
+        </dl>
+    </div>
+	
 		
 	<div id="tivit-container" class="tab-content">
 		

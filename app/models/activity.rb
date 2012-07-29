@@ -96,6 +96,9 @@ class Activity < ActiveRecord::Base
      return size
   end
 
+def get_id
+  return self.id
+end
 
 #return a unique array of all users who commented on this tivit
    def get_all_tivit_commenters_excluding_user (user)
@@ -493,6 +496,7 @@ r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)
  end
  
  def is_completed?
+  # puts "in is_completed, status = "+self.status_id.to_s+ " "+(self.status_id == TivitStatus.get_completed_id).to_s
    return self.status_id == TivitStatus.get_completed_id
  end
  
@@ -623,7 +627,7 @@ r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)
  
  
  def get_owner_id
-   puts" in get opwner id  ---------> "+self.owner_id.to_s
+  # puts" in get opwner id  ---------> "+self.owner_id.to_s
   return self.owner_id
  end
 

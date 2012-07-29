@@ -29,9 +29,7 @@ class Tivitcomment < ActiveRecord::Base
 	   
   # Returns true is this tivit was reviewed in the past and false if did not.
   # The way it is determined is by looking at when the user last reviewed the activity page and the date the comment creates
-  def old_delte_wasReviewed?(user)
-    return true
-  end  
+ 
   def wasReviewed?(user)
     return true
      tivit_user_status = self.activity.tivit_user_statuses.find_by_user_id(user.id)

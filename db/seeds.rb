@@ -8,7 +8,7 @@
 
 
 puts "starting seed.....if production check that previous seed was run"
-if(false)
+if(true)
 puts "changing to not started"
   i = 1
   changed = 0
@@ -42,7 +42,7 @@ puts "changing to not started"
   puts "Total strange " +strange.to_s
 
 end
-if (true)
+if (false)
 puts "starting seed close status...if production check that "
   i = 1
   changed = 0

@@ -14,7 +14,23 @@ module PagesHelper
         
   end
     
-
+def get_user_activity_notifications (user_id)
+  puts "in get_user_notifications "
+  events = Activity.where("invited_by = ? AND (status_id = ? OR status_id = ?) ", 
+                    user_id,TivitStatus.get_completed_id,TivitStatus.get_in_progress_id).order(:updated_at).reverse_order.limit(5)
+  
+  puts "processing "+events.size.to_s+" events"
+ # notifications = Array.new
+  #events.each do |event|
+   # if(event.is_completed?)
+             
+    #  notifications << event.get_name+" was completed"
+    #end
+  #end
+  #return ["notificaiton 1", " notification 2"]
+  return events
+  
+end
 
 
 def get_tasks_for_other(current_user_id)
@@ -347,9 +363,4 @@ def get_activities_completed_or_with_completed_tivits(user_id)
   end
   
 
-
-
-
-  
-  
 end
