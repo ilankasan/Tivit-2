@@ -3,10 +3,10 @@
 
 <% task_owner_name = render :partial => 'users/user_link', :collection =>  [event.get_owner], :as => :user %> 
 
-<%if event.get_name.length < 16 %>  
+<%if event.get_name.length < 21 %>  
 	<% task_name = event.get_name %>
 <%else%>
-	<% task_name = event.get_name[0,13]+"..." %>
+	<% task_name = event.get_name[0,18]+"..." %>
 <%end%> 
 
 <%if event.is_completed?%>
