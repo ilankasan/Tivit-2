@@ -1,0 +1,30 @@
+<!-- Display a single tivits in Team tivit within an acitivty-->
+
+
+<% task_owner_name = render :partial => 'users/user_link', :collection =>  [event.get_owner], :as => :user %> 
+
+<%if event.get_name.length < 16 %>  
+	<% task_name = event.get_name %>
+<%else%>
+	<% task_name = event.get_name[0,13]+"..." %>
+<%end%> 
+
+<%if event.is_completed?%>
+	<%comment = Tivitcomment.where(:user_id => event.get_owner_id, :activity_id => event.get_id, :action =>"Done")%>
+
+	<%=task_owner_name %> completed 
+	
+	
+<%elsif%>
+	<%comment = Tivitcomment.where(:user_id => event.get_owner_id, :activity_id => event.get_id, :action =>"Onit")%>
+
+	<%=task_owner_name %> agreed to help with 
+	
+<%end%>
+<%= link_to task_name,activity_url(event.get_parent) %><br>
+<%if !comment[0].nil?%>
+	<%= time_ago_in_words(comment[0].created_at) %> ago<br>
+<%end%>
+<br>
+	
+
