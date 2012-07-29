@@ -1,23 +1,12 @@
 module PagesHelper
 
   
-  def delete_this_get_my_activities(user_id)
-    
-      sql_my_activities = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
-                 WHERE 
-                 NOT activities.status_id       = ?  
-                 AND activities.activity_type   = 'activity' 
-                 AND activities.owner_id        = "+user_id+"
-                 ORDER BY activities.due"
-                         
-        return Activity.find_by_sql(sql_my_activities)
-        
-  end
+ 
     
 def get_user_activity_notifications (user_id)
   puts "in get_user_notifications "
-  events = Activity.where("invited_by = ? AND (status_id = ? OR status_id = ?) ", 
-                    user_id,TivitStatus.get_completed_id,TivitStatus.get_in_progress_id).order(:updated_at).reverse_order.limit(5)
+  events = Activity.where("invited_by = ? AND NOT owner_id =? AND  (status_id = ? OR status_id = ?) ", 
+                    user_id,user_id,TivitStatus.get_completed_id,TivitStatus.get_in_progress_id).order(:updated_at).reverse_order.limit(5)
   
   puts "processing "+events.size.to_s+" events"
  # notifications = Array.new
