@@ -138,7 +138,7 @@ You will receive an email with instructions about how to reset your password in 
 
 $ git add .
 
-git commit -am "7-28-12 ilan notifications"
+git commit -am "7-28-12 ilan notifications s2"
 git commit -am "1-31-12 autocomplete"
 git commit -am "4-1-12 get rid of the create activity in ADP"
 
@@ -149,6 +149,8 @@ git merge 1-19-12_tabfilters
 
 
 heroku rake db:migrate --app tiviti-staging
+heroku rake db:seed --app tiviti-staging
+
 heroku rake db:seed --remote staging
 rake db:closedstatus
 
