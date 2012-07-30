@@ -160,6 +160,11 @@ class User < ActiveRecord::Base
     return r
   end
   
+  def get_num_completed_tasks_assign_to_me  (other_user)
+    return self.activities.where(:status_id => TivitStatus.get_completed_id,:invited_by => other_user.get_id).count
+  end
+  
+  
  #####################################################
   def get_new_tasks_i_assigned  (other_user)
     return other_user.get_new_tasks_assign_to_me (self) 
@@ -171,6 +176,10 @@ class User < ActiveRecord::Base
   
   def get_last_ten_completed_tasks_i_assign  (other_user)
     return  other_user.get_last_ten_completed_tasks_assign_to_me (self) 
+  end
+  
+  def get_num_completed_tasks_i_assign  (other_user)
+    return  other_user.get_num_completed_tasks_assign_to_me (self) 
   end
   
   

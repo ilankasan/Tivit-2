@@ -141,16 +141,16 @@
 
 					<% newTasksForMe       = me.get_new_tasks_assign_to_me  (user) %>
 					<% openTasksForMe 	   = me.get_open_tasks_assign_to_me (user) %>
-					<% completedTasksForMe = me.get_completed_tasks_assign_to_me (user)  %>
+					<% completedTasksForMe = me.get_num_completed_tasks_assign_to_me (user)  %>
 								
 							
 					
 					<% newTasksForOther       = me.get_new_tasks_i_assigned  (user) %>
 					<% openTasksForOther 	  = me.get_open_tasks_i_assign  (user) %>
-					<% completedTasksForOther = me.get_completed_tasks_i_assign (user)  %>
+					<% completedTasksForOther = me.get_num_completed_tasks_i_assign (user)  %>
 				
 	              	Tasks in progress <%= newTasksForOther.size+openTasksForOther.size+newTasksForMe.size+openTasksForMe.size %>,  
-				 	Tasks completed   <%= completedTasksForOther.size + completedTasksForMe.size%> <br> 
+				 	Tasks completed   <%= completedTasksForOther + completedTasksForMe%> <br> 
 						
 	              		<!-- Ilan put data here  -->
 	              	
