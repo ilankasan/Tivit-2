@@ -939,12 +939,13 @@ jQuery(document).ready(function($){
 		if($(this).is('.active')){
 			$(this).removeClass('active');
 			//$('#who').val('').removeAttr('disabled');
-			$('#wholine').show();
+			$('#invitees').val('');
+			$('#wholine').show();			
 		} else {
 			$(this).addClass('active');
 			$('#wholine').hide();
 			//$('#who').val('don.drapper@sterlingcooper.com').attr('disabled','disabled');
-			$('#invitees').val('');
+			$('#invitees').val('myself');
 		}
 	});
 	

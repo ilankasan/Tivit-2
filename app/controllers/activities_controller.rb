@@ -350,24 +350,25 @@ class ActivitiesController < ApplicationController
   	params["parent_id"]  = params[:id] 						#   adding Parent ID
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
 	  
-    invitees = params["invitees"]
-  #  puts "______________________________________________y__"
-  #  puts " invitees --->>>>    " +invitees	
-  # puts "______________________________________________y__"
     
-    # if no invitee provided, assign tivit to current user
-    if invitees.empty? 
-    #  puts "[Yaniv] invitees is empty!"
-      puts "[Yaniv] current_account user email=" + current_account.user.get_email
+  #  puts "______________________________________________y__"
+  #  puts " invitees --->>>>    " +params.inspect
+   # puts " invitees --->>>>    " +params["invitees"].to_s
+     	
+    if(params["invitees"] == nil || params["invitees"].empty? )
+      puts "[Yaniv] invitees is empty!"
+      @invited_user = current_account.user
+      params["status_id"]     = TivitStatus.get_unassigned_id
+    elsif params["invitees"] == "myself" 
+      puts "My self !!!!!!! [Yaniv] current_account user email=" + current_account.user.get_email
       @invited_user = current_account.user
       # if assign to myself statusis in progress
       params["status_id"]     = TivitStatus.get_in_progress_id
     else
- #   puts " invitees --->>>>    " +invitees  
+      invitees = params["invitees"]
+      puts " invitees --->>>>    " +invitees  
       params["status_id"]     = TivitStatus.not_started_id
-    
       @invited_user = user_by_email(invitees.strip)
-    
     end
     
 	  params["owner_id"] =  @invited_user.get_id

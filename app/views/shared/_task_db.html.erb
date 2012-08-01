@@ -84,13 +84,21 @@
 						
 						<input type="hidden" tivitid="<%= my_task.id %>" mytivit= "<%=mytivit%>" activityOwner="<%=isActivityOwner%>" invitedByMe="<%=invitedByMe%>" >
 					</div>
-	
-					<div class="avatar read">
-						<%= profile_image(my_task.get_owner)%>
-		
-						<!--%= render :partial => 'profile_images/profile_image', :collection =>  [my_task.get_owner], :as => :user %--> 
-					</div>
-										 
+							
+						
+					<% if my_task.is_unassigned? %>
+						<!-- <img width="40" height="40" src="images/unassigned.png" class="avatar" alt="no-owner"/> -->
+						<div class="avatar unassigned">
+							
+					<% else %>
+						
+						<div class="avatar read">
+							<%= profile_image(my_task.get_owner)%>
+					<% end %>
+							
+							<!--%= render :partial => 'profile_images/profile_image', :collection =>  [my_task.get_owner], :as => :user %--> 
+						</div>
+									 
 					<div class="text">
 								
 						<!-- ADP view only if the tasks status is a new request, show on it and sorry buttons -->
@@ -99,9 +107,12 @@
 								
 								<div class="on-it"></div>
 								<span class="btn-sorry">sorry...</span>
-													
+							
+							<!-- Unassigned tasks -->						
+							<% elsif ( my_task.is_unassigned? && (taskContext == 'ADP') ) %>
+								<div class="do-it"></div>							
 							<% end %>
-														
+													
 							<% unread_comments = my_task.get_number_of_unread_comments(current_account.user)%>
 				    
 							<!-- Comments icon -->								   

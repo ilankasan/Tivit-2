@@ -355,6 +355,19 @@ r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)
     return r
   end
   
+  #[Yaniv REQUEST] Ilan, please update this fucntion to return only tasks that are unassigned. That should include tasks that users declided and 
+  # current have no owner
+  def get_unassigned_tasks
+    r =   self.tivits.where(:status_id => TivitStatus.get_unassigned_id).order(:due)
+    return r
+  end
+  
+  def get_num_unassigned_tasks 
+    return self.tivits.where(:status_id => TivitStatus.get_unassigned_id).order(:due).count
+    
+  end
+  
+  
   def get_my_open_tasks_i_agreed_to_help_with (user)
   # puts "^^^^^^^^^^^^^^^--------->>>> get_my_open_tivits_i_agreed_to_help_with"
         r =   self.tivits.joins(:tivit_user_statuses).where(
@@ -502,6 +515,10 @@ r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)
  
  def is_inprogress?
    return self.status_id == TivitStatus.get_in_progress_id
+ end
+ 
+ def is_unassigned?
+   return self.status_id == TivitStatus.get_unassigned_id
  end
  
  def update_tivit_status_reassiged(user,comment,assined_user)

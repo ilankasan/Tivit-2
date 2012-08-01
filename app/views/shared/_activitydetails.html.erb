@@ -52,7 +52,8 @@
 		<!-- <p><label for="who">Who:</label><input type="text" id="who" /></p> -->
 		<p id="wholine">
 			<label for="who">Who:</label>
-			<%= text_field_tag(:invitees, nil, :placeholder => "Who can help? (enter an email address)", :class => "required email" ) %> 
+			<%#= text_field_tag(:invitees, nil, :placeholder => "Who can help? (enter an email address)", :class => "required email" ) %> 
+			<%= text_field_tag(:invitees, nil, :placeholder => "Who can help? (enter an email address)" ) %> 
 		</p>
 		
 		<!-- tivit description -->
@@ -268,8 +269,28 @@
 			<!-- End of Main Tivits -->
 			</div> <!-- My tivits -->
 			
-			<!-- Team tivits -->
 			
+			<!-- Unassigned Tasks -->
+			<% unassignedTasks = activitydetails.get_unassigned_tasks  %>
+			
+			<% if (unassignedTasks != nil && unassignedTasks.size > 0) %>
+							
+				<div class="team tivits" id="unassigned-tasks">
+					<h2>unassigned tasks <span>(<%= unassignedTasks.size %>)</span></h2>
+					<div class="tvit-list" id="unassignedtasks">
+						<ul class="list">
+							<%= render :partial => 'shared/task_db', :collection =>  unassignedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>									
+						</ul>						
+					</div>	
+				</div>
+				
+			<% else %>
+					<div class="team tivits" id="unassigned-tasks" style="background:none">
+			
+			<% end %>
+
+			
+			<!-- Team tivits -->			
 				<!-- <h2>team tivits<span>(4)</span></h2> -->
 				<% teamNewRequestTasks = activitydetails.get_team_new_tasks (current_account.user) %>
 				<% teamTasks = activitydetails.get_team_open_tasks_they_agreed_to_help_with (current_account.user) %>

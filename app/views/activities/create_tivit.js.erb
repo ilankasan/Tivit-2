@@ -33,8 +33,26 @@ else
 	console.log('[Yaniv] My Tasks - Completed NOT visible!');  
 }
 
+// Check if this is unassigned task
+
+<% if ( true ) %>	
+	console.log('[Yaniv] Creating unassigned task...');  
+	
+	<% unassignedTasks = activityparent.get_unassigned_tasks  %>
+	// Check if we're drawing the first unassigned task now
+	<% if unassignedTasks.size == 1 %>
+		console.log('[Yaniv] Drawing FIRST unassigned tasks');  
+	<% else %>
+		//console.log('[Yaniv] Unassigned section is NOT visible');  
+		jQuery('#unassigned-tasks').append('<h2>Unassigned tasks <span>(1)</span></h2>');
+		jQuery('#unassigned-tasks').append('<div class="tvit-list" id="teamtivits"></div>');		
+		
+	<% end %>
+	
+	jQuery("#unassignedtasks").append("<ul class='list'><%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  [@activity], :as => :my_task, :locals => {:taskContext => 'ADP'})) %></ul>");
+	
 //if creating tivit for myself
-<% if current_account.user.id == (@activity.owner_id) %>
+<% elsif current_account.user.id == (@activity.owner_id) %>
 
 	console.log('[Yaniv] creating tivit for myself'); 
 	// check if we need to add the my tivits title	
