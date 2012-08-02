@@ -5,8 +5,10 @@ module PagesHelper
     
 def get_user_activity_notifications (user_id)
   puts "in get_user_notifications "
+#  events = Activity.where("invited_by = ? AND NOT owner_id =? AND  (status_id = ? OR status_id = ?) ", 
+ #                   user_id,user_id,TivitStatus.get_completed_id,TivitStatus.get_in_progress_id).order(:updated_at).reverse_order.limit(5)
   events = Activity.where("invited_by = ? AND NOT owner_id =? AND  (status_id = ? OR status_id = ?) ", 
-                    user_id,user_id,TivitStatus.get_completed_id,TivitStatus.get_in_progress_id).order(:updated_at).reverse_order.limit(5)
+                    user_id,user_id,TivitStatus.get_completed_id,TivitStatus.get_in_progress_id).order(:updated_at).reverse_order.paginate(:page => params[:page], :per_page => 5)
   
   puts "processing "+events.size.to_s+" events"
  # notifications = Array.new
@@ -293,14 +295,14 @@ def get_tasks_for_other(current_user_id)
 ################################# Completed ACTITVITIES #######################################################################################
 
   def get_completed_tivits(user)
-    puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+    #puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
      return Activity.where("status_id = ? AND activity_type = 'tivit' AND (owner_id = ? OR invited_by = ?)",TivitStatus.get_completed_id, user.get_id, user.get_id ).order(:completed_at).paginate(:page => params[:page], :per_page => 10)
 
   end
 
 
 
-def get_activities_completed_or_with_completed_tivits(user_id)
+def delete_this_get_activities_completed_or_with_completed_tivits(user_id)
     sql_completed_activities_or_with_completed_tivits = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE 
                  activities.activity_type   = 'activity' 
