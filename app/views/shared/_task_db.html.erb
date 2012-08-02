@@ -45,7 +45,7 @@
 					<% end %>
 				<% end %>		
 				
-				<% if (tivit_owner_name=="You") && (taskContext == 'ADP') && (my_task.get_owner_status == TivitStatus.get_new_id || my_task.get_owner_status == TivitStatus.get_reviewed_id) %>
+				<% if (!my_task.is_unassigned?) && (tivit_owner_name=="You") && (taskContext == 'ADP') && (my_task.get_owner_status == TivitStatus.get_new_id || my_task.get_owner_status == TivitStatus.get_reviewed_id) %>
 						<div class="conteiner yell-bg">	
 				<% else %>
 						<div class="conteiner">	
@@ -103,14 +103,15 @@
 								
 						<!-- ADP view only if the tasks status is a new request, show on it and sorry buttons -->
 						<div class="activity mytivits-act">
-							<% if ( (newRequest == "yes") && (taskContext == 'ADP') ) %>
+							<!-- Unassigned tasks -->	
+							<% if ( my_task.is_unassigned? && (taskContext == 'ADP') ) %>
+								<div class="do-it"></div>							
+								
+							<% elsif ( (newRequest == "yes") && (taskContext == 'ADP') ) %>
 								
 								<div class="on-it"></div>
 								<span class="btn-sorry">sorry...</span>
-							
-							<!-- Unassigned tasks -->						
-							<% elsif ( my_task.is_unassigned? && (taskContext == 'ADP') ) %>
-								<div class="do-it"></div>							
+															
 							<% end %>
 													
 							<% unread_comments = my_task.get_number_of_unread_comments(current_account.user)%>
@@ -184,8 +185,7 @@
 							<div class="clear"></div>
 							
 							<!-- only activity owner or tivit creator (invited by) can edit tivits -->
-				
-							<% if ( (newRequest == "no") && (taskContext == 'ADP') && ( (my_task.wasInvitedByUser?(current_account.user)) || (my_task.isParentOwner? (current_account.user)) )) %>
+							<% if ( ((newRequest == "no") || (my_task.is_unassigned?) ) && (taskContext == 'ADP') && ( (my_task.wasInvitedByUser?(current_account.user)) || (my_task.isParentOwner? (current_account.user)) )) %>
 							
 								<div class="edit-menu">
 									<div class="icon"></div>

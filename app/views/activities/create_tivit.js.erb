@@ -34,20 +34,19 @@ else
 }
 
 // Check if this is unassigned task
-
-<% if ( true ) %>	
+<% if ( @activity.is_unassigned? ) %>
 	console.log('[Yaniv] Creating unassigned task...');  
 	
-	<% unassignedTasks = activityparent.get_unassigned_tasks  %>
+	<%# unassignedTasks = activityparent.get_unassigned_tasks %>
 	// Check if we're drawing the first unassigned task now
-	<% if unassignedTasks.size == 1 %>
+	if ( !jQuery("#unassigned-tasks .list").is(":visible") )
+	{
+		console.log('[Yaniv] unassigned Tasks - is NOT visible');  
 		console.log('[Yaniv] Drawing FIRST unassigned tasks');  
-	<% else %>
 		//console.log('[Yaniv] Unassigned section is NOT visible');  
-		jQuery('#unassigned-tasks').append('<h2>Unassigned tasks <span>(1)</span></h2>');
-		jQuery('#unassigned-tasks').append('<div class="tvit-list" id="teamtivits"></div>');		
-		
-	<% end %>
+		jQuery('#unassigned-tasks').append('<h2>unassigned tasks <span>(1)</span></h2>');
+		jQuery('#unassigned-tasks').append('<div class="tvit-list" id="unassignedtasks"></div>');			
+	}
 	
 	jQuery("#unassignedtasks").append("<ul class='list'><%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  [@activity], :as => :my_task, :locals => {:taskContext => 'ADP'})) %></ul>");
 	
@@ -56,21 +55,22 @@ else
 
 	console.log('[Yaniv] creating tivit for myself'); 
 	// check if we need to add the my tivits title	
-	<% mytivits = activityparent.tivits.where("owner_id = ? " ,current_account.user.id) %>
+	<%# mytivits = activityparent.tivits.where("owner_id = ? " ,current_account.user.id) %>
 	
-	console.log('[Yaniv] mytivits.size=', <%= mytivits.size %>);  
-	
-	<% if mytivits == nil || mytivits.size == 1 %>
+	if ( !jQuery("#alltivits .list").is(":visible") )
+	{
+		console.log('[Yaniv] My Tasks - is NOT visible');  
 		// need to add the my tivits header
 		console.log('[Yaniv] first tivit for myself');  
 		jQuery('#alltivits').append('<h2>my tivits <span>(1)</span></h2>');	
-		jQuery('#alltivits').append('<div class="tvit-list" id="mytivits"></div>');			
-	<% end %>
+		jQuery('#alltivits').append('<div class="tvit-list" id="mytivits"></div>');		
+		jQuery('#alltivits').css('background', '#F8F8F8');		
+	}
 	
 	<%# if activityparent.get_num_of_completed_tasks (current_account.user) > 0 %>
 	if ( jQuery("#mytivits .show-other-tasks").is(":visible") )
 	{
-	//jQuery("#mytivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");	
+	    //jQuery("#mytivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");	
 		jQuery("#mytivits .additional-tivits").before("<ul class='list'><%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  [@activity], :as => :my_task, :locals => {:taskContext => 'ADP'})) %></ul>");	
 	}
 	else
@@ -85,15 +85,14 @@ else
 <% else %>
 	//creating tivit for someone else
 	console.log('[Yaniv] creating for someone else'); 
-	<% teamtivits = activityparent.tivits.where("NOT owner_id = ? ", current_account.user.id) %>
-	
-	console.log('[Yaniv] teamtivits.size=', <%= teamtivits.size %>);  
 		
-	<% if teamtivits == nil || teamtivits.size == 1 %>
+	if ( !jQuery("#team-tivits .list").is(":visible") )
+	{
+		console.log('[Yaniv] team tasks - is NOT visible');  	
 		console.log('[Yaniv] first tivit for someone else!');  
 		jQuery('#team-tivits').append('<h2>team tivits <span>(1)</span></h2>');
 		jQuery('#team-tivits').append('<div class="tvit-list" id="teamtivits"></div>');	
-	<%end%>
+	}
 	
 	console.log('[Yaniv] trying to run the partial...'); 
 	
@@ -115,11 +114,12 @@ else
 
 console.log('[Yaniv] succeeded?'); 
 console.log('new tivit should be rendered by now...'); 
-<% if ( (mytivits == nil || mytivits.size == 1) && (teamtivits == nil || teamtivits.size == 1) )%>
+if ( jQuery("#adpfte").is(":visible") ) 
+{
 	console.log('[Yaniv] First tivit! Remove FTE image');
 	jQuery('#adpfte').remove();
 	jQuery('#alltivits').css('background', '#F8F8F8');	
-<% end %>
+}
 
 hidePopup();
 showConfirmationMessage ("<b><%= @activity.name.gsub("\'", "\\\\'") %></b> has been created!");

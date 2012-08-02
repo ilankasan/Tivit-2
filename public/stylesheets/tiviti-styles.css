@@ -68,10 +68,13 @@ a:visited {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     padding: 7px 10px 8px 14px;
     font-size: 13px;
+    font-weight: bold;
     text-align: center;
     z-index: 130;
+    /*background: none repeat scroll 0 0 #F9EDBE;*/
     color: #222222;
     font-family: arial,sans-serif;
+    /*width: 400px;*/
     border-color: #F0C36D;
     white-space:nowrap;
     margin: -6px auto;
@@ -852,16 +855,16 @@ ul, li{margin:0; border:0; padding-left:10px; list-style:none;}
     position:relative;
     border-radius: 4px;
 }
-
-.tvit-list .record .unassigned {background:url(../images/unassigned_avatar.png) no-repeat;}
-
-.tvit-list .record .avatar img{border-radius: 4px;}
+	.tvit-list .record .avatar img{border-radius: 4px;}
 .tvit-list .avatar .rc{
     position:absolute;
     height:44px;
     width:44px;
     background:url("../images/rounded_bg.png") 0 0 no-repeat;
 }
+
+.tvit-list .record .unassigned {background:url(../images/unassigned_avatar.png) no-repeat;}
+
 .tvit-list .record .text{
     overflow:hidden;
     padding: 0 0 0 15px;
@@ -1476,7 +1479,7 @@ small.less{display:block;padding:0;}
     border-bottom:1px dashed #cbcbcb;
     margin-bottom:5px;
     border-radius:0;
-    min-height:52px;
+    height:52px;
 }
 .newtivits .list .record:last-child{
     border:none;
@@ -1484,9 +1487,6 @@ small.less{display:block;padding:0;}
 
 #newtivits .tvit-list{
     display: none;
-}
-#newtivits  .tivits .record .text-conteiner{
-    width:375px;
 }
 .new-tivits-toggle{
     margin:0 0 5px 5px;
@@ -1784,7 +1784,7 @@ small.less{display:block;padding:0;}
     padding:4px 0 0;
 }
 
-#unassign-tivits{
+#unassigned-tasks{
     margin-bottom:20px;
     padding: 0px;
 }
@@ -1792,6 +1792,7 @@ small.less{display:block;padding:0;}
     margin-bottom:20px;
     padding: 0px;
 }
+
 .yell-bg{
     background:#fffee0;
 }
