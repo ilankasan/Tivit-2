@@ -411,18 +411,30 @@ r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)
       return r
  end
  
+  def get_recently_team_completed_tasks (user)
+     #tivit_user_status = self.activity.tivit_user_statuses.find_by_user_id(user.get_id)
+     #self.created_at > tivit_user_status.last_reviewed
+     #return []
+     return self.tivits.joins(:tivit_user_statuses).where("NOT activities.owner_id = ? AND  activities.status_id = ? AND activities.id = tivit_user_statuses.activity_id AND tivit_user_statuses.user_id = ? AND activities.updated_at > tivit_user_statuses.last_reviewed",user.get_id, TivitStatus.get_completed_id,user.get_id).order(:completed_at)
+     
+  end
+  
   def get_team_completed_tasks (user)
      return self.tivits.where("NOT owner_id = ? AND  status_id = ?",user.get_id, TivitStatus.get_completed_id).order(:completed_at)
   end
+ 
  
   def get_num_of_team_completed_tasks (user)
      return self.tivits.where("NOT owner_id = ? AND  status_id = ?",user.get_id, TivitStatus.get_completed_id).count
   end
   
+  
+  
+  
   def get_team_tivits (user)
     
    # puts "----------------->>>> in team_my tivits"
-   time = Time.now()
+   #time = Time.now()
     team_done_tivits = self.tivits.where("NOT owner_id = ? AND (status_id = ? )",user.get_id, TivitStatus.get_completed_id)
     
     #puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> team_done_tivits "+team_done_tivits.count.to_s

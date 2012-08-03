@@ -313,11 +313,24 @@
 								<%= render :partial => 'shared/task_db', :collection =>  teamNewRequestTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
 							</ul>
 							<% end %>
+							
 							<% if teamTasks != nil && teamTasks.size > 0 %>
 								<ul class="list">
 								<%= render :partial => 'shared/task_db', :collection =>  teamTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
 								</ul>
 							<% end %>
+							
+							<% recentlyCompleted = activitydetails.get_recently_team_completed_tasks (current_account.user)  %>
+							<% if recentlyCompleted != nil && recentlyCompleted.size > 0 %>
+								<ul class="list">
+								<%= render :partial => 'shared/task_db', :collection =>  recentlyCompleted, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+								</ul>
+							<% end %>
+					
+					
+					
+							
+							
 							<% if teamCompletedTasks != nil && teamCompletedTasks.size > 0 %>
 								<ul class="list additional-tivits hide"">
 									<%= render :partial => 'shared/task_db', :collection =>  teamCompletedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>

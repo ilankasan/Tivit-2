@@ -27,9 +27,10 @@
 	 
     <div class="filter">
         <dl>
+        	<% if @activity_notification != nil &&  @activity_notification.size > 0 %>
             <dt><h3>Notifications:</h3></dt>
             	<%= render :partial => 'shared/notification', :collection =>  @activity_notification, :as => :event %>	
-							
+			<%end%>				
             <dd>
 	          
             </dd>

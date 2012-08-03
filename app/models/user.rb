@@ -76,6 +76,10 @@ class User < ActiveRecord::Base
     end
     #return self.admin
   end
+
+  def is_first_activity_ever?
+   return (self.activities == nil || self.activities.size == 0  )
+  end
   
   def isSupperAdmin?
  # ilan need to rewrite

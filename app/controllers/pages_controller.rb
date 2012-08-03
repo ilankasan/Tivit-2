@@ -49,8 +49,8 @@ end
 def home
     @title = "Home"
     
-    puts "Home"
-      @activities_summary =[]
+    #puts "Home"
+    #  @activities_summary =[]
        
     current_user_id = current_account.user.get_id.to_s
  #ILAN - remove filter  
@@ -64,15 +64,15 @@ def home
     else
 
      
-      if((account_session[:filter_id]==nil) && (params[:filter_id]==nil))
-        @filter_id = "1"  
-      elsif (params[:filter_id] != nil)
-        @filter_id = params[:filter_id]
-      else
-        @filter_id = account_session[:filter_id]
-      end
+     # if((account_session[:filter_id]==nil) && (params[:filter_id]==nil))
+     #   @filter_id = "1"  
+     # elsif (params[:filter_id] != nil)
+     #   @filter_id = params[:filter_id]
+     # else
+     #   @filter_id = account_session[:filter_id]
+     # end
         
-      @activities_summary =[]
+   #   @activities_summary =[]
      
   # Filter only product On Deck (for now)
       #@completed_tasks          = get_completed_tivits(current_account.user)
@@ -84,7 +84,7 @@ def home
       
       @activity_notification               = get_user_activity_notifications(current_user_id)           
  
-      account_session[:filter_id] = @filter_id
+    #  account_session[:filter_id] = @filter_id
      end
   end
 
