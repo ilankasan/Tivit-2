@@ -155,7 +155,7 @@ class ActivitiesController < ApplicationController
       @activity = @activity_temp
     end
    
-   # @activity.update_status_after_show(current_account.user)
+    @activity.update_status_after_show(current_account.user)
     
   	@title = "Activity Details - "+@activity.name
   	#puts "<<<<<<<<<<<<<<-----------show activity detailed page"  
