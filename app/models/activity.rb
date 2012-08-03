@@ -381,7 +381,7 @@ r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)
  
  def get_my_completed_tasks (user)
   puts "^^^^^^^^^^^^^^^--------->>>> get_my_completed_tasks"
-     return self.tivits.where(:owner_id => user.get_id ,:status_id => TivitStatus.get_completed_id).order(:completed_at)
+     return self.tivits.where(:owner_id => user.get_id ,:status_id => TivitStatus.get_completed_id).order(:completed_at).reverse
 # .paginate(:page => params[:page], :per_page => 30)
 
  end
