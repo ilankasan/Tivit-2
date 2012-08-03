@@ -81,6 +81,17 @@ class User < ActiveRecord::Base
    return (self.activities == nil || self.activities.size == 0  )
   end
   
+  def does_have_active_tasks?
+   
+   return true if(self.activities.where("NOT status_id = ?",TivitStatus.get_completed_id).count > 0)
+   
+   return true if(Activity.where("invited_vy = ? AND NOT status_id = ?",self.get_id, TivitStatus.get_completed_id).count > 0)
+   
+   
+   return false
+  end
+  
+  
   def isSupperAdmin?
  # ilan need to rewrite
     email = self.account.email
