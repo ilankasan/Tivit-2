@@ -242,13 +242,15 @@ jQuery(document).ready(function($){
 		console.log ("[Yaniv] action=", action);
 		
 		var onItAndSorryButtons = $(this).parents('.mytivits-act');
-					
+		
 		// Actual Ajax call to the controller
 		$.post(action, $(this).serialize(), null, "script");	
+		
 		
 		// Open the comments area so user can post something if they like
 		$(this).parents('.record').children('ul').fadeIn('slow');
 		$(onItAndSorryButtons).remove();
+	
 		
 		console.log ("[Yaniv] after Ajax call");
 		
@@ -293,7 +295,19 @@ jQuery(document).ready(function($){
 		//$('.fresh-tivits .calendar').remove();
 		//$('.fresh-tivits .activity').html("<div class='comments'></div>").removeAttr('style');
 		//$('.fresh-tivits .conteiner').addClass('yell-bg').removeClass('record-hovered').removeClass('no-hover');
-
+		
+		if ( jQuery('.dashFTE-tab-empty-txt').is(":visible") )
+		{
+			console.log ("Empty tab FTE is visible");
+		} 
+		else
+		{
+			console.log ("[Yaniv] Empty tab FTE is NOT visible");
+		}
+		
+		jQuery('.dashFTE-tab-empty-txt').remove();	
+		
+		
 		$(record).slideUp(function(){
 			$(this).remove();
 			$('.fresh-tivits').slideDown();

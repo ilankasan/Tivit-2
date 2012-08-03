@@ -271,7 +271,7 @@
 			
 			
 			<!-- Unassigned Tasks -->
-			<% unassignedTasks = activitydetails.get_unassigned_tasks %>
+			<% unassignedTasks = activitydetails.get_unassigned_tasks (current_account.user) %>
 			
 			<% if (unassignedTasks != nil && unassignedTasks.size > 0) %>
 							
@@ -282,13 +282,13 @@
 							<%= render :partial => 'shared/task_db', :collection =>  unassignedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>									
 						</ul>						
 					</div>	
-				
+				</div>
 				
 			<% else %>
-				<div class="team tivits" id="unassigned-tasks" style="background:none">			
+					<div class="team tivits" id="unassigned-tasks" style="background:none">
+			
 			<% end %>
 
-			</div> <!-- unassigned tivits -->
 			
 			<!-- Team tivits -->			
 				<!-- <h2>team tivits<span>(4)</span></h2> -->
@@ -301,53 +301,40 @@
 				<%# if teamtivits !=nil && teamtivits.size > 0 %>
 				<% if (teamNewRequestTasks != nil && teamNewRequestTasks.size > 0) || (teamTasks != nil && teamTasks.size > 0) || (teamCompletedTasks != nil && teamCompletedTasks.size > 0) %>
 				
-					<div class="team tivits" id="team-tivits">
-						<h2>team tasks <span>(<%= totalNumberOfTeamTasks %>)</span></h2>
-						<div class="tvit-list" id="teamtivits">
+				<div class="team tivits" id="team-tivits">
+					<h2>team tasks <span>(<%= totalNumberOfTeamTasks %>)</span></h2>
+					<div class="tvit-list" id="teamtivits">
+					
+						<%#= render :partial => 'shared/tivit_adp', :collection =>  teamtivits %>
+						<%#= render :partial => 'shared/task_db', :collection =>  teamtivits, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
 						
-							<%#= render :partial => 'shared/tivit_adp', :collection =>  teamtivits %>
-							<%#= render :partial => 'shared/task_db', :collection =>  teamtivits, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
-							
-							<% if teamNewRequestTasks != nil && teamNewRequestTasks.size > 0 %>
+						<% if teamNewRequestTasks != nil && teamNewRequestTasks.size > 0 %>
+						<ul class="list">
+							<%= render :partial => 'shared/task_db', :collection =>  teamNewRequestTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+						</ul>
+						<% end %>
+						<% if teamTasks != nil && teamTasks.size > 0 %>
 							<ul class="list">
-								<%= render :partial => 'shared/task_db', :collection =>  teamNewRequestTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+							<%= render :partial => 'shared/task_db', :collection =>  teamTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
 							</ul>
-							<% end %>
-							
-							<% if teamTasks != nil && teamTasks.size > 0 %>
-								<ul class="list">
-								<%= render :partial => 'shared/task_db', :collection =>  teamTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
-								</ul>
-							<% end %>
-							
-							<% recentlyCompleted = activitydetails.get_recently_team_completed_tasks (current_account.user)  %>
-							<% if recentlyCompleted != nil && recentlyCompleted.size > 0 %>
-								<ul class="list">
-								<%= render :partial => 'shared/task_db', :collection =>  recentlyCompleted, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
-								</ul>
-							<% end %>
-					
-					
-					
-							
-							
-							<% if teamCompletedTasks != nil && teamCompletedTasks.size > 0 %>
-								<ul class="list additional-tivits hide"">
-									<%= render :partial => 'shared/task_db', :collection =>  teamCompletedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
-								</ul>
-								<p class="show-other-tasks">Show <%= teamCompletedTasks.size %> completed tasks</p>
-							<% end %>						
-							
-						</div>
+						<% end %>
+						<% if teamCompletedTasks != nil && teamCompletedTasks.size > 0 %>
+							<ul class="list additional-tivits hide"">
+								<%= render :partial => 'shared/task_db', :collection =>  teamCompletedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+							</ul>
+							<p class="show-other-tasks">Show <%= teamCompletedTasks.size %> completed tasks</p>
+						<% end %>						
+						
+					</div>
 				
 				<% else %>
 					<div class="team tivits" id="team-tivits" style="background:none">
 				<%end%>
 				
-					</div> <!-- team tivits --> 
+			</div> <!-- team tivits --> 
 			<%# puts "myTotalNumberOfTasks=" + myTotalNumberOfTasks.to_s %>	
 			<%# puts "totalNumberOfTeamTasks=" + totalNumberOfTeamTasks.to_s %>			
-			<% if (totalNumberOfTeamTasks == 0) && (myTotalNumberOfTasks == 0) && (unassignedTasks.size == 0)%>
+			<% if (totalNumberOfTeamTasks == 0) && (myTotalNumberOfTasks == 0) %>
 				<div id="adpfte"></div>
 			<% end %>	
 		</div> <!-- "leftCol" -->

@@ -1,22 +1,41 @@
 console.log('in load tab in ajax!'); 
 
-<% if @objectsToRender != nil %>
-	console.log('@objectsToRender.size=', <%= @objectsToRender.size %>); 
+<% if @objectsToRender == nil || @objectsToRender.size == 0 %>
+	console.log('@objectsToRender=nil or size=0');
+	<% render = "no"%>
 <% else %>
-	console.log('@objectsToRender=nil');
+	console.log('@objectsToRender.size=', <%= @objectsToRender.size %>); 
+	<% render = "yes"%>
 <% end %>
 
 //jQuery("#mytivits").append("<%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  [@activity], :as => :my_task, :locals => {:taskContext => 'ADP'})) %>");	
 
 <% if @tabToLoad == 'activities-tab' %>
-	jQuery("#activities-tab-tasks").append("<%= escape_javascript(render(:partial => 'shared/activity_db_new', :collection =>  @objectsToRender, :as => :activity_db)) %>");	
+	
+	<% if render == "yes"%>
+		jQuery("#activities-tab-tasks").append("<%= escape_javascript(render(:partial => 'shared/activity_db_new', :collection =>  @objectsToRender, :as => :activity_db)) %>");	
+	<% else %>
+		jQuery("#activities-tab-tasks").append('<div id="dashFTE-act-tab-empty"></div>')
+	<% end %>
+	console.log('After rendering activities tab'); 
 <% elsif @tabToLoad == 'completed-tab' %>
-	jQuery("#completed-tab-tasks").append("<%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  @objectsToRender, :as => :my_task, :locals => {:taskContext => 'tasksTabCompleted'})) %>");	
+	
+	<% if render == "yes"%>
+		jQuery("#completed-tab-tasks").append("<%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  @objectsToRender, :as => :my_task, :locals => {:taskContext => 'tasksTabCompleted'})) %>");	
+	<% else %>
+		jQuery("#completed-tab-tasks").append('<div class="dashFTE-tab-empty-txt"><p>You currently don\'t have any completed tasks.</p></div>');
+	<% end %>
 	console.log('After rendering completed tasks'); 
 	
 <% elsif @tabToLoad == 'tasks-i-asked' %>
-	jQuery("#tasks-i-asked-tab").append("<%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  @objectsToRender, :as => :my_task, :locals => {:taskContext => 'IAssigned'})) %>");	
-	console.log('After rendering completed tasks'); 
+	
+	<% if render == "yes"%>
+		jQuery("#tasks-i-asked-tab").append("<%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  @objectsToRender, :as => :my_task, :locals => {:taskContext => 'IAssigned'})) %>");	
+	<% else %>
+		jQuery("#tasks-i-asked-tab").append('<div class="dashFTE-tab-empty-txt"><p>You currently don\'t have any tasks you assigned others.</p></div>');
+	<% end %>
+		
+	console.log('After rendering I assigned'); 
 	
 <% end %>
 

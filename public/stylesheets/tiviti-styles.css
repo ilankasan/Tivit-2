@@ -15,6 +15,9 @@ html, body {
 .fullscreen {
 	/*background: #333333;	*/
 	background-image: url("../images/bkg.jpg");
+	background-position: center bottom;
+	background-repeat: no-repeat;
+	background-size: cover;
 	/*max-width: 1314px;*/
     /*min-width: 0;
     width: auto;   */
@@ -206,7 +209,8 @@ a:visited {
 }
 /* Drop Down Menu **************************************************/
 /* 1. Menu Button */
-ul, li{margin:0; border:0; padding-left:10px; list-style:none;}
+ul, li{margin:0; border:0; padding-left:0px; list-style:none;}
+
 #user-nav{
 	color: white;
 	font-size:15px;
@@ -359,7 +363,24 @@ ul, li{margin:0; border:0; padding-left:10px; list-style:none;}
     font-size:0;
     line-height:0;
 }
+.dashFTE-tab-empty-txt {
+	
+}
 
+#dashFTE-act-tab-empty {
+    /*background: url('/images/tivity.jpg') no-repeat scroll center center transparent;*/
+    background: url('/images/dashFTE-act-tab-empty.png') no-repeat scroll center center transparent; 
+    display: inline-block;
+    height: 245px;
+    width: 470px;
+    top: 34px;
+    left: 168px;
+    right: 2px;
+    bottom: 2px;
+    /*overflow: hidden;*/
+    z-index: 100;
+    position: relative;
+}
 
 /* New Activity Bar / Input*****************************************/
 #newactivityFTE {
@@ -373,7 +394,7 @@ ul, li{margin:0; border:0; padding-left:10px; list-style:none;}
     right: 10px;
     bottom: 10px;
     /*overflow: hidden;*/
-    z-index: 110;
+    z-index: 100;
     position: absolute;
 }
 #dashboardFTE {

@@ -6,17 +6,21 @@
 			<div class="text">23</div>
 </div>
 -->
-<!--%puts "in task date partial"%-->
 <% owner_tivit_status = tivit.get_owner_status %>
 						
 <% due_time_window = tivit.get_due_window_from_now %>
 							
 <%# if owner_tivit_status != TivitStatus.get_completed_id %>
-	<% if tivit.due == nil %>
+	
+	<% if tivit.due != nil && tivit.isCompleted? %>
+		<div class="calendar past" style="<%= datestyle %>">
+			<div class="week"><%= tivit.due.localtime.strftime ("%^b") %></div>
+		    <div class="text"><%= tivit.due.localtime.strftime ("%-d") %></div>  
+	<% elsif tivit.due == nil %>
 		<!-- no date specified -->
 		<!-- the datestyle variable comes from the partial call as local variable since the date need to float on the right for activites tab on dashboard -->
 		<div class="calendar" style="<%= datestyle %>">
-				<% elsif due_time_window == "overdue" %>
+	<% elsif due_time_window == "overdue" %>
 		<!-- activity is overdue -->
 		<div class="calendar new" style="<%= datestyle %>">
 			<div class="week"><%= ((Time.now.end_of_day - tivit.due.localtime.end_of_day)/(3600*24)).to_i %></div>
