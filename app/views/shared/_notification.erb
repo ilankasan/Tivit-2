@@ -6,7 +6,7 @@
 <%if event.get_name.length < 21 %>  
 	<% task_name = event.get_name %>
 <%else%>
-	<% task_name = event.get_name[0,18]+"..." %>
+	<% task_name = event.get_name[0,26]+"..." %>
 <%end%> 
 
 <%if event.is_completed?%>
