@@ -301,7 +301,7 @@ def get_tasks_for_other(current_user_id)
 
   def get_completed_tivits(user)
     puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-     return Activity.where("status_id = ? AND activity_type = 'tivit' AND (owner_id = ? OR invited_by = ?)",TivitStatus.get_completed_id, user.get_id, user.get_id ).order(:completed_at).paginate(:page => params[:page], :per_page => 10)
+     return Activity.where("status_id = ? AND activity_type = 'tivit' AND (owner_id = ? OR invited_by = ?)",TivitStatus.get_completed_id, user.get_id, user.get_id ).order(:completed_at).reverse_order.paginate(:page => params[:page], :per_page => 10)
 
   end
 
