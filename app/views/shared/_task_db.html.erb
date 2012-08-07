@@ -20,6 +20,8 @@
 	<% newRequest = "no" %>
 <% end %>
 
+<% owner_tivit_status = my_task.get_owner_status %>
+
 	<!-- 		
 		<div class="team tivits">
 			<div class="tvit-list">
@@ -90,9 +92,13 @@
 						<!-- <img width="40" height="40" src="images/unassigned.png" class="avatar" alt="no-owner"/> -->
 						<div class="avatar unassigned">
 							
-					<% else %>
+					<% else %>						
 						
-						<div class="avatar read">
+						<% if owner_tivit_status == TivitStatus.get_new_id || owner_tivit_status == TivitStatus.get_reminded_id || owner_tivit_status == TivitStatus.get_completed_id %>
+							<div class="avatar unread">
+						<% else %>
+							<div class="avatar read">
+						<% end %>						
 							<%= profile_image(my_task.get_owner)%>
 					<% end %>
 							

@@ -963,13 +963,17 @@ jQuery(document).ready(function($){
 		}
 	});
 	
+	//&& !jQuery(this).parents('.record').not('.tivits .record').not('.main-tivit')
+	
 	/* Yaniv - Show/Hide comments when clicking on a tivit */
 	$('.text-conteiner').live('click', function(e){
 		//alert($(this).parents('.record').children('ul').attr('class'));
 		//console.log('[Yaniv] tivit clicked - show/hide comments...');
 		
+		//e.stopPropagation();
+		
 		// This is used to isolate clicks on remind hyperlink on ADP page in each tivit, without this, the remind link will not work
-		if( $(e.target).is("a") ){
+		if( $(e.target).is("a") || $(e.target).is(".send-reminder") ){
 			console.log("Run function because clicking on something else");
 			return;
 		}
@@ -1023,7 +1027,7 @@ jQuery(document).ready(function($){
 		//console.log('[Yaniv] tivit clicked - show/hide comments...');
 		
 		// This is used to isolate clicks on remind hyperlink on ADP page in each tivit, without this, the remind link will not work
-		if( $(e.target).is('.gray') ){
+		if( $(e.target).is('.grey') ){
 			console.log("Run function because clicking on something else");
 			return;
 		}
@@ -1336,23 +1340,42 @@ jQuery(document).ready(function($){
 	});
 	/////////////////////////////////////////////////////////////////////////
 	// send reminder in tivit status line
-	jQuery('.grey .send-reminder').hover(		
-		function() {
+	$('.send-reminder').live({
+		mouseenter:
+	   function() {
 	      //$(this).css('cursor','pointer');
 	      //console.log ("[Yaniv] status line accept hovered.");
 	      $(this).css('text-decoration','underline');
 	      $(this).css('cursor','pointer');
 	   },
-	   function() {
-	   	//console.log ("[Yaniv] status line accept un-hovered.");
+	    mouseleave:
+	    function() {
+	   	  //console.log ("[Yaniv] status line accept un-hovered.");
 	      $(this).css('text-decoration','none');
 	      $(this).css('cursor','none');
-	   }	 	
+	   }	
+	  }
 	);
+	
+	
+	//jQuery('.send-reminder').hover(		
+	//	function() {
+	      //$(this).css('cursor','pointer');
+	      //console.log ("[Yaniv] status line accept hovered.");
+//	      $(this).css('text-decoration','underline');
+	//      $(this).css('cursor','pointer');
+	//   },
+	  // function() {
+	   	  //console.log ("[Yaniv] status line accept un-hovered.");
+	    //  $(this).css('text-decoration','none');
+	    //  $(this).css('cursor','none');
+	  // }	 	
+//	);
 	// Send Reminder clicked
-	jQuery('.grey .send-reminder').live('click', function(){
+	jQuery('.send-reminder').live('click', function(e){
 	 	
 	 	//console.log ("[Yaniv] status line accept clicked.");	
+		//e.stopPropagation();
 		
 		var record = jQuery(this).parents('.record');
 		var tivitID = record.find("input").attr("tivitid");

@@ -135,6 +135,8 @@ class User < ActiveRecord::Base
   def addContact(user)
   	if(!self.isContact?(user))
   		self.mycontacts << user
+  	else
+  	   #add code to change the update code so we can track user you recently interacted with
   	end
   end
   

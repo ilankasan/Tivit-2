@@ -867,7 +867,7 @@ ul, li{margin:0; border:0; padding-left:0px; list-style:none;}
         }
 /*************/
 /* Yaniv - must add this so avatar unread will work properly */
-.record .unread .avatar {opacity: 0.6;}
+.record .unread .avatar {opacity: 0.5;}
 /*************/    	
 .tvit-list .record .avatar{
     float:left;
@@ -925,7 +925,7 @@ ul, li{margin:0; border:0; padding-left:0px; list-style:none;}
     }
     /* used for accept link on _tivit_db style */
      .tvit-list .record .text .send-reminder {
-        color:#8A8AD8;
+        color: #3265FF /*#8A8AD8*/;
         font-size:11px;
         margin:0;
     }
