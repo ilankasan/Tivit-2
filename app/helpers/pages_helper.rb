@@ -51,9 +51,40 @@ def get_tasks_for_other(current_user_id)
     
 
 
-
+def get_my_open_tasks(current_user_id)
+      
+      #puts "--->>> in my open tasks"
+   #   time = Time.now()
+      
+      completed   = TivitStatus.get_completed_id.to_s
+      new_id      = TivitStatus.get_new_id.to_s
+      reviewed_id = TivitStatus.get_reviewed_id.to_s
+      
+   #   with_date = Activity.where("(status_id     = ? OR status_id     = ?)   
+    #                AND activity_type = 'tivit'
+     #               AND owner_id      = ?
+      #              ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id).order(" due DESC, created_at DESC")
+     without_date = Activity.where("(status_id     = ? OR status_id     = ?)   
+                    AND activity_type = 'tivit'
+                    AND owner_id      = ?
+                    AND due IS NULL
+                    ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id).order(:created_at)
+  with_date = Activity.where("(status_id     = ? OR status_id     = ?)   
+                    AND activity_type = 'tivit'
+                    AND owner_id      = ?
+                    AND due IS NOT NULL
+                    ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id).order(:due).reverse_order
+          
+ #     puts "<<<--- out my open tasks "+(Time.now()-time).to_s
+      
+      
+     
+      return with_date+without_date
+       
+    end
+    
 ###################
-    def get_my_open_tasks(current_user_id)
+    def old_get_my_open_tasks(current_user_id)
       
       #puts "--->>> in my open tasks"
       time = Time.now()
@@ -69,6 +100,10 @@ def get_tasks_for_other(current_user_id)
      
       puts "<<<--- out my open tasks "+(Time.now()-time).to_s
       
+      
+      with_date     = self.activities.where("status_id = ? AND invited_by = ? AND due not null",TivitStatus.get_in_progress_id, other_user.get_id).order(:due)
+    without_date  = self.activities.where(:status_id => TivitStatus.get_in_progress_id,:invited_by => other_user.get_id,:due => nil)
+    
       return results1
        
     end

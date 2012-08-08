@@ -166,6 +166,10 @@ class User < ActiveRecord::Base
   
   def get_open_tasks_assign_to_me  (other_user)
     r = self.activities.where(:status_id => TivitStatus.get_in_progress_id,:invited_by => other_user.get_id)
+    #with_date     = self.activities.where("status_id = ? AND invited_by = ? AND due not null",TivitStatus.get_in_progress_id, other_user.get_id).order(:due)
+    #without_date  = self.activities.where(:status_id => TivitStatus.get_in_progress_id,:invited_by => other_user.get_id,:due => nil)
+    
+    #return with_date+without_date 
      #  puts "get_open_tasks_assign_to_me "+r.size.to_s
     return r
   end
