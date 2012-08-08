@@ -60,7 +60,7 @@ def get_my_open_tasks(current_user_id)
                     AND activity_type = 'tivit'
                     AND owner_id      = ?
                     AND due IS NULL
-                    ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id).order(:created_at)
+                    ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id).order(:created_at).reverse_order
       with_date = Activity.where("(status_id     = ? OR status_id     = ?)   
                     AND activity_type = 'tivit'
                     AND owner_id      = ?

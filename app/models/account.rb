@@ -10,7 +10,7 @@ class Account < ActiveRecord::Base
   has_many :authentication_services, :dependent => :destroy
   
   # Setup accessible (or protected) attributes for your model, :,
-  attr_accessible  :password, :password_confirmation, :remember_me, :email
+  attr_accessible  :password, :password_confirmation, :remember_me, :email, :confirmed_at
   
   
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

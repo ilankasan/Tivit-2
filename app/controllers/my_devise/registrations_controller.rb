@@ -6,12 +6,15 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  
   def new
   	puts " new ++++++++++++ registration ++++++++++++++++++++++++++++++++++++++"
-	
+   
     @email = params[:email]
 	 if(@email != nil)
+	   puts "Sign up with email "+@email
 	    flash[:warning] = "Sign up with email "+@email
 	 end
 	 @title = "Sign Up"
+	 
+	#account_session[:user_email] = @email
    super
     
   end
@@ -26,14 +29,20 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  
  def create
  	puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------"
- 	#puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------"
  	@params = params
+ 	puts params.inspect
+ 	puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------ 2"
+  
 	super
 #	puts "test  = "+test.inspect	
 	email = params[:account][:email]
+	puts "email = "+email 
   @account = Account.find_by_email(email)
-	
-#	puts @account.inspect if @account != nil
+
+
+  puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------ 3"
+  
+
 # fist find the user clone
 	@users = User.where("is_active = ? AND clone_email = ?","false",email)
 	@user = @users[0] if @users.size > 0
@@ -43,7 +52,8 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 		puts "user == nil and email = "+email
 		params[:account][:user][:clone_email] = email 
 		@account.user = User.new(params[:account][:user])
-		
+		puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------ 4"
+  
 	else
 		puts "user != nil"
 		if(@account.user == nil)
@@ -57,34 +67,62 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 		end
 	end
 	puts " saving account!!!!!!!!!!!!!!!!"
-  @account.save
+	
+  if(params[:account][:viral] == "true" && false)
+    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
+    
+    @account.skip_confirmation!
+    #@account.confirmed_at = Time.now()
+    @account.save!
+    @account.confirm!
+    
+    sign_in_and_redirect(:account, @account)
+    #flash[:myinfo] = 'Your account on tiviti has been created via ' + provider.capitalize + '. In your profile you can change your personal information and add a local password.'
+   
+    return
+     
+  else
+     @account.save
+  end
 
+	
+#  account_session[:sign_in] = "true" 
  end
  
  def awaiting_confirmation
+   #puts "params = "+params.inspect
+   puts "awaiting_confirmation" 
+   @account = Account.find_by_id(params[:format])
    
-   @email = Account.find_by_id(params[:format]).get_email
-   puts "email " + @email.inspect
+   #puts "email " + @email.inspect
    
-   render 'awaiting_confirmation'
+   if( @account.confirmed_at != nil && false)
+      render 'pages/home'
+   else
+      render 'awaiting_confirmation'
+   end
    return
    
  end
  protected
  def after_inactive_sign_up_path_for(resource)
-  # puts "UUUUUUUUU kkk  UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"
-  # @email = resource[:email]
-  # @params[:email]= resource[:email]
-    
-   #account_session[:email] = resource[:email]
-    
-   awaiting_confirmation_url (resource) 
-   #awaiting_confirmation_path (resource)
+   
+   puts "in after_inactive_sign_up_path_for"
+   puts params.inspect
+   email = params[:account][:email]
+   @account = Account.find_by_email(email)
+   if( params[:account][:viral] == "true" && false)
+      puts "confirmed_at != nil"
+      sign_in_and_redirect(:account, @account)
+     # render 'pages/home' 
+   else
+      awaiting_confirmation_url (resource)
+   end
   
-  #root_path
-   #'registrations/awaiting_confirmation'
-   #render 'awaiting_confirmation'
- #  "http://www.google.com"
  end
   
 end  

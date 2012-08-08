@@ -1628,7 +1628,7 @@ small.less{display:block;padding:0;}
 }
 #sign-in-up-box h1 {
     /*background: url('/images/tivity.jpg') no-repeat scroll center center transparent;*/
-    background: url('/images/signup-logo.jpg') no-repeat scroll center center transparent; 
+    background: url('/images/signup-logo.png') no-repeat scroll center center transparent; 
     display: inline-block;
     height: 46px;
     margin: 20px 0 0px;

@@ -5,7 +5,6 @@
 	<%puts "resource= "+resource.inspect%>
 	<%puts "___________________________________________________"%>
 	
-	<!--%puts "@email= "+@email%-->
 	<%puts "___________________________________________________"%>
 	 
 		
@@ -40,6 +39,7 @@
 			<%puts "email = "+@email%>
 				<%= f.email_field :email, :class => "input", :placeholder => @email,  :disabled => true %>
 				<%= f.hidden_field :email, :value =>@email%>
+				<%= f.hidden_field :viral, :value =>true%>
 				
 				
 			<%end%>
