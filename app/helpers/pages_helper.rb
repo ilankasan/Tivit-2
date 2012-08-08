@@ -43,16 +43,12 @@ def get_tasks_for_other(current_user_id)
                     ",in_progress_id,TivitStatus.not_started_id ,current_user_id,current_user_id).order(" due, created_at DESC")
       
    #   puts "number of tasks is = "+results1.size.to_s
-      
     #  puts "<<<--- out get other tasks "+(Time.now()-time).to_s
-      
       return results1  
     end
-    
-
+ 
 
 def get_my_open_tasks(current_user_id)
-      
       #puts "--->>> in my open tasks"
    #   time = Time.now()
       
@@ -60,29 +56,20 @@ def get_my_open_tasks(current_user_id)
       new_id      = TivitStatus.get_new_id.to_s
       reviewed_id = TivitStatus.get_reviewed_id.to_s
       
-   #   with_date = Activity.where("(status_id     = ? OR status_id     = ?)   
-    #                AND activity_type = 'tivit'
-     #               AND owner_id      = ?
-      #              ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id).order(" due DESC, created_at DESC")
-     without_date = Activity.where("(status_id     = ? OR status_id     = ?)   
+      without_date = Activity.where("(status_id     = ? OR status_id     = ?)   
                     AND activity_type = 'tivit'
                     AND owner_id      = ?
                     AND due IS NULL
                     ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id).order(:created_at)
-  with_date = Activity.where("(status_id     = ? OR status_id     = ?)   
+      with_date = Activity.where("(status_id     = ? OR status_id     = ?)   
                     AND activity_type = 'tivit'
                     AND owner_id      = ?
                     AND due IS NOT NULL
                     ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id).order(:due).reverse_order
           
  #     puts "<<<--- out my open tasks "+(Time.now()-time).to_s
-      
-      
-     
       return with_date+without_date
-       
     end
-    
 ###################
     def old_get_my_open_tasks(current_user_id)
       
@@ -255,7 +242,7 @@ def get_my_open_tasks(current_user_id)
     puts "_______________________________________________"
     
                           
-     sql_activities_i_participate  = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
+     old_sql_activities_i_participate  = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE NOT activities.status_id         = "+TivitStatus.get_completed_id.to_s+"  
                  AND  activities.activity_type          = 'activity'
                  AND ((activities.owner_id               = "+user_id+") 
@@ -264,23 +251,19 @@ def get_my_open_tasks(current_user_id)
                           AND  tivits.owner_id                   = "+user_id+"
                           AND  tivits.status_id             = "+TivitStatus.get_in_progress_id.to_s+ "
                           ))
-                 ORDER BY  activities.due ASC "
+                 ORDER BY  activities.due desc "
                  
- #    puts sql_activities_i_participate
-                              
-     temp_delete_sql_activities_i_participate  = "SELECT DISTINCT activities.*, ISNULL(activities.due) AS 'isnull' FROM activities, activities as tivits, tivit_user_statuses 
-                 WHERE NOT activities.status_id        = "+TivitStatus.get_completed_id.to_s+"  
-                 AND activities.activity_type          = 'activity' 
-                 AND tivits.owner_id                   = "+user_id+"
-                 AND tivits.parent_id                  = activities.id
-                 AND tivit_user_statuses.activity_id   = tivits.id 
-                 AND NOT (tivits.status_id             = "+TivitStatus.get_new_id.to_s+" OR 
-                          tivits.status_id             = "+TivitStatus.get_declined_id.to_s+") 
-                
-                 AND tivit_user_statuses.user_id       = "+user_id+"
-                 ORDER BY  isnull ASC, activities.due ASC "
-                              
-                            
+     sql_activities_i_participate  = "SELECT DISTINCT activities.*, ISNULL(activities.due) AS 'isnull' FROM activities, activities as tivits 
+                 WHERE NOT activities.status_id         = "+TivitStatus.get_completed_id.to_s+"  
+                 AND  activities.activity_type          = 'activity'
+                 AND ((activities.owner_id              = "+user_id+") 
+                      OR (     
+                               tivits.parent_id                  = activities.id
+                          AND  tivits.owner_id                   = "+user_id+"
+                          AND  tivits.status_id             = "+TivitStatus.get_in_progress_id.to_s+ "
+                          ))
+                 ORDER BY  isnull ASC, activities.due ASC"
+ 
                             
         activities_i_participate      = Activity.find_by_sql(sql_activities_i_participate)
       #  puts "activities_i_participate = "+activities_i_participate.size.to_s
