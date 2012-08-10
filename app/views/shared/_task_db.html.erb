@@ -148,8 +148,10 @@
 										
 											<%= link_to my_task.get_parent.name, my_task.get_parent, :action => "show", :method => "get", :title  => my_task.get_parent.name %>
 										
-											<% if (activityOwner != "You") %>							
-												for <strong><%= activityOwner %></strong>
+											<% if (activityOwner != "You") %>
+											<%activityOwner_link = render :partial => 'users/user_link', :collection =>  [my_task.get_parent_owner], :as => :user%> 
+								
+												for <strong><%= activityOwner_link %></strong>
 		                                    <% end %>
 		                                    
 	                                   <% end %>

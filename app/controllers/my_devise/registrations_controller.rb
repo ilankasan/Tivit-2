@@ -33,9 +33,55 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  	puts params.inspect
  	puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------ 2"
   
-	super
+  
+  
+  if(params[:account][:viral] == "true" )
+    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
+    email    = params[:account][:email]
+    puts " viral maile "+email
+    
+    password = params[:account][:password]
+    name     = params[:account][:user][:name]
+    puts " viral name = "+name+"pass = "+password
+    
+    @account = Account.new :email => email , :password => password , :fullname => name
+    @users = User.where(:is_active => false,  :clone_email => email)
+              
+    @user = @users[0] if @users.size > 0
+        
+   # puts "user = "+@user.get_name
+    if(@user == nil)
+                puts "user == nil"
+                @account.user = User.new({:name=>name, :clone_email => email})
+    else
+      puts "user != nil"
+      if(@account.user == nil)
+          puts " account.user == nil"
+          @user.activate_user
+          @user.name    = name
+          @user.save
+          @account.user = @user
+      else
+        puts " account.user != nil"
+      end
+    end
+                    # do not send confirmation email, we directly save and confirm the new record
+    @account.user.activate_user
+    @account.skip_confirmation!
+    @account.save!
+    @account.confirm!
+
+    
+    sign_in_and_redirect(:account, @account)
+    #flash[:myinfo] = 'Your account on tiviti has been created via ' + provider.capitalize + '. In your profile you can change your personal information and add a local password.'
+  else
+# user is not joining virally  
+	 super
 #	puts "test  = "+test.inspect	
-	email = params[:account][:email]
+	 email = params[:account][:email]
 	puts "email = "+email 
   @account = Account.find_by_email(email)
 
@@ -89,7 +135,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
      @account.save
   end
 
-	
+	end
 #  account_session[:sign_in] = "true" 
  end
  

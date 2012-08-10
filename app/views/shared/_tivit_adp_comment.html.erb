@@ -54,7 +54,7 @@
 		  	  		<p class="start"><%= tivit_adp_comment.user.name %> started <%= time_ago_in_words(tivit_adp_comment.created_at) %> ago.</p>
 		   	  
 		  	  	<%when ("Done")%>
-		  	  		<p class="start complete"><%= tivit_adp_comment.user.name %> completed his tivit <%= time_ago_in_words(tivit_adp_comment.created_at) %> ago.</p>
+		  	  		<p class="start complete"><%= tivit_adp_comment.user.name %> completed his task <%= time_ago_in_words(tivit_adp_comment.created_at) %> ago.</p>
 		  	  		
 		   	  	<%when ("Declined")%>
 		  	  		<p class="start">Unfortunatlly, <%= tivit_adp_comment.user.name %> cannot help with this tivit. <%= time_ago_in_words(tivit_adp_comment.created_at) %> ago.</p>

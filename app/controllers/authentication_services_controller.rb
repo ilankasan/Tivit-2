@@ -116,16 +116,16 @@ def create
       					account.user = User.new({:name=>name, :clone_email => email})
       				else
       					puts "user != nil"
-      				if(account.user == nil)
-      					puts " account.user == nil"
-      					@user.activate_user
-      					@user.name    = name
-      					@user.save
-      					account.user = @user
-      				else
-      					puts " account.user != nil"
-      				end
-      			end
+      				  if(account.user == nil)
+      					 puts " account.user == nil"
+      					 @user.activate_user
+      					 @user.name    = name
+      					 @user.save
+      					 account.user = @user
+      				  else
+      					 puts " account.user != nil"
+      				  end
+      			   end
     		            # do not send confirmation email, we directly save and confirm the new record
     		  account.user.activate_user
 					
