@@ -216,12 +216,85 @@ jQuery(document).ready(function($){
 
 	});
 	// New Requests - user click I'm on it button
+	$('.do-it').live('hover', function(){
+		$(this).css('cursor','pointer');
+	});
+	$('.do-it').live('hover', function(){
+		$(this).css('cursor','pointer');
+	});
+	
+	// New Requests - user click I'm on it button
 	$('.newtivits .on-it').live('hover', function(){
 		$(this).css('cursor','pointer');
 	});
 	$('.mytivits-act .on-it').live('hover', function(){
 		$(this).css('cursor','pointer');
 	});
+	
+	// clicking I'll do it on ADP
+	$('.do-it').live('click', function(){
+		var record = jQuery(this).parents('.record');
+	    var tivitID = $(record).find("input").attr("tivitid");
+	    console.log ("[Yaniv] do-it tivitid=", tivitID);
+	    
+	    // This will bring the tivit record based on all the input elements that has the tivitid attrivute equal to the tivit id in hand. Good examples here: http://www.mkyong.com/jquery/jquery-attribute-selector-examples/
+		var tivitRecord = $("input[tivitid='" + tivitID + "']").parents('.record');
+		tivitRecord.remove();
+		// Just testing we found the right one
+		//var foundtivitID = $(tivitRecord).find("input").attr("tivitid");
+		//console.log ("[Yaniv] on-it foundtivitID=", foundtivitID);
+		
+		// add the yellow background to show newly added
+		//tivitRecord.find('.conteiner').addClass('yell-bg').removeClass('record-hovered').removeClass('no-hover');
+		
+		// Remove the I'll do it button from the record objecg
+		//var onItAndSorryButtons = $(this).parents('.mytivits-act');
+		//$(onItAndSorryButtons).remove();
+		
+		// need to add some wrapping around the object since it's required in order to render properly
+		//tivitRecord.find('.record').wrap ('<div class="team tivits" />');
+		//tivitRecord.find('.record').wrap ('<div class="tvit-list" />');
+		
+		// Still need to update the avatar somehow....
+		//tivitRecord.find('.avatar').replaceWith();
+						
+		// Make an Ajax call to update the status of the tivit to on-it!
+		var action = '/onit?id=' + tivitID + '&type=doit' + '&method=post';
+		
+		console.log ("[Yaniv] action=", action);
+		
+		//if ( !jQuery("#alltivits .list").is(":visible") )
+		//{
+		//	console.log('[Yaniv] My Tasks - is NOT visible');  
+			// need to add the my tivits header
+		//	console.log('[Yaniv] first tivit for myself');  
+		///	jQuery('#alltivits').append('<h2>my tivits <span>(1)</span></h2>');	
+		//	jQuery('#alltivits').append('<div class="tvit-list" id="mytivits"></div>');		
+		//	jQuery('#alltivits').css('background', '#F8F8F8');		
+		//}
+		
+		//if ( jQuery("#mytivits .show-other-tasks").is(":visible") )
+		//{		    
+		//	jQuery("#mytivits .additional-tivits").before(tivitRecord);
+		//}
+		//else
+		//{			
+		//	jQuery("#mytivits").append(tivitRecord);			
+		//}
+			
+		// Actual Ajax call to the controller
+		$.post(action, $(this).serialize(), null, "script");	
+		
+		
+		// Open the comments area so user can post something if they like
+		//$(this).parents('.record').children('ul').fadeIn('slow');
+		//$(onItAndSorryButtons).remove();	
+		
+		console.log ("[Yaniv] after I'll do it ajax call");
+		
+	});
+	
+	// clicking I'm on it on ADP
 	$('.mytivits-act .on-it').live('click', function(){
 		var record = jQuery(this).parents('.record');
 	    var tivitID = $(record).find("input").attr("tivitid");
@@ -249,13 +322,12 @@ jQuery(document).ready(function($){
 		
 		// Open the comments area so user can post something if they like
 		$(this).parents('.record').children('ul').fadeIn('slow');
-		$(onItAndSorryButtons).remove();
-	
+		$(onItAndSorryButtons).remove();	
 		
-		console.log ("[Yaniv] after Ajax call");
+		//console.log ("[Yaniv] after Ajax call");
 		
 	});
-			
+	// clicking I'm on it in new request area		
 	$('.newtivits .on-it').live('click', function(){
 		
 		 // find out the tivit id that was clicked on
@@ -974,7 +1046,7 @@ jQuery(document).ready(function($){
 		
 		// This is used to isolate clicks on remind hyperlink on ADP page in each tivit, without this, the remind link will not work
 		if( $(e.target).is("a") || $(e.target).is(".send-reminder") ){
-			console.log("Run function because clicking on something else");
+			//console.log("Run function because clicking on something else");
 			return;
 		}
 		
@@ -983,7 +1055,7 @@ jQuery(document).ready(function($){
 		// First, check if we're opening or closing comments. Only on open we need to update the server
 		if (!jQuery(this).parents('.record').children('ul').is(":visible"))
 	    {
-	        console.log ("[Yaniv] OPEN comments!");
+	        //console.log ("[Yaniv] OPEN comments!");
 	        
 	        // Check if there're new comments on this activity by looking on the UI, if there's a red cricle of new comments
 	        var record = jQuery(this).parents('.record');
@@ -1006,7 +1078,7 @@ jQuery(document).ready(function($){
 	        }
 	        else
 	        {
-	        	console.log ("[Yaniv] NO new comments!"); 
+	        	//console.log ("[Yaniv] NO new comments!"); 
 	        }
 	    }
 	    else

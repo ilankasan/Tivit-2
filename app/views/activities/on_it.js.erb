@@ -4,17 +4,34 @@ console.log('on_it.js.erb:: called.');
 //console.log('activity name=', "<%= @activity.name %>");  
 //console.log('@lastcomment=', "<%= @lastcomment %>");  
 
+<% if (@type == 'doit') %>
+	console.log('In on-it.js.eb, type=Ill do it');  
+	
+	if ( !jQuery("#alltivits .list").is(":visible") )
+	{
+		console.log('[Yaniv] My Tasks - is NOT visible');  
+		// need to add the my tivits header
+		console.log('[Yaniv] first tivit for myself');  
+		jQuery('#alltivits').append('<h2>my tivits <span>(1)</span></h2>');	
+		jQuery('#alltivits').append('<div class="tvit-list" id="mytivits"></div>');		
+		jQuery('#alltivits').css('background', '#F8F8F8');		
+	}
+	
+	<%# if activityparent.get_num_of_completed_tasks (current_account.user) > 0 %>
+	if ( jQuery("#mytivits .show-other-tasks").is(":visible") )
+	{
+	    //jQuery("#mytivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");	
+		jQuery("#mytivits .additional-tivits").before("<ul class='list'><%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  [@activity], :as => :my_task, :locals => {:taskContext => 'ADP'})) %></ul>");	
+	}
+	else
+	{
+		//jQuery("#mytivits").append("<%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  [@activity], :as => :my_task, :locals => {:taskContext => 'ADP'})) %>");
+		jQuery("#mytivits").append("<ul class='list'><%= escape_javascript(render(:partial => 'shared/task_db', :collection =>  [@activity], :as => :my_task, :locals => {:taskContext => 'ADP'})) %></ul>");		
+	}
+	console.log('[Yaniv] after partial rendering....(myself)...'); 
+	
+<%end%>
+
 //jQuery('#page-container').append('<div class="flash" id="confirmMsg">You agreed to help <%= @activity.get_owner.name.gsub("\'", "\\\\'") %> </div>');
+showConfirmationMessage ("You agreed to help <b><%= @activity.get_invited_by.name.gsub("\'", "\\\\'") %></b>");
 
-//showConfirmationMessage ("You agreed to help <b><%= @activity.get_invited_by.name.gsub("\'", "\\\\'") %></b>");
-
-
-
-//showConfirmationMessage ("You agreed to help <b><%= render :partial => 'users/user_link', :collection =>  [@activity.get_owner], :as => :user %></b>");
-showConfirmationMessage ("You agreed to help <b><%= ssssss %></b>");
-
-//
-//<%activityOwner_link = render :partial => 'users/user_link', :collection =>  [my_task.get_parent_owner], :as => :user%> 
-	//							
-												for <strong><%= activityOwner_link %></strong>
-		                        

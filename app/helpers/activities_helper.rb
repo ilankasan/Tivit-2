@@ -14,12 +14,24 @@ def get_task_status_line (task, user)
     loggedInUserIsTheOwner = "no"
     #task_owner_name = task.get_owner.name
     task_owner_name = render :partial => 'users/user_link', :collection =>  [task.get_owner], :as => :user 
-    
-   
+       
   end
 
-  #task_invited_by = render :partial => 'users/user_link', :collection =>  [task.get_invited_by], :as => :user 
-  task_invited_by = task.get_invited_by.get_name
+  #task_invited_by = "<span>".html_safe
+  #task_invited_by = (link_to task.get_invited_by.get_name,  :controller  => "users", :action     => "relationship",
+  #                                                :method     => "get",
+  #                                               :id       => user.get_id,
+  #                                               :title      => "You stuff with "+ user.name,
+  #                                               :class      => "user").html_safe
+                                                 
+  #task_invited_by += "</span>".html_safe
+              
+  #task_invited_by  + (render :partial => 'users/user_link', :collection =>  [task.get_invited_by], :as => :user) + "</span>"
+  if ( task.get_invited_by.get_id != current_account.user.get_id)    
+    task_invited_by = task.get_invited_by.get_name
+  else
+    task_invited_by = "You"
+  end
   #task_invited_by = "INVITED BY"
   
   if task.get_owner.name == "not active"
@@ -83,8 +95,9 @@ def get_task_status_line (task, user)
   
     elsif (owner_tivit_status == TivitStatus.get_onit_id || owner_tivit_status == TivitStatus.get_accepted_id)
       
-      status_line_middle = " agreed to help "
-       if (task.get_owner.get_id != task.get_invited_by.get_id)
+      status_line_middle = "<span style=\"color: green\"> agreed</span>".html_safe + " to help "
+      
+      if (task.get_owner.get_id != task.get_invited_by.get_id)
          status_line_middle += task_invited_by
        end
        
@@ -104,15 +117,19 @@ def get_task_status_line (task, user)
   elsif (owner_tivit_status == TivitStatus.get_onit_id || owner_tivit_status == TivitStatus.get_accepted_id)
 
     if (task.due != nil)
+       #status_line_middle = "<span style=\"color: green\"> agreed</span>".html_safe + " to help "
        status_line_middle = " agreed to help "
+      
        if (task.get_owner.get_id != task.get_invited_by.get_id)
          status_line_middle += task_invited_by
        end
       status_line_middle += " by "
     else
+      #status_line_middle = "<span style=\"color: green\"> agreed</span>".html_safe + " to help"
       status_line_middle = " agreed to help"
+      
       if (task.get_owner.get_id != task.get_invited_by.get_id)
-        status_line_middle += " " + task_invited_by 
+        status_line_middle += " " + task_invited_by
       end
     end
   

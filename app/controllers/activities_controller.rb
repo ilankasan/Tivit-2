@@ -155,7 +155,7 @@ class ActivitiesController < ApplicationController
       @activity = @activity_temp
     end
    
-    @activity.update_status_after_show(current_account.user)
+   # @activity.update_status_after_show(current_account.user)
     
   	@title = "Activity Details - "+@activity.name
   	#puts "<<<<<<<<<<<<<<-----------show activity detailed page"  
@@ -313,8 +313,12 @@ class ActivitiesController < ApplicationController
     @comment = params["comment"]   
     @activity.update_tivit_user_status_onit(current_account.user,params["comment"])
     @lastcomment = log_action_as_comment(@activity,@comment,"OnIt",current_account.user)
-
-  
+    @type = params["type"]   
+    
+    if @type != nil
+      puts "==> type=" + @type
+    end
+    
     #redirect_to  @activity.get_parent
     respond_to do |format|
        format.html { redirect_to @activity  }
