@@ -49,9 +49,7 @@ end
 def home
     @title = "Home"
     
-    #puts "Home"
-    #  @activities_summary =[]
-       
+      
     current_user_id = current_account.user.get_id.to_s
  #ILAN - remove filter  
     puts "current_user_id = "+current_user_id
@@ -64,21 +62,9 @@ def home
     else
 
      
-     # if((account_session[:filter_id]==nil) && (params[:filter_id]==nil))
-     #   @filter_id = "1"  
-     # elsif (params[:filter_id] != nil)
-     #   @filter_id = params[:filter_id]
-     # else
-     #   @filter_id = account_session[:filter_id]
-     # end
-        
-   #   @activities_summary =[]
      
   # Filter only product On Deck (for now)
-      #@completed_tasks          = get_completed_tivits(current_account.user)
-      
-      #@activities_i_participate      = @activities_summary
-     # @incoming_activities           = get_activities_with_new_tivit_requests(current_user_id)
+
       @new_tivit_requests            = get_new_tivit_requests(current_user_id)
       @my_open_tasks                 = get_my_open_tasks(current_user_id)
       

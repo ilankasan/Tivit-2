@@ -152,7 +152,6 @@ end
 #Only when they are in my activity and have a new status or comment since last view
 # added remove tivits i declined
 
-#  puts "----------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> user is  the OWNER of activity"
     
       my_open_tivits = self.tivits.joins(:tivit_user_statuses).where(
                                     "   NOT activities.status_id          = ?
@@ -195,27 +194,13 @@ end
  #(recently ilan kasan)
       open_tivits_im_asignee = self.tivits.where(
                     "NOT activities.status_id = ? AND activities.invited_by = ?",TivitStatus.get_completed_id,user.get_id)
-      
-                      
-   #   puts "Open tivits in other activity i invited "+open_tivits_im_asignee.size.to_s
-      
-# get all tivits i participated in the conversation and there are new comments
-       
-           #   puts "my open tivites "+my_open_tivits.size.to_s
                  
       return (my_open_tivits+open_tivits_im_asignee+tivits_i_commented_with_new_comments).uniq
     end
-    
-   # puts "-------------<<<<<<<<<<<<<<-------------------------------------------------"
-       
   end
   
-   def get_requests_tivits(currentuser)
-# retuen my new requests
- #   puts "-------------<<<<<<<<<<<<<<  get_requests_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-  
-  
-   my_tivits    = self.tivits.joins(:tivit_user_statuses).where(
+  def get_requests_tivits(currentuser)
+    my_tivits    = self.tivits.joins(:tivit_user_statuses).where(
       "      tivit_user_statuses.user_id     = activities.owner_id 
        AND     activities.owner_id           = ?
        AND NOT activities.status_id          = ?

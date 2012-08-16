@@ -29,10 +29,9 @@ def get_user_activity_notifications (user_id)
 end
 
 
-def get_tasks_for_other(current_user_id)
-      
+  def get_tasks_for_other(current_user_id)
       #puts "--->>> in get tasks for others"
-      time = Time.now()
+   #   time = Time.now()
       
       in_progress_id = TivitStatus.get_in_progress_id.to_s
       
@@ -52,9 +51,9 @@ def get_my_open_tasks(current_user_id)
       #puts "--->>> in my open tasks"
    #   time = Time.now()
       
-      completed   = TivitStatus.get_completed_id.to_s
-      new_id      = TivitStatus.get_new_id.to_s
-      reviewed_id = TivitStatus.get_reviewed_id.to_s
+  #    completed   = TivitStatus.get_completed_id.to_s
+   #   new_id      = TivitStatus.get_new_id.to_s
+    #  reviewed_id = TivitStatus.get_reviewed_id.to_s
       
       without_date = Activity.where("(status_id     = ? OR status_id     = ?)   
                     AND activity_type = 'tivit'
@@ -71,81 +70,19 @@ def get_my_open_tasks(current_user_id)
       return with_date+without_date
     end
 ###################
-    def old_get_my_open_tasks(current_user_id)
-      
-      #puts "--->>> in my open tasks"
-      time = Time.now()
-      
-      completed   = TivitStatus.get_completed_id.to_s
-      new_id      = TivitStatus.get_new_id.to_s
-      reviewed_id = TivitStatus.get_reviewed_id.to_s
-      
-      results1 = Activity.where("(status_id     = ? OR status_id     = ?)   
-                    AND activity_type = 'tivit'
-                    AND owner_id      = ?
-                    ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id).order(" due, created_at DESC")
-     
-      puts "<<<--- out my open tasks "+(Time.now()-time).to_s
-      
-      
-      with_date     = self.activities.where("status_id = ? AND invited_by = ? AND due not null",TivitStatus.get_in_progress_id, other_user.get_id).order(:due)
-    without_date  = self.activities.where(:status_id => TivitStatus.get_in_progress_id,:invited_by => other_user.get_id,:due => nil)
-    
-      return results1
-       
-    end
     
     def get_new_tivit_requests(current_user_id)
-      puts "--->>> in get_new_tivit_requests"
-      time = Time.now()
+   #   puts "--->>> in get_new_tivit_requests"
+    #  time = Time.now()
       
   # get activities with New and unread tivits  
-      
-        
-      
       results1  =  Activity.where("status_id = ? AND owner_id = ? AND NOT invited_by = ?",TivitStatus.not_started_id,current_user_id,current_user_id)
     
       #puts "^^^^^^^^^^^^^^^^^   -------->>>>>>>>>>>>>>> R1 = "+results1.size.to_s
-      puts "<<<--- out get_new_tivit_requests "+(Time.now()-time).to_s
-      
-    #  puts results1.inspect
+  #    puts "<<<--- out get_new_tivit_requests "+(Time.now()-time).to_s
       return results1 
   end
 
-  def delete_this_get_new_tivit_requests(current_user_id)
-      #puts "--->>> in get_new_tivit_requests"
-      time = Time.now()
-      
-  # get activities with New and unread tivits  
-      completed   = TivitStatus.get_completed_id.to_s
-      new_id      = TivitStatus.get_new_id.to_s
-      reviewed_id = TivitStatus.get_reviewed_id.to_s
-      declined_id = TivitStatus.get_declined_id.to_s
-      proposed_id = TivitStatus.get_proposed_id.to_s
-  
-        
-      sql_new_tivit_requests = "SELECT DISTINCT tivits.* FROM  activities as tivits, tivit_user_statuses 
-                   WHERE NOT tivits.status_id             = "+completed+"  
-                   AND  tivits.activity_type              = 'tivit' 
-                   AND  tivits.owner_id                   = "+current_user_id+"  
-                   AND  NOT tivits.invited_by             = "+current_user_id+"  
-                   AND  tivits.owner_id                   = tivit_user_statuses.user_id 
-                   AND  tivits.id                         = tivit_user_statuses.activity_id 
-                   AND  (tivit_user_statuses.status_id    = "+new_id+" 
-                      OR tivit_user_statuses.status_id    = "+reviewed_id+")
-                   ORDER BY tivits.due"
-    #OR tivit_user_statuses.status_id    = "+proposed_id+"
-      results1  =  Activity.find_by_sql(sql_new_tivit_requests)
-    
-      #puts "^^^^^^^^^^^^^^^^^   -------->>>>>>>>>>>>>>> R1 = "+results1.size.to_s
-      puts "<<<--- out get_new_tivit_requests "+(Time.now()-time).to_s
-      
-    #  puts results1.inspect
-      return results1 
-  end
-  
-    
-    
   def get_activities_with_new_tivit_requests(current_user_id)
   # get activities with New and unread tivits  
   completed   = TivitStatus.get_completed_id.to_s

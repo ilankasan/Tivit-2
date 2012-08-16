@@ -203,6 +203,26 @@ class User < ActiveRecord::Base
     return  other_user.get_num_completed_tasks_assign_to_me (self) 
   end
   
+  def get_num_open_tasks_i_assigned
+    
+        returen Activity.where("     (status_id        = ? OR status_id        = ?)   
+                             AND      activity_type    = 'tivit'
+                             AND NOT  owner_id         = ?
+                             AND      invited_by       = ?
+                    ",in_progress_id,TivitStatus.not_started_id ,self.id,self.id).count
+  
+    
+  end
+  
+  
+  def get_num_my_open_tasks
+      
+      return Activity.where("status_id     = ?   
+                                AND activity_type = 'tivit'
+                                AND owner_id      = ?
+                                
+                    ",TivitStatus.get_in_progress_id,self.id).count
+  end
   
   private
                     
