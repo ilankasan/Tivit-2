@@ -52,7 +52,7 @@
 			
 			<% if (myTotalNumberOfTasks > 0) %>
 				<div class="tivits main-tivit" id="alltivits">
-					<h2>You have <span><%= @newTasksForMe.size + @openTasksForMe.size %></span> tasks you agreed to help <b><%=@other_user.get_name %></b>  with </h2>
+					<h2>You have <%=pluralize((@newTasksForMe.size + @openTasksForMe.size),"task")%> you agreed to help <b><%=@other_user.get_name %></b>  with </h2>
 					<div class="tvit-list" id="mytivits">						
 						
 						<% if @newTasksForMe.size > 0 %>
@@ -86,7 +86,7 @@
 				<% if (totalTasksIAssigned > 0) %>
 				
 				<div class="team tivits" id="team-tivits">
-					<h2>There are  <span><%= @openTasksForOther.size + @newTasksForOther.size %></span> tasks you asked <b><%=@other_user.get_name %></b> to help you with</h2>
+					<h2>There are  <%=pluralize((@openTasksForOther.size + @newTasksForOther.size),"tasks")%> you asked <b><%=@other_user.get_name %></b> to help you with</h2>
 					<div class="tvit-list" id="teamtivits">
 					
 						

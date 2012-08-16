@@ -139,7 +139,7 @@ You will receive an email with instructions about how to reset your password in 
 
 $ git add .
 
-git commit -am "8-9-12 sign up flow  s2"
+git commit -am "8-15-12 ilan enhacements  s2"
 git commit -am "1-31-12 autocomplete"
 git commit -am "4-1-12 get rid of the create activity in ADP"
 
