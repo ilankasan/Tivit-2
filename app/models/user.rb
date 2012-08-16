@@ -77,11 +77,11 @@ class User < ActiveRecord::Base
     #return self.admin
   end
 
-  def is_first_activity_ever?
+  def delete_this_is_first_activity_ever?
    return (self.activities == nil || self.activities.size == 0  )
   end
   
-  def does_have_active_tasks?
+  def delete_this_does_have_active_tasks?
    
    return true if(self.activities.where("NOT status_id = ?",TivitStatus.get_completed_id).count > 0)
    
@@ -90,6 +90,18 @@ class User < ActiveRecord::Base
    
    return false
   end
+  
+  def is_activity_zero?
+# return true is user was never assigned a task, created an activity or assign a task
+   
+   return false if(self.activities.size > 0)
+   
+   return false if(Activity.where("invited_by = ?",self.get_id).count > 0)
+   
+   
+   return true
+  end
+  
   
   
   def isSupperAdmin?
@@ -210,8 +222,6 @@ class User < ActiveRecord::Base
                              AND NOT  owner_id         = ?
                              AND      invited_by       = ?
                     ",TivitStatus.get_in_progress_id,TivitStatus.not_started_id ,self.id,self.id).count
-  
-    
   end
   
   
@@ -220,7 +230,6 @@ class User < ActiveRecord::Base
       return Activity.where("status_id     = ?   
                                 AND activity_type = 'tivit'
                                 AND owner_id      = ?
-                                
                     ",TivitStatus.get_in_progress_id,self.id).count
   end
   
