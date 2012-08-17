@@ -32,18 +32,28 @@ end
   def get_tasks_for_other(current_user_id)
       #puts "--->>> in get tasks for others"
    #   time = Time.now()
-      
       in_progress_id = TivitStatus.get_in_progress_id.to_s
       
-      results1 = Activity.where("     (status_id        = ? OR status_id        = ?)   
+      without_date = Activity.where("     (status_id        = ? OR status_id        = ?)   
                              AND      activity_type    = 'tivit'
                              AND NOT  owner_id         = ?
                              AND      invited_by       = ?
+                              AND due IS NULL
+                    ",in_progress_id,TivitStatus.not_started_id ,current_user_id,current_user_id).order("created_at DESC")
+                    
+       with_date = Activity.where("     (status_id        = ? OR status_id        = ?)   
+                             AND      activity_type    = 'tivit'
+                             AND NOT  owner_id         = ?
+                             AND      invited_by       = ?
+                              AND due IS NOT NULL
                     ",in_progress_id,TivitStatus.not_started_id ,current_user_id,current_user_id).order(" due, created_at DESC")
       
    #   puts "number of tasks is = "+results1.size.to_s
     #  puts "<<<--- out get other tasks "+(Time.now()-time).to_s
-      return results1  
+    
+       
+    
+      return with_date+without_date  
     end
  
 

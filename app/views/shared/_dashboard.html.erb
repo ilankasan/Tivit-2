@@ -14,9 +14,8 @@
 
 
 <div id="homepage-tivit-list-container">
-	
-	
-	<% if false %>
+		
+	<% if current_account.user.is_activity_zero? %>
 		 
 		<div id="dashboardFTE">
 		</div>
@@ -65,10 +64,20 @@
             <!-- <div class="status">You have <%#= @tivits_ondeck.count%> activities / tivits </div> -->
 			<ul id="tabs-nav">
 				<li class="tab open">
-	                <a href="#tivit-desk">My Tasks (<%=current_account.user.get_num_my_open_tasks%>)</a>
+					<% myTasksCount = current_account.user.get_num_my_open_tasks %>
+					<a href="#tivit-desk">My Tasks 
+	                <% if myTasksCount > 0 %>	                		
+	                		(<%= myTasksCount %>)	                		
+	                <% end %>
+	               	</a>	                	
 	            </li>
-	            <li class="tab">
-	                <a href="#tasks-i-asked">I Assigned (<%=current_account.user.get_num_open_tasks_i_assigned%>)</a>
+	            <li class="tab"> 	
+	            	<% iAssignedCount = current_account.user.get_num_open_tasks_i_assigned %>	            	
+	                <a href="#tasks-i-asked">I Assigned 
+	                <% if iAssignedCount > 0 %>	                		
+	                		(<%= iAssignedCount %>)	                		
+	                <% end %>
+	               	</a>
 	            </li>
 	    		<li class="tab">
 	                <a href="#activities-tab">Activities</a> 
