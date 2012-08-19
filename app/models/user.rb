@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   
   has_and_belongs_to_many :activities
   #has_and_belongs_to_many :preferences
-  
+  has_many :last_reviewed
   
 # each user has many user status (show the specific status for each task)
   has_many :tivit_user_statuses
@@ -77,18 +77,17 @@ class User < ActiveRecord::Base
     #return self.admin
   end
 
-  def delete_this_is_first_activity_ever?
-   return (self.activities == nil || self.activities.size == 0  )
-  end
   
-  def delete_this_does_have_active_tasks?
-   
-   return true if(self.activities.where("NOT status_id = ?",TivitStatus.get_completed_id).count > 0)
-   
-   return true if(Activity.where("invited_vy = ? AND NOT status_id = ?",self.get_id, TivitStatus.get_completed_id).count > 0)
-   
-   
-   return false
+  
+  def update_reviewed_completed_tasks
+      LastReviewed.update_completed_tasks_module(self)
+  end 
+    
+  def get_num_new_completed_since_last_reviewed
+   puts "get_num_new_completed_since_last_reviewed"
+   #self.activities()
+   return Activity.where("status_id = ? AND activity_type = 'tivit' AND (owner_id = ? OR invited_by = ?) AND completed_at > ?",TivitStatus.get_completed_id, self.id, self.id, LastReviewed.get_last_updated_completed_tasks(self)).count
+
   end
   
   def is_activity_zero?

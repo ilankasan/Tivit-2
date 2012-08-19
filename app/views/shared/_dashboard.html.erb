@@ -85,10 +85,17 @@
 	      			<%#if count > 0%>
 	                	<!-- <i><%#=count%></i> -->
 	                <%#end%>
+	                
+	                
+	                
 	            </li>
 	            <li class="tab">
 	                <a href="#completed-tab">Completed</a>
-	                	
+	                <% count = current_account.user.get_num_new_completed_since_last_reviewed %>
+	      			<%if count > 0%>
+	                	<i><%=count%></i>
+	                <%end%>	
+	                
 	                
 	            </li>	           
             </ul>        

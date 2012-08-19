@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120719030908) do
+ActiveRecord::Schema.define(:version => 20120819055535) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -104,6 +104,14 @@ ActiveRecord::Schema.define(:version => 20120719030908) do
     t.string   "file_name"
     t.integer  "document_id"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "last_revieweds", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "module_id"
+    t.datetime "when"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

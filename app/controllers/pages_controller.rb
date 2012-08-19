@@ -30,6 +30,8 @@ def load_tabs
   elsif ( @tabToLoad == 'completed-tab' )
      
     @objectsToRender = get_completed_tivits(current_account.user)
+    current_account.user.update_reviewed_completed_tasks
+    
   elsif ( @tabToLoad == 'tasks-i-asked' ) 
     @objectsToRender = get_tasks_for_other(current_account.user.get_id.to_s)
   else

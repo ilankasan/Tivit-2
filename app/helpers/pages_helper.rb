@@ -140,44 +140,6 @@ def get_my_open_tasks(current_user_id)
       #puts "number of activities with incoming tivits = "+results.size.to_s
   end
 
-  def old_get_activities_i_participate (user_id)
-#all the activites the user either own OR participating in, ordered by date, closest one first, do not show the activities i have not accepted any tivit
-    puts "_______________________________________________"
-    puts "get_activities_i_participate "
-    puts "_______________________________________________"
-    
-      sql_activities_i_participate_no_due_date = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
-                 WHERE NOT activities.status_id   = "+TivitStatus.get_completed_id.to_s+"
-                 AND activities.due               IS NULL    
-                 AND activities.activity_type     = 'activity' 
-                 AND (activities.owner_id         = "+user_id+"
-                 OR (
-                 tivits.owner_id        = "+user_id+" 
-                 AND tivits.parent_id   = activities.id))"
-                 
-      sql_activities_i_participate_with_due_date = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
-                 WHERE NOT activities.status_id   = "+TivitStatus.get_completed_id.to_s+"  
-                 AND activities.activity_type     = 'activity' 
-                 AND activities.due IS NOT           NULL
-                 AND (activities.owner_id         = "+user_id+"
-                 OR (
-                 tivits.owner_id        = "+user_id+" 
-                 AND tivits.parent_id   = activities.id))
-                 ORDER BY activities.due"
-      
-                          
-  
-                              
-                            
-        activities_i_participate_with_due_date      = Activity.find_by_sql(sql_activities_i_participate_with_due_date)
-     #   puts "with date = "+activities_i_participate_with_due_date.inspect
-        activities_i_participate_without_due_date   = Activity.find_by_sql(sql_activities_i_participate_no_due_date)
-    #    puts "without date = "+activities_i_participate_without_due_date.inspect
-        
-        return activities_i_participate_with_due_date + activities_i_participate_without_due_date
-        
-  end
-
   
   def get_activities_i_participate (user_id)
 #all the activites the user either own OR participating in, ordered by date, closest one first, do not show the activities i have not accepted any tivit
