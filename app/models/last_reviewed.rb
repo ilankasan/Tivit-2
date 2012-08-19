@@ -7,7 +7,7 @@ class LastReviewed < ActiveRecord::Base
     puts "--->>> get_last_updated_completed_tasks"
     lr = LastReviewed.where(:user_id => user.get_id, :module_id => @completed_tasks).first
     if(lr == nil)
-      return user.account.current_sign_in_at  
+      return user.account.last_sign_in_at  
     else
       puts "retrning when = "+lr.when.to_s
       return lr.when
