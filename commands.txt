@@ -65,6 +65,9 @@ rails generate model ProfileImage user_id:integer parent_id:integer content_type
 
 rails generate model ActivityDocument activity_id:integer document_id:integer
 rails generate model Document activity_document_id:integer name:string note:string version:string
+
+rails generate model last_revewed user_id:integer module_id:integer when:datetime
+
 rails generate model UserContacts user_id:integer contact_id:integer 
 
 rails generate model ActivityDocuments activity_id:integer document_id:integer user_id:integer
@@ -139,7 +142,7 @@ You will receive an email with instructions about how to reset your password in 
 
 $ git add .
 
-git commit -am "8-16-12 ilan+yaniv enhacements  s2"
+git commit -am "8-18-12 last review s2"
 git commit -am "1-31-12 autocomplete"
 git commit -am "4-1-12 get rid of the create activity in ADP"
 
