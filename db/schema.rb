@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120819055535) do
+ActiveRecord::Schema.define(:version => 20120819065400) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -115,6 +115,8 @@ ActiveRecord::Schema.define(:version => 20120819055535) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "last_revieweds", ["user_id", "module_id"], :name => "by_user_module", :unique => true
 
   create_table "preferences", :force => true do |t|
     t.string   "preference"
