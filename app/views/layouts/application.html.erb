@@ -131,22 +131,20 @@
 <%else%>
 		<div id="page-container" class="bk2">
 <%end%>    		
-			<% flash.each do |key, value| %>
-				<div class="flash <%= key %>" id="confirmMsg"><%= value %></div>
+			<%if account_signed_in?%>
+				<% flash.each do |key, value| %>
+					<div class="flash <%= key %>" id="confirmMsg"><%= value %></div>
+					<%puts "Flash key is "+key.to_s%>
+					<%puts "____________________________________________________"%>
+					<%puts flash.inspect%>
+					
+				<% end %>		
 				
-				<!--
-				<div class="notify-wrapper">
-				   	<div class="top-notify">
-				   		You reassigned a task to Peggy Olsen. <a href="">Undo</a>
-				   	</div> 
-				</div>
-				-->
-			<% end %>		
-			
-			
+			   <% end %>	
 	    
 		     
-		    <%= yield %>	     	 
+		    	<%= yield %>	 
+		     	 
 		     		
 	       <div style="clear: both;"></div>
 	       
