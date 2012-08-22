@@ -370,7 +370,14 @@ r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)
 # .paginate(:page => params[:page], :per_page => 30)
 
  end
- 
+ def is_recently_completed? (user)
+    if(self.completed_at > self.get_last_reviewed(user))
+      return true
+    else
+      return false
+    end
+    
+ end
  def get_num_of_completed_tasks (user)
      return self.tivits.where(:owner_id => user.get_id ,:status_id => TivitStatus.get_completed_id).count
  end
