@@ -12,19 +12,23 @@ end
     
 def get_user_activity_notifications (user_id)
   puts "in get_user_notifications "
-  events = Activity.where("invited_by = ? AND NOT owner_id =? AND  (status_id = ? OR status_id = ?) ", 
-                    user_id,user_id,TivitStatus.get_completed_id,TivitStatus.get_in_progress_id).order(:updated_at).reverse_order.limit(5)
+ # events = Activity.where("invited_by = ? AND NOT owner_id =? AND  (status_id = ? OR status_id = ?) ", 
+  #                  user_id,user_id,TivitStatus.get_completed_id,TivitStatus.get_in_progress_id).order(:updated_at).reverse_order.limit(5)
   
-  puts "processing "+events.size.to_s+" events"
- # notifications = Array.new
-  #events.each do |event|
-   # if(event.is_completed?)
-             
-    #  notifications << event.get_name+" was completed"
-    #end
-  #end
-  #return ["notificaiton 1", " notification 2"]
-  return events
+  #puts "processing "+events.size.to_s+" events"
+  
+  
+     #return Activity.where("status_id = ? AND activity_type = 'tivit' AND (owner_id = ? OR invited_by = ?)",TivitStatus.get_completed_id, user.get_id, user.get_id ).order(:completed_at).reverse_order.paginate(:page => params[:page], :per_page => 15)
+     sql = "SELECT * FROM activities WHERE
+                     invited_by = "+ user_id + " 
+             AND NOT owner_id   = "+ user_id + "
+             AND   (status_id   = "+TivitStatus.get_completed_id.to_s+" OR status_id = "+TivitStatus.get_in_progress_id.to_s+")  
+           ORDER BY updated_at DESC LIMIT 5"
+           
+     #return Activity.where("status_id = ? AND activity_type = 'tivit' AND (owner_id = ? OR invited_by = ?)",TivitStatus.get_completed_id, user.get_id, user.get_id ).order(:completed_at).paginate(:page => params[:page], :per_page => 15)
+     return Activity.find_by_sql(sql)
+  
+#  return events
   
 end
 
