@@ -395,14 +395,34 @@ r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)
   
       return r
  end
- 
+ def get_last_reviewed (user)
+   tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.get_id)
+   if(tivit_user_status == nil)
+     puts "user last status is nil !!!!!"
+     return 1
+   else
+      puts "last reviewed for activity  "+self.id.to_s+ " for user "+user.get_id.to_s+" is "+tivit_user_status.last_reviewed.to_s+" validating user "+tivit_user_status.user_id.to_s
+      return tivit_user_status.last_reviewed
+   end
+ end
   def get_recently_team_completed_tasks (user)
-     #tivit_user_status = self.activity.tivit_user_statuses.find_by_user_id(user.get_id)
+    puts "get_recently_team_completed_tasks"
+     last_reviewed =  self.get_last_reviewed (user)
      #self.created_at > tivit_user_status.last_reviewed
-     #return []
-     return self.tivits.joins(:tivit_user_statuses).where("NOT activities.owner_id = ? AND  activities.status_id = ? AND activities.id = tivit_user_statuses.activity_id AND tivit_user_statuses.user_id = ? AND activities.updated_at > tivit_user_statuses.last_reviewed",user.get_id, TivitStatus.get_completed_id,user.get_id).order(:completed_at)
+     
+     return self.tivits.where("NOT activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at > ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
      
   end
+  
+  def get_my_recently_completed_tasks (user)
+   puts "get_my_recently_completed_tasks"
+     last_reviewed =  self.get_last_reviewed (user)
+     #self.created_at > tivit_user_status.last_reviewed
+     
+     return self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at > ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
+      
+  end
+  
   
   def get_team_completed_tasks (user)
      return self.tivits.where("NOT owner_id = ? AND  status_id = ?",user.get_id, TivitStatus.get_completed_id).order(:completed_at).reverse_order
@@ -444,6 +464,28 @@ r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)
 # After the user viewed the tivit for the first time, make sure status changes from New to Review
   def update_status_after_show(user)
  # puts "------------------------------------------------------------"
+  puts "AFTER show attempting to change status for activity "+self.id.to_s+ " "+self.name
+ #puts "------------------------------------------------------------"
+    status = self.get_user_status(user)
+    if(status == TivitStatus.get_new_id)
+       change_status(user,TivitStatus.get_reviewed_id,"")
+       puts "------>>>>> chaging status from new to Review"
+    end
+# puts "Changing the date of last review og the comments"
+#updating the date/time a user reviewed this activity/tivit
+    tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
+    tivit_user_status.update_last_reviewed
+# ilan revisit this code
+    if(self.tivits !=nil && false)
+        self.tivits.each do |tivit|
+          tivit.update_status_after_show(user)
+        end
+    end
+  end
+ 
+ 
+ def update_last_reviewed(user)
+ # puts "------------------------------------------------------------"
  # puts "AFTER show attempting to change status for activity "+self.id.to_s+ " "+self.activity_name
  #puts "------------------------------------------------------------"
     status = self.get_user_status(user)
@@ -462,6 +504,7 @@ r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)
         end
     end
   end
+ 
  
  
  def update_tivit_user_status_reminded(user,comment)

@@ -143,7 +143,7 @@ class ActivitiesController < ApplicationController
   
   def show
     
-   # puts "----------->>>>>>>>>>> show activity detailed page"
+    puts "----------->>>>>>>>>>> show activity detailed page"
     #puts "params = "+params.inspect
     @activity_temp = Activity.find(params[:id])
     if(!@activity_temp.isActivity?)
@@ -180,14 +180,14 @@ class ActivitiesController < ApplicationController
   end
    
   def update_view_status
-   #puts "----------->>>>>>>>>>> update_view_status"
-   if(@tivit_id != nil)
+   puts "----------->>>>>>>>>>> update_view_status"
+   #if(@tivit_id != nil)
     @tivit = Activity.find(params[:id])
     if(@tivit != nil)
         @tivit.update_status_after_show(current_account.user)
         puts "updating reviewed" 
     end  
-   end
+   #end
        
    #@activity.update_status_after_show(current_account.user)
   end
