@@ -250,7 +250,7 @@
 						<% end %>
 						
 						<% myRecentlyCompleted = activitydetails.get_my_recently_completed_tasks (current_account.user)  %>
-							get_my_recently_completed_tasks
+						
 							<% if myRecentlyCompleted != nil && myRecentlyCompleted.size > 0 %>
 								<ul class="list">
 								<%= render :partial => 'shared/task_db', :collection =>  myRecentlyCompleted, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
