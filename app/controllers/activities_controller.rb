@@ -381,7 +381,7 @@ class ActivitiesController < ApplicationController
 	  current_account.user.addTwoWayContact(@invited_user)
 	  params["description"] = clean_comment(params["description"]) 
     @tivit = @invited_user.activities.create(params)
-    @tivit.get_parent
+    #@tivit.get_parent
     @tivit.update_tivit_user_status_reviewed(current_account.user,"")
     #Change status to on it is tivit assigned to self. Ilan - optimize this section to one function
     if(@invited_user.get_id == current_account.user.get_id && params["invitees"] == "myself"  )

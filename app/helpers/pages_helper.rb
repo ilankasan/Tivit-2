@@ -228,7 +228,15 @@ def get_my_open_tasks(current_user_id)
 
   def get_completed_tivits(user)
     puts " --------->>>>>>>>>>>>>>> get_completed_tivits $$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-     return Activity.where("status_id = ? AND activity_type = 'tivit' AND (owner_id = ? OR invited_by = ?)",TivitStatus.get_completed_id, user.get_id, user.get_id ).order(:completed_at).reverse_order.paginate(:page => params[:page], :per_page => 10)
+     #return Activity.where("status_id = ? AND activity_type = 'tivit' AND (owner_id = ? OR invited_by = ?)",TivitStatus.get_completed_id, user.get_id, user.get_id ).order(:completed_at).reverse_order.paginate(:page => params[:page], :per_page => 15)
+     sql = "SELECT * FROM activities WHERE
+               status_id     = "+TivitStatus.get_completed_id.to_s+"
+           AND activity_type = 'tivit' 
+           AND (owner_id = "+user.get_id.to_s+" OR invited_by = "+user.get_id.to_s+") 
+           ORDER BY completed_at DESC"
+           
+     #return Activity.where("status_id = ? AND activity_type = 'tivit' AND (owner_id = ? OR invited_by = ?)",TivitStatus.get_completed_id, user.get_id, user.get_id ).order(:completed_at).paginate(:page => params[:page], :per_page => 15)
+     return Activity.find_by_sql(sql).paginate(:page => params[:page], :per_page => 10)
 
   end
 
