@@ -163,7 +163,7 @@ class ActivitiesController < ApplicationController
    
   end
   
-  def update_reviewed
+  def old_update_reviewed
     puts ">>>>>>>>>>>>>>>>>   updating reviewed!!!!!"  
    
     @tivit = Activity.find(params[:id])
@@ -182,16 +182,22 @@ class ActivitiesController < ApplicationController
    
   def update_view_status
    puts "--------------------------------------------------"
-   puts "----------->>>>>>>>>>> update_view_status kkkkkkk"
+   puts "-yyyyy ---------->>>>>>>>>>> update_view_status kkkkkkk"
    puts "--------------------------------------------------"
    
    #if(@tivit_id != nil)
     @tivit = Activity.find(params[:id])
     if(@tivit != nil)
         @tivit.update_status_after_show(current_account.user)
-        puts "updating reviewed" 
-    end  
-   #end
+        puts "updating reviewed ooooo" 
+    end
+    parent = @tivit.get_parent
+    if(parent != nil)
+       puts "parent updating reviewed" 
+          parent.update_status_after_show(current_account.user)
+    else
+      puts "parent is nil --------------------------"
+    end
        
    #@activity.update_status_after_show(current_account.user)
   end
