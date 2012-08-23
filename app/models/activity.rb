@@ -366,7 +366,13 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
  
  def get_my_completed_tasks (user)
   puts "^^^^^^^^^^^^^^^--------->>>> get_my_completed_tasks"
-     return self.tivits.where(:owner_id => user.get_id ,:status_id => TivitStatus.get_completed_id).order(:completed_at).reverse_order
+  
+  last_reviewed =  self.get_last_reviewed (user)
+     #self.created_at > tivit_user_status.last_reviewed
+     
+     return self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at > ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
+     
+  #   return self.tivits.where(:owner_id => user.get_id ,:status_id => TivitStatus.get_completed_id).order(:completed_at).reverse_order
 # .paginate(:page => params[:page], :per_page => 30)
 
  end
@@ -432,11 +438,13 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
   
   
   def get_team_completed_tasks (user)
-     return self.tivits.where("NOT owner_id = ? AND  status_id = ?",user.get_id, TivitStatus.get_completed_id).order(:completed_at).reverse_order
+     last_reviewed =  self.get_last_reviewed (user)
+   
+     return self.tivits.where("NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at).reverse_order
   end
  
  
-  def get_num_of_team_completed_tasks (user)
+  def delete_this_get_num_of_team_completed_tasks (user)
      return self.tivits.where("NOT owner_id = ? AND  status_id = ?",user.get_id, TivitStatus.get_completed_id).count
   end
   
@@ -755,7 +763,7 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
    return 0 if (self.tivits == nil || self.tivits.size == 0)
    #puts "^^^^^^^^^^^^^^^^^^^^^  Activity = "+self.name
                                          
-   count1 = self.tivits.where(:status_id=>[TivitStatus.get_completed_id, "Done"]).count
+   count1 = self.tivits.where(:status_id=>[TivitStatus.get_completed_id]).count
   # puts "count 1 = "+count1.to_s
   # puts "count  = "+count.to_s
    return count1
@@ -768,31 +776,9 @@ return self.tivits.size
   
   end
   
-  def DELETE_get_activity_tivit_status
-#returns a string of how many tivits have been completed
-# need to remove business logic from model
-    if(self.tivits == nil || self.tivits.size == 0)
-      return "no tivits"
-    else
-      count = 0
-# puts "get_activity_tivit_status = " +self.tivits.size.inspect
-
-      self.tivits.each do |tivit|
-      status = tivit.get_user_status(tivit.get_owner)
-#puts "status = "+ status
-      if (status == "Done")
-          count = count+1
-      end
-    end
-  end
-  #get_number_of_completed_tivits
-  return count.inspect + "/" + self.tivits.size.inspect+" tivits have been completed"
-  
-  end
 
 # Checking to see if the task was previously closed. This will be used before the email is sent out below
 
-  
   def change_status_to_completed (summary)
    #puts "------------->>>>. change_status_to_completed"
    
@@ -815,7 +801,7 @@ return self.tivits.size
   end
   
   def change_status_to_in_progress
-    puts "change_status_to_in_progress"
+   # puts "change_status_to_in_progress"
     
     change_status_id(TivitStatus.get_in_progress_id)
     if(self.tivits != nil || self.tivits.size > 0)

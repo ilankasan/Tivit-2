@@ -224,8 +224,10 @@
 			<!-- My tivits -->
 			<% myNewRequestTasks = activitydetails.get_my_new_tasks (current_account.user) %>
 			<% myTasks = activitydetails.get_my_open_tasks_i_agreed_to_help_with (current_account.user) %>
+			<% myRecentlyCompleted = activitydetails.get_my_recently_completed_tasks (current_account.user)  %>
 			<% myCompletedTasks = activitydetails.get_my_completed_tasks (current_account.user) %>
-			<% myTotalNumberOfTasks = myNewRequestTasks.size + myTasks.size + myCompletedTasks.size %>
+			
+			<% myTotalNumberOfTasks = myNewRequestTasks.size + myTasks.size + myCompletedTasks.size + myRecentlyCompleted.size %>
 			
 			<%# mytivits = activitydetails.get_my_tivits(current_account.user) %>
 			
@@ -249,7 +251,6 @@
 							</ul>
 						<% end %>
 						
-						<% myRecentlyCompleted = activitydetails.get_my_recently_completed_tasks (current_account.user)  %>
 						
 							<% if myRecentlyCompleted != nil && myRecentlyCompleted.size > 0 %>
 								<ul class="list">
@@ -272,11 +273,7 @@
 				
 			<%end%>
 				
-				<!-- add tivit button -->
-				<!-- 
-				<p><input type="submit" value="add a task" id="add-tivit" class="form-button"></p>
-				<div class="clear"></div>
-				-->	
+					
 			<!-- End of Main Tivits -->
 			</div> <!-- My tivits -->
 			
@@ -303,10 +300,12 @@
 			
 			<!-- Team tivits -->			
 				<!-- <h2>team tivits<span>(4)</span></h2> -->
-				<% teamNewRequestTasks = activitydetails.get_team_new_tasks (current_account.user) %>
-				<% teamTasks = activitydetails.get_team_open_tasks_they_agreed_to_help_with (current_account.user) %>
-				<% teamCompletedTasks = activitydetails.get_team_completed_tasks (current_account.user) %>
-				<% totalNumberOfTeamTasks = teamNewRequestTasks.size + teamTasks.size + teamCompletedTasks.size %>				
+				<% teamNewRequestTasks  = activitydetails.get_team_new_tasks (current_account.user) %>
+				<% teamTasks 			= activitydetails.get_team_open_tasks_they_agreed_to_help_with (current_account.user) %>
+				<% recentlyCompleted 	= activitydetails.get_recently_team_completed_tasks (current_account.user)  %>
+				<% teamCompletedTasks 	= activitydetails.get_team_completed_tasks (current_account.user) %>
+				
+				<% totalNumberOfTeamTasks = teamNewRequestTasks.size + teamTasks.size + teamCompletedTasks.size + recentlyCompleted.size %>				
 			
 				<%# teamtivits = activitydetails.get_team_tivits(current_account.user) %>
 				<%# if teamtivits !=nil && teamtivits.size > 0 %>
@@ -331,17 +330,12 @@
 								</ul>
 							<% end %>
 							
-							<% recentlyCompleted = activitydetails.get_recently_team_completed_tasks (current_account.user)  %>
 							<% if recentlyCompleted != nil && recentlyCompleted.size > 0 %>
 								<ul class="list">
 								<%= render :partial => 'shared/task_db', :collection =>  recentlyCompleted, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
 								</ul>
 							<% end %>
 					
-					
-					
-							
-							
 							<% if teamCompletedTasks != nil && teamCompletedTasks.size > 0 %>
 								<ul class="list additional-tivits hide"">
 									<%= render :partial => 'shared/task_db', :collection =>  teamCompletedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
