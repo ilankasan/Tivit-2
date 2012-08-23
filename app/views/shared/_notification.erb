@@ -21,7 +21,7 @@
 	<%=task_owner_name %> agreed to help with 
 	
 <%end%>
-<%= link_to task_name,activity_url(event.get_parent) %><br>
+<%= link_to task_name,activity_url(event) %><br>
 <%if !comment[0].nil?%>
 	<%= time_ago_in_words(comment[0].created_at) %> ago<br>
 <%end%>

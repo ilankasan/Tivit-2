@@ -150,8 +150,12 @@ class ActivitiesController < ApplicationController
 #this is a tivit
   #    puts ">>>>>>>>>>>>>>>>>>    this is a tivit <<<<<<<<<<<<<<<<<<<<<<"
       @tivit_id = @activity_temp.id
+      puts ">>>>>>>>>>>>>>>>>>    this is a tivit <<<<<<<<<<<<<<<<<<<<<<   " +@tivit_id.to_s
+   
       @activity = @activity_temp.get_parent
     else
+    puts ">>>>>>>>>>>>>>>>>>    this is a not a tivit <<<<<<<<<<<<<<<<<<<<<<"
+   
       @activity = @activity_temp
     end
    
