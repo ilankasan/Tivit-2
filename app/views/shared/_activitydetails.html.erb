@@ -229,12 +229,14 @@
 			
 			<% myTotalNumberOfTasks = myNewRequestTasks.size + myTasks.size + myCompletedTasks.size + myRecentlyCompleted.size %>
 			
-			<%# mytivits = activitydetails.get_my_tivits(current_account.user) %>
+			<%# puts "------->>>> tasks = "+myTotalNumberOfTasks.to_s %>
 			
-			<%# if mytivits != nil && mytivits.size > 0 %>
-			<% if (myNewRequestTasks != nil && myNewRequestTasks.size > 0) || (myTasks != nil && myTasks.size > 0) || (myCompletedTasks != nil && myCompletedTasks.size > 0) %>
+			
+			<%# if (myNewRequestTasks != nil && myNewRequestTasks.size > 0) || (myTasks != nil && myTasks.size > 0) || (myCompletedTasks != nil && myCompletedTasks.size > 0)  %>
+			<% if (myTotalNumberOfTasks > 0)  %>
+			
 				<div class="tivits main-tivit" id="alltivits">
-					<div class="perc-completed"><strong><%=(( 100 * myCompletedTasks.size) / myTotalNumberOfTasks)%>%</strong> complete</div>
+					<div class="perc-completed"><strong><%=(( 100 * (myCompletedTasks.size + myRecentlyCompleted.size)) / myTotalNumberOfTasks)%>%</strong> complete</div>
 					<h2>my tasks <span>(<%= myTotalNumberOfTasks %>)</span></h2>
 					<div class="tvit-list" id="mytivits">						
 						

@@ -150,11 +150,10 @@ class ActivitiesController < ApplicationController
 #this is a tivit
   #    puts ">>>>>>>>>>>>>>>>>>    this is a tivit <<<<<<<<<<<<<<<<<<<<<<"
       @tivit_id = @activity_temp.id
-      puts ">>>>>>>>>>>>>>>>>>    this is a tivit <<<<<<<<<<<<<<<<<<<<<<   " +@tivit_id.to_s
+  #    puts ">>>>>>>>>>>>>>>>>>    this is a tivit <<<<<<<<<<<<<<<<<<<<<<   " +@tivit_id.to_s
    
       @activity = @activity_temp.get_parent
     else
-    puts ">>>>>>>>>>>>>>>>>>    this is a not a tivit <<<<<<<<<<<<<<<<<<<<<<"
    
       @activity = @activity_temp
     end
@@ -185,22 +184,20 @@ class ActivitiesController < ApplicationController
   end
    
   def update_view_status
-   puts "--------------------------------------------------"
-   puts "-yyyyy ---------->>>>>>>>>>> update_view_status kkkkkkk"
-   puts "--------------------------------------------------"
+ #  puts "-yyyyy ---------->>>>>>>>>>> update_view_status kkkkkkk"
    
    #if(@tivit_id != nil)
     @tivit = Activity.find(params[:id])
     if(@tivit != nil)
         @tivit.update_status_after_show(current_account.user)
-        puts "updating reviewed ooooo" 
+      #  puts "updating reviewed ooooo" 
     end
     parent = @tivit.get_parent
     if(parent != nil)
-       puts "parent updating reviewed" 
+      # puts "parent updating reviewed" 
           parent.update_status_after_show(current_account.user)
     else
-      puts "parent is nil --------------------------"
+      #puts "parent is nil --------------------------"
     end
        
    #@activity.update_status_after_show(current_account.user)

@@ -25,7 +25,7 @@ attr_accessible :status_id, :activity_id,:user_id,:comment,:last_reviewed
 		time = Time.now()
   		self.last_reviewed = time.utc
   		self.save
-  		puts "update_last_reviewed = "+self.last_reviewed.to_s 
+  #		puts "update_last_reviewed = "+self.last_reviewed.to_s 
 	end
 	
 	def get_user

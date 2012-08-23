@@ -370,13 +370,13 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
   last_reviewed =  self.get_last_reviewed (user)
      #self.created_at > tivit_user_status.last_reviewed
      
-     return self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at > ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
-     
-  #   return self.tivits.where(:owner_id => user.get_id ,:status_id => TivitStatus.get_completed_id).order(:completed_at).reverse_order
-# .paginate(:page => params[:page], :per_page => 30)
-
+     t =  self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at < ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
+     puts "^^^^^^^^^^^^^^^--------->>>> get_my_completed_tasks = "+t.size.to_s
+  
+     return t
+  
  end
- def is_recently_completed? (user)
+ def is_recently_completed_adp? (user)
     if(self.completed_at > self.get_last_reviewed(user))
       return true
     else
@@ -384,6 +384,17 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
     end
     
  end
+ 
+ def is_recently_completed_tab? (user)
+    if(self.completed_at > LastReviewed.get_last_updated_completed_tasks(user))
+      return true
+    else
+      return false
+    end
+    
+ end
+ 
+ 
  def get_num_of_completed_tasks (user)
      return self.tivits.where(:owner_id => user.get_id ,:status_id => TivitStatus.get_completed_id).count
  end
@@ -414,17 +425,17 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
      puts "user last status is nil !!!!!"
      return 1
    else
-      puts "last reviewed for activity  "+self.id.to_s+ " for user "+user.get_id.to_s+" is "+tivit_user_status.last_reviewed.to_s+" validating user "+tivit_user_status.user_id.to_s
+  #    puts "last reviewed for activity  "+self.id.to_s+ " for user "+user.get_id.to_s+" is "+tivit_user_status.last_reviewed.to_s+" validating user "+tivit_user_status.user_id.to_s
       return tivit_user_status.last_reviewed
    end
  end
   def get_recently_team_completed_tasks (user, task_id)
-    puts "get_recently_team_completed_tasks"
+  #  puts "get_recently_team_completed_tasks"
      last_reviewed =  self.get_last_reviewed (user)
      #self.created_at > tivit_user_status.last_reviewed
      results = self.tivits.where("NOT activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at > ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)     
      task    = self.tivits.where("NOT activities.owner_id = ? AND  activities.status_id = ? AND activities.id = ?",user.get_id, TivitStatus.get_completed_id, task_id)
-     puts "completed task = "+task.inspect+ " for od "+task_id.to_s 
+  #   puts "completed task = "+task.inspect+ " for od "+task_id.to_s 
      return (task+results).uniq       
      
      
@@ -432,13 +443,15 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
   end
   
   def get_my_recently_completed_tasks(user, task_id)
-   puts "get_my_recently_completed_tasks"
+  # puts "get_my_recently_completed_tasks"
      last_reviewed =  self.get_last_reviewed (user)
      #self.created_at > tivit_user_status.last_reviewed
      
      results =  self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at > ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
-     task    = self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.id = ?",user.get_id, TivitStatus.get_completed_id, task_id) 
-     return (task+results).uniq       
+     task    = self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.id = ?",user.get_id, TivitStatus.get_completed_id, task_id)
+     t =  (task+results).uniq
+      puts "get_my_recently_completed_tasks = "+t.size.to_s
+     return t      
   end
   
   
@@ -484,12 +497,12 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
 # After the user viewed the tivit for the first time, make sure status changes from New to Review
   def update_status_after_show(user)
  # puts "------------------------------------------------------------"
-  puts "AFTER show attempting to change status for activity "+self.id.to_s+ " "+self.name
+  #puts "AFTER show attempting to change status for activity "+self.id.to_s+ " "+self.name
  #puts "------------------------------------------------------------"
     status = self.get_user_status(user)
     if(status == TivitStatus.get_new_id)
        change_status(user,TivitStatus.get_reviewed_id,"")
-       puts "------>>>>> chaging status from new to Review"
+      # puts "------>>>>> chaging status from new to Review"
     end
 # puts "Changing the date of last review og the comments"
 #updating the date/time a user reviewed this activity/tivit
@@ -511,7 +524,7 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
     status = self.get_user_status(user)
     if(status == TivitStatus.get_new_id)
        change_status(user,TivitStatus.get_reviewed_id,"")
-       puts "------>>>>> chaging status from new to Review"
+    #   puts "------>>>>> chaging status from new to Review"
     end
 # puts "Changing the date of last review og the comments"
 #updating the date/time a user reviewed this activity/tivit
