@@ -437,15 +437,11 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
      task    = self.tivits.where("NOT activities.owner_id = ? AND  activities.status_id = ? AND activities.id = ?",user.get_id, TivitStatus.get_completed_id, task_id)
   #   puts "completed task = "+task.inspect+ " for od "+task_id.to_s 
      return (task+results).uniq       
-     
-     
-     
   end
   
   def get_my_recently_completed_tasks(user, task_id)
   # puts "get_my_recently_completed_tasks"
      last_reviewed =  self.get_last_reviewed (user)
-     #self.created_at > tivit_user_status.last_reviewed
      
      results =  self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at > ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
      task    = self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.id = ?",user.get_id, TivitStatus.get_completed_id, task_id)
@@ -642,8 +638,7 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
    return tivit_user_status.proposed_date if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
    return nil
  end
- 
- 
+  
  def get_owner_last_status_change
   return self.tivit_user_statuses.find_by_user_id(self.owner_id).last_status_change
  end
@@ -948,7 +943,6 @@ if(last_reviewed != nil)
     return tivit_user_status.status_id
  end
  
-  
  def change_status(user, status,comment)
    change_user_status(user, status,comment, nil,nil,nil)
  end
