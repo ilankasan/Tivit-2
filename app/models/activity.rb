@@ -299,11 +299,11 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
   end
   
   def get_open_tivits (user) 
-   puts "------------->>>>>>>>>>>>>>>>   in get_open_tivits"
+ #  puts "------------->>>>>>>>>>>>>>>>   in get_open_tivits"
     #self.tivits.joins(:tivit_user_statuses).where("NOT tivit_user_statuses.status_id = ?
      #                AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id).order(:due).reverse_order
-    time = Time.now()
-r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)",TivitStatus.get_in_progress_id,TivitStatus.not_started_id, user.get_id).order(:due).reverse_order
+   # time = Time.now()
+      r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)",TivitStatus.get_in_progress_id,TivitStatus.not_started_id, user.get_id).order(:due).reverse_order
      #                AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id).order(:due).reverse_order
       return r
     
@@ -511,6 +511,9 @@ r =  self.tivits.where("(status_id = ? ) OR (status_id = ? AND NOT owner_id = ?)
         end
     end
   end
+  
+  
+  
  
  
  

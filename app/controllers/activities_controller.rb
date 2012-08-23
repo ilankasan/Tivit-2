@@ -157,6 +157,7 @@ class ActivitiesController < ApplicationController
    
    # @activity.update_status_after_show(current_account.user)
     
+    
   	@title = "Activity Details - "+@activity.name
   	#puts "<<<<<<<<<<<<<<-----------show activity detailed page"  
    
@@ -168,7 +169,7 @@ class ActivitiesController < ApplicationController
     @tivit = Activity.find(params[:id])
     if(@tivit != nil)
         @tivit.update_status_after_show(current_account.user)
-        puts "updating reviewed" 
+        puts "--------------------------    updating reviewed ____________________________" 
     end  
       
     respond_to do |format|
@@ -180,7 +181,10 @@ class ActivitiesController < ApplicationController
   end
    
   def update_view_status
-   puts "----------->>>>>>>>>>> update_view_status"
+   puts "--------------------------------------------------"
+   puts "----------->>>>>>>>>>> update_view_status kkkkkkk"
+   puts "--------------------------------------------------"
+   
    #if(@tivit_id != nil)
     @tivit = Activity.find(params[:id])
     if(@tivit != nil)

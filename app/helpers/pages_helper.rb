@@ -148,14 +148,10 @@ def get_my_open_tasks(current_user_id)
   def get_activities_i_participate (user_id)
 #all the activites the user either own OR participating in, ordered by date, closest one first, do not show the activities i have not accepted any tivit
   #  puts "_______________________________________________"
-  time = Time.now()
-    puts "_______________________________________________"
+  #time = Time.now()
     
-    puts "NEW get_activities_i_participate "
-    puts "_______________________________________________"
-    
-                          
-     old_sql_activities_i_participate  = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
+     if Rails.env.development?                     
+      sql_activities_i_participate  = "SELECT DISTINCT activities.* FROM activities, activities as tivits 
                  WHERE NOT activities.status_id         = "+TivitStatus.get_completed_id.to_s+"  
                  AND  activities.activity_type          = 'activity'
                  AND ((activities.owner_id               = "+user_id+") 
@@ -165,8 +161,8 @@ def get_my_open_tasks(current_user_id)
                           AND  tivits.status_id             = "+TivitStatus.get_in_progress_id.to_s+ "
                           ))
                  ORDER BY  activities.due desc "
-                 
-     sql_activities_i_participate  = "SELECT DISTINCT activities.*, ISNULL(activities.due) AS 'isnull' FROM activities, activities as tivits 
+     else            
+      sql_activities_i_participate  = "SELECT DISTINCT activities.*, ISNULL(activities.due) AS 'isnull' FROM activities, activities as tivits 
                  WHERE NOT activities.status_id         = "+TivitStatus.get_completed_id.to_s+"  
                  AND  activities.activity_type          = 'activity'
                  AND ((activities.owner_id              = "+user_id+") 
@@ -177,10 +173,10 @@ def get_my_open_tasks(current_user_id)
                           ))
                  ORDER BY  isnull ASC, activities.due ASC"
  
-                            
+      end                      
         activities_i_participate      = Activity.find_by_sql(sql_activities_i_participate)
       #  puts "activities_i_participate = "+activities_i_participate.size.to_s
-         puts "<<<--- out activities_i_participate "+(Time.now()-time).to_s
+       #  puts "<<<--- out activities_i_participate "+(Time.now()-time).to_s
         
         return activities_i_participate
         

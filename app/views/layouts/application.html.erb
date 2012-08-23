@@ -134,9 +134,6 @@
 			<%if account_signed_in?%>
 				<% flash.each do |key, value| %>
 					<div class="flash <%= key %>" id="confirmMsg"><%= value %></div>
-					<%puts "Flash key is "+key.to_s%>
-					<%puts "____________________________________________________"%>
-					<%puts flash.inspect%>
 					
 				<% end %>		
 				
