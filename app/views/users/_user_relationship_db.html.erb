@@ -1,156 +1,35 @@
-<!-- Display a tivit within an activity on the  Dashboard -->
-<% owner_tivit_status = "tivit.get_owner_status" %>
-
-<!-- *** 1 *** figure out the status line user name -->		
-<% loggedInUserIsTheOwner = "yes" %>
-<% tivit_owner_name = "tivit_owner_name" %>
-
-<!-- *** 2 *** Figure out the appropriate window to determine the statusline relevant text -->
-<% due_time_window = "tivit.get_due_window_from_now" %>
-<% status_line_window = "status_line_window" %>
-
-<!-- *** 3 *** the middle text in status line varies dpending on the status of each tivit, let's set it up based on the status -->
-<% status_line_middle = "status_line_middle" %>
-
-		
-		
-
-	  	 			
-<% if (true)%>
-
-	<li class="record inprog">
-		<% status_line_middle = " agreed to help by" %>
-	
-<% elsif false %>
-
-	<li class="record unread">
-		<% if tivit_owner_name == "You" %>
-			<% status_line_middle = " haven't read this." %>
-		<% else %>
-			<% status_line_middle = " hasn't read this." %>
-		<% end %>
-	
-		<% if tivit.due != nil %>
-			<% status_line_window = " Due " + status_line_window %>
-		<% else %>
-			<% status_line_window = "" %>
-		<% end %>
-	
-
-
-<% elsif owner_tivit_status == TivitStatus.get_reassigned_id%>
-			<li class="record re-assign">
-			
-			<% if tivit.get_invited_by.id == current_account.user.id %>
-				<% tivit_owner_name = "You" %>
-			<% else %>
-				<% tivit_owner_name = tivit.get_invited_by.get_name %>
-			<% end %>
-			
-			<% if tivit.get_owner.id == current_account.user.id %>
-				<% status_line_middle = " reassigned to you." %>
-			<% else %>
-				<% status_line_middle = " reassigned to " +  tivit.get_owner.get_name %> 
-			<% end %>
-			
-			<% if tivit.due != nil %>
-				<% status_line_window = " Due " + status_line_window %>
-			<% else %>
-				<% status_line_window = "" %>
-			<% end %>
-				      	                	
-<% else %>	                            
-
-	<li class="record busy">
-	<% status_line_middle = " can't help." %>
-	<% status_line_window = "" %>
-	
-<%end%>
-
-	<input type="hidden" activityid="<%= "tivit.get_parent.id" %>" tivitid="<%= "tivit.id" %>">
-
-	
-	<div class="status">
-		<div class="icon"></div>
-		<!-- if I'm the activity owner / tivit creator or assignee, use class="status"
-			so jQuery for dropdown list will work, otherwise use other status so it'll be ignored -->
-		<% if loggedInUserIsTheOwner == "yes" %>
-			<% mytivit = "yes"%>
-		<% else %>
-			<% mytivit = "no"%>
-		<% end %>
-			<% activityOwner = "yes"%>
-				<% invitedByMe = "yes"%>
-					
-		<input type="hidden" tivitid="<%= "tivit.id" %>" mytivit= "<%="mytivit"%>" activityOwner="<%="activityOwner"%>" invitedByMe="<%=invitedByMe%>" >
-				
-	</div>
-
-<!-- if the status is new, that means the owner didn't read it yet, dim avatar and put the remind link -->
-	<div class="avatar">
-		<!--%= render :partial => 'profile_images/profile_image', :collection =>  [tivit.get_owner], :as => :user%-->
-	
-		<%= profile_image(user)%>  
-	</div>
-	<div class="text">
-		<div class="activity">
-		   <!-- Let's hide the attachemt icon for now until we have it really working like comments
-		   	<div class="attach">
-		   		<i>1</i>
-		    </div>
-		   -->
-		   
-		  	<h1><font color = "black">.</font></h1> 
-			
-		  	  
+<li class="record unread">
+	<div class="conteiner">	
+		<div class="avatar read">
+			<%= profile_image(user)%>  
 		</div>
-		<div class="wrapp">
-			<div class="twr">
-	              
-	              <% tivit_parent_activity = nil %>
-	              
-	              <h3>    	
-	              	<%= render :partial => 'users/user_link', :collection =>  [user], :as => :user%> 
-				       	
-	              </h3>
-	              
-	              <% status_line = "hhhhhhhhhhhhhhhhh" +tivit_owner_name + status_line_middle + status_line_window %>
-	        		<!-- all gray status lines -->
-					<span class="grey">
-	              	<% me = current_account.user %>
+		<div class="text">
+							
+			<div class="text-conteiner" style="cursor: pointer;">
+				<h3><%= render :partial => 'users/user_link', :collection =>  [user], :as => :user%> </h3>
+				<span class="grey">
+					
+					<% me = current_account.user %>
 
 					<% newTasksForMe       = me.get_new_tasks_assign_to_me  (user) %>
 					<% openTasksForMe 	   = me.get_open_tasks_assign_to_me (user) %>
-					<% completedTasksForMe = me.get_num_completed_tasks_assign_to_me (user)  %>
-								
+					<% completedTasksForMe = me.get_num_completed_tasks_assign_to_me (user)  %>					
 							
 					
 					<% newTasksForOther       = me.get_new_tasks_i_assigned  (user) %>
 					<% openTasksForOther 	  = me.get_open_tasks_i_assign  (user) %>
 					<% completedTasksForOther = me.get_num_completed_tasks_i_assign (user)  %>
 				
-	              	Tasks in progress <%= newTasksForOther.size+openTasksForOther.size+newTasksForMe.size+openTasksForMe.size %>,  
-				 	Tasks completed   <%= completedTasksForOther + completedTasksForMe%> <br> 
-						
-	              		<!-- Ilan put data here  -->
-	              	
-	              		
-		              		<% if (true ) %>
-		              		
-			              			<font color = "black">[ by ilan]</font>
-			              		
-	              			<%end%>
-	              	
-	              </span>
-	         
-            </div>
-		</div>
-	                                
-		
-		
-	</div>
-	<div class="clear"></div>
+	              	<%= newTasksForOther.size+openTasksForOther.size+newTasksForMe.size+openTasksForMe.size %> tasks in progress,  
+				 	<%= completedTasksForOther + completedTasksForMe%> Tasks completed 
+				 	
+					</span>
+			</div> <!-- text-container -->
+		</div> <!-- text -->
+												
+		<div class="clear"></div>
+	</div><!-- conteiner -->										
 </li>
-		            
-
-
+											
+								
+										
