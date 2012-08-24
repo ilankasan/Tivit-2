@@ -225,9 +225,8 @@
 			<% myNewRequestTasks = activitydetails.get_my_new_tasks (current_account.user) %>
 			<% myTasks = activitydetails.get_my_open_tasks_i_agreed_to_help_with (current_account.user) %>
 			<% myRecentlyCompleted = activitydetails.get_my_recently_completed_tasks current_account.user, @tivit_id  %>
-			<% myCompletedTasks = activitydetails.get_my_completed_tasks (current_account.user) %>
+			<% myCompletedTasks = activitydetails.get_my_completed_tasks current_account.user, @tivit_id %>
 			
-			<% task = Activity.find(@tivit_id) %>
 			
 			<%# myCompletedTasks.delete(Activity.find(@tivit_id)) %>
 			<%# myCompletedTasks.delete(Activity.find(task)) %>
