@@ -349,7 +349,6 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
   
   def get_num_unassigned_tasks 
     return self.tivits.where(:status_id => TivitStatus.get_unassigned_id).order(:due).count
-    
   end
   
   
@@ -386,7 +385,10 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
  end
  
  def is_recently_completed_tab? (user)
-    if(self.completed_at > LastReviewed.get_last_updated_completed_tasks(user))
+   
+    return false if (self.completed_at == nil)
+    return true  if (LastReviewed.get_last_updated_completed_tasks(user) == nil)  
+    if (self.completed_at > LastReviewed.get_last_updated_completed_tasks(user))
       return true
     else
       return false
@@ -455,7 +457,10 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
     
      last_reviewed =  self.get_last_reviewed (user)
    
-     return self.tivits.where("NOT activities.id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ?", remove_task_id, user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at).reverse_order
+     r =  self.tivits.where("NOT id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ?", remove_task_id, user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at).reverse_order
+     puts "----->>>>>>>>>>>>>>>  get_team_completed_tasks "+r.size.to_s
+     
+     return r
   end
  
  

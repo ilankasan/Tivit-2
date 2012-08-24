@@ -48,9 +48,11 @@
 				<% end %>		
 				
 				<% if (!my_task.is_unassigned?) && (tivit_owner_name=="You") && (taskContext == 'ADP') && (my_task.get_owner_status == TivitStatus.get_new_id || my_task.get_owner_status == TivitStatus.get_reviewed_id) %>
-						<div class="conteiner yell-bg">	
+					<div class="conteiner yell-bg">	
+				<% elsif  my_task.is_recently_completed_tab? (current_account.user) %>
+					<div class="conteiner yell-bg">	
 				<% else %>
-						<div class="conteiner">	
+					<div class="conteiner">	
 				<% end %>							
 				
 				<!-- don't show dates in activities tab on dashboard for each task -->
@@ -110,10 +112,10 @@
 						<!-- ADP view only if the tasks status is a new request, show on it and sorry buttons -->
 						<div class="activity mytivits-act">
 							<!-- Unassigned tasks -->	
-							<% if ( my_task.is_unassigned? && (taskContext == 'ADP') ) %>
+							<% if ( my_task.is_unassigned? && (taskContext == 'ADP') && (!my_task.is_completed?) ) %>
 								<div class="do-it"></div>							
 								
-							<% elsif ( (newRequest == "yes") && (taskContext == 'ADP') ) %>
+							<% elsif ( (newRequest == "yes") && (taskContext == 'ADP') && (!my_task.is_completed?) ) %>
 								
 								<div class="on-it"></div>
 								<span class="btn-sorry">sorry...</span>
