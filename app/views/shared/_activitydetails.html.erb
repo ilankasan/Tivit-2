@@ -226,6 +226,8 @@
 			<% myTasks = activitydetails.get_my_open_tasks_i_agreed_to_help_with (current_account.user) %>
 			<% myRecentlyCompleted = activitydetails.get_my_recently_completed_tasks current_account.user, @tivit_id  %>
 			<% myCompletedTasks = activitydetails.get_my_completed_tasks (current_account.user) %>
+			<% myCompletedTasks.delete(Activity.find(@tivit_id)) %>
+			
 			
 			<% myTotalNumberOfTasks = myNewRequestTasks.size + myTasks.size + myCompletedTasks.size + myRecentlyCompleted.size %>
 			
@@ -306,6 +308,8 @@
 				<% teamTasks 			= activitydetails.get_team_open_tasks_they_agreed_to_help_with (current_account.user) %>
 				<% recentlyCompleted 	= activitydetails.get_recently_team_completed_tasks current_account.user,@tivit_id  %>
 				<% teamCompletedTasks 	= activitydetails.get_team_completed_tasks (current_account.user) %>
+				<% teamCompletedTasks.delete(Activity.find(@tivit_id)) %>
+			
 				
 				<% totalNumberOfTeamTasks = teamNewRequestTasks.size + teamTasks.size + teamCompletedTasks.size + recentlyCompleted.size %>				
 			
