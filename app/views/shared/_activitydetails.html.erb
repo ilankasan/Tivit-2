@@ -228,10 +228,6 @@
 			<% myCompletedTasks = activitydetails.get_my_completed_tasks current_account.user, @tivit_id %>
 			
 			
-			<%# myCompletedTasks.delete(Activity.find(@tivit_id)) %>
-			<%# myCompletedTasks.delete(Activity.find(task)) %>
-			
-			
 			<% myTotalNumberOfTasks = myNewRequestTasks.size + myTasks.size + myCompletedTasks.size + myRecentlyCompleted.size %>
 			
 			<%# puts "------->>>> tasks = "+myTotalNumberOfTasks.to_s %>
@@ -310,9 +306,8 @@
 				<% teamNewRequestTasks  = activitydetails.get_team_new_tasks (current_account.user) %>
 				<% teamTasks 			= activitydetails.get_team_open_tasks_they_agreed_to_help_with (current_account.user) %>
 				<% recentlyCompleted 	= activitydetails.get_recently_team_completed_tasks current_account.user,@tivit_id  %>
-				<% teamCompletedTasks 	= activitydetails.get_team_completed_tasks (current_account.user) %>
-				<%# teamCompletedTasks.delete(task) %>
-			
+				<% teamCompletedTasks 	= activitydetails.get_team_completed_tasks current_account.user,@tivit_id   %>
+				
 				
 				<% totalNumberOfTeamTasks = teamNewRequestTasks.size + teamTasks.size + teamCompletedTasks.size + recentlyCompleted.size %>				
 			

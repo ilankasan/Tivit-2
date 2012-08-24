@@ -451,11 +451,11 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
   end
   
   
-  def get_team_completed_tasks (user)
+  def get_team_completed_tasks (user, remove_task_id)
     
      last_reviewed =  self.get_last_reviewed (user)
    
-     return self.tivits.where("NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at).reverse_order
+     return self.tivits.where("NOT activities.id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ?", remove_task_id, user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at).reverse_order
   end
  
  
