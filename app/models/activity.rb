@@ -369,12 +369,15 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
   last_reviewed =  self.get_last_reviewed (user)
      #self.created_at > tivit_user_status.last_reviewed
      
-   #  t =  self.tivits.where("NOT activities.id = ? AND activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at < ?",remove_task_id,user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
-    # t =  self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at < ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
-    t =  Activity.where("parent_id = ? AND owner_id = ? AND  status_id = ? AND  activities.updated_at < ? AND NOT activities.id = ? ", self.id,user.get_id, TivitStatus.get_completed_id, last_reviewed,remove_task_id).order(:completed_at).reverse_order
-     
-     puts "^^^^^^^^^^^^^^^--------->>>> get_my_completed_tasks = "+t.size.to_s
+   #  #t =  Activity.where("parent_id = ? AND owner_id = ? AND  status_id = ? AND  activities.updated_at < ? AND NOT activities.id = ? ", self.id,user.get_id, TivitStatus.get_completed_id, last_reviewed,remove_task_id).order(:completed_at).reverse_order
+     if(remove_task_id == nil)
+       t =  self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at < ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
+       puts "^^^^^^^^^^^^^^^--------->>>> get_my_completed_tasks = "+t.size.to_s
   
+     else
+      t =  self.tivits.where("NOT activities.id = ? AND activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at < ?",remove_task_id,user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
+       
+     end   
      return t
   
  end
@@ -460,7 +463,6 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
     
      last_reviewed =  self.get_last_reviewed (user)
    
-     ##r =  self.tivits.where("NOT activities.id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ?", remove_task_id, user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at).reverse_order
      
      #r =  Activity.where("parent_id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ? AND NOT activities.id = ? ", self.id,user.get_id, TivitStatus.get_completed_id, last_reviewed,remove_task_id).order(:completed_at).reverse_order
      
@@ -473,7 +475,8 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
        r =  self.tivits.where("NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ?", user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at).reverse_order
     
      else
-       r =  Activity.where("parent_id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ? AND NOT activities.id = ? ", self.id,user.get_id, TivitStatus.get_completed_id, last_reviewed,remove_task_id).order(:completed_at).reverse_order
+     #  r =  Activity.where("parent_id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ? AND NOT activities.id = ? ", self.id,user.get_id, TivitStatus.get_completed_id, last_reviewed,remove_task_id).order(:completed_at).reverse_order
+        r =  self.tivits.where("NOT activities.id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ?", remove_task_id, user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at).reverse_order
      
       puts "----->>>>>>>>>>>>>>>  remove task id  is "+remove_task_id.to_s
      end
