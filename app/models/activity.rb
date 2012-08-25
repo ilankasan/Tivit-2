@@ -461,20 +461,24 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
      last_reviewed =  self.get_last_reviewed (user)
    
      ##r =  self.tivits.where("NOT activities.id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ?", remove_task_id, user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at).reverse_order
-     #r =  self.tivits.where("NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ?", user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at).reverse_order
-    
-     r =  Activity.where("parent_id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ? AND NOT activities.id = ? ", self.id,user.get_id, TivitStatus.get_completed_id, last_reviewed,remove_task_id).order(:completed_at).reverse_order
+     
+     #r =  Activity.where("parent_id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ? AND NOT activities.id = ? ", self.id,user.get_id, TivitStatus.get_completed_id, last_reviewed,remove_task_id).order(:completed_at).reverse_order
      
            
      #return Activity.where("status_id = ? AND activity_type = 'tivit' AND (owner_id = ? OR invited_by = ?)",TivitStatus.get_completed_id, user.get_id, user.get_id ).order(:completed_at).paginate(:page => params[:page], :per_page => 15)
      
      
-     puts "----->>>>>>>>>>>>>>>  get_team_completed_tasks "+r.size.to_s
      if remove_task_id == nil
        puts"NNNNNNNNNNNIIIIIIIIIIIIIIIIIIIIIIILLLLL"
+       r =  self.tivits.where("NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ?", user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at).reverse_order
+    
      else
-     puts "----->>>>>>>>>>>>>>>  remove task id  is "+remove_task_id.to_s
+       r =  Activity.where("parent_id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ? AND NOT activities.id = ? ", self.id,user.get_id, TivitStatus.get_completed_id, last_reviewed,remove_task_id).order(:completed_at).reverse_order
+     
+      puts "----->>>>>>>>>>>>>>>  remove task id  is "+remove_task_id.to_s
      end
+     puts "----->>>>>>>>>>>>>>>  get_team_completed_tasks "+r.size.to_s
+     
      return r
   end
  
