@@ -370,8 +370,9 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
      #self.created_at > tivit_user_status.last_reviewed
      
    #  t =  self.tivits.where("NOT activities.id = ? AND activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at < ?",remove_task_id,user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
-     t =  self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at < ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
-   
+    # t =  self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at < ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
+    t =  Activity.where("parent_id = ? AND owner_id = ? AND  status_id = ? AND  activities.updated_at < ? AND NOT activities.id = ? ", self.id,user.get_id, TivitStatus.get_completed_id, last_reviewed,remove_task_id).order(:completed_at).reverse_order
+     
      puts "^^^^^^^^^^^^^^^--------->>>> get_my_completed_tasks = "+t.size.to_s
   
      return t
