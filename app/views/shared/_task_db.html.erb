@@ -151,7 +151,7 @@
 											<%= link_to my_task.get_parent.name, my_task.get_parent, :action => "show", :method => "get", :title  => my_task.get_parent.name %>
 											
 											<% if (my_task.get_invited_by != current_account.user ) %>							
-												for <%= render :partial => 'users/user_link', :collection =>  [my_task.get_parent_owner], :as => :user %>
+												for <%= render :partial => 'users/user_link', :collection =>  [my_task.get_invited_by], :as => :user %>
 		                                    <% end %>
 		                                    
 	                                   <% end %>

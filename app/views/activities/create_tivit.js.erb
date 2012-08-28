@@ -8,7 +8,7 @@ jQuery("team-tivits").append ('<div class="avatar"><img alt="Pete Campbell" src=
 
 $("team-tivits").append("<%= escape_javascript(render(:partial => 'shared/tivit_adp', :collection =>  [@activity])) %>");
 
-jQuery('#alltivits').append ('<h2>my tivits <span>(1)</span></h2>');
+jQuery('#alltivits').append ('<h2>my tasks <span>(1)</span></h2>');
 
 	
 1. If new activity that means no tivits were created, we need to insert the my tivits or team tivits headers. 
@@ -54,15 +54,15 @@ else
 <% elsif current_account.user.id == (@activity.owner_id) %>
 
 	console.log('[Yaniv] creating tivit for myself'); 
-	// check if we need to add the my tivits title	
+	// check if we need to add the my tasks title	
 	<%# mytivits = activityparent.tivits.where("owner_id = ? " ,current_account.user.id) %>
 	
 	if ( !jQuery("#alltivits .list").is(":visible") )
 	{
 		console.log('[Yaniv] My Tasks - is NOT visible');  
-		// need to add the my tivits header
+		// need to add the my tasks header
 		console.log('[Yaniv] first tivit for myself');  
-		jQuery('#alltivits').append('<h2>my tivits <span>(1)</span></h2>');	
+		jQuery('#alltivits').append('<h2>my tasks <span>(1)</span></h2>');	
 		jQuery('#alltivits').append('<div class="tvit-list" id="mytivits"></div>');		
 		jQuery('#alltivits').css('background', '#F8F8F8');		
 	}
@@ -89,8 +89,8 @@ else
 	if ( !jQuery("#team-tivits .list").is(":visible") )
 	{
 		console.log('[Yaniv] team tasks - is NOT visible');  	
-		console.log('[Yaniv] first tivit for someone else!');  
-		jQuery('#team-tivits').append('<h2>team tivits <span>(1)</span></h2>');
+		console.log('[Yaniv] first task for someone else!');  
+		jQuery('#team-tivits').append('<h2>team tasks <span>(1)</span></h2>');
 		jQuery('#team-tivits').append('<div class="tvit-list" id="teamtivits"></div>');	
 	}
 	

@@ -768,7 +768,7 @@ function showStatusListDialog(clickedObject){
     		statusList = '<div class="status-list-dialog">'+
                         '<ul class="status-list">'+
                             //'<li class="unread"><div class="ico"></div>Not started</li>'+
-                            //'<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
+                            '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
                             '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
                             '<li class="busy"><div class="ico"></div>Sorry, I can\'t help</li>'+
                             '<li class="attention"><div class="ico"></div>Propose new date</li>'+
@@ -782,7 +782,7 @@ function showStatusListDialog(clickedObject){
          		statusList = '<div class="status-list-dialog">'+
                         '<ul class="status-list">'+
                             //'<li class="unread"><div class="ico"></div>Not started</li>'+
-                            //'<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
+                            '<li class="inprog"><div class="ico"></div>I\'m on it</li>'+
                             '<li class="complete"><div class="ico"></div>I\'m done!</li>'+
                             '<li class="re-assign"><div class="ico"></div>Reassign</li>'+
                         '</ul>'+
@@ -822,6 +822,7 @@ function showStatusListDialog(clickedObject){
 		    	{
 		    		jQuery(clickedObject).parent().append(statusList);
 		    		jQuery('.status-list-dialog').find('.unread').remove();
+		    		jQuery('.status-list-dialog').find('.inprog').remove();
 		    		jQuery('.status-list-dialog').show();
 		    	}
 		    	else if(recState.hasClass('inprog'))
@@ -840,17 +841,20 @@ function showStatusListDialog(clickedObject){
 		    	{
 		    		jQuery(clickedObject).parent().append(statusList);
 		    		//jQuery('.status-list-dialog').find('.busy').remove();
+		    		jQuery('.status-list-dialog').find('.inprog').remove();
 		    		jQuery('.status-list-dialog').show();
 		    	}
 		    	else if(recState.hasClass('attention'))
 		    	{
 		    		jQuery(clickedObject).parent().append(statusList);
 		    		jQuery('.status-list-dialog').find('.attention').remove();
+		    		jQuery('.status-list-dialog').find('.inprog').remove();
 		    		jQuery('.status-list-dialog').show();
 		    	}
 		    	else if(recState.hasClass('re-assign'))
 		    	{
 		    		jQuery(clickedObject).parent().append(statusList);
+		    		jQuery('.status-list-dialog').find('.inprog').remove();
 		    		jQuery('.status-list-dialog').show();
 		    	}
 		}
