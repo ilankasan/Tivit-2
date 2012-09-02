@@ -1,9 +1,7 @@
-	<!DOCTYPE html>
 <html>
 	<head>
 		
 		<script language='javascript' async='true' type='text/javascript' src='http://cdn.walkme.com/users/4940/walkme_4940.js'></script>
-		
 		
 		<%= favicon_link_tag %>
 		
@@ -137,6 +135,9 @@
 			<%if account_signed_in?%>
 				<% flash.each do |key, value| %>
 					<div class="flash <%= key %>" id="confirmMsg"><%= value %></div>
+					<%puts "Flash key is "+key.to_s%>
+					<%puts "____________________________________________________"%>
+					<%puts flash.inspect%>
 					
 				<% end %>		
 				
