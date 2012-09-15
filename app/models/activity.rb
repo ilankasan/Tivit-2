@@ -833,7 +833,7 @@ return self.tivits.size
         if(!tivit.isCompleted?)  
         #if(TivitStatus.is_in_progress_id?(tivit.status_id))
           puts "changing status to closed ! - not operational"
-          #tivit.change_status_id_to_closed
+          tivit.change_status_id_to_closed
         end
      end
    end 
