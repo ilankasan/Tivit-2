@@ -260,7 +260,7 @@ end
   def user_by_email (email_input)
     puts "in ---->>>   user_by_email "+email_input
   	if(email_input != nil && !email_input.empty? )
-		@email = email_input.downcase
+		@email = email_input.strip.downcase
   	
 		puts "------------------ adding new invitee: " + @email 
 	  	account  = Account.find_by_email(@email)

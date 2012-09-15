@@ -383,7 +383,7 @@ class ActivitiesController < ApplicationController
       invitees = params["invitees"]
       puts " invitees --->>>>    " +invitees  
       params["status_id"]     = TivitStatus.not_started_id
-      @invited_user = user_by_email(invitees.strip)
+      @invited_user = user_by_email(invitees.strip.downcase)
     end
     
 	  params["owner_id"] =  @invited_user.get_id
