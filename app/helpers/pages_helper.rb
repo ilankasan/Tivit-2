@@ -65,7 +65,8 @@ end
 def get_my_open_tasks(current_user_id)
       #puts "--->>> in my open tasks"
    #   time = Time.now()
-      
+      not_started = TivitStatus.not_started_id
+      in_progress = TivitStatus.get_in_progress_id
   #    completed   = TivitStatus.get_completed_id.to_s
    #   new_id      = TivitStatus.get_new_id.to_s
     #  reviewed_id = TivitStatus.get_reviewed_id.to_s
