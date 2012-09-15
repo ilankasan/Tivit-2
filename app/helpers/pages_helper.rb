@@ -42,7 +42,8 @@ end
                              AND      activity_type    = 'tivit'
                              AND NOT  owner_id         = ?
                              AND      invited_by       = ?
-                              AND due IS NULL
+                             
+                             AND due IS NULL
                     ",in_progress_id,TivitStatus.not_started_id ,current_user_id,current_user_id).order("created_at DESC").reverse_order
                     
        with_date = Activity.where("     (status_id        = ? OR status_id        = ?)   
