@@ -236,7 +236,9 @@ end
     return true if(user == activity.get_owner)
     parent = activity.get_parent  
     return true if(parent != nil && user == parent.get_owner) 
-    puts "5" 
+    puts "5"
+    return true if (activity.get_invited_by == user)
+     
     return true if (activity.tivits.where(:owner_id   => user.get_id).count > 0)
     return true if (activity.tivits.where(:invited_by => user.get_id).count > 0)
     

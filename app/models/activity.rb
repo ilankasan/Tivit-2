@@ -314,7 +314,7 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
 
   def get_my_tivits (user)
      #puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
-    my_done_tivits = self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_completed_id])
+    my_done_tivits = self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_completed_id ])
    #puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my tivits"
     my_open_tivits_no_due = self.tivits.where(:owner_id => user.get_id ,:status_id => [TivitStatus.get_in_progress_id, TivitStatus.get_closed_id ],:due => nil)
     #puts "--------^^^^^^^ my_open_tivits_no_due ^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> "+my_open_tivits_no_due.count.to_s
@@ -830,9 +830,9 @@ return self.tivits.size
    if(self.tivits != nil || self.tivits.size > 0)
       self.tivits.each do |tivit|
 # change status to closed only if current status in progress
-        if(TivitStatus.is_inprogress || TivitStatus.is_not_started)
+        if(tivit.is_inprogress? || tivit.is_not_started?)
           puts "changing status to closed ! - not operational"
-          tivit.change_status_id_to_closed
+       #   tivit.change_status_id_to_closed
         end
      end
    end 

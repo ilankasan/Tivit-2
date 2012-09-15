@@ -34,7 +34,7 @@ end
 
 
   def get_tasks_for_other(current_user_id)
-      #puts "--->>> in get tasks for others"
+      puts "--->>> in get tasks for others"
    #   time = Time.now()
       in_progress_id = TivitStatus.get_in_progress_id.to_s
       
