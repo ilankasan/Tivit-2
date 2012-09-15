@@ -830,7 +830,6 @@ return self.tivits.size
    if(self.tivits != nil || self.tivits.size > 0)
       self.tivits.each do |tivit|
 # change status to closed only if current status in progress
-        if(!tivit.isCompleted?)  
         if(TivitStatus.is_inprogress || TivitStatus.is_not_started)
           puts "changing status to closed ! - not operational"
           tivit.change_status_id_to_closed
