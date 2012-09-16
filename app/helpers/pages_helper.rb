@@ -32,54 +32,60 @@ def get_user_activity_notifications (user_id)
   
 end
 
-
   def get_tasks_for_other(current_user_id)
       puts "--->>> in get tasks for others"
    #   time = Time.now()
       in_progress_id = TivitStatus.get_in_progress_id.to_s
       
-      without_date = Activity.where("     (status_id        = ? OR status_id        = ?)   
-                             AND      activity_type    = 'tivit'
-                             AND NOT  owner_id         = ?
-                             AND      invited_by       = ?
-                             AND due IS NULL
-                    ",in_progress_id,TivitStatus.not_started_id ,current_user_id,current_user_id).order("created_at DESC").reverse_order
+     
+      without_date = Activity.joins(:parent).where("(activities.status_id = ? OR activities.status_id = ?)   
+                             AND      activities.activity_type    = 'tivit'
+                             AND NOT  activities.owner_id         = ?
+                             AND      activities.invited_by       = ?
+                             AND NOT  parents_activities.status_id  = ?
+                             AND      activities.due IS NULL
+                    ",in_progress_id,TivitStatus.not_started_id ,current_user_id,current_user_id,TivitStatus.get_completed_id).order("activities.created_at DESC").reverse_order
                     
-       with_date = Activity.where("     (status_id        = ? OR status_id        = ?)   
-                             AND      activity_type    = 'tivit'
-                             AND NOT  owner_id         = ?
-                             AND      invited_by       = ?
-                              AND due IS NOT NULL
-                    ",in_progress_id,TivitStatus.not_started_id ,current_user_id,current_user_id).order(" due, created_at DESC").reverse_order
+                    
+       with_date = Activity.joins(:parent).where("(activities.status_id = ? OR activities.status_id = ?)   
+                             AND      activities.activity_type    = 'tivit'
+                             AND NOT  activities.owner_id         = ?
+                             AND      activities.invited_by       = ?
+                             AND NOT  parents_activities.status_id  = ?
+                             AND      activities.due IS NOT NULL
+                    ",in_progress_id,TivitStatus.not_started_id ,current_user_id,current_user_id,TivitStatus.get_completed_id).order(" activities.due, activities.created_at DESC").reverse_order
       
    #   puts "number of tasks is = "+results1.size.to_s
     #  puts "<<<--- out get other tasks "+(Time.now()-time).to_s
-    
-       
-    
       return with_date+without_date  
     end
- 
 
-def get_my_open_tasks(current_user_id)
-      #puts "--->>> in my open tasks"
+  
+  def get_my_open_tasks(current_user_id)
+      puts ">>>>>>>>>>>>>>>>>>>>>>>--->>> in my open tasks ---------------------"
    #   time = Time.now()
-      #not_started = TivitStatus.not_started_id
-      #in_progress = TivitStatus.get_in_progress_id
-  #    completed   = TivitStatus.get_completed_id.to_s
-   #   new_id      = TivitStatus.get_new_id.to_s
-    #  reviewed_id = TivitStatus.get_reviewed_id.to_s
       
-      without_date = Activity.where("(status_id     = ? OR status_id     = ?)   
-                    AND activity_type = 'tivit'
-                    AND owner_id      = ?
-                    AND due IS NULL
-                    ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id).order(:created_at).reverse_order
-      with_date = Activity.where("(status_id     = ? OR status_id     = ?)   
-                    AND activity_type = 'tivit'
-                    AND owner_id      = ?
-                    AND due IS NOT NULL
-                    ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id).order(:due).reverse_order
+      without_date = Activity.joins(:parent).where("(activities.status_id     = ? OR activities.status_id     = ?)   
+                    AND activities.activity_type          = 'tivit'
+                    AND activities.owner_id               = ?
+                    AND NOT parents_activities.status_id  = ?
+                    AND activities.due IS NULL
+                    ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id,TivitStatus.get_completed_id).order("activities.created_at").reverse_order
+                    
+                    #TivitStatus.get_completed_id
+                    #
+      with_date = Activity.joins(:parent).where("(activities.status_id     = ? OR activities.status_id     = ?)   
+                    AND activities.activity_type          = 'tivit'
+                    AND activities.owner_id               = ?
+                    AND NOT parents_activities.status_id  = ?
+                    AND activities.due IS NOT NULL
+                    ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id,TivitStatus.get_completed_id).order("activities.due").reverse_order
+      
+      #with_date = Activity.where("(status_id     = ? OR status_id     = ?)   
+       #             AND activity_type = 'tivit'
+       #             AND owner_id      = ?
+       #             AND due IS NOT NULL
+       #             ",TivitStatus.not_started_id,TivitStatus.get_in_progress_id,current_user_id).order(:due).reverse_order
           
  #     puts "<<<--- out my open tasks "+(Time.now()-time).to_s
       return with_date+without_date

@@ -216,20 +216,22 @@ class User < ActiveRecord::Base
   
   def get_num_open_tasks_i_assigned
     
-        return Activity.where("     (status_id        = ? OR status_id        = ?)   
-                             AND      activity_type    = 'tivit'
-                             AND NOT  owner_id         = ?
-                             AND      invited_by       = ?
-                    ",TivitStatus.get_in_progress_id,TivitStatus.not_started_id ,self.id,self.id).count
+        return Activity.joins(:parent).where("(activities.status_id = ? OR activities.status_id = ?)   
+                             AND      activities.activity_type    = 'tivit'
+                             AND NOT  activities.owner_id         = ?
+                             AND      activities.invited_by       = ?
+                             AND NOT  parents_activities.status_id  = ?
+                    ",TivitStatus.get_in_progress_id,TivitStatus.not_started_id ,self.id,self.id,TivitStatus.get_completed_id).count
   end
   
   
   def get_num_my_open_tasks
       
-      return Activity.where("status_id     = ?   
-                                AND activity_type = 'tivit'
-                                AND owner_id      = ?
-                    ",TivitStatus.get_in_progress_id,self.id).count
+      return Activity.joins(:parent).where("activities.status_id     = ?   
+                                AND activities.activity_type = 'tivit'
+                                AND activities.owner_id      = ?
+                                AND NOT  parents_activities.status_id  = ?
+                    ",TivitStatus.get_in_progress_id,self.id,TivitStatus.get_completed_id).count
   end
   
   private
