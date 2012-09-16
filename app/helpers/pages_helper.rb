@@ -96,8 +96,12 @@ end
    #   puts "--->>> in get_new_tivit_requests"
     #  time = Time.now()
       
-  # get activities with New and unread tivits  
-      results1  =  Activity.where("status_id = ? AND owner_id = ? AND NOT invited_by = ?",TivitStatus.not_started_id,current_user_id,current_user_id)
+  # get activities with New and unread tivits
+      results1  =  Activity.joins(:parent).where("
+                activities.status_id = ? 
+        AND     activities.owner_id  = ?
+        AND NOT activities.invited_by = ? 
+        AND NOT  parents_activities.status_id  = ?",TivitStatus.not_started_id,current_user_id,current_user_id,TivitStatus.get_completed_id)
     
       #puts "^^^^^^^^^^^^^^^^^   -------->>>>>>>>>>>>>>> R1 = "+results1.size.to_s
   #    puts "<<<--- out get_new_tivit_requests "+(Time.now()-time).to_s

@@ -186,10 +186,6 @@ end
        
       #puts "My open tivit "+my_open_tivits.size.to_s
      
-      old_open_tivits_im_asignee = self.tivits.joins(:tivit_user_statuses).where(
-                    "NOT activities.status_id        = ?
-                     AND activities.invited_by       = ? 
-                     AND tivit_user_statuses.user_id = activities.owner_id",TivitStatus.get_completed_id,user.get_id)
       
  #(recently ilan kasan)
       open_tivits_im_asignee = self.tivits.where(
@@ -199,7 +195,7 @@ end
     end
   end
   
-  def get_requests_tivits(currentuser)
+  def old_get_requests_tivits(currentuser)
     my_tivits    = self.tivits.joins(:tivit_user_statuses).where(
       "      tivit_user_statuses.user_id     = activities.owner_id 
        AND     activities.owner_id           = ?
@@ -226,7 +222,7 @@ end
   
   
   def self.get_num_of_requests_tivits(currentuser)
-  #  puts "______>>>>>  get_num_of_requests_tivits   <<<<_____"
+    puts "______>>>>>  get_num_of_requests_tivits   <<<<_____"
     
     current_user_id = currentuser.get_id.to_s
     sql_activities_with_my_tivits = "SELECT DISTINCT tivits.id FROM activities, activities as tivits, tivit_user_statuses
@@ -471,26 +467,21 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
      
      
      if remove_task_id == nil
-       puts"NNNNNNNNNNNIIIIIIIIIIIIIIIIIIIIIIILLLLL"
+       
        r =  self.tivits.where("NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ?", user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at).reverse_order
     
      else
      #  r =  Activity.where("parent_id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ? AND NOT activities.id = ? ", self.id,user.get_id, TivitStatus.get_completed_id, last_reviewed,remove_task_id).order(:completed_at).reverse_order
         r =  self.tivits.where("NOT activities.id = ? AND NOT owner_id = ? AND  status_id = ? AND  activities.updated_at < ?", remove_task_id, user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at).reverse_order
      
-      puts "----->>>>>>>>>>>>>>>  remove task id  is "+remove_task_id.to_s
+      #puts "----->>>>>>>>>>>>>>>  remove task id  is "+remove_task_id.to_s
      end
-     puts "----->>>>>>>>>>>>>>>  get_team_completed_tasks "+r.size.to_s
+     #puts "----->>>>>>>>>>>>>>>  get_team_completed_tasks "+r.size.to_s
      
      return r
   end
  
  
-  def delete_this_get_num_of_team_completed_tasks (user)
-     return self.tivits.where("NOT owner_id = ? AND  status_id = ?",user.get_id, TivitStatus.get_completed_id).count
-  end
-  
-  
   
   
   def get_team_tivits (user)
