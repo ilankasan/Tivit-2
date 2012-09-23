@@ -772,6 +772,7 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
  
  def get_invited_by
  #returned activity owner if invited by is nill
+    return nil if(self.activity_type == 'activity') 
     if(self.invited_by == nil)
       return self.get_parent.get_owner
     else
