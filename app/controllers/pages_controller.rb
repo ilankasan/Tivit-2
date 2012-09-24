@@ -23,7 +23,7 @@ class PagesController < ApplicationController
 def load_tabs
 
   @tabToLoad = params[:id]
-  puts "[Yaniv] tab to load=" + @tabToLoad
+ # puts "[Yaniv] tab to load=" + @tabToLoad
   
   if ( @tabToLoad == 'activities-tab' )
     @objectsToRender = get_activities_i_participate(current_account.user.get_id.to_s)
@@ -54,8 +54,8 @@ def home
       
     current_user_id = current_account.user.get_id.to_s
  #ILAN - remove filter  
-    puts "current_user_id = "+current_user_id
-    puts "Sign in account = "+current_account.sign_in_count.to_s
+   # puts "current_user_id = "+current_user_id
+   # puts "Sign in account = "+current_account.sign_in_count.to_s
     if(current_account.sign_in_count == 1 && !account_session[:show_help] == true )
       puts "befor render"
       render 'help'

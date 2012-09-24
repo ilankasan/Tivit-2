@@ -155,8 +155,11 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  def after_inactive_sign_up_path_for(resource)
    
    puts "in after_inactive_sign_up_path_for"
+   
    puts params.inspect
    email = params[:account][:email]
+   
+   
    @account = Account.find_by_email(email)
    if( params[:account][:viral] == "true" && false)
       puts "confirmed_at != nil"
