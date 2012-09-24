@@ -21,7 +21,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 
    def update
      	puts "UUUUUUPPPPPDDDATE"
-   	puts params.inspect
+ #  	puts params.inspect
 	
     super
   end
@@ -30,14 +30,14 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  def create
  	puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------"
  	@params = params
- 	puts params.inspect
- 	puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------ 2"
+ #	puts params.inspect
+ #	puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------ 2"
   
-  
+    puts "Sending email..."
+    
+  EMAIL_QUEUE << {:email_type => "notify_new_user", :email => params[:account][:email]}
   
   if(params[:account][:viral] == "true" )
-    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
     puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
     puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
     email    = params[:account][:email]
@@ -116,15 +116,12 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 	
   if(params[:account][:viral] == "true" && false)
     puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
     
     @account.skip_confirmation!
     #@account.confirmed_at = Time.now()
     @account.save!
     @account.confirm!
+  
     
     sign_in_and_redirect(:account, @account)
     #flash[:myinfo] = 'Your account on tiviti has been created via ' + provider.capitalize + '. In your profile you can change your personal information and add a local password.'

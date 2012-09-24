@@ -6,7 +6,11 @@ class UserMailer < ActionMailer::Base
            :bcc => "tiviti.mailer.cc@gmail.com"
    #   :return_path => 'system@example.com'
         
-      
+    def notify_new_user(params)
+      @email   = params[:email]
+      mail(:from => "tiviti Admin",:reply_to => "no_reply@tiviti.net",:to => "ilan.kasan@gmail.com", :subject => "tiviti: new user activate account "+ @email)
+   
+    end 
    
    def tivit_propose_new_date_email(params)
 #107 Tivit - New Date Request. When: CAssignee requests alternate due date, Who: Assigner

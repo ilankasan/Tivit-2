@@ -469,7 +469,6 @@ class ActivitiesController < ApplicationController
     	 if(current_account.user != @activity.get_invited_by)
     	   puts "--------------------------- sending email -----------------------------------"
         EMAIL_QUEUE << {:email_type => "tivit_propose_new_date_email", :assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}
-        #UserMailer.tivit_propose_new_date_email({:assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}).deliver
       
        end
     end  
