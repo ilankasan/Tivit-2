@@ -15,7 +15,7 @@ class ActivitiesController < ApplicationController
   
    def tiviti_authenticate_account
  #    puts "---------------------------------------------------------------"
- #    puts "------->>>>>>>>>>>>>>>>  tiviti_authenticate_account"
+     puts "------->>>>>>>>>>>>>>>>  tiviti_authenticate_account"
  #    puts "---------------------------------------------------------------"
      
      if(params[:email] != nil)
@@ -143,7 +143,7 @@ class ActivitiesController < ApplicationController
   
   def show
     
-    puts "----------->>>>>>>>>>> show activity detailed page"
+    puts "333----------->>>>>>>>>>> show activity detailed page"
     #puts "params = "+params.inspect
     @activity_temp = Activity.find(params[:id])
     if(!@activity_temp.isActivity?)
@@ -166,7 +166,7 @@ class ActivitiesController < ApplicationController
    
   end
   
-  def old_update_reviewed
+  def update_reviewed
     puts ">>>>>>>>>>>>>>>>>   updating reviewed!!!!!"  
    
     @tivit = Activity.find(params[:id])
@@ -184,7 +184,7 @@ class ActivitiesController < ApplicationController
   end
    
   def update_view_status
-   #puts "-yyyyy ---------->>>>>>>>>>> update_view_status kkkkkkk"
+   puts "-yyyyy ---------->>>>>>>>>>> update_view_status kkkkkkk"
    
    #if(@tivit_id != nil)
     @tivit = Activity.find(params[:id])
@@ -205,7 +205,7 @@ class ActivitiesController < ApplicationController
  
  
  def validate_access
-   puts "in validate_access " 
+   puts "--->>> in validate_access " 
    return if(params == nil || params[:id] == nil)
    if(current_account == nil)
     puts "------>>>>>>>>>>>>>>> current user is NIL!!!!!!"
@@ -300,7 +300,7 @@ class ActivitiesController < ApplicationController
   end
   
   def delete_change_tivit_status
-    
+   puts "delete_change_tivit_status" 
    # puts params.inspect  
  #ilan: the below can be optimized   
     @activity = Activity.find(params[:id])
@@ -346,6 +346,7 @@ class ActivitiesController < ApplicationController
   end
   
   def new_tivit
+    puts "new tivit"
   	@activity = Activity.find(params[:id])
     puts "Addign Tivit to Activity " + @activity.name
     render 'new_tivit'   
@@ -483,7 +484,7 @@ class ActivitiesController < ApplicationController
 
  
   def accept_date
-    #puts "-----------    Accept Date ---------------"
+    puts "-----------    Accept Date ---------------"
     
     @activity = Activity.find(params[:id])
   #  puts    params.inspect
@@ -640,6 +641,7 @@ class ActivitiesController < ApplicationController
   private
   
 	def authorized_user
+	  puts "fff"
       @activity = Activity.find(params[:id])
       redirect_to root_path unless current_account.user
     end

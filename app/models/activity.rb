@@ -669,10 +669,10 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
 # Get's the number of unread comments (do not include new comments from user)
  
  def get_number_of_unread_comments(user)
+   puts "get_number_of_unread_comments"
 #get date of last unread
-      time = Time.now()
-      
-
+#      time = Time.now()
+     
      tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
      if (tivit_user_status != nil && tivit_user_status.last_reviewed != nil)
    # puts "tivit_user_status.last_reviewed = " + tivit_user_status.last_reviewed.inspect
@@ -937,7 +937,7 @@ private
  
  
  def change_user_status(user, status,comment, proposed_date, last_reviewed, assigned_to)
- #puts "changing status for "+user.get_name+" to "+status
+ puts "changing status for "+user.get_name+" to "+status.to_s
    tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
    if(tivit_user_status == nil)
    tivit_user_status = create_status(user,status)
