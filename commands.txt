@@ -144,7 +144,7 @@ $ git add .
 
 
 heroku addons:upgrade cleardb:ignite -app tiviti-s2
-git commit -am "9-23-12 prod"
+git commit -am "9-24-12 prod"
 git commit -am "1-31-12 autocomplete"
 git commit -am "4-1-12 get rid of the create activity in ADP"
 
