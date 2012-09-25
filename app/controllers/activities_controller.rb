@@ -15,8 +15,7 @@ class ActivitiesController < ApplicationController
   
    def tiviti_authenticate_account
  #    puts "---------------------------------------------------------------"
-     puts "------->>>>>>>>>>>>>>>>  tiviti_authenticate_account"
- #    puts "---------------------------------------------------------------"
+ #    puts "------->>>>>>>>>>>>>>>>  tiviti_authenticate_account"
      
      if(params[:email] != nil)
        #render '../my_devise/registrations/new'
@@ -119,7 +118,7 @@ class ActivitiesController < ApplicationController
   
   
   def remove_tivit
-  	puts "Remove Tivit"
+  	#puts "Remove Tivit"
   	@tivit    = Activity.find(params[:id])
   	@activity = @tivit.get_parent
   	@tivit.destroy
@@ -128,7 +127,7 @@ class ActivitiesController < ApplicationController
   
   
   def edit_tivit
-      puts "edit tivit"
+    #  puts "edit tivit"
     #  puts params.inspect  
     
     @activity = Activity.find(params[:id])
@@ -167,12 +166,12 @@ class ActivitiesController < ApplicationController
   end
   
   def update_reviewed
-    puts ">>>>>>>>>>>>>>>>>   updating reviewed!!!!!"  
+  #  puts ">>>>>>>>>>>>>>>>>   updating reviewed!!!!!"  
    
     @tivit = Activity.find(params[:id])
     if(@tivit != nil)
         @tivit.update_status_after_show(current_account.user)
-        puts "--------------------------    updating reviewed ____________________________" 
+   #     puts "--------------------------    updating reviewed ____________________________" 
     end  
       
     respond_to do |format|

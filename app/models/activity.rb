@@ -92,7 +92,7 @@ class Activity < ActiveRecord::Base
 
   def get_number_of_completed_tasks( user)
      size = self.tivits.where(:owner_id=>user.get_id, :status_id =>TivitStatus.get_completed_id).count
-     puts "get_number_of_completed_tasks => "+size.to_s
+  #   puts "get_number_of_completed_tasks => "+size.to_s
      return size
   end
 
@@ -332,7 +332,7 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
 # get tasks user has not responded yet
   def get_my_new_tasks (user)
     r = self.tivits.where(:activity_type => 'tivit', :owner_id => user.get_id, :status_id =>TivitStatus.not_started_id )
-    puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my_new_tasks "+r.size.to_s
+ #   puts "--------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^--------->>>> in get_my_new_tasks "+r.size.to_s
     return r
   end
   
@@ -360,7 +360,7 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
   end
  
  def get_my_completed_tasks (user, remove_task_id)
-  puts "^^^^^^^^^^^^^^^--------->>>> get_my_completed_tasks"
+#  puts "^^^^^^^^^^^^^^^--------->>>> get_my_completed_tasks"
   
   last_reviewed =  self.get_last_reviewed (user)
      #self.created_at > tivit_user_status.last_reviewed
@@ -368,7 +368,7 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
    #  #t =  Activity.where("parent_id = ? AND owner_id = ? AND  status_id = ? AND  activities.updated_at < ? AND NOT activities.id = ? ", self.id,user.get_id, TivitStatus.get_completed_id, last_reviewed,remove_task_id).order(:completed_at).reverse_order
      if(remove_task_id == nil)
        t =  self.tivits.where("activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at < ?",user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
-       puts "^^^^^^^^^^^^^^^--------->>>> get_my_completed_tasks = "+t.size.to_s
+   #    puts "^^^^^^^^^^^^^^^--------->>>> get_my_completed_tasks = "+t.size.to_s
   
      else
       t =  self.tivits.where("NOT activities.id = ? AND activities.owner_id = ? AND  activities.status_id = ? AND activities.updated_at < ?",remove_task_id,user.get_id, TivitStatus.get_completed_id, last_reviewed).order(:completed_at)
@@ -925,7 +925,7 @@ private
  
  
  def create_status(user, status)
-  puts "^^^^^^^^^^^^^^   creating status " + status.to_s
+#  puts "^^^^^^^^^^^^^^   creating status " + status.to_s
   tivit_status = user.tivit_user_statuses.new()
   
   tivit_status.status_id = status
