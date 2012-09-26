@@ -86,6 +86,8 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 	 super
 #	puts "test  = "+test.inspect	
 	 email = params[:account][:email]
+	 EMAIL_QUEUE << {:email_type => "notify_new_user", :email => params[:account][:email], :type => "New user signup"}
+    
 	 puts "email = "+email 
    @account = Account.find_by_email(email)
 

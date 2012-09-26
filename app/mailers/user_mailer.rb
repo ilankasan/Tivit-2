@@ -7,8 +7,9 @@ class UserMailer < ActionMailer::Base
    #   :return_path => 'system@example.com'
         
     def notify_new_user(params)
-      @email   = params[:email]
-      mail(:from => "tiviti Admin",:reply_to => "no_reply@tiviti.net",:to => "ilan.kasan@gmail.com", :subject => "tiviti: new user account "+ @email)
+      @email    = params[:email]
+      @action   = params[:type]
+      mail(:from => "tiviti Admin",:reply_to => "no_reply@tiviti.net",:to => "ilan.kasan@gmail.com", :subject => "tiviti: "+ @action +" "+ @email)
    
     end 
    
