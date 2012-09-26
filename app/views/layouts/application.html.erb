@@ -132,16 +132,17 @@
 <%else%>
 		<div id="page-container" class="bk2">
 <%end%>    		
-			<%if account_signed_in?%>
 				<% flash.each do |key, value| %>
-					<div class="flash <%= key %>" id="confirmMsg"><%= value %></div>
-					<%puts "Flash key is "+key.to_s%>
-					<%puts "____________________________________________________"%>
-					<%puts flash.inspect%>
-					
-				<% end %>		
+					<%if account_signed_in? || (key != nil && key.to_s == "alert")%>
+			
+						<div class="flash <%= key %>" id="confirmMsg"><%= value %></div>
+						<%puts "Flash key is "+key.to_s%>
+						<%puts "____________________________________________________"%>
+						<%puts flash.inspect%>
+						
+					<% end %>		
 				
-			   <% end %>	
+			   	<% end %>	
 	    
 		     
 		    	<%= yield %>	 
