@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
         
     def notify_new_user(params)
       @email   = params[:email]
-      mail(:from => "tiviti Admin",:reply_to => "no_reply@tiviti.net",:to => "ilan.kasan@gmail.com", :subject => "tiviti: new user activate account "+ @email)
+      mail(:from => "tiviti Admin",:reply_to => "no_reply@tiviti.net",:to => "ilan.kasan@gmail.com", :subject => "tiviti: new user account "+ @email)
    
     end 
    

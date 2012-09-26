@@ -35,7 +35,6 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
   
     puts "Sending email..."
     
-  EMAIL_QUEUE << {:email_type => "notify_new_user", :email => params[:account][:email]}
   
   if(params[:account][:viral] == "true" )
     puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
@@ -43,14 +42,16 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
     email    = params[:account][:email]
     puts " viral maile "+email
     
+    EMAIL_QUEUE << {:email_type => "notify_new_user", :email => params[:account][:email], :type => "Viral Signup"}
+    
     password = params[:account][:password]
     name     = params[:account][:user][:name]
     puts " viral name = "+name+"pass = "+password
     
     @account = Account.new :email => email , :password => password , :fullname => name
-    @users = User.where(:is_active => false,  :clone_email => email)
+    @user = User.where(:is_active => false,  :clone_email => email).first
               
-    @user = @users[0] if @users.size > 0
+    #@user = @users[0] if @users.size > 0
         
    # puts "user = "+@user.get_name
     if(@user == nil)
@@ -78,20 +79,23 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
     sign_in_and_redirect(:account, @account)
     #flash[:myinfo] = 'Your account on tiviti has been created via ' + provider.capitalize + '. In your profile you can change your personal information and add a local password.'
   else
-# user is not joining virally  
+#----------------------------------------------------------#
+#--------------------- user is not joining virally
+#----------------------------------------------------------#
+  
 	 super
 #	puts "test  = "+test.inspect	
 	 email = params[:account][:email]
-	puts "email = "+email 
-  @account = Account.find_by_email(email)
+	 puts "email = "+email 
+   @account = Account.find_by_email(email)
 
 
-  puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------ 3"
+    puts "-------->>>>>>>>>> In Regitration Create Controller not viral <<<<<<<<<<<<<<------------------ 3"
   
 
 # fist find the user clone
-	@users = User.where("is_active = ? AND clone_email = ?","false",email)
-	@user = @users[0] if @users.size > 0
+	 @user = User.where("clone_email = ?",email).first
+	 #@user = @users[0] if @users.size > 0
 	
 	#puts "user = "+@user.inspect
 	if(@user == nil)
@@ -101,7 +105,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 		puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------ 4"
   
 	else
-		puts "user != nil"
+		puts "user already exists != nil"
 		if(@account.user == nil)
 			puts " account.user == nil"
 			@user.activate_user
@@ -114,7 +118,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 	end
 	puts " saving account!!!!!!!!!!!!!!!!"
 	
-  if(params[:account][:viral] == "true" && false)
+  if(params[:account][:viral] == "true" && false) # delete this seciton
     puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
     
     @account.skip_confirmation!

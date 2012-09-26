@@ -25,10 +25,10 @@
 			
 			<!-- Activity Name -->
 
-			<h1>Collaborating with <font color="blue"><%= @other_user.get_name %></font>
+			<h1>In common with <font color="blue"><%= @other_user.get_name %></font>
 							 </h1>
 			
-			<p><small><b>You have <%= @newTasksForMe.size + @openTasksForMe.size + @newTasksForOther.size + @openTasksForOther.size %> open tasks between you and <%=@other_user.get_name%> </b> </small></p>
+			<p><small><b>There are <%= @newTasksForMe.size + @openTasksForMe.size + @newTasksForOther.size + @openTasksForOther.size %> open tasks</b> </small></p>
 			
 			<p class="progress-complete">
 				<span>
@@ -49,10 +49,15 @@
 			<div class="clear"></div>
 			
 			<!-- Tasks Assign to me by other user-->
-			
+			<% size = @newTasksForMe.size + @openTasksForMe.size%>
 			<% if (myTotalNumberOfTasks > 0) %>
 				<div class="tivits main-tivit" id="alltivits">
-					<h2>You have <%=pluralize((@newTasksForMe.size + @openTasksForMe.size),"task")%> you agreed to help <b><%=@other_user.get_name %></b>  with </h2>
+					<%if size == 0%>
+						<h2>No tasks you agreed to help <b><%=@other_user.get_name %></b> with </h2>
+					
+					<%else%>
+						<h2><%=pluralize((size),"task")%> you agreed to help <b><%=@other_user.get_name %></b>  with </h2>
+					<%end%>
 					<div class="tvit-list" id="mytivits">						
 						
 						<% if @newTasksForMe.size > 0 %>
@@ -82,11 +87,16 @@
 				
 			<!-- End of Main Tivits -->
 			</div> <!-- My tivits -->
-			
+				<% size = @openTasksForOther.size + @newTasksForOther.size%>
 				<% if (totalTasksIAssigned > 0) %>
 				
 				<div class="team tivits" id="team-tivits">
-					<h2>There are  <%=pluralize((@openTasksForOther.size + @newTasksForOther.size),"tasks")%> you asked <b><%=@other_user.get_name %></b> to help you with</h2>
+					<%if size == 0%>
+						<h2>No open tasks you asked <b><%=@other_user.get_name %></b> to help you with</h2>					
+					<%else%>
+						<h2><%=pluralize((size),"task")%> you asked <b><%=@other_user.get_name %></b> to help you with</h2>				
+					<%end%>
+				
 					<div class="tvit-list" id="teamtivits">
 					
 						
