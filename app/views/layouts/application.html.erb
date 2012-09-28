@@ -133,7 +133,7 @@
 		<div id="page-container" class="bk2">
 <%end%>    		
 				<% flash.each do |key, value| %>
-					<%if account_signed_in? || (key != nil && key.to_s == "alert")%>
+					<%if account_signed_in? || (key != nil && key.to_s == "alert") && (value != nil && value.size >0) %>
 			
 						<div class="flash <%= key %>" id="confirmMsg"><%= value %></div>
 						<%puts "Flash key is "+key.to_s%>
