@@ -1,7 +1,8 @@
 <html>
 	<head>
-		
-		<script language='javascript' async='true' type='text/javascript' src='http://cdn.walkme.com/users/4940/walkme_4940.js'></script>
+		<%if account_signed_in?%>
+			<script language='javascript' async='true' type='text/javascript' src='http://cdn.walkme.com/users/4940/walkme_4940.js'></script>
+			<%end%>
 		
 		<%= favicon_link_tag %>
 		
@@ -133,12 +134,12 @@
 		<div id="page-container" class="bk2">
 <%end%>    		
 				<% flash.each do |key, value| %>
-					<%if account_signed_in? || (key != nil && key.to_s == "alert") && (value != nil && value.size >0) %>
+					<%if account_signed_in? || (key != nil && key.to_s == "alert") && (value != nil && value.lstrip.size >0) %>
 			
 						<div class="flash <%= key %>" id="confirmMsg"><%= value %></div>
-						<%puts "Flash key is "+key.to_s%>
-						<%puts "____________________________________________________"%>
-						<%puts flash.inspect%>
+						<%#puts "Flash key is "+key.to_s%>
+						<%#puts "____________________________________________________"%>
+						<%#puts flash.inspect%>
 						
 					<% end %>		
 				
@@ -200,14 +201,15 @@ try {
 <!-- End Beta Easy Widget -->
 
 <!-- User Voice Feedback Widget START -->
-<script type="text/javascript">
-  var uvOptions = {};
-  (function() {
-    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/Lv94vAUgz4sVo9HCcNtcHQ.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
-  })();
-</script>
-<!-- User Voice Feedback Widget END -->
-  
+<%if account_signed_in?%>
+	<script type="text/javascript">
+	  var uvOptions = {};
+	  (function() {
+	    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+	    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/Lv94vAUgz4sVo9HCcNtcHQ.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+	  })();
+	</script>
+	<!-- User Voice Feedback Widget END -->
+<%end%>  
 </html>
