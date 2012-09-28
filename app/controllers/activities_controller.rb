@@ -371,11 +371,11 @@ class ActivitiesController < ApplicationController
    # puts " invitees --->>>>    " +params["invitees"].to_s
      	
     if(params["invitees"] == nil || params["invitees"].empty? )
-      puts "[Yaniv] invitees is empty!"
+    #  puts "[Yaniv] invitees is empty!"
       @invited_user = current_account.user
       params["status_id"]     = TivitStatus.get_unassigned_id
     elsif params["invitees"] == "myself" 
-      puts "My self !!!!!!! [Yaniv] current_account user email=" + current_account.user.get_email
+   #   puts "My self !!!!!!! [Yaniv] current_account user email=" + current_account.user.get_email
       @invited_user = current_account.user
       # if assign to myself statusis in progress
       params["status_id"]     = TivitStatus.get_in_progress_id
@@ -408,12 +408,10 @@ class ActivitiesController < ApplicationController
    respond_to do |format|
        format.html { redirect_to root_path }
        format.js
-       puts "--------------->> after responding to Ajax"
     end
      if(@invited_user.get_id != current_account.user.get_id)
       EMAIL_QUEUE << {:email_type => "new_tivit_email", :assignee => @invited_user, :assigner => current_account.user,:tivit =>@tivit}
      end
-    puts "--------------->> after sending email"
        
   end
   

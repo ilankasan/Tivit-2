@@ -247,7 +247,7 @@ end
            ORDER BY completed_at DESC"
            
      #return Activity.where("status_id = ? AND activity_type = 'tivit' AND (owner_id = ? OR invited_by = ?)",TivitStatus.get_completed_id, user.get_id, user.get_id ).order(:completed_at).paginate(:page => params[:page], :per_page => 15)
-     return Activity.find_by_sql(sql).paginate(:page => params[:page], :per_page => 10)
+     return Activity.find_by_sql(sql).paginate(:page => params[:page], :per_page => 20)
 
   end
 

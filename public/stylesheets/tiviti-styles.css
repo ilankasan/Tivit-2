@@ -579,8 +579,8 @@ ul, li{margin:0; border:0; padding-left:0px; list-style:none;}
 
 .filter{
     float:right;
-    width:140px;
-    margin-right:10px;
+    width:145px;
+    margin-right:5px;
     padding:10px 15px;
     border-top:1px solid #ddd;
     border-bottom:1px solid #ddd;
