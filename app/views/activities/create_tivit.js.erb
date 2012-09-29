@@ -122,7 +122,12 @@ if ( jQuery("#adpfte").is(":visible") )
 }
 
 hidePopup();
-showConfirmationMessage ("<b><%= @activity.name.gsub("\'", "\\\\'") %></b> has been created!");
+
+<% if ( !@activity.to_self? ) %>
+	showConfirmationMessage ("<b>Task assigned to </b> <%=@activity.get_owner_name%>");
+<%else%>
+	showConfirmationMessage ("<b><%= @activity.name.gsub("\'", "\\\\'") %></b> created successfuly");
+<%end%>
 
 //jQuery('#page-container').append('<div class="flash" id="confirmMsg"><%= @activity.name.gsub("\'", "\\\\'") %> has been created!</div>');
 

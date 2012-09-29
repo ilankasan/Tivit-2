@@ -667,6 +667,9 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
  end
 
 # Get's the number of unread comments (do not include new comments from user)
+ def to_self?
+   return (!self.is_unassigned? && self.invited_by == self.owner_id)
+ end
  
  def get_number_of_unread_comments(user)
    
