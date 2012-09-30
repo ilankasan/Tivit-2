@@ -86,7 +86,10 @@
 		
 			<!-- Display actual comment -->
 			<!--p><%= tivit_adp_comment.comment%> </p-->
-			<p><%=h auto_link(tivit_adp_comment.comment) %></p>
+			<!--p><%=h auto_link(tivit_adp_comment.comment) %></p-->
+			<p><%= h auto_link(tivit_adp_comment.comment, :html => { :target => '_blank' })%></p>
+			
+			
 			<!-- User name and time -->
 			
 			<% if tivit_adp_comment.user.id == current_account.user.id %>

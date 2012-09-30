@@ -532,18 +532,8 @@ jQuery(document).ready(function($){
 		
 			//$($('#confirmDialog').css('h3')).css('background', 'none');	
 			$('#confirmDialog').css('margin-top',($('body').height() - $('.popup').height()) / 20);
-			 /*
-			 var confirmDialog = '<div class="confirmDialog">'+
-				'<div class="wrapper">'+
-					'<h2>'+ confirmDialogTitle +'</h2>'+
-					'<div class="txt">'+ confirmDialogText +'</div>'+
-					'<div class="buttons">'+
-						'<span class="cancel-button">Cancel</span>'+
-            			'<span class="submit-button">OK, go to this activity</span>'+
-					'</div>'+
-				'</div>'+
-			 '</div>';
-			 */
+			
+			
 			 
     		 jQuery('#new-activity-background').addClass('tempHide');
     		 jQuery('#activity-overlay').show();
@@ -552,7 +542,15 @@ jQuery(document).ready(function($){
     		 $('#confirmDialog').css('top', '-70px');
     		 // by defaults, all popups are display=none which means they don't show. Let's make sure this popup shows up! 
     		 $('#confirmDialog').css('display', 'block');
+    		 
+    		 
+    	     
     		 jQuery('.status-list-dialog').remove();
+    		 
+    		 
+	   
+    		 
+    		 
     		 
     		 if (who != "")
     		 {
@@ -562,6 +560,8 @@ jQuery(document).ready(function($){
 			  		 minLength: 2
 				 });
 			 }
+			 
+			 jQuery("input[id=comment]").focus();
 	    	
 	    	// Validate date only for propose new date case
 	    	if ( newState == 'attention' )
@@ -572,7 +572,6 @@ jQuery(document).ready(function($){
 	   				}
 				});
 			}
-
 
     		 // Add validation in case of re-assign (we have email input)
     		 //if (newState == 're-assign')
@@ -1697,15 +1696,7 @@ jQuery(document).ready(function($){
 								'<div class="close" id="sorry-popup-close"></div>' +
 							'</div>';		
 									
-									/*
-									'<form id="confirmDialogForm" method="post" class="confirmPopup" ' + actionPost +
-											'<h1>' + confirmDialogTitle + '</h1>' +
-											'<p><textarea rows="10" cols="10" id="comment" name="comment" placeholder="- enter a message here if you\'d like... -"/></p>' +
-											'<div class="request"><div id="popup-cancel" class="form-button">Cancel</div><input class="form-button" type="submit" name="commit" value="OK"/></div>' +
-									'</form>' +
-									'<div id="popup-close" class="close"></div>' +
-								'</div>';
-								*/
+								
 			 
     		 jQuery('#new-activity-background').addClass('tempHide');
     		 // Show overlay screen
