@@ -128,8 +128,11 @@
 				<!-- <li class="edit-yaniv1"><%= link_to "EDIT", edit_activity_path(activitydetails) %></li> -->
 				<li class="edit-yaniv">edit</li>
 				
-				
-				<li class="cmpl-yaniv">mark as completed</li>
+				<% if activitydetails.isCompleted?%>
+					<li class="cmpl-yaniv">mark as not completed</li>
+				<%else%>
+					<li class="cmpl-yaniv">mark as completed</li>
+				<%end%>
   				<li class="dele-yaniv"><%= link_to "delete", activitydetails, :method => :delete,
 	                                 :confirm => "You sure you want to delete #{activitydetails.name}?",
 	                                 :title => activitydetails.name %></li>
@@ -313,12 +316,13 @@
 				<% recentlyCompleted 	= activitydetails.get_recently_team_completed_tasks current_account.user,@tivit_id  %>
 				<% teamCompletedTasks 	= activitydetails.get_team_completed_tasks current_account.user,@tivit_id   %>
 				
-				
 				<% totalNumberOfTeamTasks = teamNewRequestTasks.size + teamTasks.size + teamCompletedTasks.size + recentlyCompleted.size %>				
-			
-				<%# teamtivits = activitydetails.get_team_tivits(current_account.user) %>
-				<%# if teamtivits !=nil && teamtivits.size > 0 %>
-				<% if (teamNewRequestTasks != nil && teamNewRequestTasks.size > 0) || (teamTasks != nil && teamTasks.size > 0) || (teamCompletedTasks != nil && teamCompletedTasks.size > 0) %>
+				<%puts "->>>>>>------->>>>> "+totalNumberOfTeamTasks.to_s%>
+				
+				<%# if (teamNewRequestTasks != nil && teamNewRequestTasks.size > 0) || (teamTasks != nil && teamTasks.size > 0) || (teamCompletedTasks != nil && teamCompletedTasks.size > 0) %>
+				<%# if (teamNewRequestTasks.size > 0) || (teamTasks.size > 0) || (teamCompletedTasks.size > 0) %>
+				<% if (totalNumberOfTeamTasks > 0) %>
+				
 				
 					<div class="team tivits" id="team-tivits">
 						<h2>team tasks <span>(<%= totalNumberOfTeamTasks %>)</span></h2>

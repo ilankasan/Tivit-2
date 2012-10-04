@@ -515,6 +515,15 @@ class ActivitiesController < ApplicationController
  end
  
  
+ def mark_as_not_completed
+#display page to write activity summary
+   puts "not-----------    mark_as_NOT_completed ---------------not"  
+   @activity = Activity.find(params[:id])
+   render 'activity_compelete_summary' 
+ end
+ 
+ 
+ 
  def completed_activity
 #closing an activity
 
