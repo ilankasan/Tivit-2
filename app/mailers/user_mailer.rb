@@ -9,7 +9,8 @@ class UserMailer < ActionMailer::Base
     def notify_new_user(params)
       @email    = params[:email]
       @action   = params[:type]
-      mail(:from => "tiviti Admin",:reply_to => "no_reply@tiviti.net",:to => "ilan.kasan@gmail.com", :subject => "tiviti: "+ @action +" "+ @email)
+      mail(:from => "tiviti Admin",:reply_to => "no_reply@tiviti.net",:to => ["ilan.kasan@gmail.com","yanivlevi1@gmail.com"], :subject => "tiviti: "+ @action +" "+ @email)
+                                                                                                      
    
     end 
    
@@ -74,7 +75,7 @@ class UserMailer < ActionMailer::Base
     @comment    = params[:comment]
     @tivit      = params[:tivit]
     toemail     = create_recipient_list(params[:send_to])
-    puts "sneding to "
+   # puts "sneding to "
     puts toemail.inspect
     mail(:from => create_from_str(@commenter.get_name),:reply_to => @commenter.get_email,:to => toemail,
          :subject => "tiviti: You have a new comment for '"+@tivit.get_name+"'" )
