@@ -124,7 +124,7 @@ if ( jQuery("#adpfte").is(":visible") )
 hidePopup();
 
 <% if ( !@activity.to_self? ) %>
-	showConfirmationMessage ("<b>Task assigned to </b> <%=@activity.get_owner_name%>");
+	showConfirmationMessage ("<b> <%=@activity.get_owner_name%> was notified you requested help with '<%= @activity.name.gsub("\'", "\\\\'") %>'</b>");
 <%else%>
 	showConfirmationMessage ("<b><%= @activity.name.gsub("\'", "\\\\'") %></b> created successfuly");
 <%end%>
