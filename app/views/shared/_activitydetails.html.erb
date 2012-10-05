@@ -274,7 +274,7 @@
 					
 						
 						
-						<% if myCompletedTasks.size > 0 && myTotalNumberOfTasks < 5 %>
+						<% if myCompletedTasks.size > 0 && myTotalNumberOfTasks < 6 %>
 							<%= render :partial => 'shared/task_db', :collection =>  myCompletedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
 						<%elsif myCompletedTasks.size > 0 %>
 							<ul class="list additional-tivits hide"">
@@ -355,7 +355,7 @@
 							<% end %>
 					
 					
-						<% if teamCompletedTasks.size > 0 && myTotalNumberOfTasks < 5 %>
+						<% if teamCompletedTasks.size > 0 && myTotalNumberOfTasks < 6 %>
 										<%= render :partial => 'shared/task_db', :collection =>  teamCompletedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
 						<%elsif teamCompletedTasks.size > 0 %>
 								<ul class="list additional-tivits hide"">
