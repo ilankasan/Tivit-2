@@ -110,8 +110,7 @@ resources :pages
   match "/home/load_tabs"   => "pages#load_tabs"
   
   
-  #get "pages/signout"
-
+  
 resources :users do
   get :autocomplete_user_email, :on => :collection
 end

@@ -21,7 +21,7 @@ class PagesController < ApplicationController
  end
 
 def load_tabs
-
+puts "..................load_tabs................" 
   @tabToLoad = params[:id]
  # puts "[Yaniv] tab to load=" + @tabToLoad
   
@@ -49,6 +49,7 @@ def load_tabs
 end 
 
 def home
+    puts "............>>>>>>>>>>>>>>>>>>>>> home"
     @title = "Home"
     
       
