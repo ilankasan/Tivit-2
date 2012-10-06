@@ -171,7 +171,7 @@ class User < ActiveRecord::Base
 
   def get_new_tasks_assign_to_me  (other_user)
     r = self.activities.where(:status_id => TivitStatus.not_started_id,:invited_by => other_user.get_id)
-    puts "get_new_tasks_assign_to_me "+r.size.to_s
+  #  puts "get_new_tasks_assign_to_me "+r.size.to_s
     return r
   end
   

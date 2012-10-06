@@ -545,6 +545,30 @@ class ActivitiesController < ApplicationController
     redirect_to @activity
   end
 
+
+def reopen_completed_activity
+#reopen an activity
+
+ puts "-----------  reopen  completed_activity --------------"  
+    
+    @activity = Activity.find(params[:id])   
+    
+    #puts params.inspect
+    
+    if(@activity.change_status_to_in_progress)   
+#send email to all participants that tivit was completed (not including owner):
+      #notify_users_activity_is_closed(@activity,params["summary"],current_account.user)
+   
+      flash[:success] = "Actvitity " + @activity.name + " successfuly reopned"
+    else
+      flash[:failed] = "Errrorrororororor"
+      @title = "Edit activity"
+    end
+    redirect_to @activity
+  end
+
+
+
    
  def decline
     puts "-----------    decline ---------------"  
