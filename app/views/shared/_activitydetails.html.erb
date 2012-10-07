@@ -130,10 +130,11 @@
 				<li class="edit-yaniv">edit</li>
 				
 				<% if activitydetails.isCompleted?%>
-					<li class="cmpl-yaniv">mark as not completed</li>
+					<li class="reopen-cmpl-ilan">re-open Activity</li>
 				<%else%>
 					<li class="cmpl-yaniv">mark as completed</li>
 				<%end%>
+				
   				<li class="dele-yaniv"><%= link_to "delete", activitydetails, :method => :delete,
 	                                 :confirm => "You sure you want to delete #{activitydetails.name}?",
 	                                 :title => activitydetails.name %></li>

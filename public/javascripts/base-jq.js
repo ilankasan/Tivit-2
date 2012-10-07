@@ -1655,6 +1655,46 @@ jQuery(document).ready(function($){
 	});
 	/////////////////////////////////////////////////////////////////////////
 	
+	
+	
+	/////////////////////////////////////////////////////////////////////////
+	// Mark as completed - ADP
+	jQuery('.reopen-cmpl-ilan').live('click', function(){
+	 	console.log ("[Ilan] Mark as not completed clicked.");	
+		
+		var record = jQuery(this).parents('.act-main');
+		var activityID = record.find("input").attr("activityid");
+    	console.log ("[Ilan] activityid=", activityID);
+    	
+		var actionPost = 'action="/reopen_completed_activity?id=' + activityID + '&method=put"' + ' accept-charset="UTF-8">';
+		
+		console.log ("[Ilan] ", actionPost);
+		var confirmDialogTitle = "Reopen Activity ";
+		
+		var confirmDialog =	'<div class="popup" id="confirmDialog">'	+
+    								'<div class="loading-popup"></div>' + 
+									'<form id="confirmDialogForm" method="post" class="confirmPopup" ' + actionPost +
+											'<h1>' + confirmDialogTitle + '</h1>' +
+											'<p><textarea rows="10" cols="10" id="summary" name="summary" placeholder="- provide a summary of the acivity to share with the team... -"/></p>' +
+											'<div class="request"><div id="popup-cancel" class="form-button">Cancel</div><input class="form-button" type="submit" name="commit" value="OK"/></div>' +
+									'</form>' +
+									'<div id="popup-close" class="close"></div>' +
+								'</div>';
+			 
+    		 jQuery('#new-activity-background').addClass('tempHide');
+    		 // Show overlay screen
+    		 jQuery('#activity-overlay').show();
+    		 jQuery('#activity-header').append(confirmDialog);
+    		 // Center the dialog relative to where dropdown was clicked. Default for popups is 70px because of the add tivit window.
+    		 $('#confirmDialog').css('top', '100px');
+    		 // by defaults, all popups are display=none which means they don't show. Let's make sure this popup shows up! 
+    		 $('#confirmDialog').css('display', 'block');
+		
+		return false;
+ 	
+	});
+	/////////////////////////////////////////////////////////////////////////
+	
 	//Functions
 	function showLess(list){
 		var commentsCount = list.length - 2;
