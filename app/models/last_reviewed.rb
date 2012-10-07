@@ -6,10 +6,11 @@ class LastReviewed < ActiveRecord::Base
   def self.get_last_updated_completed_tasks(user)
    # puts "--->>> get_last_updated_completed_tasks"
     lr = LastReviewed.where(:user_id => user.get_id, :module_id => @completed_tasks).first
+   # puts last review
     if(lr == nil)
       return user.account.last_sign_in_at  
     else
-    #  puts "retrning when = "+lr.when.to_s
+      puts "retrning when = "+lr.when.to_s
       return lr.when
     end  
       

@@ -26,6 +26,8 @@ console.log('in load tab in ajax!');
 	<% else %>
 		jQuery("#completed-tab-tasks").append('<div class="dashFTE-tab-empty-txt"><p>You currently don\'t have any completed tasks.</p></div>');
 	<% end %>
+	
+	<%current_account.user.update_reviewed_completed_tasks%>
 	console.log('After rendering completed tasks'); 
 	
 <% elsif @tabToLoad == 'tasks-i-asked' %>

@@ -30,7 +30,7 @@ puts "..................load_tabs................"
   elsif ( @tabToLoad == 'completed-tab' )
      
     @objectsToRender = get_completed_tivits(current_account.user)
-    current_account.user.update_reviewed_completed_tasks
+    #current_account.user.update_reviewed_completed_tasks
     
   elsif ( @tabToLoad == 'tasks-i-asked' ) 
     @objectsToRender = get_tasks_for_other(current_account.user.get_id.to_s)
@@ -38,7 +38,7 @@ puts "..................load_tabs................"
     return
   end
      
-   puts "[Yaniv] @objectsToRender = " + @objectsToRender.size.to_s
+  # puts "[Yaniv] @objectsToRender = " + @objectsToRender.size.to_s
    
    respond_to do |format|
        format.html { redirect_to @tivit }

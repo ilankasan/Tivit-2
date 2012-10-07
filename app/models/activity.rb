@@ -387,12 +387,18 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
  end
  
  def is_recently_completed_tab? (user)
+   puts self.name+" --->>>> is_recently_completed_tab?"
    
     return false if (self.completed_at == nil)
-    return true  if (LastReviewed.get_last_updated_completed_tasks(user) == nil)  
-    if (self.completed_at > LastReviewed.get_last_updated_completed_tasks(user))
+    lr = LastReviewed.get_last_updated_completed_tasks(user)
+    
+    return true  if ( lr == nil)  
+    if (self.completed_at > lr )
+      puts " is_recently_completed_tab? returning true "
       return true
     else
+      puts " is_recently_completed_tab? returning flase  "
+      
       return false
     end
     

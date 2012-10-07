@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
   end 
     
   def get_num_new_completed_since_last_reviewed
-   puts "get_num_new_completed_since_last_reviewed"
+  # puts "get_num_new_completed_since_last_reviewed"
    #self.activities()
    return Activity.where("status_id = ? AND activity_type = 'tivit' AND (owner_id = ? OR invited_by = ?) AND completed_at > ?",TivitStatus.get_completed_id, self.id, self.id, LastReviewed.get_last_updated_completed_tasks(self)).count
 
