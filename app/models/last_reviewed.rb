@@ -18,23 +18,20 @@ class LastReviewed < ActiveRecord::Base
   
   
   def self.update_completed_tasks_module(user)
-    puts "--->>> update_completed_module"
+    #puts "--->>> update_completed_module"
     lr = LastReviewed.where(:user_id => user.get_id, :module_id => @completed_tasks).first
     if(lr == nil)
-      puts "new record"
       lr = LastReviewed.new(:user_id => user.get_id, :module_id => @completed_tasks,:when => Time.now())
       lr.save
-      puts "new record"
       
     else
-      puts "updating record"
       lr.when = Time.now()
       lr.save
       #lr.save
       
-      puts "updating record"
+     
     end
-    puts "---<<< update_completed_module"
+    #puts "---<<< update_completed_module"
     
   end
   
