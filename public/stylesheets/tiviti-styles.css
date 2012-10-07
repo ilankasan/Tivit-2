@@ -1173,7 +1173,7 @@ a img{border:none;}
 .tivits p, .tivits h1, .tivits h2{margin:0;padding:0;}
 
 .activities h1{font-size:24px;font-weight:bold;color:#000;margin:9px 0 2px;}
-.activities h2{font-size:18px;color:#333;font-weight:normal;padding:8px 0 0 12px;}
+.activities h2{font-size:18px;color:#333;font-weight:normal;padding:8px 0 0 6px;}
 .activities h2 span{color:#969696;}
 
 /* This line controls the tivit titles style on both dashboard AND ADP */
@@ -1291,7 +1291,7 @@ a img{border:none;}
 	.tivits li ul.list li.active{background:none !important;}
 	.tivits li ul.list .active .record-conteiner{background:#ffffcc;}
 		.record-conteiner{width:461px;padding:5px;}
-	.tivits.main-tivit{margin:20px 0;padding: 0 0px 0 0px; }
+	.tivits.main-tivit{margin:20px 0;padding: 0 0px 0 0px; padding-left: 10px; }
 .tivits .form-button{width:auto;padding:8px 10px 8px 40px;text-align:right;font-size:15px;position:absolute;top:-43px;right:0;
 	background:#61B010 url(../images/icon_add_tivit.png) 6px center no-repeat}
 .add-tivit-button{width:auto;padding:8px 10px 8px 40px;text-align:right;font-size:15px;background:#61B010 url(../images/icon_add_tivit.png) 6px center no-repeat; 
@@ -1398,7 +1398,7 @@ a img{border:none;}
 	.edit-menu .icon{z-index: 5; width:16px;height:17px;background:url(../images/icon_edit_menu.png) no-repeat;/*display:none;*/}
 	
 .tivits li ul.list{margin:10px 0 0 85px;display:none;}
-.tivits li ul.list{margin:10px 0 0 136px;display:none;}
+.tivits li ul.list{margin:10px 0 0 146px;display:none;}
 .tivits li ul.list li{position:relative;padding:0;}
 .tivits li ul.list li:first-child.active{margin-top:15px;}
 .tivits li ul.list .avatar,.tivits li ul.list .avatar img{width:26px;height:26px;}
@@ -1417,7 +1417,7 @@ a img{border:none;}
 .request span{color:red;}
 .request a{color:#2525f8;display:inline-block;padding:0 6px;}
 
-.request .form-button{position:relative;top:0;display:inline-block;background: #fff;padding:3px 15px;margin:20px 0 40px 5px;color:#929292;
+.request .form-button{left: 10px; position:relative;top:24px;display:inline-block;background: #fff;padding:3px 15px;margin:20px 0 40px 5px;color:#929292;
 		border: 1px solid #C0C0C0;border-radius:4px;}
 		
 .request .form-button:first-child{background-image:none;background-color:#61B010;color:#fff;margin:20px 0 40px 5px;}
@@ -1453,13 +1453,14 @@ a img{border:none;}
 	.edit{background:url(../images/icon_edit.png) 2px center no-repeat;}
 	.del{background:url(../images/icon_delete.png) left center no-repeat;}
 .tivits li ul.list .text input,
-.post textarea{width:415px;margin:10px 0 0;padding:0 4px;height:20px;color:#929292;
+.post textarea{width:415px;margin:10px 0 0;padding:0 4px;height:24px;color:#929292;
 	background:#fff;border:1px solid #e6e6e6;
-	font:italic 13px Arial,'Liberation Sans',FreeSans,sans-serif;}
+	font:italic 13px Arial,'Liberation Sans',FreeSans,sans-serif; height: 24px;}
 	.tivits .post{position:relative;padding-left:36px;}
 	.tivits li ul.list .post{width:425px;}
-	.post textarea{padding-top:2px; resize:none; autocomplete="off" ; overflow: hidden; line-height: 18px;}
-	.post-style textarea{color:#242424;font-style:normal;}
+	
+	.post textarea {height:24px; padding-top:2px; resize:none; autocomplete="off" ; overflow: hidden; line-height: 18px; font-size: 13px;}
+	.post-style textarea{padding-top:2px;height:24px;color:#242424;font-style:normal;}
 	
 	
 .post .post-button{display:block;width:auto;height:26px;margin:10px 0 0;padding:0px 14px 0px 12px;;background:#61B010;color:#fff;
@@ -1576,14 +1577,14 @@ small.less{display:block;padding:0;}
 .popup label.error { font-size: 13px; text-align: left; width: 300px; float: none; color: red; padding-left: 101px; vertical-align: top; }
 
 .popup input,.popup textarea{width:400px;height:27px;border:1px solid #d0d0d0;font:normal 13px Arial,'Liberation Sans',FreeSans,sans-serif;padding-left:4px;}
-.popup textarea{height:70px;resize:none; padding: 4px;width: 394px;}
+.popup textarea{height:70px;resize:none; padding: 4px;width: 400px;}
 
 
 .popup form p{margin:12px 0;}
 
 .popup .input-date label{width:271px;}
-.popup .input-date input{width:175px;height:20px;}
-.popup .input-date .ico_calc{float:right;left: -22px; top:-25px;}
+.popup .input-date input{width:179px;height:26px;}
+.popup .input-date .ico_calc{float:right;left: -26px; top:5px;}
 .popup .assign{padding-left:56px;cursor:pointer;}
 .popup .assign i{display:inline-block;width:14px;height:14px;border:1px solid #d0d0d0;
 		position:relative;top:3px;background:none;}
@@ -1595,14 +1596,14 @@ small.less{display:block;padding:0;}
 
 
 /* Yaniv - Confirm dialog specifics, to separate from add tivit popup where it doesn't fit nicely */
-.popup .confirmPopup textarea{width:430px;height:60px;padding: 4px;margin: 5px 0 5px 2px;}
+.popup .confirmPopup textarea{width:440px;height:60px;padding: 4px;margin: 5px 0 5px 18px;}
 .popup .confirmPopup .input-date .ico_calc{float:right;left: -26px; top:4px;}
 .popup .confirmPopup .request .form-button{margin-top: 14px; margin-left: 5px; margin-right: 11px;background-color:#61B010;color:#fff;cursor:pointer;width:auto;padding:2px 16px;font-size:15px;font-weight: bold;}
 .popup .confirmPopup .request .form-button:first-child{background-color:#fff;color:#929292;margin-left:298px;margin-right:10px; padding:2px 15px;font-size:15px;font-weight: bold;}
 .popup .confirmPopup {top: 0px;}
 .popup .confirmPopup p {padding: 0 0px;}
 
-.popup .edittivitPopup .input-date .ico_calc{float:right;left: -26px; top:4px;}
+.popup .edittivitPopup .input-date .ico_calc{float:right;left: -28px; top:5px;}
 
 .popup .radb{width:auto; height:auto; margin:0 10px 0 0;border:none;}
 .popup .left-p{margin:12px 25px;}
@@ -1812,6 +1813,7 @@ small.less{display:block;padding:0;}
 #team-tivits{
     margin-bottom:20px;
     padding: 0px;
+    padding-left: 10px;
 }
 
 .yell-bg{

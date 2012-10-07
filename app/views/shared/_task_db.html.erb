@@ -100,8 +100,11 @@
 							<div class="avatar unread">
 						<% else %>
 							<div class="avatar read">
-						<% end %>						
-							<%= profile_image(my_task.get_owner)%>
+						<% end %>	
+							
+							<% userURL = "/users/relationship/" + my_task.get_owner.get_id.to_s %>														               			
+							<a href=<%= userURL %>><%= profile_image(my_task.get_owner)%></a>
+							
 					<% end %>
 							
 							<!--%= render :partial => 'profile_images/profile_image', :collection =>  [my_task.get_owner], :as => :user %--> 

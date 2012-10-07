@@ -117,25 +117,26 @@
 			 	
 			 	<div id="alltivits" class="main-tivit">
 					<div id="mytivits" class="tvit-list">	
-						
-						<div class="team tivits">
-							<div class="tvit-list">
-								<ul class="list">
-									
-									<% if ( expand_new_request_ui? || (nil == @my_open_tasks) ) %>
-										<% if (@new_tivit_requests != nil) && (@new_tivit_requests.size > 0) %>
-											<div class="dashFTE-tab-empty-txt"><p>You currently have no tasks open...but you have some new requests for help above. See if you can help.</p></div>
-										<% else %>
-											<div class="dashFTE-tab-empty-txt"><p>You currently have no tasks open...Create a new activity and task and get stuff done.</p></div>
+						<ul class="list">
+							<div class="team tivits">
+								<div class="tvit-list">
+									<ul class="list">
+										
+										<% if ( expand_new_request_ui? || (nil == @my_open_tasks) ) %>
+											<% if (@new_tivit_requests != nil) && (@new_tivit_requests.size > 0) %>
+												<div class="dashFTE-tab-empty-txt"><p>You currently have no tasks open...but you have some new requests for help above. See if you can help.</p></div>
+											<% else %>
+												<div class="dashFTE-tab-empty-txt"><p>You currently have no tasks open...Create a new activity and task and get stuff done.</p></div>
+											<% end %>
 										<% end %>
-									<% end %>
-									<%#= @my_open_tasks.size %>
-									<%#= render :partial => 'shared/activity_db', :collection =>  @activities_summary, :locals => {:tabview => "Summary"} %>
-					     			<%= render :partial => 'shared/task_db', :collection =>  @my_open_tasks, :as => :my_task, :locals => {:taskContext => 'tasksTabDashboard'} %>
-					    				 
-					     		</ul>
-					     	</div>
-					     </div>
+										<%#= @my_open_tasks.size %>
+										<%#= render :partial => 'shared/activity_db', :collection =>  @activities_summary, :locals => {:tabview => "Summary"} %>
+						     			<%= render :partial => 'shared/task_db', :collection =>  @my_open_tasks, :as => :my_task, :locals => {:taskContext => 'tasksTabDashboard'} %>
+						    				 
+						     		</ul>
+						     	</div>
+						     </div>
+						</ul>
 		     		</div>
 		     	</div>
 			<%# end %>

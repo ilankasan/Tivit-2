@@ -20,15 +20,16 @@
 		
 
 		<!-- comment user avatar -->
-		<div class="avatar">
-			
-			
+		<div class="avatar">			
 			
 			<!--%= profile_image(tivit_adp_comment.user)%-->
 			<%time = Time.now() %>
  
 			<!--%= render :partial => 'profile_images/profile_image', :collection =>  users, :as => :user, :class => "avatar" %-->
-				<%= profile_image(tivit_adp_comment.user)%>
+				
+				<% userURL = "/users/relationship/" + tivit_adp_comment.user.id.to_s %>														               			
+				<a href=<%= userURL %>><%= profile_image(tivit_adp_comment.user)%></a>				
+				
 		
 			<%# puts (Time.now()-time).to_s%>
 

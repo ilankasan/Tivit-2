@@ -90,8 +90,9 @@
 		<div class="avatar">
 			<!-- <img class="avatar" src="images/act_avatar.gif" alt="Don-profile"> -->
 			<!--%= render :partial => 'profile_images/profile_image', :collection =>  [activitydetails.get_owner], :as => :user, :class => "avatar" %-->
-			<%= profile_image(activitydetails.get_owner)%>
-		  
+			
+		  	<% userURL = "/users/relationship/" + activitydetails.get_owner.id.to_s %>														               			
+			<a href=<%= userURL %>><%= profile_image(activitydetails.get_owner)%></a>
 			
 		</div>
 		<div class="info">
@@ -129,7 +130,7 @@
 				<li class="edit-yaniv">edit</li>
 				
 				<% if activitydetails.isCompleted?%>
-					<li class="reopen-cmpl-ilan">re-open Activity</li>
+					<li class="cmpl-yaniv">mark as not completed</li>
 				<%else%>
 					<li class="cmpl-yaniv">mark as completed</li>
 				<%end%>
