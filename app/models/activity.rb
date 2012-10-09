@@ -432,7 +432,7 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
  def get_last_reviewed (user)
    tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.get_id)
    if(tivit_user_status == nil)
-     puts "user last status is nil !!!!!"
+   #  puts "user last status is nil !!!!!"
      return 1
    else
   #    puts "last reviewed for activity  "+self.id.to_s+ " for user "+user.get_id.to_s+" is "+tivit_user_status.last_reviewed.to_s+" validating user "+tivit_user_status.user_id.to_s
@@ -882,7 +882,7 @@ return self.tivits.size
   end
   
   def change_status_if_to_done
-    puts "------>>>>>>>>>>>>>>>  change_status_to_Done --------------------------------------------"
+    
     change_status_id(TivitStatus.get_completed_id)
   end
   

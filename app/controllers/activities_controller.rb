@@ -136,13 +136,12 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
        format.html {}
        format.js {}
-       puts "[Yaniv] (activities controller)------->> after edit_tivit."
+    #   puts "[Yaniv] (activities controller)------->> after edit_tivit."
     end    
   end
   
   def show
     
-    puts "333----------->>>>>>>>>>> show activity detailed page"
     #puts "params = "+params.inspect
     @activity_temp = Activity.find(params[:id])
     if(!@activity_temp.isActivity?)
@@ -183,7 +182,6 @@ class ActivitiesController < ApplicationController
   end
    
   def update_view_status
-   puts "-yyyyy ---------->>>>>>>>>>> update_view_status kkkkkkk"
    
    #if(@tivit_id != nil)
     @tivit = Activity.find(params[:id])
@@ -207,7 +205,6 @@ class ActivitiesController < ApplicationController
    puts "--->>> in validate_access " 
    return if(params == nil || params[:id] == nil)
    if(current_account == nil)
-    puts "------>>>>>>>>>>>>>>> current user is NIL!!!!!!"
     return
    end
       
