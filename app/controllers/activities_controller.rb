@@ -237,7 +237,7 @@ class ActivitiesController < ApplicationController
         comment.save
       end
            
-      flash[:success] = "task " + @activity.name + " has been updated"
+      flash[:success] = "Task '" + @activity.name + "' has been updated"
       redirect_to @activity
       
     else

@@ -731,15 +731,13 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
  
  def get_owner_name
  #adding the user to the existing users on the task
-     user = User.find_by_id(self.owner_id)
-    if user == nil
+    owner = self.get_owner
+    if  owner == nil
        "no owner error, call admin"
     else
-       return user.name
+       return owner.get_name
     end
  end
- 
- 
  
  
  def get_owner_id
