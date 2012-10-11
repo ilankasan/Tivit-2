@@ -76,8 +76,13 @@ def get_task_status_line (task, user)
     status_line_window = ""
     
 #if someone other than the task owner completed activity
-    if(task.get_completed_by != task.get_owner)
-      task_owner_name = task.get_completed_by.get_name
+    completed_by = task.get_completed_by 
+    if(completed_by != task.get_owner)
+      if(completed_by = current_account.user)
+        task_owner_name = "You"
+      else
+        task_owner_name = task.get_completed_by.get_name
+      end
     end 
        
     
