@@ -34,8 +34,9 @@ def get_task_status_line (task, user)
   end
   #task_invited_by = "INVITED BY"
   
-  if task.get_owner.name == "not active"
-    task_owner_name = task.get_owner.clone_email
+#ilan - change code
+  if !task.get_owner.isActive? 
+    task_owner_name = task.get_owner.get_name
   end
 
   #*** 2 *** Figure out the appropriate window to determine the statusline relevant text
@@ -73,6 +74,12 @@ def get_task_status_line (task, user)
   if (task.isCompleted?)
     status_line_middle = " finished this " +  (time_ago_in_words (task.completed_at)) + " ago."
     status_line_window = ""
+    
+#if someone other than the task owner completed activity
+    if(task.get_completed_by != task.get_owner)
+      task_owner_name = task.get_completed_by.get_name
+    end 
+       
     
   elsif ( TivitStatus.is_proposed_id?(owner_tivit_status) )
     proposed_date = "no data was set"

@@ -36,7 +36,6 @@ class UserMailer < ActionMailer::Base
      
 
 #108  Tivit - New Date Accepted. When: Assigner accepts alternate due date, Who: Assignee
-    puts "tivit_access_new_date_email"
          
     @assignee   = params[:assignee]
     @assigner   = params[:assigner]
@@ -70,7 +69,6 @@ class UserMailer < ActionMailer::Base
 
  def notify_comment_added_to_tivit(params)
 #103 Tivit - New Comment(s). When: Comment added (non-self), Who: Assigner, Assignee, Commenters  Ilan: sent only to asigner if asigne comments
-#puts ">>>>>>>>>>    notify_comment_added_to_tivit "
     @commenter  = params[:commenter]
     @comment    = params[:comment]
     @tivit      = params[:tivit]
