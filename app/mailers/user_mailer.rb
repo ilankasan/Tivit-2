@@ -52,9 +52,9 @@ class UserMailer < ActionMailer::Base
    
    def new_tivit_email(params)
 #101 Tivit - New. When: Assigner creates tivit, Who: Assignee
-    puts "----------------------------------------"                                                   
-    puts "really new "
-    puts "----------------------------------------"                                                   
+  #  puts "----------------------------------------"                                                   
+  #  puts "really new "
+  #  puts "----------------------------------------"                                                   
                                                       
     @invitee   = params[:assignee]
     @inviter   = params[:assigner]
