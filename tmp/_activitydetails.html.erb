@@ -1,0 +1,383 @@
+<% if activitydetails.get_owner.id == current_account.user.get_id %>
+	<% activity_owner_name = "You" %>
+<% else %>
+	<% activity_owner_name = activitydetails.get_owner.name %>
+<% end %>
+
+
+<!-- Full window overlay -->
+<div id="activity-overlay"></div>
+
+<!-- Add New Tivit Form -->
+<!--
+<div class="popup" id="add-tivit-window">
+
+	<form action="/">
+		<h3>Add a tivit for youself or for others</h3>
+		<p><label for="tivit">tivit:</label><input type="text" id="tivit" /></p>
+		<p><label for="who">Who:</label><input type="text" id="who" /></p>
+		<p class="assign"><i></i> assign myself</p>
+		<p><label for="what">What:</label><textarea id="what" cols="10" rows="10"></textarea></p>
+		<p class="input-date"><label for="due">Needed by:</label>
+		<input type="text" autocomplete="off" name="due" id="due" />
+		<img class="ico_calc" onclick="javascript:NewCssCal('due', 'mmddyyyy', 'arrow')" src="images/cal.gif" alt="date" /></p>
+		<div class="request">
+			<div class="form-button" id="cancel">Cancel</div>
+			<div class="form-button">Create</div>
+		</div>
+	</form>
+	
+	<div class="close" id="popup-close"></div>
+</div>
+-->
+
+<div class="popup" id="add-tivit-window">
+	
+	<div class="loading-popup"></div>
+
+	<!-- Popup title -->
+	<h3>Assign yourself a task or invite others to help</h3>
+
+	<!-- in the form tag below, the second id is the actual HTML ID of the form which I use in jQuery -->
+	<%= form_tag({:controller => "activities", :action => "create_tivit", :method => "post", :id => @activity.id}, :id => "create-new-tivit-form") do %>
+	
+		<!-- tivit name -->
+		<!-- <p><label for="tivit">tivit:</label><input type="text" id="tivit" /></p> -->	
+		<p><label for="tivit">Name:</label>
+			<%= text_field_tag(:name, nil, :placeholder => "Enter name of task", :class => "required") %> 
+		</p>
+		
+		<!-- tivit invitee -->
+		<p class="assign" id="assignmyselfchk"><i></i> assign to myself</p>
+		<!-- <p><label for="who">Who:</label><input type="text" id="who" /></p> -->
+		<p id="wholine">
+			<label for="who">Who:</label>
+			<%#= text_field_tag(:invitees, nil, :placeholder => "Who can help? (enter an email address)", :class => "required email" ) %> 
+			<%= text_field_tag(:invitees, nil, :placeholder => "Who can help? (enter an email address)", :class => "email") %> 
+		</p>
+		
+		<!-- tivit description -->
+		<!-- <p><label for="what">What:</label><textarea id="what" cols="10" rows="10"></textarea></p>-->
+		<p><label for="what">What:</label>
+			<%= text_area_tag(:description, nil, :placeholder => "Any details to provide?") %> 
+			</p>
+	
+		<!-- need by date -->		  	
+		<p class="input-date"><label for="due">Needed by:</label>
+	     	<%= text_field_tag(:due, nil, :placeholder => "choose date", :name => "due",  :id => "addtivitduedate", :autocomplete => "off", :class => "input-date") %> 
+	     	<img class="ico_calc" src="/images/cal.gif" onclick="javascript:NewCssCal('addtivitduedate', 'mmddyyyy', 'arrow', false,'24',true,'future')" class="ico_calc" style="cursor:pointer"/> 	
+		</p>
+		
+		
+		 	
+		<div class="request">
+			<div class="form-button" id="cancel">Cancel</div>
+			  <%= submit_tag("Add", :class => "form-button") %>
+		</div>
+		
+	<% end %> 
+	
+	<!-- Popup close button -->
+	<div class="close" id="popup-close"></div>
+	
+</div>
+
+<div class="activities">
+	<!-- Top Activities Panel -->
+	<div class="act-main" id="activity-header">
+		<input type="hidden" activityid="<%= activitydetails.id %>">
+		
+		<div class="avatar">
+			<!-- <img class="avatar" src="images/act_avatar.gif" alt="Don-profile"> -->
+			<!--%= render :partial => 'profile_images/profile_image', :collection =>  [activitydetails.get_owner], :as => :user, :class => "avatar" %-->
+			<%= profile_image(activitydetails.get_owner)%>
+		  
+			
+		</div>
+		<div class="info">
+			
+			<!-- Activity Name -->
+
+			<h1><%= activitydetails.name %> </h1>
+			
+			
+			<% if activitydetails.isCompleted?%>
+				<small><font color="red"><%= activity_owner_name %>, marked this Activity as Completed <%= time_ago_in_words(activitydetails.completed_at) %> ago.</font></small></p>
+				
+			<%else%>
+				<small><%= activity_owner_name %>, <%= time_ago_in_words(activitydetails.created_at) %> ago.</small></p>
+			<%end%>
+				
+			
+			<!-- <p class="progress-complete"><span>20%</span> (1/5 tivits complete)</p> -->	
+			<p class="progress-complete">
+				<span>
+					<%unless activitydetails.get_number_of_tivits == 0%>
+	            		<strong> <%=(( 100 * activitydetails.get_number_of_completed_tivits) / activitydetails.get_number_of_tivits)%>%</strong>
+	     
+	        			</span> 
+	     				(<%= activitydetails.get_number_of_completed_tivits %>/<%= activitydetails.get_number_of_tivits %> tasks completed)	
+	     			   		
+	        		<%end%>   
+	        </p>                                        
+    		</br>  
+    		
+	  		<% if current_account.user.get_id == (activitydetails.owner_id) %>
+			<ul>
+				
+				<!-- <li class="edit-yaniv1"><%= link_to "EDIT", edit_activity_path(activitydetails) %></li> -->
+				<li class="edit-yaniv">edit</li>
+				
+				<% if activitydetails.isCompleted?%>
+					<li class="reopen-cmpl-ilan">re-open Activity</li>
+				<%else%>
+					<li class="cmpl-yaniv">mark as completed</li>
+				<%end%>
+  				<li class="dele-yaniv"><%= link_to "delete", activitydetails, :method => :delete,
+	                                 :confirm => "You sure you want to delete #{activitydetails.name}?",
+	                                 :title => activitydetails.name %></li>
+			</ul>
+			<% end %>
+		</div>
+		
+		<!-- Activity Due Date -->
+		<!-- 
+		<div class="calendar red">
+			<div class="week">MON</div>
+	    	<div class="text">26</div>
+		</div>
+		-->
+		
+		<% due_time_window = activitydetails.get_due_window_from_now %>
+		
+		<% if activitydetails.due == nil %>
+	<!-- no date specified -->
+			<div class="calendar">
+			
+		<% elsif due_time_window == "overdue" %>
+	<!-- activity is overdue -->
+			<div class="calendar new">
+				<div class="week"><%= ((Time.now.end_of_day - activitydetails.due.localtime.end_of_day)/(3600*24)).to_i %></div>
+				<div class="text">days ago</div>
+				
+		<% elsif due_time_window == "today" %>
+	<!-- activity due today -->
+		 	<div class="calendar today">
+		 		<div class="text">Today</div>
+		 		
+		<% elsif due_time_window == "tomorrow"  %>
+	<!-- activity due tomorrow -->
+		 	<div class="calendar tomorrow">
+		 		<div class="text">Tom.</div>
+		 		 		
+		<% elsif due_time_window == "withinaweek" %>
+	<!-- activity due within a week -->
+			<div class="calendar past">
+				<div class="week"><%= (activitydetails.due.localtime.strftime ("%a")).upcase %></div>
+			    <div class="text"><%= activitydetails.due.localtime.strftime ("%-d") %></div>
+				
+		<% else %>
+	<!-- activity due within more than a week -->
+			<div class="calendar date beyondaweek">
+				<div class="text"><%= activitydetails.due.localtime.strftime ("%-m-%-d") %></div>
+			
+		<%end%>
+		
+		 
+		<!-- <div class="calendar new">
+			<%if (activitydetails.due != nil && activitydetails.due.inspect.size > 0 )%>
+				<div class="week"><%= (activitydetails.due.strftime ("%a")).upcase %></div>
+	    		<div class="text"><%= activitydetails.due.strftime ("%d") %></div>
+	    	<%end%>
+	    -->
+		</div>
+		
+		<!-- Activity Description -->
+		<div class="description">
+			<p>
+				<p><%=h auto_link(activitydetails.description) %></p>
+			 
+			 <!-- <a class="more" href="#">...more</a> <!-- <small>Don Drapper 5 min ago</small> -->
+			 </p>
+		</div>
+	</div>
+	
+
+	<div class="body">
+		<!-- Right col: Files -->
+		<!--
+		<div class="rightCol files">
+			<h2>files <span>(2)</span></h2>
+			<div class="file new">
+				<p><a href="#"><img src="../images/file_1.jpg" alt="Presentation" /></a></p>
+				<p><a href="#">Kodak Competitive Lan...</a></p>
+				<p><span>Pete Campbell</span></p>
+				<p><small>17 minutes ago</small></p>
+			</div>			
+			<div class="file">
+				<p><a href="#"><img src="../images/file_2.jpg" alt="Excel" /><i>3</i></a></p>
+				<p><a href="#">Lucky Strike Presentation</a></p>
+				<p><span>Don Draper</span></p>
+				<p><small>Yesterday @ 8:09 AM</small></p>
+			</div>
+		</div>
+		-->
+		<!-- Left col: tivities -->		
+		<div class="leftCol">
+			
+			<!-- add tivit button -->
+			<p><input type="submit" class="add-tivit-button" id="add-tivit" value="add a task"></p>
+			<div class="clear"></div>
+			
+			<!-- My tivits -->
+			<% myNewRequestTasks = activitydetails.get_my_new_tasks (current_account.user) %>
+			<% myTasks = activitydetails.get_my_open_tasks_i_agreed_to_help_with (current_account.user) %>
+			<% myRecentlyCompleted = activitydetails.get_my_recently_completed_tasks current_account.user, @tivit_id  %>
+			<% myCompletedTasks = activitydetails.get_my_completed_tasks current_account.user, @tivit_id %>
+			
+			
+			<% myTotalNumberOfTasks = myNewRequestTasks.size + myTasks.size + myCompletedTasks.size + myRecentlyCompleted.size %>
+			
+			<%# puts "------->>>> tasks = "+myTotalNumberOfTasks.to_s %>
+			
+			
+			<%# if (myNewRequestTasks != nil && myNewRequestTasks.size > 0) || (myTasks != nil && myTasks.size > 0) || (myCompletedTasks != nil && myCompletedTasks.size > 0)  %>
+			<% if (myTotalNumberOfTasks > 0)  %>
+			
+				<div class="tivits main-tivit" id="alltivits">
+					<div class="perc-completed"><strong><%=(( 100 * (myCompletedTasks.size + myRecentlyCompleted.size)) / myTotalNumberOfTasks)%>%</strong> complete</div>
+					<h2>my tasks <span>(<%= myTotalNumberOfTasks %>)</span></h2>
+					<div class="tvit-list" id="mytivits">						
+						
+						<%#= render :partial => 'shared/tivit_adp', :collection =>  mytivits %>
+						
+						<% if myNewRequestTasks != nil && myNewRequestTasks.size > 0 %>
+						<ul class="list">
+							<%= render :partial => 'shared/task_db', :collection =>  myNewRequestTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+						</ul>
+						<% end %>
+						<% if myTasks != nil && myTasks.size > 0 %>
+							<ul class="list">
+							<%= render :partial => 'shared/task_db', :collection =>  myTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+							</ul>
+						<% end %>
+						
+						
+							<% if myRecentlyCompleted != nil && myRecentlyCompleted.size > 0 %>
+								<ul class="list">
+								<%= render :partial => 'shared/task_db', :collection =>  myRecentlyCompleted, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+								</ul>
+							<% end %>
+					
+					
+						<%#= if total team tasks is 6 or less show all tasks %>
+					
+						
+						
+						<% if myCompletedTasks.size > 0 && myTotalNumberOfTasks < 6 %>
+							<%= render :partial => 'shared/task_db', :collection =>  myCompletedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+						<%elsif myCompletedTasks.size > 0 %>
+							<ul class="list additional-tivits hide"">
+								<%= render :partial => 'shared/task_db', :collection =>  myCompletedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+							</ul>
+							<p class="show-other-tasks">Show <%= myCompletedTasks.size %> completed tasks</p>
+						<% end %>						
+					</div>
+					
+			<%else%>
+				<div class="tivits main-tivit" id="alltivits" style="background:none" >
+				
+			<%end%>
+				
+					
+			<!-- End of Main Tivits -->
+			</div> <!-- My tivits -->
+			
+			
+			<!-- Unassigned Tasks -->
+			<% unassignedTasks = activitydetails.get_unassigned_tasks %>
+			
+			<% if (unassignedTasks != nil && unassignedTasks.size > 0) %>
+							
+				<div class="team tivits" id="unassigned-tasks">
+					<h2>unassigned tasks <span>(<%= unassignedTasks.size %>)</span></h2>
+					<div class="tvit-list" id="unassignedtasks">
+						<ul class="list">
+							<%= render :partial => 'shared/task_db', :collection =>  unassignedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>									
+						</ul>						
+					</div>	
+				
+				
+			<% else %>
+				<div class="team tivits" id="unassigned-tasks" style="background:none">			
+			<% end %>
+
+			</div> <!-- unassigned tivits -->
+			
+			<!-- Team tivits -->			
+				<!-- <h2>team tivits<span>(4)</span></h2> -->
+				<% teamNewRequestTasks  = activitydetails.get_team_new_tasks (current_account.user) %>
+				<% teamTasks 			= activitydetails.get_team_open_tasks_they_agreed_to_help_with (current_account.user) %>
+				<% recentlyCompleted 	= activitydetails.get_recently_team_completed_tasks current_account.user,@tivit_id  %>
+				<% teamCompletedTasks 	= activitydetails.get_team_completed_tasks current_account.user,@tivit_id   %>
+				
+				<% totalNumberOfTeamTasks = teamNewRequestTasks.size + teamTasks.size + teamCompletedTasks.size + recentlyCompleted.size %>				
+				<%puts "->>>>>>------->>>>> "+totalNumberOfTeamTasks.to_s%>
+				
+				<%# if (teamNewRequestTasks != nil && teamNewRequestTasks.size > 0) || (teamTasks != nil && teamTasks.size > 0) || (teamCompletedTasks != nil && teamCompletedTasks.size > 0) %>
+				<%# if (teamNewRequestTasks.size > 0) || (teamTasks.size > 0) || (teamCompletedTasks.size > 0) %>
+				<% if (totalNumberOfTeamTasks > 0) %>
+				
+				
+					<div class="team tivits" id="team-tivits">
+						<h2>team tasks <span>(<%= totalNumberOfTeamTasks %>)</span></h2>
+						<div class="tvit-list" id="teamtivits">
+						
+							<%#= render :partial => 'shared/tivit_adp', :collection =>  teamtivits %>
+							<%#= render :partial => 'shared/task_db', :collection =>  teamtivits, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+							
+							<% if teamNewRequestTasks != nil && teamNewRequestTasks.size > 0 %>
+							<ul class="list">
+								<%= render :partial => 'shared/task_db', :collection =>  teamNewRequestTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+							</ul>
+							<% end %>
+							
+							<% if teamTasks != nil && teamTasks.size > 0 %>
+								<ul class="list">
+								<%= render :partial => 'shared/task_db', :collection =>  teamTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+								</ul>
+							<% end %>
+							
+							<% if recentlyCompleted != nil && recentlyCompleted.size > 0 %>
+								<ul class="list">
+								<%= render :partial => 'shared/task_db', :collection =>  recentlyCompleted, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+								</ul>
+							<% end %>
+					
+					
+						<% if teamCompletedTasks.size > 0 && myTotalNumberOfTasks < 6 %>
+										<%= render :partial => 'shared/task_db', :collection =>  teamCompletedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+						<%elsif teamCompletedTasks.size > 0 %>
+								<ul class="list additional-tivits hide"">
+									<%= render :partial => 'shared/task_db', :collection =>  teamCompletedTasks, :as => :my_task, :locals => {:taskContext => 'ADP'} %>
+								</ul>
+								<p class="show-other-tasks">Show <%= teamCompletedTasks.size %> completed tasks</p>
+						<% end %>						
+							
+						</div>
+				
+				<% else %>
+					<div class="team tivits" id="team-tivits" style="background:none">
+				<%end%>
+				
+					</div> <!-- team tivits --> 
+			<%# puts "myTotalNumberOfTasks=" + myTotalNumberOfTasks.to_s %>	
+			<%# puts "totalNumberOfTeamTasks=" + totalNumberOfTeamTasks.to_s %>			
+			<% if (totalNumberOfTeamTasks == 0) && (myTotalNumberOfTasks == 0) && (unassignedTasks.size == 0)%>
+				<div id="adpfte"></div>
+			<% end %>	
+		</div> <!-- "leftCol" -->
+	
+	</div> <!-- "body" -->
+	
+</div> <!--"activities" --> 
