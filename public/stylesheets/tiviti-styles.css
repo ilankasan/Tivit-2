@@ -1584,7 +1584,7 @@ small.less{display:block;padding:0;}
 
 .popup .input-date label{width:271px;}
 .popup .input-date input{width:179px;height:26px;}
-.popup .input-date .ico_calc{float:right;left: -26px; top:5px;}
+.popup .input-date .ico_calc{float:right;left: -26px; top:-25px;}
 .popup .assign{padding-left:56px;cursor:pointer;}
 .popup .assign i{display:inline-block;width:14px;height:14px;border:1px solid #d0d0d0;
 		position:relative;top:3px;background:none;}

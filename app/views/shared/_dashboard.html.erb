@@ -93,7 +93,7 @@
 	                <a href="#completed-tab">Completed</a>
 	                <% count = current_account.user.get_num_new_completed_since_last_reviewed %>
 	      			<%if count > 0%>
-	                	<i><%=count%></i>
+	                	<i id="recentlyCompletedCount"><%=count%></i>
 	                <%end%>	
 	                
 	                
