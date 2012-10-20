@@ -87,7 +87,7 @@ def home
      @title = "Analytics"
      @user_adopt   = get_user_stats
      @tivit_stats  = get_tivits_stats
-     @users = User.joins("LEFT OUTER JOIN accounts ON accounts.id = users.account_id").order(:current_sign_in_at,:created_at).reverse_order.paginate(:page => params[:page], :per_page => 30)
+     @users = User.joins("LEFT OUTER JOIN accounts ON accounts.id = users.account_id").order(:current_sign_in_at,:created_at).reverse_order.paginate(:page => params[:page], :per_page => 200)
      
      #@active_users = User.where(:is_active => true)
      @active_users = User.joins(:account,:tivitcomments).where(:is_active => true).order("tivitcomments.updated_at").reverse_order.uniq
