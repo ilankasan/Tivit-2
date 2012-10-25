@@ -30,17 +30,11 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
  def create
  	puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------"
  	@params = params
- #	puts params.inspect
- #	puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------ 2"
-  
-    puts "Sending email..."
-    
-  
+   
   if(params[:account][:viral] == "true" )
     puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
     email    = params[:account][:email]
-    puts " viral maile "+email
+    puts " viral mail "+email
     
     EMAIL_QUEUE << {:email_type => "notify_new_user", :email => params[:account][:email], :type => "Viral Signup"}
     
@@ -82,65 +76,48 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
 #----------------------------------------------------------#
 #--------------------- user is not joining virally
 #----------------------------------------------------------#
-  
-	 super
-#	puts "test  = "+test.inspect	
-	 email = params[:account][:email]
-	 EMAIL_QUEUE << {:email_type => "notify_new_user", :email => params[:account][:email], :type => "New user signup"}
-    
-	 puts "email = "+email 
-   @account = Account.find_by_email(email)
-
-
-    puts "-------->>>>>>>>>> In Regitration Create Controller not viral <<<<<<<<<<<<<<------------------ 3"
-  
-
-# fist find the user clone
-	 @user = User.where("clone_email = ?",email).first
-	 #@user = @users[0] if @users.size > 0
-	
-	#puts "user = "+@user.inspect
-	if(@user == nil)
-		puts "user == nil and email = "+email
-		params[:account][:user][:clone_email] = email 
-		@account.user = User.new(params[:account][:user])
-		puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------ 4"
-  
-	else
-		puts "user already exists != nil"
-		if(@account.user == nil)
-			puts " account.user == nil"
-			@user.activate_user
-			@user.name    = params[:account][:user][:name]
-			@user.save
-			@account.user = @user
-		else
-			puts " account.user != nil"
-		end
-	end
-	puts " saving account!!!!!!!!!!!!!!!!"
-	
-  if(params[:account][:viral] == "true" && false) # delete this seciton
-    puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
-    
-    @account.skip_confirmation!
-    #@account.confirmed_at = Time.now()
-    @account.save!
-    @account.confirm!
-  
-    
-    sign_in_and_redirect(:account, @account)
-    #flash[:myinfo] = 'Your account on tiviti has been created via ' + provider.capitalize + '. In your profile you can change your personal information and add a local password.'
-   
-    return
+     puts " --  no viral --  "
+     email = params[:account][:email]
+     puts "email = "+email
+   #  @account = Account.find_by_email(email)
      
-  else
-     @account.save
-  end
+  	 super
+  	 
+     @account = Account.find_by_email(email)
+     puts "-------->>>>>>>>>> In Regitration Create Controller not viral <<<<<<<<<<<<<<------------------ 3"
+# fist find the user clone
+  	 @user = User.where("clone_email = ?",email).first
+  	 #@user = @users[0] if @users.size > 0
+  	
+  	#puts "user = "+@user.inspect
+  	if(@user == nil)
+  		puts "user == nil and email = "+email
+  		params[:account][:user][:clone_email] = email 
+  		@account.user = User.new(params[:account][:user])
+  		puts "-------->>>>>>>>>> In Regitration Create Controller <<<<<<<<<<<<<<------------------ 4"
+  	  EMAIL_QUEUE << {:email_type => "notify_new_user", :email => params[:account][:email], :type => "New user signup"}
+  	else
+  		puts "user already exists != nil"
+  		if(@account.user == nil)
+  			puts " account.user == nil"
+  			@user.activate_user
+  			@user.name    = params[:account][:user][:name]
+  			@user.save
+  			@account.user = @user
+  		else
+		  	puts " account.user != nil"
+		  end
+	  end
+	puts " saving account!!!!!!!!!!!!!!!!"
+	@account.save!
+	
 
 	end
 #  account_session[:sign_in] = "true" 
  end
+ 
+ 
+ 
  
  def awaiting_confirmation
    #puts "params = "+params.inspect
