@@ -58,7 +58,7 @@ var DisableColor = "#CCCCCC"; //color of disabled cell.
 var CalBgColor = "#FFFFFF"; //Background color of Calendar window.
 
 var WeekChar = 2;//number of character for week day. if 2 then Mo,Tu,We. if 3 then Mon,Tue,Wed.
-var DateSeparator = "-";//Date Separator, you can change it to "-" if you want.
+var DateSeparator = "/";//Date Separator, you can change it to "-" if you want.
 var ShowLongMonth = true;//Show long month name in Calendar header. example: "January".
 var ShowMonthYear = true;//Show Month and Year in Calendar header.
 var ThemeBg = "";//Background image of Calendar window.

@@ -500,7 +500,7 @@ jQuery(document).ready(function($){
 	    			var confirmDialogTitle = 'Propose Another Date';
 	    			var actionPost = 'action="/proposedate?id=' + tivitID + '&method=put" accept-charset="UTF-8">';
 	    			dueDate = '<p class="input-date"><label for="propose_date">How about:</label>' +
-									'<input id="propose_date" name="propose_date" type="text" autocomplete="off" placeholder="choose date" class="required tivitiDate"/>' + 
+									'<input id="propose_date" name="propose_date" type="text" autocomplete="off" placeholder="mm/dd/yyy" class="required tivitiDate"/>' + 
 								    '<img src="/images/cal.gif" onclick="javascript:NewCssCal(\'propose_date\', \'mmddyyyy\', \'arrow\', false,\'24\', true,\'future\' )" class="ico_calc"/>' +
 							  '</p>';			           
 	    			break;
