@@ -35,7 +35,7 @@ class ActivitiesController < ApplicationController
         return
        end
      end
-     puts "++++++++++++++++++++++++++++++++++++++++++++++(((()()()())))"
+   #  puts "++++++++++++++++++++++++++++++++++++++++++++++(((()()()())))"
    #  redirect_to new_account_session_path (user)
      authenticate_account! 
    end # end def
@@ -218,8 +218,8 @@ class ActivitiesController < ApplicationController
    
   
   def update_tivit
-    puts "-----------    UPDATE tivit"  
- #   puts params.inspect
+    puts ">>>>> -----------    UPDATE tivit"  
+    puts params.inspect
     @activity = Activity.find(params[:id])   
     
     params["due"] = adjust_date_to_end_of_day(parse_date(params, "due"))
@@ -236,7 +236,6 @@ class ActivitiesController < ApplicationController
       end
            
       flash[:success] = "Task '" + @activity.name + "' has been updated"
-      redirect_to @activity
       
     else
       if(params[:name] == nil || params[:name].empty?)   
@@ -244,8 +243,10 @@ class ActivitiesController < ApplicationController
       else
         flash[:failed] = "Failed to update t"
       end
-      redirect_to @activity
     end
+    redirect_to :back
+    #redirect_to @activity
+  
   end
 
   
