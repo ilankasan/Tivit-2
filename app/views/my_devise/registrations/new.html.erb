@@ -1,9 +1,11 @@
 <title>tiviti - Sign Up </title>
+<% if (@email != nil) %>
+	<div align="center"><font size = "3"  color = "black" >To respond to this request you need to sign in or create a new account</font></div>
+<%end%>
 
 <div id="sign-in-up-box"> 
 	<h1>tiviti</h1>
 	<%#puts "resource= "+resource.inspect%>
-	<%puts "___________________________________________________"%>
 	
 	<%puts "___________________________________________________"%>
 	 
@@ -36,7 +38,7 @@
 				<%= f.email_field :email, :class => "input" %>
 				
 			<%else%>
-			<%puts "email = "+@email%>
+				<%puts "email ===="+@email%>
 				<%= f.email_field :email, :class => "input", :placeholder => @email,  :disabled => true %>
 				<%= f.hidden_field :email, :value =>@email%>
 				<%= f.hidden_field :viral, :value =>true%>

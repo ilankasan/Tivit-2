@@ -10,7 +10,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
     @email = params[:email]
 	 if(@email != nil)
 	   puts "Sign up with email "+@email
-	    flash[:warning] = "Sign up with email "+@email
+	 #   flash[:warning] = "Sign up with email "+@email
 	 end
 	 @title = "Sign Up"
 	 
