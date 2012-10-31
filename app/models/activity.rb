@@ -720,7 +720,7 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
     if(self.due == nil)
       return ""
     else
-      return self.due.localtime.strftime("%m-%d-%Y");
+      return self.due.localtime.strftime("%m/%d/%Y");
     end
   end
    

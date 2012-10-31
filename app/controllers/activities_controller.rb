@@ -241,7 +241,7 @@ class ActivitiesController < ApplicationController
       if(params[:name] == nil || params[:name].empty?)   
         flash[:failed] = "Failed to update task. Name cannot be empty"
       else
-        flash[:failed] = "Failed to update t"
+        flash[:failed] = "Failed to update tast"
       end
     end
     redirect_to :back
@@ -387,12 +387,16 @@ class ActivitiesController < ApplicationController
     
 	  params["owner_id"] =  @invited_user.get_id
 	  params["activity_type"] = "tivit"
-	 	
-	  current_account.user.addTwoWayContact(@invited_user)
+	  
 	  params["description"] = clean_comment(params["description"]) 
     @tivit = @invited_user.activities.create(params)
-    #@tivit.get_parent
     @tivit.update_tivit_user_status_reviewed(current_account.user,"")
+    
+    # ilan modify this to add all users in the activity to the invited_user contact list 
+    current_account.user.addTwoWayContact(@invited_user)
+    #AddActivityUsersAsContacts(current_account.user,@invited_user,params[:id])
+    
+
     #Change status to on it is tivit assigned to self. Ilan - optimize this section to one function
     if(@invited_user.get_id == current_account.user.get_id && params["invitees"] == "myself"  )
       puts "i am on it"
