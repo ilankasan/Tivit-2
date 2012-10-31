@@ -15,7 +15,7 @@ class ActivitiesController < ApplicationController
   
    def tiviti_authenticate_account
  #    puts "---------------------------------------------------------------"
- #    puts "------->>>>>>>>>>>>>>>>  tiviti_authenticate_account"
+     puts "------->>>>>>>>>>>>>>>>  tiviti_authenticate_account"
      
      if(params[:email] != nil)
        #render '../my_devise/registrations/new'
@@ -23,20 +23,21 @@ class ActivitiesController < ApplicationController
       # puts "email is "+params[:email]
        user = User.where(:clone_email => params[:email])
        #puts "users = "+user.inspect
-       
+       @email = params[:email]
+       puts "email == "+@email 
        if (user != nil && user[0] != nil && user[0].get_account == nil)
         #redirect_to new_registration_path(user[0].get_account)
         @account = Account.new()
         #puts "account = "+@account.inspect
-      #  puts "---------------------------------------------------------------"
       #  puts "-------------------------     redirect_to new_registration_path    --------------------------------------"
         redirect_to new_registration_path(@account,:email =>params[:email])
        # puts "---------------------------------------------------------------"
         return
        end
      end
-  #   puts "++++++++++++++++++++++++++++++++++++++++++++++(((()()()())))"
-     authenticate_account!
+     puts "++++++++++++++++++++++++++++++++++++++++++++++(((()()()())))"
+   #  redirect_to new_account_session_path (user)
+     authenticate_account! 
    end # end def
   
    def create

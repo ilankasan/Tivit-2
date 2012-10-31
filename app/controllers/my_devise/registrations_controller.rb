@@ -7,7 +7,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
   def new
   	puts " new ++++++++++++ registration ++++++++++++++++++++++++++++++++++++++"
    
-    @email = params[:email]
+   @email = params[:email]
 	 if(@email != nil)
 	   puts "Sign up with email "+@email
 	 #   flash[:warning] = "Sign up with email "+@email
@@ -139,7 +139,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
    
    puts "in after_inactive_sign_up_path_for"
    
-   puts params.inspect
+  # puts params.inspect
    email = params[:account][:email]
    
    
