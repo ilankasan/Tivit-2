@@ -101,7 +101,7 @@ end
                 activities.status_id = ? 
         AND     activities.owner_id  = ?
         AND NOT activities.invited_by = ? 
-        AND NOT  parents_activities.status_id  = ?",TivitStatus.not_started_id,current_user_id,current_user_id,TivitStatus.get_completed_id)
+        AND NOT  parents_activities.status_id  = ?",TivitStatus.not_started_id,current_user_id,current_user_id,TivitStatus.get_completed_id).order(:updated_at)
     
       #puts "^^^^^^^^^^^^^^^^^   -------->>>>>>>>>>>>>>> R1 = "+results1.size.to_s
   #    puts "<<<--- out get_new_tivit_requests "+(Time.now()-time).to_s
