@@ -357,17 +357,15 @@ class ActivitiesController < ApplicationController
   	  
   	due = parse_date(params,"due")
   	
-  	puts "due date = "+due.to_s
+  	#puts "due date = "+due.to_s
 #adding a strign representation of due date 
   	params["due"] 		   = adjust_date_to_end_of_day(due).to_s
-  	puts " adujested due date "+params["due"]
+ # 	puts " adujested due date "+params["due"]
   	params["parent_id"]  = params[:id] 						#   adding Parent ID
   	params["invited_by"] = current_account.user.id 						#   adding invite by		
 	  
     
-  #  puts "______________________________________________y__"
   #  puts " invitees --->>>>    " +params.inspect
-   # puts " invitees --->>>>    " +params["invitees"].to_s
      	
     if(params["invitees"] == nil || params["invitees"].empty? )
     #  puts "[Yaniv] invitees is empty!"

@@ -1,30 +1,35 @@
 <!-- Display a single tivits in Team tivit within an acitivty-->
 
 
-<% task_owner_name = render :partial => 'users/user_link', :collection =>  [event.get_owner], :as => :user %> 
 
-<%if event.get_name.length < 30 %>  
+<%if event.get_name.length < 35 %>  
 	<% task_name = event.get_name %>
 <%else%>
 	<% task_name = event.get_name[0,40]+"..." %>
 <%end%> 
 
 <%if event.is_completed?%>
-	<%comment = Tivitcomment.where(:user_id => event.get_owner_id, :activity_id => event.get_id, :action =>"Done")%>
-
+	<%comment = Tivitcomment.where(:user_id => event.get_owner_id, :activity_id => event.get_id, :action =>"Done").first%>
+	<% task_owner_name = render :partial => 'users/user_link', :collection =>  [event.get_completed_by], :as => :user %> 
 	<%=task_owner_name %> completed 
 	
 	
 <%elsif%>
-	<%comment = Tivitcomment.where(:user_id => event.get_owner_id, :activity_id => event.get_id, :action =>"Onit")%>
+	<%comment = Tivitcomment.where(:user_id => event.get_owner_id, :activity_id => event.get_id, :action =>"Onit").first%>
+	<% task_owner_name = render :partial => 'users/user_link', :collection =>  [event.get_owner], :as => :user %> 
 
 	<%=task_owner_name %> agreed to help with 
 	
 <%end%>
 <%= link_to task_name,activity_url(event) %><br>
-<%if !comment[0].nil?%>
-	<%= time_ago_in_words(comment[0].created_at) %> ago<br>
+<%if !comment.nil?%>
+	<%= time_ago_in_words(comment.created_at) %> ago<br>
+<%elsif event.is_completed? %>
+	<%= time_ago_in_words(event.completed_at) %> ago<br>
+
 <%end%>
+
+
 <br>
 	
 
