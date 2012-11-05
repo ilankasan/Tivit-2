@@ -32,20 +32,5 @@ function changeBackground() {
 	{
 		myLayer.style.background="red";
 	} 
-	
    
 }
-
-$(document).ready(function(){
-    var $tabs = $("#tivit-container").tabs({ select: function(event, ui) {                                         
-                                          $("#test-items").empty();
-                                          $("#completed-items").empty();
-                                          if($.data(ui.tab, 'load.tabs')) {
-           $(ui.panel).html("Loading...");
-       }
-
-                                      }
-                               });
-});
-
-      

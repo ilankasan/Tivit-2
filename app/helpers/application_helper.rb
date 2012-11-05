@@ -7,12 +7,18 @@ module ApplicationHelper
   
   # Return a title on a per-page basis.
   def title
-    base_title = "tivity"
+    base_title = "tiviti"
     if @title.nil?
       base_title
     else
       "#{base_title} | #{@title}"
     end
+  end
+  
+  def get_number_of_new_requests 
+    
+     @new_tivit_requests            = get_new_tivit_requests(current_account.user.get_id.to_s)
+     return @new_tivit_requests.size  
   end
   
   # Check the client version used to access the application. No versioning distinction yet as it's really not needed at this point. 

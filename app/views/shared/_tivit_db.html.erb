@@ -55,7 +55,7 @@
 	<% status_line_middle = " finished this " +  (time_ago_in_words (tivit.completed_at)) + " ago." %>
 	<% status_line_window = "" %>
 		
-<% elsif TivitStatus.is_proposed_id?(owner_tivit_status) %>
+<% elsif TivitStatus.is_proposed?(owner_tivit_status) %>
 
 	<li class="record attention">
 	<% proposed_date = "no data was set"%>
@@ -239,7 +239,7 @@
 					<!-- all gray status lines -->
 					<span class="grey">
 	              		
-	              		<% if TivitStatus.is_proposed_id?(owner_tivit_status)%>
+	              		<% if TivitStatus.is_proposed?(owner_tivit_status)%>
 		              		<%= tivit_owner_name %> 
 							<font color="red"><%= status_line_middle %></font>
 							

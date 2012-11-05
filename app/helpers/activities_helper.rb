@@ -1,6 +1,23 @@
 module ActivitiesHelper
 
 
+def get_tooltip_text (identifier)
+  
+  tooltip = ""
+  case identifier
+  when "on-it button"
+    tooltip="Add this task to your task list and let the requestor know you can help.";
+  when "sorry button"
+    tooltip="Let the requestor know you cannot help and if you think someone else can do it let him know." 
+  when "date icon"
+    tooltip="Edit date" 
+  when "comment icon"
+    tooltip="see/hide comments" 
+  end
+  
+  return tooltip
+  
+end
 # [07/08/2012] Yaniv: Return the task status line sting for the specific user 
 def get_task_status_line (task, user)
     
@@ -86,7 +103,7 @@ def get_task_status_line (task, user)
     end 
        
     
-  elsif ( TivitStatus.is_proposed_id?(owner_tivit_status) )
+  elsif ( TivitStatus.is_proposed?(owner_tivit_status) )
     proposed_date = "no data was set"
     if (task.get_owner_proposed_date == nil || task.get_owner_proposed_date == "")
       proposed_date = "[no data was set]"

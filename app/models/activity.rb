@@ -599,8 +599,9 @@ AND activities.owner_id = ? AND tivit_user_statuses.user_id = activities.owner_i
  end
  
  def update_tivit_user_propose_date(user,comment,date)
+   puts "--->>> in update_tivit_user_propose_date id = "+self.id.to_s
   change_user_status(user,TivitStatus.get_proposed_id,comment,date,Time.now().utc,nil)
-  self.change_status_id_to_in_progress if self.isCompleted?
+ # self.change_status_id_to_in_progress if self.isCompleted?
  end
  
  def is_not_started?
@@ -949,15 +950,15 @@ private
  puts "changing status for "+user.get_name+" to "+status.to_s
    tivit_user_status = self.tivit_user_statuses.find_by_user_id(user.id)
    if(tivit_user_status == nil)
-   tivit_user_status = create_status(user,status)
+    tivit_user_status = create_status(user,status)
    end
   
   if(proposed_date != nil)
-  tivit_user_status.proposed_date = proposed_date
+    tivit_user_status.proposed_date = proposed_date
   end
  
-if(last_reviewed != nil)
-  tivit_user_status.last_reviewed = last_reviewed
+  if(last_reviewed != nil)
+    tivit_user_status.last_reviewed = last_reviewed
   end
  
   if(assigned_to != nil)
@@ -969,7 +970,7 @@ if(last_reviewed != nil)
    #tivit_user_status.comment = clean_comment(comment)
    tivit_user_status.last_status_change = Time.now.utc
    tivit_user_status.save()
-    return tivit_user_status.status_id
+   return tivit_user_status.status_id
  end
  
  def change_status(user, status,comment)

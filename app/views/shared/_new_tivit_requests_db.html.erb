@@ -24,9 +24,9 @@
 		-->
 		<div class="text">
 			<div class="activity">
-				<div class="on-it"></div>
+				<div class="on-it" title="<%= get_tooltip_text ( "on-it button" )%>"></div>
 				<!-- <a href="#" class="details-link">details &gt;</a>-->
-				<span class="btn-sorry">sorry...</span>
+				<span class="btn-sorry" title="<%= get_tooltip_text ( "sorry button" )%>">sorry...</span>
 				
 				<%= link_to "details >", new_tivit_request, :action => "show",
 	  									   :method => "get",

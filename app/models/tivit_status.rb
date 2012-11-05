@@ -97,7 +97,7 @@ class TivitStatus < ActiveRecord::Base
     return @proposed
   end
   
-  def self.is_proposed_id?(id)
+  def self.is_proposed?(id)
     return  (id==@proposed)
   end
   

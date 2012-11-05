@@ -120,18 +120,17 @@
 								
 							<% elsif ( (newRequest == "yes") && (taskContext == 'ADP') && (!my_task.is_completed?) ) %>
 								
-								<div class="on-it"></div>
-								<span class="btn-sorry">sorry...</span>
+								<div class="on-it" title="<%= get_tooltip_text ( "on-it button" )%>"></div>
+								<span class="btn-sorry" title="<%= get_tooltip_text ( "sorry button" )%>">sorry...</span>
 															
 							<% end %>
 													
 							<% unread_comments = my_task.get_number_of_unread_comments(current_account.user)%>
-				    
 							<!-- Comments icon -->								   
 									  			
 			  			</div>
 			  			
-			  				<div class="comments">	
+			  				<div class="comments" title="<%= get_tooltip_text ( "comment icon" )%>">	
 								<% if unread_comments > 0 %>
 									<i><%=unread_comments%></i>
 								<% end %>

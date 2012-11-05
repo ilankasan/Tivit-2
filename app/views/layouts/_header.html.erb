@@ -12,10 +12,25 @@
  
         <ul class="nav-item">
         	
-        	<% if @title == "Dashboard" %>  	
-        		<li><%= link_to "Dashboard", root_path, :class => "current" %></li>
+        	<% new_request_count = get_number_of_new_requests %>	
+        	
+        	<% if @title == "Dashboard" %>         	
+        		
+        		<li>
+        		    <%= link_to "Dashboard", root_path, :class => "current" %>        		    
+        			<% if (new_request_count > 0) %>
+        				<i id="header_new_request_count"><%= new_request_count %></i>
+        			<% end %>
+        		</li>
+        		
         	<% else %>
-	    		<li><%= link_to "Dashboard", root_path %></li>
+	    		<li>
+	    			<%= link_to "Dashboard", root_path %>
+	    			<% if new_request_count > 0 %>
+        				<i id="header_new_request_count"><%= new_request_count %></i>
+        			<% end %>
+	    		</li>
+	    		
 	    	<% end %>
 	    	
 	    	<!-- <li><%= link_to "Activities", about_path %></li> -->
@@ -29,10 +44,10 @@
 	    	<% end %>
 	    	
 	  
-	    	<% if @title == "How It Works" %>
-	    		<li><%= link_to "How It Works", help_path, :class => "current" %></li>
+	    	<% if @title == "How Does It Work" %>
+	    		<li><%= link_to "How Does It Work", help_path, :class => "current" %></li>
 	    	<% else %>
-	    		<li><%= link_to "How It Works", help_path %></li>
+	    		<li><%= link_to "How Does It Work", help_path %></li>
 	    	<% end %>
 	    	
 	    	

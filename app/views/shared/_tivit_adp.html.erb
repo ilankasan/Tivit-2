@@ -80,7 +80,7 @@
 		<li class="record complete tivit-name-line-through">
 		<% respondbutton = "I'm done!" %>
 		
-		<% elsif TivitStatus.is_proposed_id?(owner_tivit_status)%>
+		<% elsif TivitStatus.is_proposed?(owner_tivit_status)%>
 	
 		<li class="record attention">
 		<% respondbutton = "new date?" %>
@@ -317,7 +317,7 @@
 						
 					<span class="grey">
 	              		
-	              		<% if TivitStatus.is_proposed_id?(owner_tivit_status) %>
+	              		<% if TivitStatus.is_proposed?(owner_tivit_status) %>
 		              		<%= tivit_owner_name %> 
 							<font color="red"><%= status_line_middle %></font>
 							<!-- only tivit creator and activity owner can accept new time proposed. The only exception is when activity owner request a new time for a tivit s/he got assigned -->

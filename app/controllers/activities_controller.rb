@@ -208,7 +208,7 @@ class ActivitiesController < ApplicationController
    if(current_account == nil)
     return
    end
-      
+               
    @activity = Activity.find_by_id(params[:id])   
    if(@activity == nil || !validate_user_access_to_activity(@activity,current_account.user))
       render 'shared/access_denied' 
@@ -465,11 +465,7 @@ class ActivitiesController < ApplicationController
     	@activity.update_tivit_user_propose_date(current_account.user,params["comment"], proposed_date)
     	@lastcomment = log_action_as_comment(@activity,params["comment"],"Proposed",current_account.user)
          
-    	 if(current_account.user != @activity.get_invited_by)
-    	   puts "--------------------------- sending email -----------------------------------"
-        EMAIL_QUEUE << {:email_type => "tivit_propose_new_date_email", :assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}
-      
-       end
+    	
     end  
     
     #redirect_to  @activity.get_parent
@@ -478,6 +474,12 @@ class ActivitiesController < ApplicationController
        format.js {}
        puts "--------[change status to propose_date activities controller]------->> after responding to Ajax"
      end
+     
+     if(current_account.user != @activity.get_invited_by && params["propose_date"] != nil  )
+         puts "--------------------------- sending email -----------------------------------"
+        EMAIL_QUEUE << {:email_type => "tivit_propose_new_date_email", :assigner => @activity.get_invited_by , :assignee => current_account.user,:comment =>params["comment"], :tivit =>@activity}
+     end
+     #redirect_to :back
   end
 
  
