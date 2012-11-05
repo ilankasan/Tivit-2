@@ -22,12 +22,15 @@
 	
 <%end%>
 <%= link_to task_name,activity_url(event) %><br>
-<%if !comment.nil?%>
-	<%= time_ago_in_words(comment.created_at) %> ago<br>
-<%elsif event.is_completed? %>
-	<%= time_ago_in_words(event.completed_at) %> ago<br>
 
+
+<%if event.is_completed? %>
+	<%= time_ago_in_words(event.completed_at) %> ago<br>
+<%elsif !comment.nil?%>
+	<%= time_ago_in_words(comment.updated_at) %> ago<br>
 <%end%>
+
+
 
 
 <br>
