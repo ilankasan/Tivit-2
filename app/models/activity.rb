@@ -54,7 +54,12 @@ class Activity < ActiveRecord::Base
   
   
   def get_completed_by
-    return self.tivit_user_statuses.where(:status_id => TivitStatus.get_completed_id).last.user
+    status =  self.tivit_user_statuses.where(:status_id => TivitStatus.get_completed_id).last
+     if status != nil
+       return status.user
+     else
+       return nil
+     end
   end
   def add_user_invitee(user)
  #adding the user to the existing users on the task
