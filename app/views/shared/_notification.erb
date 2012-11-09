@@ -7,7 +7,7 @@
 <%else%>
 	<% task_name = event.get_name[0,40]+"..." %>
 <%end%> 
-
+<%if hjkjkj 0jkj %>
 <%if event.is_completed? && event.get_completed_by != nil%>
 	<%comment = Tivitcomment.where(:user_id => event.get_owner_id, :activity_id => event.get_id, :action =>"Done").first%>
 	<% task_owner_name = render :partial => 'users/user_link', :collection =>  [event.get_completed_by], :as => :user %> 
