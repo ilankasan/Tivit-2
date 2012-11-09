@@ -14,6 +14,17 @@ class UserMailer < ActionMailer::Base
    
     end 
    
+   
+   
+   def notify_error_occured(params)
+      
+      mail(:from => "tiviti Admin",:reply_to => "no_reply@tiviti.net",:to => ["ilan.kasan@gmail.com","yanivlevi1@gmail.com"], :subject => "tiviti: Application ancountered ab error")
+                                                                                                      
+   
+    end 
+   
+   
+   
    def tivit_propose_new_date_email(params)
 #107 Tivit - New Date Request. When: CAssignee requests alternate due date, Who: Assigner
     #  puts "--->>>>  tivit_propose_new_date_email"

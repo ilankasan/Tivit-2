@@ -6,11 +6,7 @@ class ApplicationController < ActionController::Base
   include UsersHelper
   include PagesHelper
   
-   rescue_from(Exception) { 
    
-    EMAIL_QUEUE << {:email_type => "notify_error_occured"}
-    
-  }
 
   
 end
