@@ -34,7 +34,7 @@ class  MyDevise::RegistrationsController < Devise::RegistrationsController
   if(params[:account][:viral] == "true" )
     puts " viral !!!!!!!!!!!!!!!!!!!!!!!!!"
     email    = params[:account][:email]
-    puts " viral mail "+email
+    #puts " viral mail "+email
     
     EMAIL_QUEUE << {:email_type => "notify_new_user", :email => params[:account][:email], :type => "Viral Signup"}
     
