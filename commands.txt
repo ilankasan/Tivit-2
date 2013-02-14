@@ -38,6 +38,11 @@ heroku--remote staging
 heroku stack:migrate bamboo-mri-1.9.2 --remote staging2
 
 
+$ heroku addons:upgrade cleardb:ignite --app tiviti-s2
+Upgrading to cleardb:ignite on tiviti-s2... done, v468 (free)
+Use `heroku addons:docs cleardb:ignite` to view documentation.
+
+
 heroku rake db:migrate
 heroku restart --remote staging
 
