@@ -2,7 +2,7 @@ source :gemcutter
 
 gem 'rails', '3.0.3'
 gem 'faker', '0.3.1'
-gem 'excon', '0.5.6'
+gem 'excon', '0.71.0'
 gem 'daemons', '1.1.0'
 
 gem 'girl_friday', '0.9.7'
